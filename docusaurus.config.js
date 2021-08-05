@@ -26,16 +26,7 @@ module.exports = {
           position: 'left',
           label: 'Tutorial',
         },
-        {
-          href: 'https://resources.madmachine.io',
-          label: 'Blogs',
-          position: 'left',
-        },
-        //{to: '/blog', label: 'Blog', position: 'left'},
-        {
-          type: 'docsVersionDropdown',
-          position: 'right',
-        },
+        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
