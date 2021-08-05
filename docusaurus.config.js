@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'My Site',
   tagline: 'Dinosaurs are cool',
-  url: 'https://madmachine-docs.netlify.app',
+  url: 'https://docs.madmachine.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -26,7 +26,16 @@ module.exports = {
           position: 'left',
           label: 'Tutorial',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {
+          href: 'https://resources.madmachine.io',
+          label: 'Blogs',
+          position: 'left',
+        },
+        //{to: '/blog', label: 'Blog', position: 'left'},
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+        },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
