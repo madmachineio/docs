@@ -24,9 +24,21 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'base/introduction',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docs',
+        },
+        {
+          type: 'doc',
+          docId: 'learn/learn1',
+          position: 'left',
+          label: 'Learn',
+        },
+        {
+          type: 'doc',
+          docId: 'library/swiftio',
+          position: 'left',
+          label: 'Library',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
@@ -39,15 +51,6 @@ module.exports = {
     footer: {
       style: 'dark',
       links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
-        },
         {
           title: 'Community',
           items: [
