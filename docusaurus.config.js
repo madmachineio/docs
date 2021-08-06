@@ -14,10 +14,12 @@ module.exports = {
   projectName: 'docs', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'Machine',
+      //title: 'Machine',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo.png',
+        src: 'img/logo.svg',
+        srcDark: 'img/logo_dark.svg',
+        href: 'https://madmachine.io'
       },
       items: [
         {
