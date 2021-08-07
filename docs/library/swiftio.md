@@ -5,4 +5,4 @@ description: Use SwiftIO library to control hardware
 slug: /swiftio
 ---
 
-# SwiftIO library
+# SwiftIO
