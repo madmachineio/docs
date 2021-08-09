@@ -37,6 +37,7 @@ module.exports = {
       label: 'Quick Guide',
       items: [
         'base/guide/use-ide',
+        'base/guide/use-mm-sdk',
       ],
     },
     'base/faq', 
