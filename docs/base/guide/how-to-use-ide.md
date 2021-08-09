@@ -27,19 +27,7 @@ Then complete the project info.
 | Slow flashing | Fail to verify file `swiftio.bin` | - | - |
 | Fast flashing | Fail to open file `swiftio.bin` | Detecting USB connection | Detecting SD card |
 
-```swift title="Blink"
-import SwiftIO
-import SwiftIOBoard
 
-let green = DigitalOut(Id.GREEN)
-​
-while true {
-    green.write(true)
-    sleep(ms: 1000)
-    green.write(false)
-    sleep(ms: 1000)
-}
-```
 
 ## Get familiar with IDE
 - Menu bar
