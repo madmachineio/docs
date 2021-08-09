@@ -85,6 +85,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
+      additionalLanguages: ['swift'],
     },
     gtag: {
       // You can also use your "G-" Measurement ID here.
