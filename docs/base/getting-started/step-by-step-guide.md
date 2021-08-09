@@ -15,7 +15,7 @@ At first, you need to download the MadMachine IDE. It is a simple tool to allow 
 
 The IDE is available on **Windows** and **Mac**. You could find the software package [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.1.1). Select the appropriate version according to your operating system. 
 
-::: info
+:::info
 If you're an experienced programmer, you may edit your code wherever you like and use the mm-sdk to compile your code.
 :::
 
@@ -53,7 +53,7 @@ while true {
 }
 ```
 
-::: tip
+:::tip
 Note: there are built-in example codes in the IDE. You could click the button ![example](img/example.jpeg) on the bottom left corner.
 
 ![example code](img/exampleCode.jpeg)
