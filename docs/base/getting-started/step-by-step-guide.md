@@ -19,7 +19,7 @@ The IDE is available on **Windows** and **Mac**. You could find the software pac
 If you're an experienced programmer, you may edit your code wherever you like and use the mm-sdk to compile your code.
 :::
 
-Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](/docs/faq.md). 
+Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](../faq.md). 
 
 ## **Step 2: Code in the IDE**
 
