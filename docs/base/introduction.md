@@ -1,8 +1,8 @@
 ---
-id: welcome
-title: Welcome
+id: introduction
+title: introduction
 description: Have a quick view at MadMachine platform.
-slug: /welcome
+slug: /introduction
 ---
 
 # Welcome

@@ -16,7 +16,7 @@ module.exports = {
   // But you can create a sidebar manually
   
   docsSidebar: [
-    'base/welcome', 
+    'base/introduction', 
     {
       type: 'category',
       label: 'Getting Started',
