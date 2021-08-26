@@ -25,5 +25,5 @@ Then complete the project info.
 ## Get familiar with IDE
 - Menu bar
 - Toolbar
-    - ![add](img/add.jpeg)**New file**: create a new file for the current project.
+    - **New file**: create a new file for the current project.
 
