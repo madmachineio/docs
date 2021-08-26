@@ -1,7 +1,7 @@
 ---
 id: step-by-step
 title: Blink your first LED
-description: Using the Swift Programming Language on microcontroller
+description: Use the Swift Programming Language to realize your first project.
 slug: /step-by-step
 ---
 
@@ -16,7 +16,7 @@ At first, you need to download the MadMachine IDE. It is a simple tool to allow 
 The IDE is available on **Windows** and **Mac**. You could find the software package [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.1.1). Select the appropriate version according to your operating system. 
 
 :::info
-If you're an experienced programmer, you may edit your code wherever you like and use the mm-sdk to compile your code.
+For advanced users, you may edit your code wherever you like and use the mm-sdk to compile your code.
 :::
 
 Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](../faq.md). 
@@ -54,7 +54,7 @@ while true {
 ```
 
 :::tip
-Note: there are built-in example codes in the IDE. You could click the button ![example](img/example.jpeg) on the bottom left corner.
+There are built-in example codes in the IDE. You could click the button ![example](img/example.jpeg) on the bottom left corner.
 
 ![example code](img/exampleCode.jpeg)
 
@@ -62,3 +62,37 @@ Choose **GettingStarted**/**Blink**. The code will show up in a new window.
 
 ![blink](img/blink.png)
 :::
+
+## **Step 3: Prepare SD card and confirm USB connection**
+
+You could notice the message on the status bar. The board is connected yet. So you will need to connect it to your computer.
+
+1. Make sure that you have inserted an **SD card** into the slot.
+
+2. Connect the SwiftIO board to your computer through the **Download port** using a Micro-USB cable.
+
+3. Press the **Download button** beside the port. SwiftIO board will be mounted as a USB Drive on your computer. 
+
+Here is an illustrational instruction.
+
+
+:::note
+Bad quality USB cable or some third-party USB hub may cause connection failure.
+:::
+
+
+:::tip
+The onboard RGB LED will show the current status of the USB connection. Wait until it turns to steady green.
+
+| LED State | RED | GREEN | BLUE |
+| :--- | :--- | :--- | :--- |
+| On | USB communication failed | USB connection established | - |
+| Slow flashing | Fail to verify file `swiftio.bin` | - | - |
+| Fast flashing | Fail to open file `swiftio.bin` | Detecting USB connection | Detecting SD card |
+
+
+## **Step 4: Build your code and download it to the board**
+
+1. Once the SD card is mounted successfully, the message on the status bar will change to "SwiftIOBoard ready".
+
+2. Click the Download ![download button](img/download.png) button.

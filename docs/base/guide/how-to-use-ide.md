@@ -21,13 +21,6 @@ Then complete the project info.
 - The Project name is _necessary_ for your project.
 - Just keep the location as it is. The project folder will be created in the directory `Documents/MadMachine/Projects`. 
 
-| LED State | RED | GREEN | BLUE |
-| :--- | :--- | :--- | :--- |
-| On | USB communication failed | USB connection established | - |
-| Slow flashing | Fail to verify file `swiftio.bin` | - | - |
-| Fast flashing | Fail to open file `swiftio.bin` | Detecting USB connection | Detecting SD card |
-
-
 
 ## Get familiar with IDE
 - Menu bar
