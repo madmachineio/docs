@@ -95,3 +95,7 @@ The onboard RGB LED will show the current status of the USB connection. Wait unt
 1. Once the SD card is mounted successfully, the message on the status bar will change to "SwiftIOBoard ready".
 
 2. Click the Download ![download button](img/download.png) button.
+
+The IDE begins to build your project, and then download it to your board if there is no error.
+
+After the code is downloaded, the USB drive will be removed automatically.
