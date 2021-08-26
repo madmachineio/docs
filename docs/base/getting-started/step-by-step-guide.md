@@ -81,7 +81,6 @@ Bad quality USB cable or some third-party USB hub may cause connection failure.
 :::
 
 
-:::tip
 The onboard RGB LED will show the current status of the USB connection. Wait until it turns to steady green.
 
 | LED State | RED | GREEN | BLUE |
