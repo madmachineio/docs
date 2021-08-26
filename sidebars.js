@@ -16,12 +16,13 @@ module.exports = {
   // But you can create a sidebar manually
   
   docsSidebar: [
-    'base/introduction', 
+    'base/welcome', 
     {
       type: 'category',
       label: 'Getting Started',
       items: [
         'base/getting-started/step-by-step',
+        'base/getting-started/first-impression',
       ],
     },
     {
