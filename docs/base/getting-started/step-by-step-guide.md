@@ -54,13 +54,13 @@ while true {
 ```
 
 :::tip
-There are built-in example codes in the IDE. You could click the button ![example](img/example.jpeg) on the bottom left corner.
+There are built-in example codes in the IDE. You could click the button ![example](img/example.png) on the bottom left corner.
 
 
 
 Choose **GettingStarted**/**Blink**. The code will show up in a new window.
 
-![blink](img/blink.png)
+
 :::
 
 ## **Step 3: Prepare SD card and confirm USB connection**
