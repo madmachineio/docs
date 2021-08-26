@@ -29,13 +29,13 @@ OK, you're ready to code.
 
 2. Click **Create a new MadMachine project**.
 
-![img](img/create.png)
+
 
 3. **Name** the project. We call it "Blink". You could choose any descriptive name you like for the project. Leave the rest as they are. 
 
 4. Then click **Create**.
 
-![img](img/create2.png)
+
 
 5. Now it's time to write the code. Click `Sources`/`Blink`/`main.swift`. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
 
@@ -56,7 +56,7 @@ while true {
 :::tip
 There are built-in example codes in the IDE. You could click the button ![example](img/example.jpeg) on the bottom left corner.
 
-![example code](img/exampleCode.jpeg)
+
 
 Choose **GettingStarted**/**Blink**. The code will show up in a new window.
 

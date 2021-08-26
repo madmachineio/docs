@@ -13,7 +13,7 @@ Now I will show you a brief introduction to MadMachine IDE. Here you can edit, b
 
 When you first open the IDE, it will appear as follows. You need to click on **Create a new MadMachine project**. 
 
-![img](img/create.png)
+
 
 Then complete the project info.
 
