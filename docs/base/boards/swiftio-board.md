@@ -7,9 +7,11 @@ slug: /swiftio-board
 
 # SwiftIO Board
 
+Let's look at parts of the SwiftIO board.
+
+
 ![SwiftIO board](img/SwiftIOParts.png)
 
-Let's look at parts of the SwiftIO board.
 
 ## **MCU**
 
