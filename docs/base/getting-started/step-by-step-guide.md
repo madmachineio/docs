@@ -7,23 +7,26 @@ slug: /step-by-step
 
 # Getting Started
 
-So, you‘ve got your SwiftIO board. Let's start with a hello world project - LED blink. Follow us step-by-step to run your first project on the SwiftIO board.
+Now that you‘ve got your board, let's start with a hello world project - LED blink. Follow us step-by-step to run your first project. 
 
 ## **Step 1: Download and install the MadMachine IDE**
 
-At first, you need to download the MadMachine IDE. It is a simple tool to allow you to write the code and download it to your board.  
+At first, you certainly need a tool to edit your code. MadMachine IDE allows you to write code, compile and download it to your board.  
 
-The IDE is available on **Windows** and **Mac**. You could find the software package [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.1.1). Select the appropriate version according to your operating system. 
+You can get the latest IDE for MacOs [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). And your computer should have Xcode to allow the code to be compiled successfully.
+
+BTW, the IDE for Windows doesn't support our new features since we are waiting the Window support of Swift language. 
+
 
 :::info
-For advanced users, you may edit your code wherever you like and use the mm-sdk to compile your code.
+For advanced users, you may edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.
 :::
 
 Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](../faq.md). 
 
 ## **Step 2: Code in the IDE**
 
-OK, you're ready to code. 
+Now you're ready to code. 
 
 1. **Open** the MadMachine IDE. Now it's empty on the right side, as you create and try more projects, it will be filled with all your projects.
 
@@ -35,7 +38,7 @@ OK, you're ready to code.
 
 4. Then click **Create**.
 
-
+![IDE](img/IDE.png)
 
 5. Now it's time to write the code. Click `Sources`/`Blink`/`main.swift`. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
 

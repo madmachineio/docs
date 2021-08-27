@@ -7,6 +7,10 @@ slug: /swiftio-board
 
 # SwiftIO Board
 
+SwiftIO board is our first board that runs Swift language. It is powerful enough and fully functional for most of your projects.
+
+
+
 Let's look at parts of the SwiftIO board.
 
 
@@ -92,3 +96,11 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 
 **Vcoin**: button cell can power the RTC through the Vcoin pin when there is no power supply.
 
+**IOREF**: this pin provide a voltage corresponding to the input and ouput of that board,  that's to say 3.3V.
+
+
+## By the way
+
+All these details may sounds quite confusing at first. Don't worry, most of them are not commonly used. 
+
+If you have not idea how to start, you can work with [this Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio) to learn with some simple projects. 
