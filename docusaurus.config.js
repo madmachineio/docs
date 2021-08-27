@@ -42,7 +42,7 @@ module.exports = {
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/madmachineio',
+          href: 'https://github.com/madmachineio/docs',
           label: 'GitHub',
           position: 'right',
         },
@@ -83,8 +83,8 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} MadMachine Limited`,
     },
     prism: {
-      theme: lightCodeTheme,
-      darkTheme: darkCodeTheme,
+      theme: require('prism-react-renderer/themes/github'),
+      darkTheme: require("prism-react-renderer/themes/vsDark"),
       additionalLanguages: ['swift'],
     },
     gtag: {
@@ -94,6 +94,10 @@ module.exports = {
       anonymizeIP: true, // Should IPs be anonymized?
     },
   },
+  stylesheets: [
+    'https://fonts.googleapis.com/css?family=Roboto:400,400i,700',
+    'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',
