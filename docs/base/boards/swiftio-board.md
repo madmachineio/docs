@@ -65,14 +65,17 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 
 ![SwiftIO pinout](img/SwiftIOPinout.png)
 
-**Power pins**: GND and 3.3V. There are 8 GND (ground) pins on your board to ground the circuit and 4 3V3 pins that supply 3.3V of power to your module.
+**GND**: there are 8 GND (ground) pins on your board to ground the circuit.
+
+
+**3.3V**: there are 4 3V3 pins that supply 3.3V of power to your module.
 
 
 **DigitalIn/Out**: The digital pins are labeled D0 to D45 on SwiftIO board. These pins can act as digital input pins to read logic value or as output pins to control other circuits.
 
 **AnalogIn**: SwiftIO board has 12 analog pins from A0 to A11. You can use them to measure analog inputs and get a raw value between 0 and 4095 (12-bit resolution).
 
-**PWMOut**: The digital pins marked with a tilde can generate PWM wave, 14 pins in total. You can set the duty cycle to simulate different output voltages. Some of the pins are paired and share the same frequency, like PWM3A and PWM3B. 
+**PWMOut**: the digital pins marked with a tilde can generate PWM wave, 14 pins in total. You can set the duty cycle to simulate different output voltages. Some of the pins are paired and share the same frequency, like PWM3A and PWM3B. 
 
 
 

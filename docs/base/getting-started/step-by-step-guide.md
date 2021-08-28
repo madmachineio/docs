@@ -29,22 +29,23 @@ Double click the downloaded file and follow the installation instructions. If yo
 Now you're ready to code. 
 
 1. **Open** the MadMachine IDE. Now it's empty on the right side, as you create and try more projects, it will be filled with all your projects.
+![Open IDE](img/createProject1.png)
 
 2. Click **Create a new MadMachine project**.
+![Create a project](img/createProject2.png)
 
+3. **Name** the project. We call it "Blink". You could choose any descriptive name you like for the project.
+Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
+![Name project](img/createProject3.png)
 
-
-3. **Name** the project. We call it "Blink". You could choose any descriptive name you like for the project. Leave the rest as they are. 
-
-4. Then click **Create**.
-
-![IDE](img/IDE.png)
+4. The new project is created.
+![New project](img/createProject4.png)
 
 5. Now it's time to write the code. Click `Sources`/`Blink`/`main.swift`. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
 
 ```swift title="Blink"
 import SwiftIO
-import SwiftIOBoard
+import SwiftIOFeather
 
 let green = DigitalOut(Id.GREEN)
 ​
@@ -55,6 +56,7 @@ while true {
     sleep(ms: 1000)
 }
 ```
+![code](img/code.png)
 
 :::tip
 There are built-in example codes in the IDE. You could click the button ![example](img/example.png) on the bottom left corner.
