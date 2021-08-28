@@ -50,7 +50,45 @@ module.exports = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        alt: 'MadMachine',
+        src: 'img/logo.svg',
+        srcDark: 'img/logo_dark.svg',
+        href: 'https://madmachine.io'
+      },
       links: [
+        {
+          items: [
+            {
+              html: `
+                <a href="https://madmachine.io">
+                  <img src='static/img/logo_dark.svg' width='200' />
+                </a>
+              `
+            },
+            {
+              label: '© 2021, All Rights Reserved.',
+              href: 'https://madmachine.io',
+            },
+          ],
+        },
+        {
+          title: 'Products',
+          items: [
+            {
+              label: 'Boards',
+              href: 'https://madmachine.io/discord',
+            },
+            {
+              label: 'Kits',
+              href: 'https://twitter.com/madmachineio',
+            },
+            {
+              label: 'Modules',
+              href: 'https://twitter.com/madmachineio',
+            },
+          ],
+        },
         {
           title: 'Community',
           items: [
@@ -62,17 +100,23 @@ module.exports = {
               label: 'Twitter',
               href: 'https://twitter.com/madmachineio',
             },
+            {
+              label: 'Youtube',
+              href: 'https://madmachine.io/discord',
+            },
+            {
+              label: 'Forum',
+              href: 'https://madmachine.io/discord',
+            },
           ],
         },
         {
-          title: 'More',
+          title: 'About',
           items: [
-            /*
             {
-              label: 'Blog',
+              label: 'Press kit',
               to: '/blog',
             },
-            */
             {
               label: 'GitHub',
               href: 'https://github.com/madmachineio',
@@ -80,7 +124,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} MadMachine Limited`,
+      //copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
     },
     prism: {
       theme: require('prism-react-renderer/themes/github'),
