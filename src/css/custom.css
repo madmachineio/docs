@@ -32,6 +32,60 @@
   --ifm-footer-background-color: #2c2c2e;
 }
 
+.footer--subscribe--fake {
+  position: absolute;
+  left: -5000px;
+}
+
+.footer--subscribe {
+  padding: 8px 100px 8px 8px;
+  border: 0;
+  outline: none;
+  border-radius: 16px;
+  font-size: 16px;
+}
+
+.footer--subscribe--button {
+  margin-left: -96px;
+  padding: 6px 8px;
+  border: 0;
+  outline: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: var(--ifm-color-primary-darkest);
+  color:aliceblue;
+}
+
+.footer--subscribe--button:hover {
+  background-color: var(--ifm-color-primary-darker);
+}
+
+.footer--icon {
+  margin-top: 1rem;
+  font-size: 2.5rem;
+}
+
+.footer--icon--twitter {
+  color: #1da1f2;
+  margin: 0 0px 0 20px;
+}
+
+.footer--icon--discord {
+  color: #5865f2;
+  margin: 0 0px 0 20px;
+}
+
+.footer--icon--github {
+  color: #000000;
+  margin: 0 0px 0 20px;
+}
+
+.footer--icon--youtube {
+  color: #FF0000;
+  margin: 0 0px 0 20px;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;

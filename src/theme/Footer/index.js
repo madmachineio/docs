@@ -16,6 +16,13 @@ import styles from './styles.module.css';
 import ThemedImage from '@theme/ThemedImage';
 //import IconExternalLink from '@theme/IconExternalLink';
 
+import {
+  FaDiscord,
+  FaTwitter,
+  FaGithub,
+  FaYoutube} from 'react-icons/fa';
+
+
 function FooterLink({to, href, label, prependBaseUrlToHref, ...props}) {
   const toUrl = useBaseUrl(to);
   const normalizedHref = useBaseUrl(href, {
@@ -46,6 +53,19 @@ function FooterLink({to, href, label, prependBaseUrlToHref, ...props}) {
 const FooterLogo = ({sources, alt}) => (
   <ThemedImage className="footer__logo" alt={alt} sources={sources} />
 );
+
+
+const Subscribe = () => {
+  return (
+    <form action="https://madmachine.us5.list-manage.com/subscribe/post?u=18fbea2e6fe4ec584193b92db&amp;id=545deb9dde" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+      <div aria-hidden="true" className="footer--subscribe--fake">
+        <input type="text" name="b_18fbea2e6fe4ec584193b92db_545deb9dde" tabindex="-1" value="" />
+      </div>
+      <input type="email" name="EMAIL" placeholder="Enter Your Email Address" className="footer--subscribe" />
+      <input type="submit" value="Subscribe" name="subscribe" className="footer--subscribe--button" />
+    </form>
+  );
+}
 
 /*
 function Footer() {
@@ -137,7 +157,7 @@ function Footer() {
 
 function Footer() {
   const {footer} = useThemeConfig();
-  const {copyright, links = [], logo = {}} = footer || {};
+  const {links = [], logo = {}} = footer || {};
   const sources = {
     light: useBaseUrl(logo.src),
     dark: useBaseUrl(logo.srcDark || logo.src),
@@ -147,15 +167,39 @@ function Footer() {
     return null;
   }
 
+
   return (
     <footer
       className={clsx('footer', {
         'footer--dark': footer.style === 'dark',
       })}>
       <div className="container">
-        {links && links.length > 0 && (
-          <div className="row footer__links">
-            {links.map((linkItem, i) => (
+        <div className="row footer__links">
+
+          <div className="col footer__col">
+            <ul className="footer__items">
+              <li className="footer__item">
+                {logo.href ? (
+                    <Link href={logo.href} className={styles.footerLogoLink}>
+                      <FooterLogo alt={logo.alt} sources={sources} />
+                    </Link>
+                  ) : (
+                    <FooterLogo alt={logo.alt} sources={sources} />
+                  )}
+              </li>
+              <li className="footer__item">
+                    <Link href='mailto:info@madmachine.io' className="footer__link-item">
+                      info@madmachine.io
+                    </Link>
+              </li>
+              <li className="footer__item">
+              © {new Date().getFullYear()}, All Rights Reserved. 
+              </li>
+            </ul>
+          </div>
+
+          {links && links.length > 0 && (
+            links.map((linkItem, i) => (
               <div key={i} className="col footer__col">
                 {linkItem.title != null ? (
                   <div className="footer__title">{linkItem.title}</div>
@@ -183,12 +227,37 @@ function Footer() {
                   </ul>
                 ) : null}
               </div>
-            ))}
+            ))
+          )}
+
+          <div className="col footer__col">
+            <ul className="footer__items">
+              <li className="footer__item">
+                  <h2>Join us</h2>
+              </li>
+              <li className="footer__item">
+                <Subscribe />
+              </li>
+              <li className="footer__item">
+                <div className="footer--icon">
+                  <a href="https://twitter.com/madmachineio" className="footer--icon--twitter"><FaTwitter /></a>
+                  <span className="footer--icon--discord"><FaDiscord /></span>
+                  <span className="footer--icon--github"><FaGithub /></span>
+                  <span className="footer--icon--youtube"><FaYoutube /></span>
+                  
+                </div>
+              </li>
+            </ul>
           </div>
-        )}
+
+        </div>
+
       </div>
     </footer>
   );
+
+
+
 }
 
 export default Footer;

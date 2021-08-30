@@ -52,26 +52,11 @@ module.exports = {
       style: 'dark',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo.svg',
+        src: 'img/logo_dark.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
       links: [
-        {
-          items: [
-            {
-              html: `
-                <a href="https://madmachine.io">
-                  <img src='static/img/logo_dark.svg' width='200' />
-                </a>
-              `
-            },
-            {
-              label: '© 2021, All Rights Reserved.',
-              href: 'https://madmachine.io',
-            },
-          ],
-        },
         {
           title: 'Products',
           items: [
@@ -90,41 +75,15 @@ module.exports = {
           ],
         },
         {
-          title: 'Community',
           items: [
             {
-              label: 'Discord',
-              href: 'https://madmachine.io/discord',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/madmachineio',
-            },
-            {
-              label: 'Youtube',
-              href: 'https://madmachine.io/discord',
-            },
-            {
-              label: 'Forum',
-              href: 'https://madmachine.io/discord',
-            },
-          ],
-        },
-        {
-          title: 'About',
-          items: [
-            {
-              label: 'Press kit',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/madmachineio',
+              html: `
+                <p>hello</ p>
+              `
             },
           ],
         },
       ],
-      //copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
     },
     prism: {
       theme: require('prism-react-renderer/themes/github'),
@@ -150,7 +109,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/madmachineio/docs/',
         },
         blog: {
           showReadingTime: true,
