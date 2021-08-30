@@ -74,7 +74,7 @@ Now let's navigate around the interface to get familiar with IDE.
 - **⑩ Terminal**: displays the output info about the building process. You can correct your code according to the messages if something goes wrong.
 
 
-## Serial monitor
+**About Serial monitor**
 
 After you download the code, connect the serial port to your computer with a USB cable. Wait several seconds. Then you click on the ![serial button](img/serialButton.png) button, a new window will pop up.
 
