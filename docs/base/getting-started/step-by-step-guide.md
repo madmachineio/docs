@@ -1,13 +1,13 @@
 ---
 id: step-by-step
-title: Blink your first LED
+title: Download your first project
 description: Use the Swift Programming Language to realize your first project.
 slug: /step-by-step
 ---
 
-# Getting Started
+# Download your first project
 
-Now that you‘ve got your board, let's start with a hello world project - LED blink. Follow us step-by-step to run your first project. 
+Now that you‘ve got your board, let's start with a hello world project - LED blink. 
 
 ## **Step 1: Download and install the MadMachine IDE**
 
@@ -28,7 +28,9 @@ Double click the downloaded file and follow the installation instructions. If yo
 
 Now you're ready to code. 
 
-1. **Open** the MadMachine IDE. Now it's empty on the right side, as you create and try more projects, it will be filled with all your projects.
+1. **Open** the MadMachine IDE. 
+
+    Now it's empty on the right side, as you create and try more projects, it will be filled with all your projects.
 
 ![Open IDE](img/createProject1.png)
 
@@ -37,17 +39,18 @@ Now you're ready to code.
 ![Create a project](img/createProject2.png)
 
 3. **Name** the project. We call it "Blink". You could choose any descriptive name you like for the project.
-Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
+
+    Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
 
 ![Name project](img/createProject3.png)
 
-4. The new project is created.
+4. The new project is created. 
 
 ![New project](img/createProject4.png)
 
-5. Now it's time to write the code. Click `Sources`/`Blink`/`main.swift`. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
+5. Now it's time to write the code. Click on the left panel **`Sources` / `Blink` / `main.swift`**. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
 
-```swift title="Blink"
+```swift
 import SwiftIO
 import SwiftIOFeather
 
@@ -63,26 +66,24 @@ while true {
 ![code](img/code.png)
 
 :::tip
-There are built-in example codes in the IDE. You could click the button ![example](img/example.png) on the bottom left corner.
+There are built-in example codes in the IDE. You can view them by clicking the button ![example](img/example.png) on the bottom left corner.
 
-
-
-Choose **GettingStarted**/**Blink**. The code will show up in a new window.
-
-
+Double click on any of the project. The code will show up in a new window.
 :::
 
 ## **Step 3: Prepare SD card and confirm USB connection**
 
-You could notice the message on the status bar. The board is connected yet. So you will need to connect it to your computer.
+You may notice the message on the status bar saying the board is not connected yet. And the download button on the upper left corner is not clickable. 
+
+![Board status](img/BoardStatus.png)
+
+So you need to connect the board to your computer first.
 
 1. Make sure that you have inserted an **SD card** into the slot.
 
-2. Connect the SwiftIO board to your computer through the **Download port** using a Micro-USB cable.
+2. Connect the board to your computer through the **Download port** using a USB cable. 
 
-3. Press the **Download button** beside the port. SwiftIO board will be mounted as a USB Drive on your computer. 
-
-Here is an illustrational instruction.
+3. Press the **Download button**. There are two buttons on your board. The one labeled "Download" or "DL" is the correct one.  In this way, your board will appear as a USB Drive on your computer. 
 
 
 :::note
@@ -90,7 +91,7 @@ Bad quality USB cable or some third-party USB hub may cause connection failure.
 :::
 
 
-The onboard RGB LED will show the current status of the USB connection. Wait until it turns to steady green.
+The onboard RGB LED will show the current status of the USB connection. Wait until it turns to **steady green**.
 
 | LED State | RED | GREEN | BLUE |
 | :--- | :--- | :--- | :--- |
@@ -99,12 +100,18 @@ The onboard RGB LED will show the current status of the USB connection. Wait unt
 | Fast flashing | Fail to open file `swiftio.bin` | Detecting USB connection | Detecting SD card |
 
 
-## **Step 4: Build your code and download it to the board**
+## **Step 4: Build and download the code to your board**
 
-1. Once the SD card is mounted successfully, the message on the status bar will change to "SwiftIOBoard ready".
+1. Once the SD card is mounted successfully, the message on the status bar will change to "XXX ready". XXX corresponds to the board you're using.
 
 2. Click the Download ![download button](img/download.png) button.
 
-The IDE begins to build your project, and then download it to your board if there is no error.
+![download code](img/clickDownload.png)
+
+The IDE begins to build your project, and then download it to your board if there is no error. 
 
 After the code is downloaded, the USB drive will be removed automatically.
+
+![The code is downloaded](img/downloaded.png)
+
+Congratulations! The onboard green LED begins to blink per second.
