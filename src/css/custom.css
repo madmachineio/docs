@@ -62,6 +62,7 @@
   font-weight: 700;
   background-color: var(--ifm-color-primary-darkest);
   color:aliceblue;
+  -webkit-appearance: none;
 }
 
 .footer--subscribe--button:hover {
