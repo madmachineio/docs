@@ -3,7 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'MadMachine Documentation',
+  title: 'MadMachine',
   tagline: 'MadMachine Documentation',
   url: 'https://docs.madmachine.io',
   baseUrl: '/',
@@ -15,9 +15,11 @@ module.exports = {
   themeConfig: {
     navbar: {
       //title: 'Machine',
+      style: 'dark',
+      hideOnScroll: true,
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo.svg',
+        src: 'img/logo_dark.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
@@ -53,7 +55,6 @@ module.exports = {
       logo: {
         alt: 'MadMachine',
         src: 'img/logo_dark.svg',
-        srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
       links: [
