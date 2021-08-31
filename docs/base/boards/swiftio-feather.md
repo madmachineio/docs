@@ -11,7 +11,6 @@ SwiftIO Feather is a simplified version of the SwiftIO board. Though small in si
 
 The SwiftIO feather is compatible with the Adafruit feather system. This means you could use it together with the hardware in their system. There are so many possibilities! 
 
-Its main difference 
  
 ![SwiftIO Feather](img/FeatherParts.png)
 
