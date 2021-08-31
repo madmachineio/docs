@@ -1,11 +1,11 @@
 ---
 id: board-selection
-title: Board selection for your project
+title: Board selection
 description: How to choose or change the board used for your project
 slug: /board-selection
 ---
 
-# Board selection for your project
+# Board selection
 
 ## Select when creating a new project
 

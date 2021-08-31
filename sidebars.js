@@ -39,7 +39,8 @@ module.exports = {
       items: [
         'base/guide/use-ide',
         'base/guide/use-mm-sdk',
-        'base/guide/board-selection'
+        'base/guide/board-selection',
+        'base/guide/library.md'
       ],
     },
     'base/faq', 
