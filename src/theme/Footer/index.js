@@ -54,7 +54,6 @@ const FooterLogo = ({sources, alt}) => (
   <ThemedImage className="footer__logo" alt={alt} sources={sources} />
 );
 
-
 const Subscribe = () => {
   return (
     <form action="https://madmachine.us5.list-manage.com/subscribe/post?u=18fbea2e6fe4ec584193b92db&amp;id=545deb9dde" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
@@ -66,6 +65,7 @@ const Subscribe = () => {
     </form>
   );
 }
+
 
 /*
 function Footer() {
@@ -147,12 +147,7 @@ function Footer() {
     </footer>
   );
 }
-
-
 */
-
-
-
 
 
 function Footer() {
@@ -166,7 +161,6 @@ function Footer() {
   if (!footer) {
     return null;
   }
-
 
   return (
     <footer
@@ -241,10 +235,9 @@ function Footer() {
               <li className="footer__item">
                 <div className="footer--icon">
                   <a href="https://twitter.com/madmachineio" className="footer--icon--twitter"><FaTwitter /></a>
-                  <span className="footer--icon--discord"><FaDiscord /></span>
-                  <span className="footer--icon--github"><FaGithub /></span>
-                  <span className="footer--icon--youtube"><FaYoutube /></span>
-                  
+                  <a href="https://madmachine.io/discord" className="footer--icon--discord"><FaDiscord /></a>
+                  <a href="https://github.com/madmachineio" className="footer--icon--github"><FaGithub /></a>
+                  <a href="https://youtube.com/madmachineio" className="footer--icon--youtube"><FaYoutube /></a>
                 </div>
               </li>
             </ul>
@@ -255,9 +248,7 @@ function Footer() {
       </div>
     </footer>
   );
-
-
-
 }
+
 
 export default Footer;
