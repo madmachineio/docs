@@ -22,6 +22,7 @@ module.exports = {
       label: 'Getting Started',
       items: [
         'base/getting-started/step-by-step',
+        'base/getting-started/first-impression',
       ],
     },
     {
@@ -37,6 +38,7 @@ module.exports = {
       label: 'Quick Guide',
       items: [
         'base/guide/use-ide',
+        'base/guide/use-mm-sdk',
       ],
     },
     'base/faq', 

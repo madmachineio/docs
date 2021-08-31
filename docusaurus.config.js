@@ -17,7 +17,7 @@ module.exports = {
       //title: 'Machine',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo.svg',
+        src: 'img/logo_dark.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
@@ -42,7 +42,7 @@ module.exports = {
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/madmachineio',
+          href: 'https://github.com/madmachineio/docs',
           label: 'GitHub',
           position: 'right',
         },
@@ -50,41 +50,53 @@ module.exports = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        alt: 'MadMachine',
+        src: 'img/logo.svg',
+        srcDark: 'img/logo_dark.svg',
+        href: 'https://madmachine.io'
+      },
       links: [
         {
-          title: 'Community',
+          title: 'Products',
           items: [
             {
-              label: 'Discord',
+              label: 'Boards',
               href: 'https://madmachine.io/discord',
             },
             {
-              label: 'Twitter',
+              label: 'Kits',
+              href: 'https://twitter.com/madmachineio',
+            },
+            {
+              label: 'Modules',
               href: 'https://twitter.com/madmachineio',
             },
           ],
         },
         {
-          title: 'More',
+          title: 'About',
           items: [
-            /*
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Boards',
+              href: 'https://madmachine.io/discord',
             },
-            */
             {
-              label: 'GitHub',
-              href: 'https://github.com/madmachineio',
+              label: 'Kits',
+              href: 'https://twitter.com/madmachineio',
+            },
+            {
+              label: 'Modules',
+              href: 'https://twitter.com/madmachineio',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} MadMachine Limited`,
     },
     prism: {
-      theme: lightCodeTheme,
-      darkTheme: darkCodeTheme,
+      theme: require('prism-react-renderer/themes/github'),
+      darkTheme: require("prism-react-renderer/themes/vsDark"),
+      additionalLanguages: ['swift'],
     },
     gtag: {
       // You can also use your "G-" Measurement ID here.
@@ -93,6 +105,10 @@ module.exports = {
       anonymizeIP: true, // Should IPs be anonymized?
     },
   },
+  stylesheets: [
+    'https://fonts.googleapis.com/css?family=Roboto:400,400i,700',
+    'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -101,7 +117,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/madmachineio/docs/',
         },
         blog: {
           showReadingTime: true,
