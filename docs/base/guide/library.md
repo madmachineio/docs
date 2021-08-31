@@ -25,7 +25,7 @@ It depends on how the LED is connected to your circuit. There are two ways to co
 
 - In the second circuit, the LED is connected to the digital pin and ground. If the pin outputs a high voltage, the current flows from the pin to the ground, the LED will be on. If it outputs a low voltage, the LED is off.
 
-![](img/LEDCircuit.png)
+![](img/LEDcircuit.png)
 
 ## Create a new project
 Now that you make it clear how to turn on the LED, you could start your library.
