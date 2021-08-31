@@ -150,11 +150,11 @@ function Footer() {
                 <Subscribe />
               </li>
               <li className="footer__item">
-                <div className="footer--icon">
-                  <a href="https://twitter.com/madmachineio" className="footer--icon--twitter"><FaTwitter /></a>
-                  <a href="https://madmachine.io/discord" className="footer--icon--discord"><FaDiscord /></a>
-                  <a href="https://github.com/madmachineio" className="footer--icon--github"><FaGithub /></a>
-                  <a href="https://youtube.com/madmachineio" className="footer--icon--youtube"><FaYoutube /></a>
+                <div>
+                  <Link to="https://twitter.com/madmachineio" className="footer--community"><FaTwitter /></Link>
+                  <Link to="https://madmachine.io/discord" className="footer--community"><FaDiscord /></Link>
+                  <Link to="https://github.com/madmachineio" className="footer--community"><FaGithub /></Link>
+                  <Link to="https://youtube.com/madmachineio" className="footer--community"><FaYoutube /></Link>
                 </div>
               </li>
             </ul>
