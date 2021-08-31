@@ -40,7 +40,7 @@ module.exports = {
         'base/guide/use-ide',
         'base/guide/use-mm-sdk',
         'base/guide/board-selection',
-        'base/guide/library.md'
+        'base/guide/library',
       ],
     },
     'base/faq', 
