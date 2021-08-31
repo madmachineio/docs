@@ -19,6 +19,7 @@ module.exports = {
     'base/introduction', 
     {
       type: 'category',
+      collapsible: false,
       label: 'Getting Started',
       items: [
         'base/getting-started/step-by-step',

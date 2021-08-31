@@ -2,7 +2,7 @@
 id: introduction
 title: Introduction
 description: Have a quick view at MadMachine platform.
-slug: /introduction
+slug: /
 ---
 
 # Introduction

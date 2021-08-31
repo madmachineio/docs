@@ -17,7 +17,7 @@ module.exports = {
       //title: 'Machine',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo_dark.svg',
+        src: 'img/logo.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
@@ -52,25 +52,25 @@ module.exports = {
       style: 'dark',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo.svg',
+        src: 'img/logo_dark.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
       links: [
         {
-          title: 'Products',
+          title: 'Goto',
           items: [
             {
-              label: 'Boards',
-              href: 'https://madmachine.io/discord',
+              label: 'Home',
+              href: 'https://madmachine.io',
             },
             {
-              label: 'Kits',
-              href: 'https://twitter.com/madmachineio',
+              label: 'Blog',
+              href: 'https://madmachine.io/blog',
             },
             {
-              label: 'Modules',
-              href: 'https://twitter.com/madmachineio',
+              label: 'Products',
+              href: 'https://madmachine.io/products',
             },
           ],
         },
@@ -118,13 +118,9 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             'https://github.com/madmachineio/docs/',
+          routeBasePath: '/',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
-        },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
