@@ -63,7 +63,7 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 **GND**: there are 2 GND (ground) pins on your board to ground the circuit.
 
 
-**3.3V**: there is a 3V3 pins that supply 3.3V of power to your module.
+**3V3**: there is a 3V3 pin that supply 3.3V of power to your module.
 
 **DigitalIn/Out**: The digital pins are labeled D0 to D35 on SwiftIO board. These pins can act as digital input pins to read logic value or as output pins to control other circuits.
 
@@ -87,10 +87,15 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 
 **RESET**: restart the code when the RESET pin is set to low.
 
+**VBAT**: it is internally connected to the LiPo battery connector. You can use it to power other devices.
+
+**VUSB**: it is internally connected to the USB port. You can use it to power other devices.
 
 **Vcoin**: button cell can power the RTC through the Vcoin pin when there is no power supply.
 
+**EN**: it is used to power down your board. It can be useful when the board is embedded in other devices.
 
+**B0/B1**: the two pins are reserved for bootloader update.
 
 
 ## By the way

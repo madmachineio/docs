@@ -1,11 +1,11 @@
 ---
 id: step-by-step
-title: Download your first project
+title: Run your first project
 description: Use the Swift Programming Language to realize your first project.
 slug: /step-by-step
 ---
 
-# Download your first project
+# Run your first project
 
 Now that you‘ve got your board, let's start with a hello world project - LED blink. 
 
@@ -43,7 +43,7 @@ Now you're ready to code.
 
 ![New project](img/createProject4.png)
 
-5. Now it's time to write the code. Click on the left panel **`Sources` / `Blink` / `main.swift`**. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
+5. Now it's time to write the code. Click on the left panel `Sources` / `Blink` / `main.swift`. You always edit the code in the file `main.swift`. Copy and paste the following code into the file.
 
 ```swift
 import SwiftIO

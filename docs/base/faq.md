@@ -95,7 +95,7 @@ While our board needs to manage the files on the USB driver. So you need to enab
 
 Now you can try to download your project again.
 
-## **SwiftIO board reset repeatedly**
+## SwiftIO board reset repeatedly
 
 There is a maximum current limit for the USB port of your devices.
 
@@ -111,7 +111,7 @@ You can try these ways:
 
 3. Use a power bank to supply the board
 
-## **USB driver can't be mounted**
+## USB driver can't be mounted
 
 This problem may be caused by these reasons
 

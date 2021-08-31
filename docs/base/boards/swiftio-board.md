@@ -68,7 +68,7 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 **GND**: there are 8 GND (ground) pins on your board to ground the circuit.
 
 
-**3.3V**: there are 4 3V3 pins that supply 3.3V of power to your module.
+**3V3**: there are 4 3V3 pins that supply 3.3V of power to your module.
 
 
 **DigitalIn/Out**: The digital pins are labeled D0 to D45 on SwiftIO board. These pins can act as digital input pins to read logic value or as output pins to control other circuits.
