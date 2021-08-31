@@ -27,7 +27,7 @@ It depends on how the LED is connected to your circuit. There are two ways to co
 
 ![](img/LEDcircuit.png)
 
-## Create a new project
+### Create a new project
 Now that you make it clear how to turn on the LED, you could start your library.
 
 Open the MadMachine IDE. Create a new project.
@@ -125,13 +125,13 @@ Well, that's a brief introduction about how to created a basic library to contro
 
 ## How to use a library
 
-Let's see how you could use the libraries. We will use the library `MadLed` created above.
+Let's see how you could use the libraries. You will use the library `MadLed` created above. 
 
 ### Add dependencies
 
-After you create a project, you will need to add the dependencies to it.
+At first, you need to create a new executable project. After you create a project, you will need to add the dependencies to it.
 
-All our libraries are stored on Github. You could find it [here](https://github.com/madmachineio/MadLed). In main branch, click **Code** and you will get a drop-down menu. Click the button to **copy** the URL.
+All our libraries are stored on Github. You could find the library MadLed [here](https://github.com/madmachineio/MadLed). In main branch, click **Code** and you will get a drop-down menu. Click the button to **copy** the URL.
 
 ![get the location of the library](img/github.png)
 
@@ -143,7 +143,7 @@ If you use the library on your computer, you can indicate its path.
 
 ![](img/dependency.png)
 
-### Import the targets
+### Import the target and write code
 
 In the file `main.swift`, import the targets that are needed for your project. You could notice in the line2 that you import the `SwiftIOBoard` . It is one of the targets of `MadBoards`. The other two are the unique target in their library that shares the same name with the library.
 
