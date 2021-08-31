@@ -32,6 +32,7 @@
   --ifm-footer-background-color: #2c2c2e;
 }
 
+
 .footer--subscribe--fake {
   position: absolute;
   left: -5000px;
@@ -85,6 +86,8 @@
   color: #FF0000;
   margin: 0 0px 0 20px;
 }
+
+
 
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);

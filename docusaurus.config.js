@@ -17,7 +17,7 @@ module.exports = {
       //title: 'Machine',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo.svg',
+        src: 'img/logo_dark.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
@@ -52,7 +52,7 @@ module.exports = {
       style: 'dark',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo_dark.svg',
+        src: 'img/logo.svg',
         srcDark: 'img/logo_dark.svg',
         href: 'https://madmachine.io'
       },
@@ -75,11 +75,19 @@ module.exports = {
           ],
         },
         {
+          title: 'About',
           items: [
             {
-              html: `
-                <p>hello</ p>
-              `
+              label: 'Boards',
+              href: 'https://madmachine.io/discord',
+            },
+            {
+              label: 'Kits',
+              href: 'https://twitter.com/madmachineio',
+            },
+            {
+              label: 'Modules',
+              href: 'https://twitter.com/madmachineio',
             },
           ],
         },
