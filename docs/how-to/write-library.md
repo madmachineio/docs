@@ -1,8 +1,6 @@
 ---
-id: library
-title: Library
-description: How to write and use a library
-slug: /library
+title: Write a library
+description: How to write a library
 ---
 
 # Library
@@ -10,7 +8,7 @@ slug: /library
 The library usually contains a block of codes that provides specific functionalities. Then you could use it in any of your projects to realize those functionalities. Let's see how to deal with it.
 
 :::note
-Only the Mac version of MadMachine IDE supports the Swift Package Manager now. So the tutorial below is based on the Mac version. We will find ways to support the Windows version later. For the moment, you could try our CLI tool [MM SDK](how-to-use-mm-sdk.md).
+Only the Mac version of MadMachine IDE supports the Swift Package Manager now. So the tutorial below is based on the Mac version. We will find ways to support the Windows version later. For the moment, you could try our CLI tool [MM SDK](use-mm-sdk.md).
 :::
 
 ## How to write a library

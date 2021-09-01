@@ -52,7 +52,7 @@ After all, microcontrollers are not computers, you cannot expect them to do ever
 
 ## What do I need?
 
-At first, you certainly need a hardware to work with. Our board family has two boards now: [SwiftIO board](boards/swiftio-board.md) and [SwiftIO Feather board](boards/swiftio-feather.md). They come with beginner kits to help you start. 
+At first, you certainly need a hardware to work with. Our board family has two boards now: [SwiftIO board](hardware/swiftio-board.md) and [SwiftIO Feather board](hardware/swiftio-feather.md). They come with beginner kits to help you start. 
 
 In order to program your board, you need to install the [MadMachine IDE](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). It allows you to edit, compile and download code. 
 

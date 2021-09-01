@@ -1,11 +1,10 @@
 ---
-id: use-ide
 title: How to use IDE
 description: How to use MadMachine IDE
-slug: /how-to-use-ide
 ---
 
 # How to use IDE
+
 
 Now I will show you a brief introduction to MadMachine IDE. It allows you to edit, build the code and download it to your board. It simplifies the whole coding process, and thus everyone can get started easily.
 

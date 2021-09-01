@@ -26,21 +26,33 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'base/introduction',
+          docId: 'overview/introduction',
           position: 'left',
-          label: 'Docs',
+          label: 'Overview',
         },
         {
           type: 'doc',
-          docId: 'learn/learn1',
+          docId: 'how-to/create-new-project',
+          position: 'left',
+          label: 'How-to',
+        },
+        {
+          type: 'doc',
+          docId: 'learn/overview',
           position: 'left',
           label: 'Learn',
         },
         {
           type: 'doc',
-          docId: 'library/swiftio',
+          docId: 'tutorials/overview',
           position: 'left',
-          label: 'Library',
+          label: 'Tutorials',
+        },
+        {
+          type: 'doc',
+          docId: 'reference/reference',
+          position: 'left',
+          label: 'References',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {

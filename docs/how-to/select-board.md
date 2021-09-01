@@ -1,8 +1,6 @@
 ---
-id: board-selection
-title: Board selection
+title: Select board in a project
 description: How to choose or change the board used for your project
-slug: /board-selection
 ---
 
 # Board selection
