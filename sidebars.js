@@ -16,41 +16,41 @@ module.exports = {
   // But you can create a sidebar manually
   
   docsSidebar: [
-    'base/introduction', 
+    'overview/introduction', 
+    'overview/run-your-first-project',
     {
       type: 'category',
       collapsible: false,
-      label: 'Getting Started',
+      label: 'Software',
       items: [
-        'base/getting-started/step-by-step',
+        'overview/software/madmachine-ide',
       ],
     },
     {
       type: 'category',
-      label: 'Boards',
+      collapsible: false,
+      label: 'Hardware',
       items: [
-        'base/boards/swiftio-board',
-        'base/boards/swiftio-feather',
+        'overview/hardware/swiftio-board',
+        'overview/hardware/swiftio-feather',
       ],
     },
-    {
-      type: 'category',
-      label: 'Quick Guide',
-      items: [
-        'base/guide/use-ide',
-        'base/guide/use-mm-sdk',
-        'base/guide/board-selection',
-        'base/guide/library',
-      ],
-    },
-    'base/faq', 
+    'overview/faq', 
+  ],
+
+  howToSidebar: [
+    'how-to/create-new-project'
   ],
 
   learnSidebar: [
-    'learn/learn1',
+    'learn/overview',
   ],
 
-  libarySidebar: [
-    'library/swiftio',
+  tutorialSidebar: [
+    'tutorials/overview',
+  ],
+
+  referenceSidebar: [
+    'reference/reference',
   ],
 };

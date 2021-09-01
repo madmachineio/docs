@@ -1,8 +1,7 @@
 ---
-id: step-by-step
+id: run-your-first-project
 title: Run your first project
 description: Use the Swift Programming Language to realize your first project.
-slug: /step-by-step
 ---
 
 # Run your first project
@@ -15,7 +14,7 @@ At first, you certainly need a tool to edit your code. MadMachine IDE allows you
 
 You can get the latest IDE for macOS [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). And your computer should have Xcode to allow the code to be compiled successfully. The IDE for Windows doesn't support our new features since we are waiting the Window support of Swift language. 
 
-Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](../faq.md). 
+Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](./faq.md). 
 
 :::info
 For advanced users, you may edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.
@@ -80,7 +79,7 @@ So you need to connect the board to your computer first.
 
 
 :::note
-Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](../faq.md)
+Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](./faq.md)
 :::
 
 

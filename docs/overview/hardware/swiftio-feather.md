@@ -2,7 +2,6 @@
 id: swiftio-feather
 title: SwiftIO Feather
 description: What is SwiftIO Feather?
-slug: /swiftio-feather
 ---
 
 # SwiftIO Feather
@@ -14,32 +13,32 @@ The SwiftIO feather is compatible with the Adafruit feather system. This means y
  
 ![SwiftIO Feather](img/FeatherParts.png)
 
-## **MCU**
+## MCU
 
 i.MX RT1062 Crossover Processor with Arm® Cortex®-M7 core @600MHz. This 32-bit MCU has 600MHz clock and thus can run extremely quickly. It serves as the brain of the SwiftIO board to deal with all kinds of calculation.
 
 
-## **Memory** 
+## Memory
 
 It has 8MB flash, 32MB SDRAM.
 
 
-## **Buttons**
+## Buttons
 
 - The **download button** allows to mount your board as a USB drive on your computer in order to download code. 
 - The **reset button** can restart the code that has downloaded to your board. Sometimes, if your code don't run normally, you may press it to solve the problem.
 
 
-## **USB**
+## USB
 
 It has a USB-C port that allows you to download your code. It can also power the board. The power from it will be regulated to 3.3V.
 
-## **LiPo battery connector**
+## LiPo battery connector
 
 If you want to use the SwiftIO Feather board in your DIY project, you can power it with a LiPo battery.
  
 
-## **Built-in RGB LED** 
+## Built-in RGB LED
 It contains red, blue and green LEDs. You can know from it the status of your board. Besides, you can control them by setting digital levels. 
 
 | LED State | RED | GREEN | BLUE |
@@ -56,7 +55,7 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 :::
 
 
-## **Pins**
+## Pins
 
 ![SwiftIO Feather pinout](img/FeatherPinout.png)
 

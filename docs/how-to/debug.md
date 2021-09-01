@@ -1,8 +1,6 @@
 ---
-id: debug
 title: Debug
 description: How to debug your code
-slug: /debug
 ---
 
 # Debug
