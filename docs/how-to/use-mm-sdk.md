@@ -1,9 +1,9 @@
 ---
-title: How to use MM SDK
-description: How to use MM SDK
+title: Use MM SDK
+description: For advanced users, you don't need to download the MadMachine IDE. You can edit your code wherever you like and use mm sdk to build it into the bin file.
 ---
 
-# How to use MM SDK
+# Use MM SDK
 
 ## MM SDK
 
@@ -20,19 +20,19 @@ The latest features would be added to this SDK first and then integrated into th
 1. Boards
    * Board abstraction libraries based on [Zephyr](https://github.com/zephyrproject-rtos/zephyr)
 2. mm
-   * Python script which is used to help to build the project
+   * Python script to help to build the project
 3. usr (This directory is only contained in the [release package](https://github.com/madmachineio/mm-sdk/releases), not in the git repo)
-   * Clang, Swift compilier, SwiftPM tools etc.
+   * Clang, Swift compiler, SwiftPM tools, etc.
    * Standard library and arch related libraries
    * Compiled Python build tool
 
-## Usage (Take macOS and Linux for example)
+## Usage (macOS and Linux)
 
 ### Install required dependencies:
 
 #### macOS
 
-Install XCode and open it so it could install any components that needed.
+Install XCode and open it so it can install any necessary components.
 
 #### Ubuntu 18.04
 
@@ -106,15 +106,19 @@ let package = Package(
     name: "DemoProgram",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", .upToNextMajor(from: "0.0.1")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "DemoProgram",
-            dependencies: ["SwiftIO", "MadBoards"]),
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                "MadDrivers"]),
         .testTarget(
             name: "DemoProgramTests",
             dependencies: ["DemoProgram"]),
@@ -135,13 +139,13 @@ After a successful building, there would be `.build/release/swiftio.bin` in your
 
 Follow those steps to download the executable:
 
-1. Insert SD card to the board and connect it to your computer through a USB cable
-2. Press the **Download** button and wait for the onboard RGB LED to turn to static **green**\)
-3. A USB disk drive should be mounted on your computer
-4. Copy the `swiftio.bin` to the SD card root directory
-5. Eject the USB drive and the program would run automatically
+1. Insert an SD card to the board and connect it to your computer through a USB cable.
+2. Press the **Download** button and wait for the onboard RGB LED to turn to steady **green**).
+3. A USB disk drive will be mounted on your computer.
+4. Copy the `swiftio.bin` to the SD card root directory.
+5. Eject the USB drive and the program will run automatically.
 
-### Download an executable to the board using command \(Only on macOS now\)
+### Download an executable to the board using command (Only on macOS now)
 
 After mounting the SD card:
 
@@ -150,11 +154,11 @@ cd ~/Documents/DemoProgram
 ~/mm-sdk/usr/mm/mm download -b SwiftIOBoard
 ```
 
-This command would find the corresponding bin file, copy it to the SD card and eject the SD card automatically
+This command will find the corresponding bin file, copy it to the SD card and eject the SD card automatically.
 
-## Usage \(Take Windows 10 for example\)
+## Usage (Windows 10 for example)
 
-Download and unzip the sdk to the directory `D:\`
+Download and unzip the sdk to the directory `D:\`.
 
 Press `Win + R` keys on your keyboard, then type `cmd`, and press Enter on your keyboard or click OK to run a Command Prompt.
 
@@ -185,15 +189,19 @@ let package = Package(
     name: "DemoProgram",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", .upToNextMajor(from: "0.0.1")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "DemoProgram",
-            dependencies: ["SwiftIO", "MadBoards"]),
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                "MadDrivers"]),
         .testTarget(
             name: "DemoProgramTests",
             dependencies: ["DemoProgram"]),
@@ -214,8 +222,8 @@ After a successful building, there would be `.build\release\swiftio.bin` in your
 
 Follow those steps to download the executable:
 
-1. Insert SD card to the board and connect it to your computer through a USB cable
-2. Press the **Download** button and wait for the onboard RGB LED to turn to static **green**
+1. Insert an SD card to the board and connect it to your computer through a USB cable.
+2. Press the **Download** button and wait for the onboard RGB LED to turn to steady **green**.
 3. A USB disk drive should be mounted on your computer
-4. Copy the `swiftio.bin` to the SD card root directory
-5. Eject the USB drive and the program would run automatically
+4. Copy the `swiftio.bin` to the SD card root directory.
+5. Eject the USB drive and the program would run automatically.
