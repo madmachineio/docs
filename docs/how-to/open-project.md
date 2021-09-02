@@ -1,5 +1,5 @@
 ---
-title: How to open an existing project
+title: Open an existing project
 description: If you want to run some projects from others, you need to know how to open them. 
 ---
 

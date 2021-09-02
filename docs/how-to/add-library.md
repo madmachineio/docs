@@ -1,5 +1,5 @@
 ---
-title: Add a library to your project
+title: Add a library
 description: All kinds of libraries do reduce a lot of work and simplify your code. So how can you add it to all projects?
 ---
 
