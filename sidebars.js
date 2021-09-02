@@ -39,7 +39,13 @@ module.exports = {
   ],
 
   howToSidebar: [
-    'how-to/create-new-project'
+    'how-to/create-new-project',
+    'how-to/open-project',
+    'how-to/select-board',
+    'how-to/debug',
+    'how-to/use-mm-sdk',
+    'how-to/add-library',
+    'how-to/write-library',
   ],
 
   learnSidebar: [
