@@ -10,7 +10,7 @@ SwiftIO Circuit Playgrounds is a super easy-to-use starter kit for you. All modu
 
 Let's look at these modules in detail:
 
-![SwiftIO Circuit Playgrounds](img/playgrounds.png)
+![SwiftIO Circuit Playgrounds](img/Playgrounds.png)
 
 - **SwiftIO Feather**: control all other modules.
 - **Shield**: allow the SwiftIO Feather to connect to the whole board.
