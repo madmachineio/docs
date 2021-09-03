@@ -1,7 +1,7 @@
 ---
 id: run-your-first-project
 title: Run your first project
-description: Use the Swift Programming Language to realize your first project: blink a LED.
+description: Use the Swift Programming Language to realize your first project, blink a LED.
 ---
 
 # Run your first project
@@ -12,9 +12,9 @@ Now that you‘ve got your board, let's start with a hello world project - LED b
 
 At first, you certainly need a tool to edit your code. MadMachine IDE allows you to write code, compile and download it to your board. 
 
-You can get the latest IDE for macOS [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). And your computer should have Xcode to allow the code to be compiled successfully. The IDE for Windows doesn't support our new features since we are waiting the Window support of Swift language. 
+You can get the latest IDE for macOS [here](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). And your computer should have Xcode to allow the code to compile successfully. The IDE for Windows doesn't support our new features since we are waiting for the Window support of Swift language. 
 
-Double click the downloaded file and follow the installation instructions. If you meet with any problem, you could refer to [FAQ](./faq.md). 
+Double click the downloaded file and follow the installation instructions. If you meet any problem, you could refer to [FAQ](./faq.md). 
 
 :::info
 For advanced users, you may edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.
@@ -34,7 +34,7 @@ Now you're ready to code.
 
 ![Create a project](img/createProject2.png)
 
-3. **Name** the project. We call it "Blink". You could choose any descriptive name you like for the project. Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
+3. **Name** the project. We call it `Blink`. You could choose any descriptive name you like for the project. Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
 
 ![Name project](img/createProject3.png)
 
@@ -69,11 +69,11 @@ You may notice the message on the status bar saying the board is not connected y
 
 ![Board status](img/BoardStatus.png)
 
-So you need to connect the board to your computer first.
+So connect the board to your computer first.
 
 1. Make sure that you have inserted an **SD card** into the slot.
 
-2. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO Feather board has only the download port. SwiftIO board has both download and serial port, so maker sure you connect the right port.
+2. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO Feather board has only the download port. SwiftIO board has both download and serial port, so make sure you connect the right port.
 
 3. Press the **Download button**. There are two buttons on your board. The one labeled "Download" or "DL" is the correct one.  Once pressed, your board will appear as a USB Drive on your computer. 
 

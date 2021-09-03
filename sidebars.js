@@ -33,6 +33,8 @@ module.exports = {
       items: [
         'overview/hardware/swiftio-board',
         'overview/hardware/swiftio-feather',
+        'overview/hardware/maker-kit',
+        'overview/hardware/circuit-playgrounds',
       ],
     },
     'overview/faq', 
