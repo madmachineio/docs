@@ -10,11 +10,11 @@ slug: /reference
 
 ## SwiftIO
 
-The [SwiftIO]((https://swiftioapi.madmachine.io/)) library provides you with easy access to communicate with the external circuits. It is the most basic one for all of your projects. Simply by invoking the related classes/methods in your code, download it to your board, you can see the result at once. It allows you to read or write the digital and analog signals, as well as using the communication protocol to interact with all devices.
+The [SwiftIO](https://swiftioapi.madmachine.io/) library provides you with easy access to communicate with the external circuits. It is the most basic one for all of your projects. Simply by invoking the related classes/methods in your code, download it to your board, you can see the result at once. It allows you to read or write the digital and analog signals, as well as using the communication protocol to interact with all devices.
 
 ## MadBoards
 
-The [MadBoards]((https://github.com/madmachineio/MadBoards)) library consists of the id of each board. Different boards correspond to a unique list of id, since the numbers of pins are not the same. There are two boards now: SwiftIOBoard and SwiftIOFeather. When you write the code, you need to import the right one to use the pin id.
+The [MadBoards](https://github.com/madmachineio/MadBoards) library consists of the id of each board. Different boards correspond to a unique list of id, since the numbers of pins are not the same. There are two boards now: SwiftIOBoard and SwiftIOFeather. When you write the code, you need to import the right one to use the pin id.
 
 ## MadDrivers
 
