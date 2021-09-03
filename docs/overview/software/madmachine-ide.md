@@ -1,7 +1,7 @@
 ---
 id: madmachine-ide
 title: MadMachine IDE
-description: How to use MadMachine IDE
+description: Have a quick overview at the MadMachine IDE before going to more details.
 ---
 
 # MadMachine IDE 

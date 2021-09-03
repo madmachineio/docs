@@ -1,7 +1,7 @@
 ---
 id: run-your-first-project
 title: Run your first project
-description: Use the Swift Programming Language to realize your first project.
+description: Use the Swift Programming Language to realize your first project: blink a LED.
 ---
 
 # Run your first project

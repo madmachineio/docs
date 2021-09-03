@@ -1,14 +1,14 @@
 ---
 id: swiftio-feather
 title: SwiftIO Feather
-description: What is SwiftIO Feather?
+description: Know each part of the SwiftIO Feather and the function of the pins.
 ---
 
 # SwiftIO Feather
 
-SwiftIO Feather is a simplified version of the SwiftIO board. Though small in size, it is powerful enough for all projects. One of its advantages is that it could be easily embedded in any of your projects.
+SwiftIO Feather is a simplified version of the SwiftIO board. Though small in size, it is powerful enough for all projects. One of its advantages is that it is suitable to be embedded in any of your projects.
 
-The SwiftIO feather is compatible with the Adafruit feather system. This means you could use it together with the hardware in their system. There are so many possibilities! 
+The SwiftIO feather is compatible with the Adafruit feather system. This means you can use it together with the hardware in this system. There are so many possibilities! 
 
  
 ![SwiftIO Feather](img/FeatherParts.png)
@@ -25,8 +25,8 @@ It has 8MB flash, 32MB SDRAM.
 
 ## Buttons
 
-- The **download button** allows to mount your board as a USB drive on your computer in order to download code. 
-- The **reset button** can restart the code that has downloaded to your board. Sometimes, if your code don't run normally, you may press it to solve the problem.
+- The **download button** allows you to mount your board as a USB drive on your computer in order to download code. 
+- The **reset button** can restart the code that has been downloaded to your board. Sometimes, if your code don't run normally, you may press it to solve the problem.
 
 
 ## USB
@@ -62,27 +62,27 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 **GND**: there are 2 GND (ground) pins on your board to ground the circuit.
 
 
-**3V3**: there is a 3V3 pin that supply 3.3V of power to your module.
+**3V3**: there is a 3V3 pin that supplies 3.3V of power to your module.
 
-**DigitalIn/Out**: The digital pins are labeled D0 to D35 on SwiftIO board. These pins can act as digital input pins to read logic value or as output pins to control other circuits.
+**DigitalIn/Out**: The digital pins are labeled D0 to D35 on SwiftIO board. These pins can act as digital input pins to read logic values or as output pins to control other circuits.
 
 **AnalogIn**: SwiftIO board has 12 analog pins from A0 to A13. You can use them to measure analog inputs and get a raw value between 0 and 4095 (12-bit resolution).
 
-**PWMOut**: The digital pins marked with a tilde can generate PWM wave, 14 pins in total. You can set the duty cycle to simulate different output voltages. Some of the pins are paired and share the same frequency, like PWM3A and PWM3B. 
+**PWMOut**: The digital pins marked with a tilde can generate PWM waves, 14 pins in total. You can set the duty cycle to simulate different output voltages. Some of the pins are paired and share the same frequency, like PWM3A and PWM3B. 
 
 
 
-**I2C**: I2C0 and I2C1. Each onw contains two wires: SCL for clock signal, SDA for data transmission. You can use I2C protocol to communicate with different devices by writing and reading messages through the bus..
+**I2C**: I2C0 and I2C1. Each one contains two wires: SCL for clock signal, SDA for data transmission. You can use I2C protocol to communicate with different devices by writing and reading messages through the bus.
 
 **SPI**: SPI0 and SPI1. It needs 4 wires: CS for device selection, SDI to receive data, SDO to send out data, SCK for clock signal. The communication speed of SPI is faster than I2C and UART.
 
-**UART**: UART0 to UART2. Two wires are required for UART communication: TX pin is for transmission and RX is for reception. The board can communicate with other external devices through these pins or with computer through USB cable.
+**UART**: UART0 to UART2. Two wires are required for UART communication: TX pin is for transmission and RX is for reception. The board can communicate with other external devices through these pins or with your computer through a USB cable.
 
 **CAN**: CAN0. It uses 2 wires to receive and send data using CAN protocol.
 
-**I2SIn**: it allows you to receive audio signal from other devices. You can see it needs 3 wires: RX is to receive data, BCLK carries clock signal, SYNC for left or right channel selection.
+**I2SIn**: it allows you to receive audio signals from other devices. You can see it needs 3 wires: RX is to receive data, BCLK carries clock signal, SYNC for left or right channel selection.
 
-**I2SOut**: it allows you to send audio siganl to other devices. It needs 3 wires: TX is to send data, BCLK carries clock signal, SYNC for left or right channel selection.
+**I2SOut**: it allows you to send audio signals to other devices. It needs 3 wires: TX is to send data, BCLK carries clock signal, SYNC for left or right channel selection.
 
 **RESET**: restart the code when the RESET pin is set to low.
 
@@ -99,7 +99,7 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 
 ## By the way
 
-SwiftIO Feather board is designed to be easily fitted into any of your project. So you can choose whether the headers on the board is pre-soldered or not.
+SwiftIO Feather board is designed to be easily fitted into any of your projects. So you can choose whether the headers on the board are pre-soldered or not.
 
 Of course, it comes with a learning kit to get started. It's called SwiftIO Circuit Playgrounds. However, it still needs more test and also lack of necessary chips.
 

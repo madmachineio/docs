@@ -1,7 +1,7 @@
 ---
 id: introduction
 title: Introduction
-description: Have a quick view at MadMachine platform.
+description: Have a quick view at MadMachine project and know how your board works.
 slug: /
 ---
 
@@ -9,63 +9,70 @@ slug: /
 
 Welcome to the MadMachine! Excited to see you here!!!
 
-Maybe you are not quite clear how all these stuffs work. Don't worry, let's find it out together.
+Maybe you are not clear how all stuff works. Don't worry, let's find it out together.
 
 
 ## What is MadMachine project?
 
-Our project all focus on Swift language and microcontrollers. We would like to provide you with necessary hardware and software support to explore together the possibility of their combination. You can program your board in Swift language to control all kinds of hardwares, like LEDs, speakers, motors... or make them responsive to your actions. 
+Our project all focuses on Swift language and microcontrollers. We provide you with the necessary hardware and software support to explore together the possibility of their combination. You can program your board in Swift language to control all kinds of hardware, like LEDs, speakers, motors... or make them responsive to your actions. 
 
-Well, here's a little bit of background. You can surely skip this part if you'are quite familiar with it.
+![](img/explanation.png)
+
+Well, here's a little bit of background. You can skip this part if you're familiar with it.
 
 ### Swift language
 
-Let's first talk about [Swift language](https://docs.swift.org/swift-book/). It is a programming language created by Apple. Nowadays, it's widely used for application development. Besides, many developers around the world are finding its possibilities in different filed, like server-side, etc. 
+Let's first talk about [Swift language](https://docs.swift.org/swift-book/). It is a programming language created by Apple. Nowadays, it's used widely for application development. Besides, many developers from all over the world are finding its possibilities in different filed, like server-side, etc. 
 
-With many years' experience in electronics engineering, we strongly believe the huge potential of Swift on microcontroller world. As it's powerful, effecient and easy-to-learn, plus some unique features, the hardware programming can be more friendly and secure.
+With many years of experience in electronics engineering, we strongly believe huge potentials of Swift in the microcontroller world. As it's powerful, efficient and easy-to-learn, plus some unique features, the hardware programming can be more friendly and secure.
 
 
 ### Microcontroller
 
-When it comes to microcontroller, many guys can have different definitions. In brief, you can take it as a small computer. You program it to receive or send data. We'll dive deeper into hardwares in section Learn.
+When it comes to microcontrollers, many guys can have different definitions. In brief, you can take them as small computers. You program it to receive or send data. We'll dive deeper into hardware in section [Learn](../learn/overview.md).
 
-Actually it is everywhere in our daily life, in keyboards, printers, microwave ovens, washing machines... and usually embedded in all kinds of devices. But the microcontrollers in them are programmed in advance to perform specific tasks and have limited functionalities. 
+It is everywhere in our daily life, in keyboards, printers, microwave ovens, washing machines... and usually embedded in all kinds of devices. But the microcontrollers in them are programmed in advance to perform specific tasks and have limited functionalities. 
 
-There are also some microcontrollers with more usages and can programmed by you to do mutilple tasks, with endless possibities, like our boards, [Arduino](https://www.arduino.cc/)...
+There are also some microcontrollers with more usages and can be programmed by you to do multiple tasks, with endless possibilities, like our boards, [Arduino](https://www.arduino.cc/)...
 
 ### And then...
 
-Yeah, they can now work together!!! You can write several lines of code to get some stuffs to work. 
+Yeah, they can now work together!!! You can write several lines of code to get some stuff to work. 
 
-You guys don't need to know complicated low-level stuffs, simply start with some example projects, no matter you have or don't have related knowledges.  
+You guys don't need to know complicated low-level stuff, simply starting with some example projects, no matter you have or don't have related knowledge.  
 
 
 ## What can I do with all boards?
 
-There's endless possibilities... You can get inspiration from [instructable](https://www.instructables.com/circuits/projects/) and [hackster](https://www.hackster.io/projects?ref=topnav).
+There're endless possibilities... You can get inspiration from [instructable](https://www.instructables.com/circuits/projects/) and [hackster](https://www.hackster.io/projects?ref=topnav).
 
-The principles of all kinds of projects are not that complicated. To sum up, your board get info from your surroundings, like light, temperature, sound, or your action like pressing a button, touching a screen. After it get the info, it will calculate the values and show it directly or by other ways like lighting, display, movement, sound, etc. Of course, what your board will do are all decided by your code.
+The principles of all kinds of projects are not that complicated. To sum up, your board gets info from your surroundings, like light, temperature, sound, or your action like pressing a button, touching a screen. After it gets data, it will show it directly or in other ways like lighting, display, movement, sound, etc. Of course, what your board will do is all decided by your code.
 
 :::note
-After all, microcontrollers are not computers, you cannot expect them to do everything, especially some task that need heavy computing power.
+After all, microcontrollers are not computers, and you cannot expect them to do everything, especially some tasks that need heavy computing power.
 :::
 
 ## What do I need?
 
-At first, you certainly need a hardware to work with. Our board family has two boards now: [SwiftIO board](hardware/swiftio-board.md) and [SwiftIO Feather board](hardware/swiftio-feather.md). They come with beginner kits to help you start. 
+At first, you certainly need a board to work with. Our board family has two boards now: [SwiftIO board](hardware/swiftio-board.md) and [SwiftIO Feather board](hardware/swiftio-feather.md). They come with beginner kits to help you start. 
 
-In order to program your board, you need to install the [MadMachine IDE](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). It allows you to edit, compile and download code. 
+To program your board, you need to install the [MadMachine IDE](https://github.com/madmachineio/MadMachineIDE/releases/tag/v0.2.3-alpha). It allows you to edit, compile and download code. 
 
 You will know more details later. Let's keep going.
 
+## Resources
 
-Never afraid if you have no prior experiences. You can follow the tutorials here to get started. 
+Never be afraid that you have no prior experience. You can follow the tutorials here to get started. 
 
-- Docs - start from here to get familiar with the basic operations.
+- [Overview](#introduction) - start from here to get familiar with the MadMachine project and basic operations.
 
-- Learn - then learn A to Z of electronics to understand better how everything works.
+- [How-to](../how-to/create-new-project.md) - learn some useful guides for your projects.
 
-- Library - consult the documentation of APIs as you program your board.
+- [Learn](../learn/overview.md) - then learn A to Z of electronics to understand better how everything works.
+
+- [Tutorials](../tutorials/overview.md) - try some built-in projects and get inspirations. 
+
+- [Reference](../reference/reference.md) - consult the documentation of APIs as you program your board.
 
 
 
@@ -80,6 +87,6 @@ Never afraid if you have no prior experiences. You can follow the tutorials here
 
 - [Twitter](https://twitter.com/madmachineio) – know who we are
 
-Our SwiftIO board family is stable enough for most of your projects. We believe you will love it once you start. It is a special gift for makers, programming lovers, electronic hobbyists, or all those curious about new tech. This is super easy to learn. And as you go further, you will see the charm of the Swift language.
+Our SwiftIO board family is stable enough for most of your projects. We believe you will love it once you start. It is a special gift for makers, programming lovers, electronic hobbyists, or all those curious about new tech. It's super easy to learn. And as you go further, you will see the charm of the Swift language.
 
 Hope all of you will enjoy it.
