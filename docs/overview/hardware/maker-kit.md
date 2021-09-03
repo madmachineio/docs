@@ -13,7 +13,7 @@ Most parts adopt grove connectors, which allow you to connect a module using a 4
 
 In our maker kit, you can find different parts for their specific usage. Let's find them out together.
 
-![Maker kit](img/MakerKit.png)
+![Maker kit](img/Makerkit.png)
 
 
 - **SwiftIO board**: control all other parts in the kit and make them respond to your code.
