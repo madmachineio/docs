@@ -1,7 +1,6 @@
 ---
-id: swiftio-board
 title: SwiftIO Board
-description: What is SwiftIO Board?
+description: Know each part of the SwiftIO board and the function of the pins.
 ---
 
 # SwiftIO Board
@@ -18,7 +17,7 @@ Let's look at parts of the SwiftIO board.
 
 ## MCU
 
-i.MX RT1052 Crossover Processor with Arm® Cortex®-M7 core @600MHz. This 32-bit MCU has 600MHz clock and thus can run extremely quickly. It serves as the brain of the SwiftIO board to deal with all kinds of calculation.
+i.MX RT1052 Crossover Processor with Arm® Cortex®-M7 core @600MHz. This 32-bit MCU has 600MHz clock and thus can run extremely quickly. It serves as the brain of the SwiftIO board to deal with all kinds of calculations.
 
 
 ## Memory
@@ -29,17 +28,17 @@ The SwiftIO board has 8MB external flash, 32MB SDRAM.
 ## Buttons
 
 You can see 2 buttons on SwiftIO board. 
-- The **download button** allows to mount your board as a USB drive on your computer in order to download code. 
-- The **reset button** can restart the code that has downloaded to your board. Sometimes, if your code don't run normally, you may press it to solve the problem.
+- The **download button** allows you to mount your board as a USB drive on your computer in order to download code. 
+- The **reset button** can restart the code that has been downloaded to your board. Sometimes, if your code doesn't run correctly, you may press it to solve the problem.
 
 
 ## Micro USB
 
 There are 2 USB ports, one for serial communication and one for code downloading. Both of them can be power your board.
 
-- You need to connect the **Download port** on the SwiftIO board to your computer to download code.
+- You need to connect the **Download port** on the SwiftIO board to your computer to download your code.
 
-- You can print the values and see them in serial monitor by connecting the **Serial port**, since there is a UART to USB converter on the board.
+- You can print the values and see them in the serial monitor by connecting the **Serial port** since there is a UART to USB converter on the board.
 
  
 
@@ -70,39 +69,39 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 **3V3**: there are 4 3V3 pins that supply 3.3V of power to your module.
 
 
-**DigitalIn/Out**: The digital pins are labeled D0 to D45 on SwiftIO board. These pins can act as digital input pins to read logic value or as output pins to control other circuits.
+**DigitalIn/Out**: The digital pins are labeled D0 to D45 on the SwiftIO board. These pins can act as digital input pins to read logic values or as output pins to control other circuits.
 
 **AnalogIn**: SwiftIO board has 12 analog pins from A0 to A11. You can use them to measure analog inputs and get a raw value between 0 and 4095 (12-bit resolution).
 
-**PWMOut**: the digital pins marked with a tilde can generate PWM wave, 14 pins in total. You can set the duty cycle to simulate different output voltages. Some of the pins are paired and share the same frequency, like PWM3A and PWM3B. 
+**PWMOut**: the digital pins marked with a tilde can generate PWM waves, 14 pins in total. You can set the duty cycle to simulate different output voltages. Some of the pins are paired and share the same frequency, like PWM3A and PWM3B. 
 
 
 
-**I2C**: I2C0 and I2C1. Each onw contains two wires: SCL for clock signal, SDA for data transmission. You can use I2C protocol to communicate with different devices by writing and reading messages through the bus..
+**I2C**: I2C0 and I2C1. Each one contains two wires: SCL for clock signal, SDA for data transmission. You can use I2C protocol to communicate with different devices by writing and reading messages through the bus.
 
 **SPI**: SPI0 and SPI1. It needs 4 wires: CS for device selection, SDI to receive data, SDO to send out data, SCK for clock signal. The communication speed of SPI is faster than I2C and UART.
 
-**UART**: UART0 to UART3. Two wires are required for UART communication: TX pin is for transmission and RX is for reception. The board can communicate with other external devices through these pins or with computer through USB cable.
+**UART**: UART0 to UART3. Two wires are required for UART communication: TX pin is for transmission and RX is for reception. The board can communicate with other external devices through these pins or with your computer through a USB cable.
 
 **CAN**: CAN0 and CAN1. It uses 2 wires to receive and send data using CAN protocol.
 
-**I2SIn**: it allows you to receive audio signal from other devices. You can see it needs 3 wires: RX is to receive data, BCLK carries clock signal, SYNC for left or right channel selection.
+**I2SIn**: it allows you to receive audio signals from other devices. You can see it needs 3 wires: RX is to receive data, BCLK carries clock signal, SYNC for left or right channel selection.
 
-**I2SOut**: it allows you to send audio siganl to other devices. It needs 3 wires: TX is to send data, BCLK carries clock signal, SYNC for left or right channel selection.
+**I2SOut**: it allows you to send audio signals to other devices. It needs 3 wires: TX is to send data, BCLK carries clock signal, SYNC for left or right channel selection.
 
 **RESET**: restart the code when the RESET pin is set to low.
 
-**Vin**: you can supply voltage to the board using external power source through Vin pin. You'd better apply voltages between 5V to 12V.
+**Vin**: you can supply voltage to the board using an external power source through Vin pin. You'd better apply voltages between 5V to 12V.
 
 **Vout**: the Vout pin will provide the higher output voltage between Vcc and  USB voltage.
 
 **Vcoin**: button cell can power the RTC through the Vcoin pin when there is no power supply.
 
-**IOREF**: this pin provide a voltage corresponding to the input and ouput of that board,  that's to say 3.3V.
+**IOREF**: this pin provides a voltage corresponding to the input and output of that board,  that's to say 3.3V.
 
 
 ## By the way
 
-All these details may sounds quite confusing at first. Don't worry, most of them are not commonly used. 
+All these details may sound quite confusing at first. Don't worry, most of them are not commonly used. 
 
 If you have not idea how to start, you can work with [this Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio) to learn with some simple projects. 
