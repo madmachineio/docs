@@ -1,5 +1,4 @@
 ---
-id: swiftio-feather
 title: SwiftIO Feather
 description: Know each part of the SwiftIO Feather and the function of the pins.
 ---

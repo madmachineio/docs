@@ -1,5 +1,4 @@
 ---
-id: madmachine-ide
 title: MadMachine IDE
 description: Have a quick overview at the MadMachine IDE before going to more details.
 ---

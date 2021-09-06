@@ -1,7 +1,6 @@
 ---
-id: introduction
 title: Introduction
-description: Have a quick view at MadMachine project and know how your board works.
+description: Have a quick view of the MadMachine project and know how your board works.
 slug: /
 ---
 
@@ -9,7 +8,7 @@ slug: /
 
 Welcome to the MadMachine! Excited to see you here!!!
 
-Maybe you are not clear how all stuff works. Don't worry, let's find it out together.
+Maybe you are not clear about the way all stuff works. Don't worry, let's find it out together.
 
 
 ## What is MadMachine project?

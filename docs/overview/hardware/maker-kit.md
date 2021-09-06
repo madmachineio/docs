@@ -1,5 +1,4 @@
 ---
-id: maker-kit
 title: SwiftIO Maker kit
 description: Know about the Make kit to decide how to start with SwiftIO board.
 ---

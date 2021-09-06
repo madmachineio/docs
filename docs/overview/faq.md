@@ -1,5 +1,4 @@
 ---
-id: faq
 title: FAQ
 description: Find solutions if you meet some problems when using your board.
 ---

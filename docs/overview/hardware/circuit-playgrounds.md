@@ -1,5 +1,4 @@
 ---
-id: circuit-playgrounds
 title: SwiftIO Circuit Playgrounds
 description: SwiftIO Circuit Playgrounds is an all-in-one kit that is suitable to get started. You can get familiar with basic electronics and Swift programming.
 ---

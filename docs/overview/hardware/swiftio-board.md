@@ -1,5 +1,4 @@
 ---
-id: swiftio-board
 title: SwiftIO Board
 description: Know each part of the SwiftIO board and the function of the pins.
 ---
