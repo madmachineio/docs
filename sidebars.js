@@ -56,6 +56,27 @@ module.exports = {
 
   tutorialSidebar: [
     'tutorials/overview',
+    {
+      type: 'category',
+      label: 'General',
+      items: [
+        'tutorials/general/test',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'SwiftIO Maker Kit',
+      items: [
+        'tutorials/swiftio-maker-kit/test',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'SwiftIO Circuit Playgrounds',
+      items: [
+        'tutorials/swiftio-circuit-playgrounds/test',
+      ],
+    },
   ],
 
   referenceSidebar: [
