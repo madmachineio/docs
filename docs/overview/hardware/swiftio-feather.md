@@ -43,8 +43,8 @@ It contains red, blue and green LEDs. You can know from it the status of your bo
 | LED State | RED | GREEN | BLUE |
 | :--- | :--- | :--- | :--- |
 | On | USB communication failed | USB connection established | - |
-| Slow flashing | Fail to verify file `swiftio.bin` | - | - |
-| Fast flashing | Fail to open file `swiftio.bin` | Detecting USB connection | Detecting SD card |
+| Slow flashing | Fail to verify file `feather.bin` | - | - |
+| Fast flashing | Fail to open file `feather.bin` | Detecting USB connection | Detecting SD card |
 
 
 

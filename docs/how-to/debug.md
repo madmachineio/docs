@@ -5,7 +5,7 @@ description: Use the serial monitor to debug your code. You will print the value
 
 # Debug
 
-You must have met similar situations: your code is downloaded to the board but doesn't work as you have predicted. You are unable to see what is happening inside your device. At that time, you need to debug your code.
+You must have met similar situations: your code is downloaded to the board but doesn't work as you have predicted. Even if you press the reset button, the board is still unresponsive. You are unable to see what is happening inside your device. At that time, you need to debug your code.
 
 There are two common ways. One is to step through it, which is not supported yet. So the best way by now is to print the information out to find the problem.
 
