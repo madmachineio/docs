@@ -66,7 +66,7 @@ module.exports = {
           label: 'GettingStarted',
           items: [
             'tutorials/general/getting-started/blink',
-            
+            'tutorials/general/getting-started/read-digital-input',
           ],
         },
         {
