@@ -56,6 +56,45 @@ module.exports = {
 
   tutorialSidebar: [
     'tutorials/overview',
+    {
+      type: 'category',
+      label: 'General',
+      items: [
+
+        {
+          type: 'category',
+          label: 'GettingStarted',
+          items: [
+            'tutorials/general/getting-started/blink',
+            'tutorials/general/getting-started/read-digital-input',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'SimpleIO',
+          items: [
+            'tutorials/general/simpleio/test',
+            
+          ],
+        },
+
+
+      ],
+    },
+    {
+      type: 'category',
+      label: 'SwiftIO Maker Kit',
+      items: [
+        'tutorials/swiftio-maker-kit/test',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'SwiftIO Circuit Playgrounds',
+      items: [
+        'tutorials/swiftio-circuit-playgrounds/test',
+      ],
+    },
   ],
 
   referenceSidebar: [
