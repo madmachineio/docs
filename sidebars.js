@@ -60,7 +60,25 @@ module.exports = {
       type: 'category',
       label: 'General',
       items: [
-        'tutorials/general/test',
+
+        {
+          type: 'category',
+          label: 'GettingStarted',
+          items: [
+            'tutorials/general/getting-started/test',
+            
+          ],
+        },
+        {
+          type: 'category',
+          label: 'SimpleIO',
+          items: [
+            'tutorials/general/simpleio/test',
+            
+          ],
+        },
+
+
       ],
     },
     {
