@@ -89,7 +89,7 @@ So connect the board to your computer first.
 ![](img/downloadButton.png)
 
 :::note
-Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](./faq.md##USB-driver-can't-be-mounted).
+Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](./faq.md#USB-driver-can't-be-mounted).
 :::
 
 
