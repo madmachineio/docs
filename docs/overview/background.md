@@ -1,6 +1,6 @@
 ---
 title: Background
-description: 
+description: You will know how we get Swift code run on microcontrollers and how your code is built and downloaded to your board, What's more, you will understand the difference between our boards and others like Arduino, MicroPython, Rasberry Pi.
 ---
 
 # Background
