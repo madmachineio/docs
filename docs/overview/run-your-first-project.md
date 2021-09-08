@@ -1,6 +1,6 @@
 ---
 title: Run your first project
-description: Use the Swift Programming Language to realize your first project, blink a LED.
+description: You will use the Swift Programming Language to blink a LED and realize your first project as a maker.
 ---
 
 # Run your first project

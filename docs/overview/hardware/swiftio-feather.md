@@ -1,6 +1,6 @@
 ---
 title: SwiftIO Feather
-description: Know each part of the SwiftIO Feather and the function of the pins.
+description: SwiftIO Feather is a simplified board and is suitable to be embedded in all your designs. You can use it to build prototypes and program your projects in a modern way.
 ---
 
 # SwiftIO Feather
@@ -14,7 +14,7 @@ The SwiftIO feather is compatible with the Adafruit feather system. This means y
 
 ## MCU
 
-i.MX RT1062 Crossover Processor with Arm® Cortex®-M7 core @600MHz. This 32-bit MCU has 600MHz clock and thus can run extremely quickly. It serves as the brain of the SwiftIO board to deal with all kinds of calculation.
+i.MX RT1062 Crossover Processor with Arm® Cortex®-M7 core @600MHz. This 32-bit MCU has 600MHz clock and thus can run extremely quickly. It serves as the brain of the SwiftIO board to deal with all kinds of calculations.
 
 
 ## Memory

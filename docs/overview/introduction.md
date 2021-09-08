@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: Have a quick view of the MadMachine project and know how your board works.
+description: What is MadMachine? You will know about the microcontroller and Swift language as you find it out, and learn to interact with all kinds of devices in a modern way.
 slug: /
 ---
 
@@ -11,9 +11,9 @@ Welcome to the MadMachine! Excited to see you here!!!
 Maybe you are not clear about the way all stuff works. Don't worry, let's find it out together.
 
 
-## What is MadMachine project?
+## What is MadMachine?
 
-Our project all focuses on Swift language and microcontrollers. We provide you with the necessary hardware and software support to explore together the possibility of their combination. You can program your board in Swift language to control all kinds of hardware, like LEDs, speakers, motors... or make them responsive to your actions. 
+Our project all focuses on Swift language and microcontrollers. We provide you with the necessary hardware and software support to explore together the possibility of their combination. You can program your board in Swift language to control all kinds of hardware, like LEDs, speakers, motors, or make them responsive to your actions. 
 
 ![](img/explanation.png)
 
@@ -23,7 +23,7 @@ Well, here's a little bit of background. You can skip this part if you're famili
 
 Let's first talk about [Swift language](https://docs.swift.org/swift-book/). It is a programming language created by Apple. Nowadays, it's widely used for application development. Besides, many developers from all over the world are finding its possibilities in different filed, like server-side, etc. 
 
-With many years of experience in electronics engineering, we strongly believe huge potentials of Swift in the microcontroller world. As it's powerful, efficient and easy-to-learn, plus some unique features, the hardware programming can be more friendly and secure.
+With many years of experience in electronics engineering, we strongly believe huge potentials of Swift in the microcontroller world. It is a powerful, efficient, easy-to-learn language, and can the hardware programming can be more friendly and secure.
 
 
 ### Microcontroller

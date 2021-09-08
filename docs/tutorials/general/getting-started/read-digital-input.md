@@ -10,10 +10,25 @@ In this example, let's try to read digital signals using a pushbutton. When you 
 ## What you need
 
 - SwiftIO Feather (or SwiftIO board)
+- Breadboard
 - Button
 - Jumper wires
 
 ## Circuit
+
+1. Plug the button into the breadboard. Make sure the button is not in the wrong direction.
+2. Connect one leg on the left side to the pin 3V3V. 
+3. Connect one leg on the right side to pin D10. 
+
+![](img/readDigitalInput.png)
+
+:::note
+In a breadboard, the holes beside the **blue** horizontal line are all connected. They are for **ground**. The holes beside the **red** line are the same and connect to the **power** pin. In the middle, there are 30 rows. The holes A, B, C, D, E in the same row are connected internally. The holes F, G, H, I, J are the same. 
+:::
+
+:::info
+You can notice the wires are in different colors. Usually, red is for the wire connected to power, and black is for ground.
+:::
 
 
 
@@ -55,10 +70,11 @@ The button, or pushbutton, is always used to control other devices. You can see 
 
 ![](img/button.png)
 
-This kind of button usually has four legs. The two legs on the same side are shorted, like 1 and 3.
+This kind of button usually has four legs. Every two legs are shorted, like 1 and 3, 2 and 4. 
 
-So when you connect a single button, it's better to connect the two legs on a diagonal line in the circuit, like 1 and 4.
+If you connect both 1 and 3 to your circuit, the current can flow through it all the time. So the button cannot control other components.
 
+So it's a good idea to connect the two legs on a diagonal line in the circuit, like 1 and 4.
 
 
 

@@ -37,6 +37,7 @@ module.exports = {
         'overview/hardware/circuit-playgrounds',
       ],
     },
+    'overview/background', 
     'overview/faq', 
   ],
 
