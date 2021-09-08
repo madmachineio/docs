@@ -5,18 +5,16 @@ description: You will know how we get Swift code run on microcontrollers and how
 
 # Background
 
-## A big thank you!
+Hi guys! Welcome✨!
 
-Hi guys! It’s Andy Liu. We started to sell the SwiftIO board in July 2020. And we have received hundreds of orders from different countries. You guys are awesome! You are not only customers but angels for us. I want to express the depth of my gratitude to all of you!
+Thanks very much for your support in such an early stage! Hope we can grow together in the long term 😘!
 
-Our project may take years to be perfect, and we would like to run it steadily so we have more chances to incorporate your feedback and improve continuously. It might evolve slowly, but nothing can kill us.
-At present, the hardware is stable enough. But the software still needs improvement. We received some issues about the software:
+Let's talk about MadMachine project. At present, the hardware is stable enough. But the software still needs improvement. We received some issues about the software:
 - The IDE has problems in different OS environments
 - The USB drive may not appear after pressing the DOWNLOAD button
 
-Here, we will give a brief explanation of the techniques we use in our project. After reading this article, you will know the principle of our project and what to do if you encounter some issues before we solve them.
+So we want to share you with some techniques used in our project. After reading this article, you will know the principle of our project and what to do if you encounter some issues before we solve them.
 
-**Again, thanks very much for your support in such an early stage! Hope we could grow together in the long term 😘**
 
 
 ## Background
