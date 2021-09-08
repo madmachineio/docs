@@ -1,6 +1,6 @@
 ---
 title: SwiftIO Board
-description: Know each part of the SwiftIO board and the function of the pins.
+description: SwiftIO Board allows you to interact with all kinds of electronic devices using Swift language. You will know about details of the board and the functionalities of all pins.
 ---
 
 # SwiftIO Board
@@ -27,7 +27,7 @@ The SwiftIO board has 8MB external flash, 32MB SDRAM.
 
 ## Buttons
 
-You can see 2 buttons on SwiftIO board. 
+You can see 2 buttons on the SwiftIO board. 
 - The **download button** allows you to mount your board as a USB drive on your computer in order to download code. 
 - The **reset button** can restart the code that has been downloaded to your board. Sometimes, if your code doesn't run correctly, you may press it to solve the problem.
 

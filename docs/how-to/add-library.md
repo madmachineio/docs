@@ -1,6 +1,6 @@
 ---
 title: Add a library
-description: All kinds of libraries do reduce a lot of work and simplify your code. So how can you add it to all projects?
+description: All kinds of libraries do reduce a lot of work and simplify your Swift code for your projects. You can program the hardware and use different electronic components easily with libraries.
 ---
 
 # Add a library to your project
@@ -20,7 +20,7 @@ Let's see how you could use the libraries. You will use the library `MadLed` for
 
 At first, you need to [create a new executable project](create-new-project.md).
 
-All our libraries are on Github. You could find the library MadLed [here](https://github.com/madmachineio/MadLed). Click the button **Code**. In the drop-down menu, click the button to **copy** the URL.
+All our libraries are on Github. You could find the library `MadLed` [here](https://github.com/madmachineio/MadLed). Click the button **Code**. In the drop-down menu, click the button to **copy** the URL.
 
 ![get the location of the library](img/github.png)
 

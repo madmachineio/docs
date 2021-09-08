@@ -1,11 +1,11 @@
 ---
 title: SwiftIO Circuit Playgrounds
-description: SwiftIO Circuit Playgrounds is an all-in-one kit that is suitable to get started. You can get familiar with basic electronics and Swift programming.
+description: SwiftIO Circuit Playgrounds is an all-in-one kit to get started with electronics and programming. You can write Swift code to make devices work and interact with the physical world.
 ---
 
 # SwiftIO Circuit Playgrounds
 
-SwiftIO Circuit Playgrounds is a super easy-to-use starter kit for you. All modules are connected to the shield through stamps holes. You don't need to build the circuit. Just download the code and you can see the results immediately.
+SwiftIO Circuit Playgrounds is a super easy-to-use starter kit for you. All modules connect to the shield on the middle through stamps holes. You don't need to build the circuit. Just download the code and you can see the results immediately.
 
 Let's look at these modules in detail:
 
@@ -19,7 +19,7 @@ Let's look at these modules in detail:
 - **Buzzer**: produces sounds that are usually for alert or confirmation.
 - **Humiture**: measure temperature and humidity.
 - **Color sensor**: detect the color of an object and the light intensity.
-- **Accelerometer**: detect movement by measuring the acceleration in x, y and z-axis.
+- **Accelerometer**: detect movement by measuring the acceleration in x, y, and z-axis.
 - **Speaker**: generate sounds or play the audio files back.
 - **Microphone**: record sound and store audio data.
 - **LCD**: display graphics or images.
