@@ -66,6 +66,11 @@ while true {
 }
 ```
 
+
+## What you'll see
+
+The LED will gradually brighten to its full brightness. Then it will become dimmer until it's off. And it will repeat the changes over and over again.
+
 ## Background
 
 ### Pulse Width Modulation (PWM)
