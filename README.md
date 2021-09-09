@@ -1,33 +1,17 @@
-# Website
+# MadMachine Docs
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+Welcome to MadMachine!
 
-## Installation
+If you have no idea how to start your project, you're in the right place. Here you can find all the necessary knowledge and tutorials to start programming and electronics. There are 5 sections in total, which allow you to get familiar with the usage, explore some simple projects and learn how everything works.
 
-```console
-yarn install
-```
+- [Overview](#introduction) - get familiar with the MadMachine project and basic operations.
 
-## Local Development
+- [How-to](../how-to/create-new-project.md) - learn some useful guides for your projects.
 
-```console
-yarn start
-```
+- [Learn](../learn/overview.md) - then learn A to Z of electronics to understand better how everything works.
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+- [Tutorials](../tutorials/overview.md) - try some built-in projects and get inspirations. 
 
-## Build
+- [Reference](../reference/reference.md) - consult the documentation of APIs as you program your board.
 
-```console
-yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-```console
-GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Last but not least, if you find something confusing or you have any suggestions, welcome to open a pull request. 
