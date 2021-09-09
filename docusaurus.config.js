@@ -16,7 +16,7 @@ module.exports = {
     navbar: {
       //title: 'Machine',
       style: 'dark',
-      hideOnScroll: true,
+      hideOnScroll: false,
       logo: {
         alt: 'MadMachine',
         src: 'img/logo_dark.svg',
