@@ -1,6 +1,6 @@
 ---
 title: Read digital input
-description: You will use a button of change digital input and print its values on the serial monitor.
+description: You will use a button to change digital inputs. The microcontroller reads the value and prints it on the serial monitor. 
 ---
 
 # Read digital input
@@ -18,7 +18,7 @@ In this example, let's try to read digital signals using a pushbutton. When you 
 
 1. Plug the button into the breadboard. Make sure the button is not in the wrong direction.
 2. Connect one leg on the left side to the pin 3V3V. 
-3. Connect one leg on the right side to pin D10. 
+3. Connect one leg on the right side to pin D1. 
 
 ![](img/readDigitalInput.png)
 
@@ -44,8 +44,8 @@ import SwiftIO
 // Import the board library to use the Id of the specific board.
 import SwiftIOFeather
 
-// Initialize the pin D0 as a digital input pin.
-let pin = DigitalIn(Id.D0)
+// Initialize the pin D1 as a digital input pin.
+let pin = DigitalIn(Id.D1)
 
 // read the input every second.
 while true {
@@ -90,15 +90,15 @@ import SwiftIOFeather
 [SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) defines the corresponding pin id of the SwiftIO Feather board. The pins of different boards are different. So this library tells the IDE you are dealing with this board, not any other board. Then you could use the id in it. If you use the SwiftIO board, you need to import the `SwiftIOBoard` instead.
 
 ``` swift
-let pin = DigitalIn(Id.D0)
+let pin = DigitalIn(Id.D1)
 ```
-The button connects to pin D0. The digital pins can be used as both input and output. You will set it when initializing the pin. Here the pin serves as input, so you need the class `DigitalIn`.
+The button connects to pin D1. The digital pins can be used as both input and output. You will set it when initializing the pin. Here the pin serves as input, so you need the class `DigitalIn`.
 
 ``` swift
 let value = pin.read()
 ```
 
-The method `read()` allows you to get the input value. The return value is either `true` or `false`, representing high level and low level respectively. So you can know the states of the button according to the values. If you press the button, the pin connects to 3V3, so the value will be `true`. Once you release the button, the input value will be false.
+The method `read()` allows you to get the input value. The return value is either `true` or `false`, representing high and low level respectively. So you can know the states of the button according to the values. If you press the button, the pin connects to 3V3, so the value will be `true`. Once you release the button, the input value will be false.
 
 ``` swift
 print(value)
@@ -107,7 +107,7 @@ The function `print()` can print the values out. You can view them on the serial
 
 ## Reference
 
-[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - set whether the pin output a high or low voltage.
+[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - read the input value from a digital pin.
 
 - `init(_:mode:)` - initialize the digital input pin. The first parameter needs the id. You can refer to the corresponding `Id` enumeration. The parameter mode already has a default value.
 

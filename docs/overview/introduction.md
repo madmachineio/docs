@@ -61,22 +61,26 @@ Let's keep going.
 
 ## Resources
 
-Never be afraid that you have no prior experience. You can follow the tutorials here to get started. 
+Never be afraid that you have no prior experience. You can follow the tutorials to get started. There are 5 sections in all, and you can navigate them by clicking on the header.
 
-- [Overview](#introduction) - start from here to get familiar with the MadMachine project and basic operations.
+![](img/header.png)
 
-- [How-to](../how-to/create-new-project.md) - learn some useful guides for your projects.
+- [**Overview**](#introduction) - start from here to get familiar with the MadMachine project and basic operations.
 
-- [Learn](../learn/overview.md) - then learn A to Z of electronics to understand better how everything works.
+- [**How-to**](../how-to/create-new-project.md) - learn some useful guides for your projects.
 
-- [Tutorials](../tutorials/overview.md) - try some built-in projects and get inspirations. 
+- [**Learn**](../learn/overview.md) - then learn A to Z of electronics to understand better how everything works.
 
-- [Reference](../reference/reference.md) - consult the documentation of APIs as you program your board.
+- [**Tutorials**](../tutorials/overview.md) - try some built-in projects and get inspirations. 
+
+- [**Reference**](../reference/reference.md) - consult the documentation of APIs as you program your board.
 
 
 
 
 ## More info
+
+- [Twitter](https://twitter.com/madmachineio) – know who we are.
 
 - [Discord](http://madmachine.io/discord) – discuss and share your opinions.
  
@@ -84,8 +88,7 @@ Never be afraid that you have no prior experience. You can follow the tutorials 
  
 - [Youtube](https://www.youtube.com/c/MadMachineio) – learn with us step-by-step.
 
-- [Twitter](https://twitter.com/madmachineio) – know who we are.
 
-Our SwiftIO board family is stable enough for most of your projects. We believe you will love it once you start. It's super easy to learn. And as you go further, you will see the charm of the Swift language.
+Our boards are stable enough to be used in most of your projects. We believe you will love it once you start. Besides, it's super easy to learn. And as you go further, you will see its charm.
 
 Hope all of you will enjoy it.
