@@ -69,6 +69,7 @@ module.exports = {
             'tutorials/general/getting-started/blink',
             'tutorials/general/getting-started/read-digital-input',
             'tutorials/general/getting-started/read-analog-input',
+            'tutorials/general/getting-started/pwm-brightness-control',
           ],
         },
         {
