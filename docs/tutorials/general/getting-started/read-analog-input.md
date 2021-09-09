@@ -19,7 +19,7 @@ So far, you've learned about digital signals. In this example, let's try analog 
 
 Let's build the circuit now.
 
-1. Place the potentiometer into the breadboard.
+1. Place the potentiometer onto the breadboard.
 2. Connect the first leg on the left to pin GND.
 3. Connect the second leg to pin A0.
 4. Connect the third leg goes to pin 3V3.
@@ -54,6 +54,10 @@ while true {
 }
 ```
 
+## What you'll see
+
+As you turn the potentiometer, the values printed on the screen change accordingly. They may gradually approach 0 or 3.3 depending on the direction you rotate.
+
 ## Background
 
 ### Analog input
@@ -67,7 +71,7 @@ So how does the board read the values? Here comes the **analog to digital conver
 
 The converter has different precision, and the **resolution** describes the possible values it can measure. Our boards have a 12-bit resolution, which means there are 4096 (0-4095) values in total. The values from 0 to 4095 are known as **raw values**.
 
-Let's see the working process in detail. When the board reads from the analog pin, it will first get a raw value between 0 and 4095. Then it will be converted to voltage value proportionally. Here is the formula:
+Let's see the working process in detail. When the board reads from the analog pin, it will first get a raw value between 0 and 4095, which will be mapped to voltage value proportionally. Here is the formula:
 
 **resolution / reference voltage = raw value / actual voltage**
 
@@ -96,7 +100,7 @@ Import the [**SwiftIO**](https://swiftioapi.madmachine.io/) library to use the r
 ```swift
 let pin = AnalogIn(Id.A0)
 ```
-The potentometer connects to pin A0, so you initialize it before using the pin.
+The potentiometer connects to pin A0, so you initialize it before using the pin.
 
 ```swift
 let value = pin.readVoltage()
@@ -112,7 +116,7 @@ Print the result directly to the serial port. You can view the results on the se
 
 ## Reference
 
-[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - set whether the pin output a high or low voltage.
+[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
 
 - `init(_:)` - initialize an analog input pin. You need to tell the id of a specified pin to initialize it.
 

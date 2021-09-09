@@ -107,7 +107,7 @@ The function `print()` can print the values out. You can view them on the serial
 
 ## Reference
 
-[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - set whether the pin output a high or low voltage.
+[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - read the input value from a digital pin.
 
 - `init(_:mode:)` - initialize the digital input pin. The first parameter needs the id. You can refer to the corresponding `Id` enumeration. The parameter mode already has a default value.
 
