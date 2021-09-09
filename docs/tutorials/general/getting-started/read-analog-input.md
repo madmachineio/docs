@@ -1,6 +1,6 @@
 ---
 title: Read analog input
-description: 
+description: You will connect a potentiometer to your board and read analog input values. The value will be printed on the serial monitor.
 ---
 
 # Read analog input
