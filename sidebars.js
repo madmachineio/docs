@@ -77,7 +77,7 @@ module.exports = {
           label: 'SimpleIO',
           items: [
             'tutorials/general/simpleio/button-control-led',
-            
+            'tutorials/general/simpleio/blink-analogin',
           ],
         },
 
