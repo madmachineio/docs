@@ -24,7 +24,7 @@ module.exports = {
       label: 'Software',
       items: [
         'overview/software/madmachine-ide',
-        'overview/software/use-mm-sdk',
+        'overview/software/mm-sdk',
       ],
     },
     {
