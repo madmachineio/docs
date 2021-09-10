@@ -8,7 +8,7 @@ description: As you try more project, you may use some new components or realize
 A library usually contains a block of codes that provides specific functionalities. You can use it in any of your projects to realize those functionalities and don't need to copy all of its code. Let's see how to deal with it.
 
 :::note
-Only the Mac version of MadMachine IDE supports the Swift Package Manager now. So the tutorial below is based on the Mac version. We will find ways to support the Windows version later. For the moment, you could try our CLI tool [MM SDK](use-mm-sdk.md).
+Only the Mac version of MadMachine IDE supports the Swift Package Manager now. So the tutorial below is based on the Mac version. We will find ways to support the Windows version later. For the moment, you could try our CLI tool [MM SDK](../overview/software/mm-sdk.md).
 :::
 
 ## How to write a library
