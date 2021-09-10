@@ -136,5 +136,3 @@ In the loop, the pin outputs high voltage and then sleeps for 1 second. So in th
 - `write(_:)` - set a specific pin to output high or low voltage. Its parameter is a boolean type. `true` corresponds to a high level, and `false` corresponds to a low level.
 
 [`sleep(ms:)`](https://swiftioapi.madmachine.io/Functions.html#/s:7SwiftIO5sleep2msySi_tF) - suspend the microcontroller's work and thus make the current state last for a specified time, measured in milliseconds.
-
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.

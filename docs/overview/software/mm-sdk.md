@@ -1,9 +1,9 @@
 ---
-title: Use MM SDK
+title: MM SDK
 description: For advanced users, you don't need to download the MadMachine IDE. You can edit your code wherever you like and use mm sdk to build it into the bin file.
 ---
 
-# Use MM SDK
+# MM SDK
 
 ## MM SDK
 
@@ -226,4 +226,4 @@ Follow those steps to download the executable:
 2. Press the **Download** button and wait for the onboard RGB LED to turn to steady **green**.
 3. A USB disk drive should be mounted on your computer
 4. Copy the `swiftio.bin` to the SD card root directory.
-5. Eject the USB drive and the program would run automatically.
+5. Eject the USB drive and the program will run automatically.

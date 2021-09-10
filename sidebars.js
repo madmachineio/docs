@@ -24,6 +24,7 @@ module.exports = {
       label: 'Software',
       items: [
         'overview/software/madmachine-ide',
+        'overview/software/use-mm-sdk',
       ],
     },
     {
@@ -46,7 +47,6 @@ module.exports = {
     'how-to/open-project',
     'how-to/select-board',
     'how-to/debug',
-    'how-to/use-mm-sdk',
     'how-to/add-library',
     'how-to/write-library',
   ],
@@ -76,7 +76,7 @@ module.exports = {
           type: 'category',
           label: 'SimpleIO',
           items: [
-            'tutorials/general/simpleio/test',
+            'tutorials/general/simpleio/button-control-led',
             
           ],
         },

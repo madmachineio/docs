@@ -11,13 +11,18 @@ Now that you‘ve got your board, let's start with a hello world project - LED b
 
 At first, you certainly need a tool to edit your code. MadMachine IDE allows you to write code, compile and download it to your board. 
 
-You can get the latest IDE for macOS [here](https://www.madmachine.io/downloads). And your computer should have Xcode to allow the code to compile successfully. 
+You can get the latest IDE for macOS [here](https://github.com/madmachineio/MadMachineIDE/releases). 
 
-![](img/downloadIDE.png)
 
-The IDE for Windows doesn't support our new features since we are waiting for the Window support of Swift language. 
+:::note
+Your computer should have Xcode to allow the code to compile successfully. 
+:::
+
+The IDE for Windows doesn't support our new features since we are waiting for the Window support of Swift language...
 
 Double click the downloaded file and follow the installation instructions. If you have any problem, you can refer to [FAQ](./faq.md). 
+
+![](img/downloadIDE.png)
 
 :::info
 For advanced users, you may edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.

@@ -5,7 +5,7 @@ description: You will use a button to change digital inputs. The microcontroller
 
 # Read digital input
 
-In this example, let's try to read digital signals using a pushbutton. When you press or release the button, the input value will change accordingly. The value is true or false. You could see the result in the serial monitor.
+In this example, let's try to read digital signals using a pushbutton. When you press or release the button, the input value will change accordingly. The value is true or false. You can see the result in the serial monitor.
 
 ## What you need
 
@@ -17,13 +17,13 @@ In this example, let's try to read digital signals using a pushbutton. When you 
 ## Circuit
 
 1. Plug the button into the breadboard. Make sure the button is not in the wrong direction.
-2. Connect one leg on the left side to the pin 3V3V. 
+2. Connect one leg on the left side to the pin 3V3. 
 3. Connect one leg on the right side to pin D1. 
 
 ![](img/readDigitalInput.png)
 
 :::note
-In a breadboard, the holes beside the **blue** horizontal line are all connected. They are for **ground**. The holes beside the **red** line are the same and connect to the **power** pin. In the middle, there are 30 rows. The holes A, B, C, D, E in the same row are connected internally. The holes F, G, H, I, J are the same. 
+In a breadboard, the holes beside the **blue** horizontal line are all connected. They are for **ground**. The holes beside the **red** line are the same and connect to the **power** pin. In the middle, there are 30 rows. The holes A, B, C, D, E in the same row are connected internally. The holes F, G, H, I, J are the same. So make sure the button is placed in the right direction.
 :::
 
 :::info
@@ -114,3 +114,5 @@ The function `print()` can print the values out. You can view them on the serial
 - `read()` - read values from a input pin. It will return a boolean value. `true` corresponds to a high level, and `false` corresponds to a low level.
 
 `print()` - print the values out.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.

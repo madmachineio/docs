@@ -121,3 +121,5 @@ After finishing the first loop, the value is about 1.01. So `value = 1.0` is to 
 - `init(_:frequency:dutycycle:)` - initialize a PWM pin. You need to tell the id of a specified pin to initialize it. The frequency and duty cycle have their default value. You can set their values or change them later.
 
 - `setDutycycle(_:)` - set the on-time of the signal to change the average voltage.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.

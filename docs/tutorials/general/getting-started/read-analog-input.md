@@ -121,3 +121,5 @@ Print the result directly to the serial port. You can view the results on the se
 - `init(_:)` - initialize an analog input pin. You need to tell the id of a specified pin to initialize it.
 
 - `readVoltage()` - read the input voltage from a pin. It will return a float between 0 and 3.3.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
