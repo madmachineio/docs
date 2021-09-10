@@ -1,25 +1,27 @@
 ---
 title: Blink
-description: Learn how to blink an LED using your board and know about digital signal.
+description: Learn how to blink an LED using your board and know about digital signals.
 ---
 
 # Blink
 
-Let's first come to an easy beginner project - blink the onboard LED. This example shows the simplest thing you can do with just the board to see the physical output.
+Let's first come to an easy beginner project - blink the onboard LED. The LED will be on and off per second. It is always the first try when you begin to program the microcontrollers, like a hello world project. 
 
 ## What you need
 - SwiftIO Feather (or SwiftIO board) 
 
-![](img/feather.png)
+
 
 :::note
-The projects in the **General** will use SwiftIO Feather as an example. You can also use the SwiftIO board instead. And you may need to change your code accordingly.
+The projects in the section **General** will use SwiftIO Feather as an example. You can also use the SwiftIO board instead. And you may need to change your code accordingly.
 :::
 
 
 ## Circuit
 
 For this project, you only need the board. There is a built-in RGB LED on the board as shown in the image above. You can control it using the methods in `DigitalOut` class.
+
+![](img/feather.png)
 
 Just plug the board into your computer with a USB cable to download your code.
 
@@ -51,9 +53,6 @@ while true {
 }
 ```
 
-## What you'll see
-
-The green LED will be off and on alternatively. 
 
 ## Background
 

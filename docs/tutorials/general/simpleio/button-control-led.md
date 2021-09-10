@@ -5,7 +5,7 @@ description: You will program your board to build a LED switch. When you press t
 
 # Button control LED
 
-In this example, you will use a pushbutton to control the LED. The input signal will change as you press the button. Thus, you can set LED states according to input states.
+In this example, you will use a pushbutton to control the LED. The input signal will change as you press the button. Thus, you can set LED states according to input states. When you press the button, the LED turns on. When you release it, the LED turns off.
 
 ## What you need
 
@@ -54,11 +54,6 @@ while true {
 
 }
 ```
-## What you'll see
-
-When you press the button, the red LED on your board will turn on. Once you release it, the LED turns off.
-
-
 
 
 ## Code analysis

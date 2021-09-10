@@ -1,11 +1,11 @@
 ---
 title: Blink analog
-description: You will rotate the potentiometer to change the brightness of the LED.
+description: You will program your board in Swift to change the blink rate of the LED using a potentiometer.
 ---
 
 # Blink analog
 
-In this example, you will use a potentiometer to control the flashing speed of an LED light. The speed will change as you turn it.
+In this example, you will use a potentiometer to control the flashing speed of an LED light. It will change as you turn it.
 
 ## What you need
 
@@ -19,15 +19,14 @@ In this example, you will use a potentiometer to control the flashing speed of a
 
 ## Circuit
 
+
+1. Place the potentiometer onto the breadboard. Connect the legs on the left to pin **3V3**, connect the second leg to pin **A0**, and the third leg to pin **GND**.
+2. Place the LED onto the breadboard. The long leg of LED goes to **D19** through a resistor. The short leg connects to **GND**.
+
 ![](img/blinkRate.png)
 
-Prepare the jumper wire cables, be aware of the female and male ends. Connect the male ends to the SwiftIO board at ports 3.3V, A6, and GND.
 
-Connect the A6 wire to the middle pin of the potentiometer. Connect the GND wire to the outer pins of the potentiometer, and the 3.3V wire to the other outer pin of the potentiometer.
-
-For the LED module, connect jumper wires to GND and SIG ports. Connect the GND wire to the GND port of SwiftIO, and connect the SIG wire to the D10 port.
-
-## Code
+## Example code
 
 ```swift
 // Read the analog input and use it to set the rate of LED blink.
@@ -35,11 +34,11 @@ For the LED module, connect jumper wires to GND and SIG ports. Connect the GND w
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
-import SwiftIOBoard
+import SwiftIOFeather
 
 // Initialize an analog input and a digital output pin the components are connected to,
 let sensor = AnalogIn(Id.A0)
-let led = DigitalOut(Id.D0)
+let led = DigitalOut(Id.D19)
 
 // Enable the LED to blink over and over again.
 while true {
@@ -52,13 +51,30 @@ while true {
 }
 ```
 
-## Instruction
+## Code analysis
 
-`.readRawValue()` method reads the current raw value from the specified analog pin. Since the analog-to-digital converter on the SwiftIO Board has a resolution of 12-bit, therefore, the corresponding value would be 0-4095.
+```swift
+let value = sensor.readRawValue()
+```
 
-`.toggle()` method, as the name suggests, inverts the output level on a specific digital pin. For example, if the original output is a high voltage, then it will be changed to low voltage.
+The method `.readRawValue()` reads the current raw value from the specified analog pin. Since the analog-to-digital converter on the SwiftIO Board has a resolution of 12-bit, therefore, the corresponding value would be 0-4095.
 
-Between each `.toggle()`, a `sleep(ms: )` function with a parameter `value` is used. It makes sure that there's a certain amount of time between each toggle, and the time is under control.
+```swift
+led.toggle()
+```
 
+The method `.toggle()`, as the name suggests, changes the output level. If it's high level now, it will be changed to low, and vice versa. And you even don't need to know the current state.
 
+```swift
+sleep(ms: value)
+```
+The function `sleep()` keeps the current state of LED for a specified time. And the time is decided by the value. It makes sure that the time between each toggle is under control and changes with the potentiometer.
+
+## Reference
+
+[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+
+[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
 

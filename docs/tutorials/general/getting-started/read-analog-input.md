@@ -1,11 +1,11 @@
 ---
 title: Read analog input
-description: You will connect a potentiometer to your board and read analog input values. The value will be printed on the serial monitor.
+description: You will connect a potentiometer to your board and read analog input values. Then you view them on the serial monitor.
 ---
 
 # Read analog input
 
-So far, you've learned about digital signals. In this example, let's try analog signals. You'll use a potentiometer to get different results.
+So far, you've learned about digital signals. In this example, let's try analog signals. You'll turn a potentiometer to change the input. Your board reads its value and shows them on the serial monitor.
 
 
 ## What you need
@@ -54,9 +54,6 @@ while true {
 }
 ```
 
-## What you'll see
-
-As you turn the potentiometer, the values printed on the screen change accordingly. They may gradually approach 0 or 3.3 depending on the direction you rotate.
 
 ## Background
 

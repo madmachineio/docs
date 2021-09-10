@@ -5,7 +5,7 @@ description: You will DIY breathing LED. The microcontroller will output PWM sig
 
 # PWM Brightness Control
 
-In this project, let's try to control the brightness of LED - light gradually on and off LED. 
+You may notice the breathing light on your phone when a new message comes. It smoothly changes from dark to bright and back to dark. In this project, let's try to realize it using an LED. 
 
 ## What you need
 
@@ -31,7 +31,7 @@ Let's build the circuit as below.
 You can find the example code at the bottom left corner of IDE: ![](img/example.png) / `GettingStarted` / `PWMBrightnessControl`.
 
 ```swift
-// Brighten or dimming the LED by changing the duty cycle of PWM signal.
+// Brighten or dimming the LED by changing the duty cycle of a PWM signal.
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
 
@@ -66,10 +66,6 @@ while true {
 }
 ```
 
-
-## What you'll see
-
-The LED will gradually brighten to its full brightness. Then it will become dimmer until it's off. And it will repeat the changes over and over again.
 
 ## Background
 

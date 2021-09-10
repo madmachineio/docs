@@ -5,7 +5,7 @@ description: You will use a button to change digital inputs. The microcontroller
 
 # Read digital input
 
-In this example, let's try to read digital signals using a pushbutton. When you press or release the button, the input value will change accordingly. The value is true or false. You can see the result in the serial monitor.
+In this example, let's try to read digital signals using a pushbutton. When you press or release the button, the input value will change accordingly, either true or false. You can see the result in the serial monitor.
 
 ## What you need
 
@@ -57,10 +57,6 @@ while true {
     sleep(ms: 1000)
 }
 ```
-
-## What you'll see
-
-If you release the button, the value is false. When you press the button, the value changes to true.
 
 ## Background
 
