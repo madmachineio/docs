@@ -40,7 +40,6 @@ timer.setInterrupt(ms: 1000) {
     red.toggle()
 }
 
-
 while true {
 
 }
@@ -64,6 +63,9 @@ The function you choose for interrupt should be able to execute **extremely quic
 
 The timer is a part of the hardware on the board. It works just like an alarm clock. You set the time interval for the interrupt. If the time is up, the microcontroller will execute the specified program. 
 
+![](img/timer.png)
+
+
 ## Code analysis
 
 ```swift
@@ -77,7 +79,7 @@ timer.setInterrupt(ms: 1000) {
 }
 ```
 
-The method `setInterrupt()` is used to set the interval and the ISR. It has 4 paramter in all:
+The method `setInterrupt()` is used to set the interval and the ISR. It has 4 parameters in all:
 
 `setInterrupt(ms period: Int, mode: Mode = .period, start: Bool = true, _ callback: @escaping ()->Void)`
 
