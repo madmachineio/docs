@@ -78,6 +78,8 @@ module.exports = {
           items: [
             'tutorials/general/simpleio/button-control-led',
             'tutorials/general/simpleio/blink-analogin',
+            'tutorials/general/simpleio/blink-timer',
+            'tutorials/general/simpleio/brightness-analogin',
           ],
         },
 
@@ -91,13 +93,7 @@ module.exports = {
         'tutorials/swiftio-maker-kit/test',
       ],
     },
-    {
-      type: 'category',
-      label: 'SwiftIO Circuit Playgrounds',
-      items: [
-        'tutorials/swiftio-circuit-playgrounds/test',
-      ],
-    },
+
   ],
 
   referenceSidebar: [

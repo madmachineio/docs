@@ -81,6 +81,15 @@ The **duty cycle** is the percentage of on-time of output signal during one peri
 
 ![](img/PWMSignal.png)
 
+### Why PWM instead of analog signal?
+
+Unlike incandescent light bulbs, LEDs (and some other devices) can only operate under certain voltages. Lowering the voltage on LEDs wouldn't result in lower brightness. The LED will turn off if the voltage isn't high enough.
+
+However, you can use PWM to control the overall power output of the LEDs. The LED is flashing, but it is imperceptible to your eyes. So it seems that this LED is darker or brighter.
+
+BTW, most mobile phones use the same method to control the brightness of the screen. However, if the flashing frequency is too low (the screen is very dark), it may be harmful to your eyes.
+
+
 ## Code analysis
 
 ```swift
@@ -103,7 +112,7 @@ while value <= 1.0 {
 }
 ```
 
-It ensures the value not bigger than 1.0 and gradually brightens the LED. `.setDutyCycle` method allows you to set the duty cycle. Each time, you will gradually increase the value by 0.01. The brightening process lasts for 2 minutes. To ensure a smooth brightness change, you need to set appropriate value change and sleep time. 
+It ensures the value is not bigger than 1.0 and gradually brightens the LED. `.setDutyCycle` method allows you to set the duty cycle. Each time, you will gradually increase the value by 0.01. The brightening process lasts for 2 minutes. To ensure a smooth brightness change, you need to set appropriate value change and sleep time. 
 
 ```swift
 value = 1.0
