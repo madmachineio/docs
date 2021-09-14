@@ -9,14 +9,15 @@ This demo is similar to the previous PWM brightness control, but you will make 3
 
 ## What you need
 
-* SwiftIO board
-* Jumper wires
-* 3x color LEDs and 3x 330-ohm resistors \(or 3-color LED Modules\)
-* SwiftIO shield \(optional\)
+- SwiftIO Feather (or SwiftIO board)
+- Breadboard
+- 3x LEDs
+- 3x 330ohm resistors
+- Jumper wires
 
 ## Circuit
 
-![](../../.gitbook/assets/LEDsBrightness.png)
+![](img/leds.png)
 
 ## Example code
 
@@ -65,6 +66,26 @@ while true {
 
 ## Code analysis
 
-`let leds = [red, green, blue]` This is one of the Swift collection types, known as an array. The array is an ordered collection of values. You could access and modify an array through its methods and properties, or by using subscript syntax, such as `leds.red`, `leds.green`, `leds.blue`.
+```swift
+let leds = [red, green, blue]
+```
+There are 3 LEDs in total. They all repeat the same operations. So you can put them in an array. 
 
-You can iterate over the entire set of values in an array with the for-in loop: `for led in leds`. This is the reason why we want to create the array `leds`. With the for-in loop syntax structure, it's very convenient and concise to iterate each one in it. Or, you might need to write the same block of code many times.
+An **array** is a collection of ordered values of the same type. To access its item, you can use its index. The index starts from 0. So if you want to access red led, it's `leds[0]`.
+
+```swift
+for led in leds {
+
+}
+```
+
+Then you can use `for-in` loop to iterate over the array. That's why you create it. You can avoid repeating the same code many times and thus simplify the code.
+
+`led` represents each item in the array `leds`, and you can name it as you like. In the loop, the first item will execute the code in the brackets. After that, the second one repeats the task. The task will repeat several times until all items finish it.
+
+## Reference
+
+[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
