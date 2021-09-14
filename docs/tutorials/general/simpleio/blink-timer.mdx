@@ -24,7 +24,10 @@ All you need is a compatible board. Connect it to your computer to download the 
 
 
 ## Example code
-You can find the example code at the bottom left corner of IDE: ![](img/example.png) / `SimpleIO` / `BlinkTimer`.
+You can find the example code at the bottom left corner of IDE: <img
+  src={require('./img/example.png').default}
+  alt="circuit diagram" width="20"
+/> / `SimpleIO` / `BlinkTimer`.
 
 ```swift
 // Change the LED state every second by setting the interrupt.
@@ -56,9 +59,11 @@ An interrupt ensures that the processor responds immediately to some events. Whe
 
 The interrupt can happen under several different conditions. You will use a timer to trigger it in this demo.
 
-![](img/interrupt.png)
 
-
+<img
+  src={require('./img/interrupt.png').default}
+  alt="interrupt" width="480"
+/>
 
 :::note
 The function you choose for interrupt should be able to execute **extremely quickly**. Usually, we tend to change the state of pins or some values. 
