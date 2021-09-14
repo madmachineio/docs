@@ -16,8 +16,11 @@ In the previous demo, you change the output constantly and using the function `s
 
 All you need is a compatible board. Connect it to your computer to download the code.
 
-![](img/feather.png)
 
+<img
+  src={require('./img/feather.png').default}
+  alt="circuit diagram" width="480"
+/>
 
 
 ## Example code
@@ -55,6 +58,8 @@ The interrupt can happen under several different conditions. You will use a time
 
 ![](img/interrupt.png)
 
+
+
 :::note
 The function you choose for interrupt should be able to execute **extremely quickly**. Usually, we tend to change the state of pins or some values. 
 :::
@@ -63,8 +68,11 @@ The function you choose for interrupt should be able to execute **extremely quic
 
 The timer is a part of the hardware on the board. It works just like an alarm clock. You set the time interval for the interrupt. If the time is up, the microcontroller will execute the specified program. 
 
-![](img/timer.png)
 
+<img
+  src={require('./img/timer.png').default}
+  alt="timer" width="480"
+/>
 
 ## Code analysis
 
