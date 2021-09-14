@@ -24,11 +24,18 @@ Let's build the circuit now.
 3. Connect the second leg to pin A0.
 4. Connect the third leg goes to pin 3V3.
 
-![](img/readAnalogInput.png)
+
+<img
+  src={require('./img/readAnalogInput.png').default}
+  alt="circuit diagram" width="480"
+/>
 
 ## Example code
 
-You can find the example code at the bottom left corner of IDE: ![](img/example.png) / `GettingStarted` / `ReadAnalogInput`.
+You can find the example code at the bottom left corner of IDE: <img
+  src={require('./img/example.png').default}
+  alt="example" width="20"
+/> / `GettingStarted` / `ReadAnalogInput`.
 
 For the code, you will use the `AnalogIn` class.
 
@@ -62,7 +69,12 @@ while true {
 
 You have known that the digital signal has determined values, and the analog signal is quite different. Its voltage changes smoothly with time. And its value ranges between 0V and 3.3V. So you can get 1.5V, 2V, 2.75V... There can be infinite possible values.
 
-![](img/analogSignal.png)
+
+<img
+  src={require('./img/analogSignal.png').default}
+  alt="analog signal" width="480"
+/>
+
 
 So how does the board read the values? Here comes the **analog to digital converter**. In brief, it converts the analog voltage to a digital value that the microcontroller can read. 
 
@@ -82,7 +94,11 @@ For example, if the raw value equals 0, the voltage would be 0V; if the raw valu
 
 The potentiometer is one kind of variable resistor. You could adjust its resistance by rotating it clockwise or anticlockwise.
 
-![](img/potentiometer.png)
+
+<img
+  src={require('./img/potentiometer.png').default}
+  alt="potentiometer" width="480"
+/>
 
 The resistance between ① and ③ is its maximum value. The wiper divides it into two parts. As the wiper moves, the resistance of the two parts will change accordingly.
 

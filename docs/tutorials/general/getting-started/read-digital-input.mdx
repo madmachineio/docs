@@ -20,7 +20,11 @@ In this example, let's try to read digital signals using a pushbutton. When you 
 2. Connect one leg on the left side to the pin 3V3. 
 3. Connect one leg on the right side to pin D1. 
 
-![](img/readDigitalInput.png)
+
+<img
+  src={require('./img/readDigitalInpute.png').default}
+  alt="circuit diagram" width="480"
+/>
 
 :::note
 In a breadboard, the holes beside the **blue** horizontal line are all connected. They are for **ground**. The holes beside the **red** line are the same and connect to the **power** pin. In the middle, there are 30 rows. The holes A, B, C, D, E in the same row are connected internally. The holes F, G, H, I, J are the same. So make sure the button is placed in the right direction.
@@ -34,7 +38,10 @@ You can notice the wires are in different colors. Usually, red is for the wire c
 
 ## Example code
 
-You can find the example code by clicking the bottom left corner of IDE: ![](img/example.png) / `GettingStarted` / `ReadDigitalInput`.
+You can find the example code by clicking the bottom left corner of IDE: <img
+  src={require('./img/example.png').default}
+  alt="example" width="20"
+/> / `GettingStarted` / `ReadDigitalInput`.
 
 ``` swift
 // Read the input voltage on a specified digital pin. The value you get will be either true or false.
@@ -64,7 +71,11 @@ while true {
 
 The button, or pushbutton, is always used to control other devices. You can see it in a light switch, remote control, etc. This button is momentary, so its state will only change as you press it. Once you release it, it will go back to its original state.
 
-![](img/button.png)
+
+<img
+  src={require('./img/button.png').default}
+  alt="button" width="480"
+/>
 
 This kind of button usually has four legs. Every two legs are shorted, like 1 and 3, 2 and 4. 
 

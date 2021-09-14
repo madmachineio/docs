@@ -23,12 +23,19 @@ Let's build the circuit as below.
 2. The long leg (anode) of LED goes to PWM4B through a resistor.
 3. The short leg (cathode) of LED connects to the ground.
 
-![](img/PWMBrightness.png)
+
+<img
+  src={require('./img/PWMBrightness.png').default}
+  alt="circuit diagram" width="480"
+/>
 
 
 ## Example code
 
-You can find the example code at the bottom left corner of IDE: ![](img/example.png) / `GettingStarted` / `PWMBrightnessControl`.
+You can find the example code at the bottom left corner of IDE: <img
+  src={require('./img/example.png').default}
+  alt="example" width="20"
+/> / `GettingStarted` / `PWMBrightnessControl`.
 
 ```swift
 // Brighten or dimming the LED by changing the duty cycle of a PWM signal.
@@ -79,7 +86,11 @@ Now come more concepts. A fixed time **period** consists of on and off time. The
 
 The **duty cycle** is the percentage of on-time of output signal during one period. Its range is 0-1. 1 means the output is always on. 0 means the voltage is always low. And the signal with a 0.5 duty cycle is on for 50% of the time and off for 50% of the time.
 
-![](img/PWMSignal.png)
+
+<img
+  src={require('./img/PWMSignals.png').default}
+  alt="PWM Signal" width="480"
+/>
 
 ### Why PWM instead of analog signal?
 
