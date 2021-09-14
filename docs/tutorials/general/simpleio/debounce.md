@@ -17,7 +17,7 @@ This example demonstrates how to debounce an input, which means checking twice i
 
 ## Circuit
 
-![](../../.gitbook/assets/ButtoncontrolLED.png)
+
 
 ## Code
 
@@ -72,7 +72,7 @@ while true {
 
 Due to mechanical and physical issues, when you slowly press or release the button, there might be several contacts inside the button, so it often generates spurious open/close transitions when pressed or released. If you check the input state to directly determine the button state, these transitions may be read as multiple presses in a very short time. So you will need a debounce method.
 
-![](../../.gitbook/assets/bounce.png)
+
 
 This example demonstrates how to debounce an input, which means checking twice in a short period of time to make sure the pushbutton is definitely pressed. Without debouncing, pressing the button once may cause unpredictable results, like multiple LED state changes with just one press. 
 
