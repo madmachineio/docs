@@ -82,6 +82,9 @@ module.exports = {
             'tutorials/general/simpleio/brightness-analogin',
             'tutorials/general/simpleio/leds-brightness-control',
             'tutorials/general/simpleio/debounce',
+            'tutorials/general/simpleio/pwm-sound-output',
+            'tutorials/general/simpleio/pwm-melody',
+           
           ],
         },
 
