@@ -1,6 +1,7 @@
 ---
 title: Mission1_Blink
-description: Learn how to
+description: Learn how to blink the onboard LED and get started with Swift language.
+
 ---
 
 # Mission1_Blink
@@ -11,19 +12,19 @@ In the very beginning, we will start with the hello world project - blink the LE
 
 ## What you need
 
+- SwiftIO board
+
 <img
   src={require('./img/SwiftIO.png').default}
   alt="SwiftIO board" width="480"
 />
 
-- SwiftIO board
+
 You could notice there is an onboard LED. So you will only deal with it in this project, no other components are needed.
 
 
-
-
 ## Circuit
-Just connect the SwiftIO board to your computer through download port using a USB cable.
+Just connect the SwiftIO board to your computer through the download port using a USB cable.
 
 
 
@@ -55,16 +56,16 @@ while true {
 
 ## Background
 
-## Digital signal
+### Digital signal
 
-The digital signal normally has two states, its value is either **1** or **0**. For the SwiftIO board, 1 represents 3.3V, and 0 represents 0V. There are also other ways to express the same meaning: high or low, true or false. In this project, you will control the output voltage to turn on or off the LED.
+The digital signal usually has two states. Its value is either **1** or **0**. For the SwiftIO board, 1 represents 3.3V, and 0 represents 0V. There are also other ways to express the same meaning: high or low, true or false. In this project, you will control the output voltage to turn on or off the LED.
 
 <img
   src={require('./img/digitalSignal.png').default}
   alt="Digital signal" width="480"
 />
 
-## LED
+### LED
 
 The LED, or light-emitting diode, is one kind of diode. It has a **positive** leg (anode) and a **negative** leg (cathode). The long leg is positive and the short leg is negative. The current could only flow in one direction, from positive to negative. You should connect the positive leg to the current source.Only when you connect it in the right direction, the current could flow.
 
@@ -131,7 +132,7 @@ In the dead loop **while true**, all code in the brackets will run over and over
 
 The method `write(_:)` is used to set the pin to output high or low voltage. Its parameter is a boolean type: `true` corresponds to a high level and `false` corresponds to a low level. And as mentioned above, you need to set a low voltage to turn on the LED.
 
-The function `sleep(ms:)` means the delay time, calculated in milliseconds. The parameter name `ms` must be added to pass in the parameter.
+The function sleep(ms:) will stop the microcontroller's work for a specified period. It needs a period in milliseconds as its parameter. It is a global function in the library, so you can directly use it in your code.
 
 ## Reference
 
