@@ -81,6 +81,7 @@ module.exports = {
             'tutorials/general/simpleio/blink-timer',
             'tutorials/general/simpleio/brightness-analogin',
             'tutorials/general/simpleio/leds-brightness-control',
+            'tutorials/general/simpleio/debounce',
           ],
         },
 
