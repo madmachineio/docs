@@ -95,7 +95,7 @@ module.exports = {
       type: 'category',
       label: 'SwiftIO Maker Kit',
       items: [
-        'tutorials/swiftio-maker-kit/test',
+        'tutorials/swiftio-maker-kit/mission1',
       ],
     },
 
