@@ -1,8 +1,98 @@
 ---
-title: Blink
-description: Learn how to blink an LED using your board and know about digital signal.
+title: PWM sound output
+description: You will program your microcontroller board in Swift to drive a buzzer. It will generate PWM signals to make the buzzer play a scale.
 ---
 
-# Blink
+# PWM sound output
 
-to be continued
+PWM signal can change the brightness of LEDs. You must be quite familiar with it through some projects. What's more, it allows the buzzer to generate sounds.
+
+This example shows how to use the `PWMOut` to generate notes. It plays musical notes from 1 to 7 repeatedly.
+
+## What you need
+
+- SwiftIO Feather (or SwiftIO board)
+- Breadboard
+- Buzzer
+- Jumper wires
+
+## Circuit
+
+1. Plug the buzzer onto the breadboard.
+2. Connect any one leg to the pin GND and the other to the pin PWM5A. 
+
+<img
+  src={require('./img/buzzer.png').default}
+  alt="circuit diagram" width="480"
+/>
+
+## Code
+
+You can find the example code at the bottom left corner of IDE: <img
+  src={require('./img/example.png').default}
+  alt="example" width="20"
+/> / `SimpleIO` / `PWMSoundOutput`.
+
+```swift
+// Produce different notes by changing the frequency of PWM signals.
+// Import the library to enable the relevant classes and functions.
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import SwiftIOFeather
+
+// Initialize a PWM output pin the speaker connects.
+let speaker = PWMOut(Id.PWM5A)
+
+// Specify several frequencies to produce different sound.
+let fre = [262, 294, 330, 349, 392, 440, 494]
+
+// Play recurrently these notes.
+while true {
+    for f in fre {
+        // Set the frequency and the duty cycle of output to produce each note.
+        speaker.set(frequency: f, dutycycle: 0.5)
+        // Play each note for one second.
+        sleep(ms: 1000)
+    }
+}
+```
+## Background
+
+### Buzzer
+
+The PWM signal outputs high and low voltage alternatively. There is a diaphragm inside the buzzer. It can move back and forth as the signal switches between on and off. The vibration causes the surrounding air to vibrate. Thus the buzzer produces the sound. 
+
+<img
+  src={require('./img/diaphragm.png').default}
+  alt="How buzzer works" width="480"
+/>
+
+There are two kinds of buzzers. An **active** buzzer has an internal circuit to create alternating voltage. So you can connect it to power. A **passive** buzzer needs a PWM signal to vibrate the diaphragm. The frequency will influence the pitch. A higher frequency will produce a higher pitch.
+
+
+
+## Code analysis
+
+```swift
+let fre = [262, 294, 330, 349, 392, 440, 494]
+```
+
+This array stores the frequencies of seven notes from 1 to 7. The first frequency corresponds to middle C. 
+
+```swift
+speaker.set(frequency: f, dutycycle: 0.5)
+```
+
+The frequency is an essential factor for sounds. The method `set()` allows you to set both the frequency and duty cycle of the PWM signal.
+
+```swift
+sleep(ms: 1000)
+```
+`sleep` defines the duration of notes. Each note will last one second.
+
+## Reference
+
+[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
