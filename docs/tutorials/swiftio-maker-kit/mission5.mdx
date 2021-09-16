@@ -1,0 +1,54 @@
+---
+title: Mission5_Buzzer
+description: Learn how to
+---
+
+# Mission5_Buzzer
+
+
+
+
+
+## What you need
+
+
+
+
+## Circuit
+
+
+## Example code
+
+```swift
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import SwiftIOBoard
+
+let a0 = AnalogIn(Id.A0)
+
+// PWM, also known as Pulse Width Modulation is a type of digital signal.
+// The PWM signal can be used to configure a servo, or to control the dimming of a LED light.
+// Initialize a PWM output pin.
+let buzzer = PWMOut(Id.PWM2B)
+
+while true {
+    // Read the input voltage.
+    let value = a0.readPercent()
+    
+    //let value = a0.readPercent()
+    let frequency = Int(400 + 2000 * value) // calculate the float value into Int type to serve as frequency.
+    buzzer.set(frequency: frequency, dutycycle: 0.5) // Set PWM parameters.
+    sleep(ms: 20) // Set the duration of the notes.
+}
+```
+
+
+## Background
+
+
+
+## Code analysis
+
+
+## Reference

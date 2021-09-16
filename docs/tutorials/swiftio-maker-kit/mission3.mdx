@@ -1,0 +1,49 @@
+---
+title: Mission3_Push_Button
+description: Learn how to
+---
+
+# Mission3_Push_Button
+
+
+
+## What you need
+
+
+
+
+## Circuit
+
+
+## Example code
+
+```swift
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import SwiftIOBoard
+
+let led = DigitalOut(Id.RED) // Initialize the red onboard led.
+let button = DigitalIn(Id.D10) // Initialize an input pin D10 on board.
+while true {
+
+    // Read the button value. If it is pressed, turn on the led.
+    if button.read() {
+        led.write(false)
+    } else {
+        led.write(true)
+    }
+
+    sleep(ms: 10)
+}
+```
+
+
+## Background
+
+
+
+## Code analysis
+
+
+## Reference

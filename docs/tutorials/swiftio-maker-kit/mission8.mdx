@@ -1,0 +1,50 @@
+---
+title: Mission8_Servo_Motor
+description: Learn how to
+---
+
+# Mission8_Servo_Motor
+
+
+
+
+
+## What you need
+
+
+
+
+## Circuit
+
+
+## Example code
+
+```swift
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import SwiftIOBoard
+
+let a0 = AnalogIn(Id.A0) // Initialize the analog pin.
+// Each cycle of the signal lasts for 20 milliseconds.
+// The pulse should last between 0.5 and 2.5 milliseconds to activate the servo.
+// With a 0.5ms pulse, the servo will turn to 0 degrees and with a 2.5ms pulse, it will at 180 degrees.
+// In between, it is at an angle between 0–180.
+let servo = PWMOut(Id.PWM4A)
+
+while true {
+    let value = a0.readPercent() // Read the analog value and return a value between 0.0 and 1.0.
+    let pulse = Int(500 + 2000 * value) // Calculate the value to get the pulse duration.
+    servo.set(period: 20000, pulse: pulse) // Set the servo position according to the scaled value.
+    sleep(ms: 20)
+}
+```
+
+## Background
+
+
+
+## Code analysis
+
+
+## Reference

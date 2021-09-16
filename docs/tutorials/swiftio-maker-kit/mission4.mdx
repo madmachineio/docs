@@ -1,0 +1,49 @@
+---
+title: Mission4_Potentiometer_RGB
+description: Learn how to
+---
+
+# Mission4_Potentiometer_RGB
+
+
+
+
+## What you need
+
+
+
+
+## Circuit
+
+
+## Example code
+
+```swift
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import SwiftIOBoard
+
+let a0 = AnalogIn(Id.A0) // Initialize an AnalogIn pin A0.
+let led = DigitalOut(Id.RED) // Initialize the red onboard led.
+while true {
+    led.toggle()
+
+    // Return the percentage of the voltage in the range of 0.0 to 1.0.
+    let analogValue = a0.readPercent()
+    let delayTime = Int(analogValue * 500)
+
+    // Stop the program for a certain period based on the value to keep current led state.
+    sleep(ms: delayTime)
+}
+```
+
+
+## Background
+
+
+
+## Code analysis
+
+
+## Reference

@@ -5,7 +5,7 @@ description: You will DIY breathing LED. The microcontroller will output PWM sig
 
 # PWM Brightness Control
 
-In this project, let's try to control the brightness of LED - light gradually on and off LED. 
+You may notice the breathing light on your phone when a new message comes. It smoothly changes from dark to bright and back to dark. In this project, let's try to realize it using an LED. 
 
 ## What you need
 
@@ -23,15 +23,22 @@ Let's build the circuit as below.
 2. The long leg (anode) of LED goes to PWM4B through a resistor.
 3. The short leg (cathode) of LED connects to the ground.
 
-![](img/PWMBrightness.png)
+
+<img
+  src={require('./img/PWMBrightness.png').default}
+  alt="circuit diagram" width="480"
+/>
 
 
 ## Example code
 
-You can find the example code at the bottom left corner of IDE: ![](img/example.png) / `GettingStarted` / `PWMBrightnessControl`.
+You can find the example code at the bottom left corner of IDE: <img
+  src={require('./img/example.png').default}
+  alt="example" width="20"
+/> / `GettingStarted` / `PWMBrightnessControl`.
 
 ```swift
-// Brighten or dimming the LED by changing the duty cycle of PWM signal.
+// Brighten or dimming the LED by changing the duty cycle of a PWM signal.
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
 
@@ -67,10 +74,6 @@ while true {
 ```
 
 
-## What you'll see
-
-The LED will gradually brighten to its full brightness. Then it will become dimmer until it's off. And it will repeat the changes over and over again.
-
 ## Background
 
 ### Pulse Width Modulation (PWM)
@@ -83,7 +86,20 @@ Now come more concepts. A fixed time **period** consists of on and off time. The
 
 The **duty cycle** is the percentage of on-time of output signal during one period. Its range is 0-1. 1 means the output is always on. 0 means the voltage is always low. And the signal with a 0.5 duty cycle is on for 50% of the time and off for 50% of the time.
 
-![](img/PWMSignal.png)
+
+<img
+  src={require('./img/PWMSignal.png').default}
+  alt="PWM Signal" width="960"
+/>
+
+### Why PWM instead of analog signal?
+
+Unlike incandescent light bulbs, LEDs (and some other devices) can only operate under certain voltages. Lowering the voltage on LEDs wouldn't result in lower brightness. The LED will turn off if the voltage isn't high enough.
+
+However, you can use PWM to control the overall power output of the LEDs. The LED is flashing, but it is imperceptible to your eyes. So it seems that this LED is darker or brighter.
+
+BTW, most mobile phones use the same method to control the brightness of the screen. However, if the flashing frequency is too low (the screen is very dark), it may be harmful to your eyes.
+
 
 ## Code analysis
 
@@ -107,7 +123,7 @@ while value <= 1.0 {
 }
 ```
 
-It ensures the value not bigger than 1.0 and gradually brightens the LED. `.setDutyCycle` method allows you to set the duty cycle. Each time, you will gradually increase the value by 0.01. The brightening process lasts for 2 minutes. To ensure a smooth brightness change, you need to set appropriate value change and sleep time. 
+It ensures the value is not bigger than 1.0 and gradually brightens the LED. `.setDutyCycle` method allows you to set the duty cycle. Each time, you will gradually increase the value by 0.01. The brightening process lasts for 2 minutes. To ensure a smooth brightness change, you need to set appropriate value change and sleep time. 
 
 ```swift
 value = 1.0
@@ -121,3 +137,5 @@ After finishing the first loop, the value is about 1.01. So `value = 1.0` is to 
 - `init(_:frequency:dutycycle:)` - initialize a PWM pin. You need to tell the id of a specified pin to initialize it. The frequency and duty cycle have their default value. You can set their values or change them later.
 
 - `setDutycycle(_:)` - set the on-time of the signal to change the average voltage.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.

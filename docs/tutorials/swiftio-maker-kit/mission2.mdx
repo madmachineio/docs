@@ -1,0 +1,63 @@
+---
+title: Mission2_RGB_LED
+description: Learn how to blink three LEDs in turns with digital signals and get started with Swift language.
+
+---
+
+# Mission2_RGB_LED
+
+After successfully get an LED to work, why not try more LEDs? In this project, let's build the circuit and make the LEDs blink one after another.
+
+## What you need
+
+The parts you will need are all included in the Maker kit.
+
+- SwiftIO board
+- Breadboard
+- Red, green and blue LEDs
+- Resistor
+- Jumper wires
+
+
+## Circuit
+
+
+## Example code
+
+```swift
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import SwiftIOBoard
+
+// Initialize three LEDs.
+let red = DigitalOut(Id.D16)
+let green = DigitalOut(Id.D17)
+let blue = DigitalOut(Id.D18)
+
+while true {
+    // Turn on red LED for 1 second, then off.
+    red.write(true)
+    sleep(ms: 1000)
+    red.write(false)
+
+    // Turn on green LED for 1 second, then off.
+    green.write(true)
+    sleep(ms: 1000)
+    green.write(false)
+
+    // Turn on blue LED for 1 second, then off.
+    blue.high()
+    sleep(ms: 1000)
+    blue.low()
+}
+```
+
+## Background
+
+
+
+## Code analysis
+
+
+## Reference

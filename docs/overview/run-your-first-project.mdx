@@ -11,13 +11,21 @@ Now that you‘ve got your board, let's start with a hello world project - LED b
 
 At first, you certainly need a tool to edit your code. MadMachine IDE allows you to write code, compile and download it to your board. 
 
-You can get the latest IDE for macOS [here](https://www.madmachine.io/downloads). And your computer should have Xcode to allow the code to compile successfully. 
+You can get the latest IDE for macOS [here](https://github.com/madmachineio/MadMachineIDE/releases). 
 
-![](img/downloadIDE.png)
 
-The IDE for Windows doesn't support our new features since we are waiting for the Window support of Swift language. 
+:::note
+Your computer should have Xcode to allow the code to compile successfully. 
+:::
+
+The IDE for Windows doesn't support our new features since we are waiting for the Window support of Swift language...
 
 Double click the downloaded file and follow the installation instructions. If you have any problem, you can refer to [FAQ](./faq.md). 
+
+<img
+  src={require('./img/downloadIDE.png').default}
+  alt="Download the IDE" width="960"
+/>
 
 :::info
 For advanced users, you may edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.
@@ -31,19 +39,32 @@ Now, you're ready to code.
 
 1. **Open** the MadMachine IDE. Now it's empty on the right side, as you create and try more projects, it will be filled with all your projects.
 
-![Open IDE](img/createProject1.png)
+
+<img
+  src={require('./img/createProject1.png').default}
+  alt="Open IDE" width="800"
+/>
 
 2. Click **Create a new MadMachine project**.
 
-![Create a project](img/createProject2.png)
+<img
+  src={require('./img/createProject2.png').default}
+  alt="Create a project" width="800"
+/>
 
 3. **Name** the project. We call it `Blink`. You can choose any descriptive name you like for the project. Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
 
-![Name project](img/createProject3.png)
+<img
+  src={require('./img/createProject3.png').default}
+  alt="Name project" width="800"
+/>
 
 4. The new project is created. The left panel may be empty when the window opens as it needs time to load the files.
 
-![New project](img/createProject4.png)
+<img
+  src={require('./img/createProject4.png').default}
+  alt="New project" width="960"
+/>
 
 5. Now it's time to write the code. Click on the left panel `Sources` / `Blink` / `main.swift` to open the file. You will always edit the code in the file `main.swift` in your future projects. Copy and paste the following sample code into the file.
 
@@ -60,10 +81,17 @@ while true {
     sleep(ms: 1000)
 }
 ```
-![code](img/code.png)
+
+<img
+  src={require('./img/code.png').default}
+  alt="code" width="960"
+/>
 
 :::info
-There are also built-in example codes in the IDE. You can view them by clicking the button ![example](img/example.png) on the bottom left corner. Double click on the projects `Blink` in the folder `GettingStarted`. The code will show up in a new window. 
+There are also built-in example codes in the IDE. You can view them by clicking the button <img
+  src={require('./img/example.png').default}
+  alt="example" width="20"
+/> on the bottom left corner. Double click on the projects `Blink` in the folder `GettingStarted`. The code will show up in a new window. 
 
 Please make sure the board you are using is the same as the example. You can follow the instructions [here](../how-to/select-board.md) to change the board used in code.
 :::
@@ -72,21 +100,35 @@ Please make sure the board you are using is the same as the example. You can fol
 
 You may notice the message on the status bar saying the board is not connected yet. And the download button on the upper left corner is not clickable. 
 
-![Board status](img/BoardStatus.png)
+<img
+  src={require('./img/status.png').default}
+  alt="Board status" width="960"
+/>
+
 
 So connect the board to your computer first.
 
 1. Make sure that you have inserted an **SD card** into the slot.
 
-![](img/SDcard.png)
+
+<img
+  src={require('./img/SDcard.png').default}
+  alt="Insert SD card" width="480"
+/>
 
 2. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO Feather board has only the download port. SwiftIO board has both download and serial port, so make sure you connect the right port.
 
-![](img/downloadPort.png)
+<img
+  src={require('./img/downloadPort.png').default}
+  alt="Connect board to computer" width="960"
+/>
 
 3. Press the **Download button**. Once pressed, your board will appear as a USB Drive on your computer. There are two buttons on your board. The one labeled "**Download**" or "**DL**" is the correct one. The positions of the button on the two boards are as below.  
 
-![](img/downloadButton.png)
+<img
+  src={require('./img/downloadButton.png').default}
+  alt="Press download button" width="960"
+/>
 
 :::note
 Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](./faq.md#USB-driver-can't-be-mounted).
@@ -101,21 +143,33 @@ Bad quality USB cable or some third-party USB hub may cause connection failure. 
 | Slow flashing | Fail to verify bin file | - | - |
 | Fast flashing | Fail to open bin file | Detecting USB connection | Detecting SD card |
 
-![](img/greenLED.png)
+<img
+  src={require('./img/greenLED.png').default}
+  alt="Green LED is on" width="960"
+/>
 
 
 ## Step 4: Build and download the code to your board
 
 1. Once the SD card is mounted successfully, the message on the status bar will change to **"XXX ready"**. XXX corresponds to the board you're using.
 
-2. Click the Download ![download button](img/download.png) button.
+2. Click the Download <img
+  src={require('./img/download.png').default}
+  alt="download" width="20"
+/> button.
 
-![download code](img/clickDownload.png)
+<img
+  src={require('./img/clickDownload.png').default}
+  alt="Download the code" width="960"
+/>
 
 The IDE begins to build your project and download it to your board if there is no error. 
 
 After the code is downloaded, the USB drive will be removed automatically.
 
-![downloaded](img/downloaded.png)
+<img
+  src={require('./img/downloaded.png').default}
+  alt="Finished" width="960"
+/>
 
 Congratulations! The onboard green LED begins to blink per second.

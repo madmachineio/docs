@@ -24,6 +24,7 @@ module.exports = {
       label: 'Software',
       items: [
         'overview/software/madmachine-ide',
+        'overview/software/mm-sdk',
       ],
     },
     {
@@ -46,7 +47,6 @@ module.exports = {
     'how-to/open-project',
     'how-to/select-board',
     'how-to/debug',
-    'how-to/use-mm-sdk',
     'how-to/add-library',
     'how-to/write-library',
   ],
@@ -76,8 +76,15 @@ module.exports = {
           type: 'category',
           label: 'SimpleIO',
           items: [
-            'tutorials/general/simpleio/test',
-            
+            'tutorials/general/simpleio/button-control-led',
+            'tutorials/general/simpleio/blink-analogin',
+            'tutorials/general/simpleio/blink-timer',
+            'tutorials/general/simpleio/brightness-analogin',
+            'tutorials/general/simpleio/leds-brightness-control',
+            'tutorials/general/simpleio/debounce',
+            'tutorials/general/simpleio/pwm-sound-output',
+            'tutorials/general/simpleio/pwm-melody',
+           
           ],
         },
 
@@ -88,16 +95,10 @@ module.exports = {
       type: 'category',
       label: 'SwiftIO Maker Kit',
       items: [
-        'tutorials/swiftio-maker-kit/test',
+        'tutorials/swiftio-maker-kit/mission1',
       ],
     },
-    {
-      type: 'category',
-      label: 'SwiftIO Circuit Playgrounds',
-      items: [
-        'tutorials/swiftio-circuit-playgrounds/test',
-      ],
-    },
+
   ],
 
   referenceSidebar: [
