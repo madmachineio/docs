@@ -5,16 +5,31 @@ description: Learn how to
 
 # Mission5_Buzzer
 
-
-
-
+In this project, you will get a buzzer buzzing. And its sound will change as you turn the potentiometer.
 
 ## What you need
 
+The parts you will need are all included in the Maker kit.
 
+- SwiftIO board
+- Shield
+- Buzzer module
+- Potentiometer module
+- 4-pin cable
 
 
 ## Circuit
+
+1. Place the shield on top of your SwiftIO board.
+
+2. Connect the potentiometer module to pin A0 using a 4-pin cable.
+
+3. Connect the buzzer module to pin PWM2B (D10).
+
+<img
+  src={require('./img/buzzerSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 
 ## Example code
@@ -27,8 +42,6 @@ import SwiftIOBoard
 
 let a0 = AnalogIn(Id.A0)
 
-// PWM, also known as Pulse Width Modulation is a type of digital signal.
-// The PWM signal can be used to configure a servo, or to control the dimming of a LED light.
 // Initialize a PWM output pin.
 let buzzer = PWMOut(Id.PWM2B)
 
@@ -46,9 +59,75 @@ while true {
 
 ## Background
 
+### Buzzer
+
+The PWM signal outputs high and low voltage alternatively. There is a diaphragm inside the buzzer. It can move back and forth as the signal switches between on and off. The vibration causes the surrounding air to vibrate. Thus the buzzer produces the sound. 
+
+<img
+  src={require('./img/diaphragm.png').default}
+  alt="How buzzer works" width="480"
+/>
+
+There are two kinds of buzzers. An **active** buzzer has an internal circuit to create alternating voltage. So you can connect it to power. A **passive** buzzer needs a PWM signal to vibrate the diaphragm. The frequency will influence the pitch. A higher frequency will produce a higher pitch.
+
+
+### Pulse Width Modulation (PWM)
+
+Pulse Width Modulation (PWM) can simulate analog results digitally. The signal is still a square wave that switches between on and off. The duration of the "on-time" is called the **pulse width**. So this technique will change the duration of high level relative to low level. In this way, it will simulate the voltage between fully open (3.3 volts) and off (0 volts).  
+
+In this case, if you repeat this switching pattern with LEDs fast enough, the signal seems to be a stable voltage between 0 and 3.3v. And the LED would show different brightness.
+
+Now come more concepts. A fixed time **period** consists of on and off time. The duration or period is the inverse of the PWM **frequency**. For example, when the PWM frequency is 500 Hz, one period is 2 milliseconds.
+
+The **duty cycle** is the percentage of on-time of output signal during one period. Its range is 0-1. 1 means the output is always on. 0 means the voltage is always low. And the signal with a 0.5 duty cycle is on for 50% of the time and off for 50% of the time.
+
+
+<img
+  src={require('./img/PWMSignal.png').default}
+  alt="PWM Signal" width="960"
+/>
+
 
 
 ## Code analysis
+```swift
+import SwiftIO
+import SwiftIOBoard
+```
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) to use everything it. SwiftIO is used to control the input and output of SwiftIO board. SwiftIOBoard defines the pin name of the board.
 
+
+```swift
+let a0 = AnalogIn(Id.A0)
+let buzzer = PWMOut(Id.PWM2B)
+```
+Initialize the analog pin (A0) the potentiometer is connected and the PWM pin (PWM2B) the buzzer is connected.
+
+```swift
+while true {
+    let value = a0.readPercent()
+    let frequency = Int(400 + 2000 * value) 
+    buzzer.set(frequency: frequency, dutycycle: 0.5)
+    sleep(ms: 20) 
+}
+```
+Since you don't want the control to be available once, you write the code in the loop `while true`.
+
+Read the analog value in percentage and store it in the constant `value`.
+
+Then set the PWM signal. You will need `set(frequency:dutycycle:)`. This method has two parameters: frequency and duty cycle.
+
+Its frequency is related to the analog value above. While the value is too small to be used as a frequency, so you do some calculations.
+
+The duty cycle doesn't really matter in this project, and you can set it to 0.5 here.
+
+Use the function `sleep(ms:)` to make each pitch will last about 20ms.
 
 ## Reference
+
+[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+
+[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.

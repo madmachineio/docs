@@ -5,16 +5,32 @@ description: Learn how to
 
 # Mission4_Potentiometer_RGB
 
+In this project, you'll turn a potentiometer to control the LED blink rate, to make it blink faster or slower.
 
 
 
 ## What you need
+
+The parts you will need are all included in the Maker kit.
+
+- SwiftIO board
+- Shield
+- Potentiometer module
+- 4-pin cable
 
 
 
 
 ## Circuit
 
+1. Place the shield on the top of your SwiftIO board.
+
+2. Connect the potentiometer module to pin **A0** using a 4-pin cable.
+
+<img
+  src={require('./img/potSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 ## Example code
 
@@ -41,9 +57,82 @@ while true {
 
 ## Background
 
+### Analog signal
+You have known that the digital signal has determined values, and the analog signal is quite different. Its voltage changes smoothly with time. And its value ranges between 0V and 3.3V. So you can get 1.5V, 2V, 2.75V... There can be infinite possible values.
+
+
+<img
+  src={require('./img/analogSignal.png').default}
+  alt="analog signal" width="480"
+/>
+
+
+So how does the board read the values? Here comes the **analog to digital converter**. In brief, it converts the analog voltage to a digital value that the microcontroller can read. 
+
+The converter has different precision, and the **resolution** describes the possible values it can measure. Our boards have a 12-bit resolution, which means there are 4096 (0-4095) values in total. The values from 0 to 4095 are known as **raw values**.
+
+Let's see the working process in detail. When the board reads from the analog pin, it will first get a raw value between 0 and 4095, which will be mapped to voltage value proportionally. Here is the formula:
+
+**resolution / reference voltage = raw value / actual voltage**
+
+_where_
+
+_resolution: 4096; reference voltage: 3.3V_
+
+For example, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 2047 corresponds 1.65V.
+
+### Potentiometer
+
+The potentiometer is one kind of variable resistor. You could adjust its resistance by rotating it clockwise or anticlockwise.
+
+
+<img
+  src={require('./img/potentiometer.png').default}
+  alt="potentiometer" width="240"
+/>
+
+The resistance between ① and ③ is its maximum value. The wiper divides it into two parts. As the wiper moves, the resistance of the two parts will change accordingly.
+
+
 
 
 ## Code analysis
 
+```swift
+import SwiftIO
+import SwiftIOBoard
+```
+
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift).
+
+```swift
+let a0 = AnalogIn(Id.A0)
+let led = DigitalOut(Id.RED)
+```
+
+Initialize the red onboard LED and the analog pin (A0) the potentiometer connects.
+
+```swift
+led.toggle()
+```
+`toggle()` is used to reverse the digital output voltage. If the present voltage is high, it will be changed to low, and vice versa. `led.toggle()` could change the state of the onboard LED automatically. You don't need to know if the LED is on or off.
+
+```swift
+let analogValue = a0.readPercent()
+```
+`a0.readPercent()` allows you to get the input voltage in percentage. It represents the ratio between the raw value and the resolution (4096).
+
+```swift
+let delayTime = Int(analogValue * 500)
+sleep(ms: delayTime)
+```
+
+The blink rate is decided by sleep time. Then this time is related to the input value. In this way, the potentiometer could control the LED.
 
 ## Reference
+
+[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+
+[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.
