@@ -5,14 +5,31 @@ description: Learn how to
 
 # Mission10_Humiture_Sensor
 
+In the previous mission, you learn about the LCD. Now you're going to know more about it, the LCD will be used to show the temperature in your room.
+
 
 
 ## What you need
 
+The parts you will use are all included in the Maker kit.
 
+- SwiftIO board
+- Shield
+- Humiture sensor
+- 16x2 LCD
+- 4-pin cable
 
 
 ## Circuit
+
+1. Place the shield on top of the SwiftIO board.
+
+2. Connect the humiture sensor and the LCD to the I2C0. There are three available pins, you could choose any two.
+
+<img
+  src={require('./img/humitureSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 
 ## Example code
@@ -45,9 +62,61 @@ while true{
 
 ## Background
 
+### Humiture sensor
+The humiture sensor could sense the temperature and humidity at the same time.
 
+It uses the I2C protocol to communicate with the SwiftIO board. You could find a file SHT3x.swift in this mission that you could use to read the values.
 
 ## Code analysis
 
+In this project, you can find the file LCD1602.swift for the LCD and the file SHT3x.swift for the sensor. You could directly use them to simplify your code and don't need to configure them according to their datasheet.
+
+So let's come to the file `main.swift`.
+
+```swift
+import SwiftIO
+import SwiftIOBoard
+```
+Import the necessary libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift). SwiftIO is used to control the input and output of the SwiftIO board. SwiftIOBoard defines the pin name of the board.
+
+```swift
+let i2c = I2C(Id.I2C0)
+let lcd = LCD1602(i2c)
+let sht = SHT3x(i2c)
+```
+Initialize the I2C interface I2C0.
+
+Then initialize the LCD and the sensor. Both of them need the I2C interface as their parameter.
+
+let temp = sht.readCelsius()
+To get the temperature, you need the method `readCelsius()` in the file `SHT3x.swift`. It will calculate the temperature into Celsius.
+
+```swift
+lcd.write(x:0, y:0, "Temperature:")
+lcd.write(x: 0, y: 1, temp)
+lcd.write(x:4, y:1, " ")
+lcd.write(x:5, y:1, "C")
+```
+As you get the value, you could display it on the LCD. The four statements are all about the content to be displayed:
+
+- The first row of the LCD will display the text "Temperature:". It starts from the origin.
+- The temperature will be displayed on the second row from the first column. They will take up four characters.
+- The fifth is blank to separate the value from the unit.
+- The sixth is the unit.
+
+<img
+  src={require('./img/lcdContent.png').default}
+  alt="Content on the LCD" width="480"
+/>
+
+```swift
+sleep(ms: 1000)
+```
+The sensor will read value every 1s, so the value on the LCD will be refreshed per second.
 
 ## Reference
+
+[I2C](https://swiftioapi.madmachine.io/Classes/I2C.html) - use I2C protocol to communicate with other devices.
+
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.

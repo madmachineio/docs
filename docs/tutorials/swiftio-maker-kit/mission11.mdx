@@ -5,15 +5,27 @@ description: Learn how to
 
 # Mission11_Reproduce_Mission10
 
+This mission is similar to Mission10. You will display the temperature on the LCD. But you will use an external library to realize it.
 
+The parts you will use are all included in the Maker kit.
 
-## What you need
-
-
+- SwiftIO board
+- Shield
+- Humiture sensor
+- 16x2 LCD
+- 4-pin cable
 
 
 ## Circuit
 
+1. Place the shield on top of the SwiftIO board.
+
+2. Connect the humiture sensor and the LCD to the I2C0. There are three available pins, you could choose any two.
+
+<img
+  src={require('./img/humitureSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 ## Example code
 
@@ -45,11 +57,21 @@ while true{
 }
 ```
 
-## Background
-
-
-
 ## Code analysis
 
+The code above includes the two files to configure the LCD and humiture sensor. However, there is a more convenient way - using libraries and you don't need to add hardware drivers in your projects.
+
+Simply put, a library contains a block of code that is for specific functionality. Then you could use it in any of your projects to realize those functionalities.
+
+In the previous code, the two files are included, so you could directly use them.
+
+Now, you will use the online libraries - LCD1602 and SHT3x in your code. They are in the MadDriver that contains all the related hardware libraries and its location has been indicated in the project. Thus you don't need to add these files to your project and just import them into your code. The IDE will download them automatically when building your project.
+
+Then the rest of the code is the same as the previous one.
 
 ## Reference
+
+[I2C](https://swiftioapi.madmachine.io/Classes/I2C.html) - use I2C protocol to communicate with other devices.
+
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.

@@ -5,22 +5,102 @@ description: Learn how to
 
 # Mission12_Buzzer_Music
 
-
-
-
+In this project, let's play a known song Twinkle twinkle little star using a buzzer.
 
 
 ## What you need
 
+The parts you will use are all included in the Maker kit.
 
+- SwiftIO board
+- Shield
+- Buzzer
+- 4-pin cable
 
 
 ## Circuit
 
 
+
+1. Place the shield on the top of your SwiftIO board.
+
+2. Connect buzzer module to pin PWM2B (D10).
+
+<img
+  src={require('./img/buzzerSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
+
+
 ## Example code
 
-```swift
+```swift title="Twinkle.swift"
+import PWMTone
+
+struct Music {
+    static let twinkle: [(note: PWMTone.Note, value: Int)] = [
+        (.C4, 4),
+        (.C4, 4),
+        (.G4, 4),
+        (.G4, 4),
+
+        (.A4, 4),
+        (.A4, 4),
+        (.G4, 2),
+
+        (.F4, 4),
+        (.F4, 4),
+        (.E4, 4),
+        (.E4, 4),
+
+
+        (.D4, 4),
+        (.D4, 4),
+        (.C4, 2),
+
+        (.G4, 4),
+        (.G4, 4),
+        (.F4, 4),
+        (.F4, 4),
+
+        (.E4, 4),
+        (.E4, 4),
+        (.D4, 2),
+
+        (.G4, 4),
+        (.G4, 4),
+        (.F4, 4),
+        (.F4, 4),
+
+        (.E4, 4),
+        (.E4, 4),
+        (.D4, 2),
+
+        (.C4, 4),
+        (.C4, 4),
+        (.G4, 4),
+        (.G4, 4),
+
+        (.A4, 4),
+        (.A4, 4),
+        (.G4, 2),
+
+        (.F4, 4),
+        (.F4, 4),
+        (.E4, 4),
+        (.E4, 4),
+
+        (.D4, 4),
+        (.D4, 4),
+        (.C4, 2)
+    ]
+}
+
+```
+
+
+
+```swift title="main.swift"
 import SwiftIO
 import SwiftIOBoard
 import PWMTone
@@ -44,9 +124,83 @@ while true {
 
 ## Background
 
+### Musical notes
 
+Before coming to the code, you will know something about the notes.
+
+There are 88 keys in total on a piano keyboard, from A0 to C8. These notes correspond to different frequencies from low to high.
+
+<img
+  src={require('./img/keyboard.png').default}
+  alt="Piano keyboard" width="960"
+/>
+
+A half step, or semitone, is the smallest interval between notes, for example, the interval between the key A and key A# is a half step. Two half steps constitute a whole step, like the interval between A and B.
+
+An octave consists of 12 half steps. It is the distance between a note and the next note with the same name, for example, the first key A to the second key A forms an octave.
+
+A quarter note is the common note length in music and has one beat. Then the other notes are based on it: a half note has two beats, a whole note has four beats, an eighth note has half of the beat, etc.
+
+BPM, or beat per minute, is used to measure the tempo of a piece of music. For example, 60 BPM means there would be 60 beats in a minute and each beat lasts 1 second.
 
 ## Code analysis
 
+You can find two files in the project.
+
+The file `Twinkle.swift` records the notes of the melody and the duration of each note.
+
+In the file `main.swift`, you will set the PWM signal to play the music. Let's take a look at it.
+
+```swift
+import SwiftIO
+import SwiftIOBoard
+import PWMTone 
+```
+[SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) are the libraries used in all these projects.
+
+And you will use another library [PWMTone](https://github.com/madmachineio/PWMTone). It allows you to set the PWM in accordance with the musical score.
+
+```swift
+var halfStep = 0 
+```
+The value `halfStep` is used to change the pitch. It equals 0, so the pitch remains unchanged.
+
+```swift
+var bpm = 60 
+```
+Set the bpm to 60, so each beat will last one second.
+
+```swift
+let player = PWMTone(PWMOut(Id.PWM2B), bpm: bpm) 
+```
+Initialize the player. It has three parameters:
+
+- The first one is the PWM pin,
+- The second is the bpm.
+- The third one sets the interval between each note, it equals 0.1 by default.
+
+```swift
+player.play(track: Music.twinkle) 
+```
+This statement is to play the music. The method `play(track:halfstep)` has two parameters.
+
+- The track is an array of tuples that indicates notes and note length. `Music.twinkle` refers to the score written in the file `Twinkle.swift`. In the struct `Music`, there is a constant twinkle that stores the notes and the note length. So the track is written as `Music.twinkle`.
+- The halfStep has a default value of 0. You will set it later. So you could ignore it here.
+
+```swift
+bpm += 40 
+player.setBPM(bpm) 
+```
+Then increase the bpm to make the tempo a little faster. This increment is a random number you prefer.
+
+```swift
+halfStep += 12
+player.setFixedHalfStep(halfStep)
+```
+These two statements aim to raise an octave, so the pitch of the music sounds higher.
 
 ## Reference
+
+[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+
+[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
