@@ -5,16 +5,34 @@ description: Learn how to
 
 # Mission7_DC_Motors
 
-
+In this mission, let's DIY a small fan. You will use a DC motor and control its speed using a potentiometer.
 
 
 
 ## What you need
 
+The parts you will need are all included in the Maker kit.
 
+- SwiftIO board
+- Shield
+- Motor
+- Fan blade
+- Potentiometer module
+- 4-pin cable
 
 
 ## Circuit
+
+1. Place the shield on top of your SwiftIO board.
+
+2. Connect the potentiometer module to pin A0 using a 4-pin cable.
+
+3. Connect Motor Driver module to pin PWM2B (D10). Then connect the DC motor to the module and attach the fan blade to the shaft.
+
+<img
+  src={require('./img/motorSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 
 ## Example code
@@ -40,9 +58,43 @@ while true {
 
 ## Background
 
+### DC motor
 
+DC motor, or Direct Current Motor, could convert the electricity into motion.
+
+It normally has two legs, a positive one and a negative one. As you connect it to the power, it will start to rotate. And if you connect the legs in an opposite direction, the motor still works but will rotate the opposite way.
+
+Then why does it rotate when applying voltage? That's because as the current flows, there will be an electromagnet field, and will thus cause the motor to rotate. The speed of rotation could be controlled by the PWM signal. You could adjust its duty cycle to change the speed.
 
 ## Code analysis
 
+```swift
+import SwiftIO
+import SwiftIOBoard
+```
+
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift). SwiftIO is used to control the input and output of the SwiftIO board. SwiftIOBoard defines the pin name of the board.
+
+```swift
+let a0 = AnalogIn(Id.A0)
+let motor = PWMOut(Id.PWM2B)
+```
+Initialize the analog pin A0 for the potentiometer and the PWM pin PWM2B for the motor.
+
+```swift
+let value = a0.readPercent()
+motor.setDutycycle(value) 
+sleep(ms: 50)
+```
+In the dead loop, read the input value in percentage, then use this value to set the duty cycle of the PWM output. So as you rotate the potentiometer, the motor speed will change accordingly. Then set a suitable sleep time.
+
+Ok, that's all about the code. It is quite straightforward.
 
 ## Reference
+
+[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+
+[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.

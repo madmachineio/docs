@@ -101,7 +101,9 @@ module.exports = {
         'tutorials/swiftio-maker-kit/mission4',
         'tutorials/swiftio-maker-kit/mission5',
         'tutorials/swiftio-maker-kit/mission6',
-
+        'tutorials/swiftio-maker-kit/mission7',
+        'tutorials/swiftio-maker-kit/mission8',
+        'tutorials/swiftio-maker-kit/mission9',
       ],
     },
 
