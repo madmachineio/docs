@@ -1,11 +1,11 @@
 ---
 title: Mission3_Push_Button
-description: Learn how to
+description: Learn how to program in Swift your board to control an LED using a button.
 ---
 
 # Mission3_Push_Button
 
-In the two previous projects, the LEDs turn on and off automatically. Now, you will control the LED manually using a pushbutton.
+In the two previous projects, the LEDs turn on and off automatically. Now, you will control the LED manually using a button.
 
 
 ## What you need
@@ -20,13 +20,13 @@ The parts you will need are all included in the Maker kit.
 
 ## Circuit
 
-The shield is a modular circuit board that makes it easier to connect the circuit. The pins on the two sides are the same as those on the SwiftIO board. Besides, it has many grove connectors, so you could use a 4-pin cable to connect the pin instead of four jumper wires.
+The shield is a modular circuit board to connect the circuit more easily. The pins on the two sides are the same as those on the SwiftIO board. Besides, it has many grove connectors, so you could use a 4-pin cable to connect the pin instead of four jumper wires.
 
 1. Place the shield on the top of your SwiftIO board. Make sure you connect them in the right direction.
 
 2. Connect the button module to pin D10 using a 4-pin cable. You can notice each cable has four colors of wires: the black is usually for ground, the red one is for power.
 
-Ok, the circuit is complete. It is really convenient, isn't it?
+Ok, the circuit is complete. It is so convenient, isn't it?
 
 
 
@@ -78,7 +78,7 @@ If you connect both 1 and 3 to your circuit, the current can flow through it all
 
 So it's a good idea to connect the two legs on a diagonal line in the circuit, like 1 and 4.
 
-While the button module in your kit uses the grove connector, and you could directly build the circuit without worrying about the wrong connection.
+While the button module in your kit uses the grove connector, you can directly build the circuit without worrying about the wrong connection.
 
 Also, there is a known issue with the button: the [bounce](../general/simpleio/debounce.mdx). And the microcontroller might regard it as several presses. The button module uses the hardware debounce method, so you will not meet with this issue.
 
@@ -90,7 +90,7 @@ Also, there is a known issue with the button: the [bounce](../general/simpleio/d
 import SwiftIO
 import SwiftIOBoard
 ```
-First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) to use everything it. SwiftIO is used to control the input and output of SwiftIO board. SwiftIOBoard defines the pin name of the board.
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) to use everything it. **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
 
 ```swift
 let led = DigitalOut(Id.RED)
