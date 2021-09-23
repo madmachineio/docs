@@ -1,36 +1,60 @@
 ---
 title: Mission2_RGB_LED
-description: Learn how to blink three LEDs in turns with digital signals and get started with Swift language.
+description: Learn how to blink three LEDs in turns with digital signals and learn to program your board in Swift language.
 
 ---
 
 # Mission2_RGB_LED
 
-After successfully get an LED to work, why not try more LEDs? In this project, let's build the circuit and make the LEDs blink one after another.
+After successfully get an LED to work, why not try more LEDs? In this project, let's build a circuit for the first time and make the LEDs blink one after another repeatedly.
 
 ## What you need
 
-The parts you will need are all included in the Maker kit.
+The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
 
 - SwiftIO board
 - Breadboard
-- Red, green and blue LEDs
+- Red, green, and blue LEDs
 - Resistor
 - Jumper wires
 
 
 ## Circuit
 
+Let's know something about the breadboard first. The one in the kit is a tiny and simplified version. You can find many holes in it. Each upper or lower five sockets vertically beside the gap in the middle are connected as shown above. It is very convenient for your project prototype.
+
+<img
+  src={require('./img/breadboard.png').default}
+  alt="breadboard" width="240"
+/>
+
+1. Place three LEDs on different columns.
+2. The long leg of each LED connects to a digital pin: red LED connects to D16, green LED connects to D17, blue LED connects to D18.
+3. The short leg is connected to a 1k ohm resistor and goes to the pin GND.
+
+
+<img
+  src={require('./img/ledsSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
+
+BTW, you can usually find that the red jumper wires are for power, and the black ones are for ground. 
+
+
+:::note
+The resistance of the resistor is not absolute, as long as it is bigger than the minimum requirement to resist the voltage. And the brightness of the LED will be influenced by the resistor: its resistance is higher, the LED will be dimmer.
+:::
 
 ## Example code
 
 ```swift
+// Import the SwiftIO library to use everything in it.
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
 import SwiftIOBoard
 
-// Initialize three LEDs.
+// Initialize three digital pins used for the LEDs.
 let red = DigitalOut(Id.D16)
 let green = DigitalOut(Id.D17)
 let blue = DigitalOut(Id.D18)
@@ -53,11 +77,55 @@ while true {
 }
 ```
 
-## Background
+import ReactPlayer from 'react-player/youtube';
 
-
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/WH6LidZfoNw'
+    controls={true}
+  />
+</div>
 
 ## Code analysis
 
+```swift
+import SwiftIO
+import SwiftIOBoard
+```
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) to use everything in it. **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+
+```swift
+let red = DigitalOut(Id.D16)
+let green = DigitalOut(Id.D17)
+let blue = DigitalOut(Id.D18)
+```
+The class [DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) allows you to set the pin to output high or low voltage. You need to initialize three output pins: D16, D17, and D18 that the LEDs connect. Only after initialization, the pin can output the designated levels.
+
+```swift
+while true {
+}
+```
+To make the LED blink repeatedly, you need to write the code in the dead loop `while true`. The code inside it could run all the time unless you power off the board.
+
+```swift
+red.write(true)
+sleep(ms: 1000)
+red.write(false)
+```
+
+In the loop, you will set three LEDs separately. The operations are similar. Let's look at the red LED.
+
+At first, the pin outputs a high voltage to light the LED. Since each of the three LEDs connects to the digital pin and ground, they will be on as you apply a high voltage. After 1s, turn off the LED with a low voltage. So the LED will be on for 1s and then be turned off.
+
+The following LED turns on immediately and repeats the process above. Thus three LEDs blink in turns.
+
+
 
 ## Reference
+
+[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+
+[`sleep(ms:)`](https://swiftioapi.madmachine.io/Functions.html#/s:7SwiftIO5sleep2msySi_tF) - suspend the microcontroller's work and thus make the current state last for a specified time, measured in milliseconds.
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.
+

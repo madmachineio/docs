@@ -1,29 +1,44 @@
 ---
 title: Mission11_Reproduce_Mission10
-description: Learn how to
+description: Learn how to use a library to measure the temperature. You will know how to add a library to your Swift code.
 ---
 
 # Mission11_Reproduce_Mission10
 
+This mission is similar to Mission10. You will display the temperature on the LCD. But you will use an external library to realize it.
 
 
 ## What you need
+The parts you will use are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
 
-
+- SwiftIO board
+- Shield
+- Humiture sensor
+- 16x2 LCD
+- 4-pin cable
 
 
 ## Circuit
 
+1. Place the shield on top of the SwiftIO board.
+
+2. Connect the humiture sensor and the LCD to the I2C0. There are three available pins, you could choose any two.
+
+<img
+  src={require('./img/humitureSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 ## Example code
 
 ```swift
+// Import the SwiftIO library to use everything in it.
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
 import SwiftIOBoard
 
-// Import LCD1602 and SHT3x driver from MadDrivers which is an online git repo
+// Import LCD1602 and SHT3x driver from MadDrivers which is an online git repo.
 import LCD1602
 import SHT3x
 
@@ -33,7 +48,7 @@ let lcd = LCD1602(i2c)
 let sht = SHT3x(i2c)
 
 while true{
-    // Read and display the temperature on the LCD and update the value every 1s.
+    // Read and display the temperature on the LCD and update the value every second.
     let temp = sht.readCelsius()
 
     lcd.write(x:0, y:0, "Temperature:")
@@ -45,11 +60,22 @@ while true{
 }
 ```
 
-## Background
-
-
-
 ## Code analysis
 
+In previous mission, the code includes the two files to configure the LCD and humiture sensor. However, there is a more convenient way - using libraries and you don't need to add hardware drivers to your projects.
+
+Simply put, a library contains a block of code that is for specific functionality. Then you can use it in any of your projects to realize those functionalities.
+
+In the previous code, the two files are included, so you can directly use them. Now, you will use the online libraries - LCD1602 and SHT3x in your code. They are in the [MadDriver](https://github.com/madmachineio/MadDrivers/tree/main/Sources) that contains all the related hardware libraries and its location has been indicated in the project. Thus you don't need to add these files to your project and just import them to your code. The IDE will download them automatically when building your project.
+
+Then the rest of the code is the same as the previous one.
 
 ## Reference
+
+[I2C](https://swiftioapi.madmachine.io/Classes/I2C.html) - use I2C protocol to communicate with other devices.
+
+[LCD1602](https://github.com/madmachineio/MadDrivers/blob/main/Sources/LCD1602/LCD1602.swift) - display some characters on a 16x2 LCD.
+
+[SHT3x](https://github.com/madmachineio/MadDrivers/blob/main/Sources/SHT3x/SHT3x.swift) - measure temperature and humidity and communicate using I2C protocol.
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.

@@ -26,7 +26,7 @@ Let's look at these modules in detail:
 
 
 
-This kit contains the most commonly used modules. You can create plenties of projects with it. The document that comes with it is in preparation and will guide you from the most basic concept.
+This kit contains the most commonly used modules. You can create plenties of projects with it. The document that comes with it is in preparation and will guide you from the most basic concept. Here is a [draft](https://docs.google.com/document/d/1loehCrsVMBz9qZpDv9ZDO9f9_gvPuu7pK2wZF51jGBY/edit?usp=sharing), and feel free to comment in the doc.
 
 The kit still needs more tests. What's more, there is a great chip shortage worldwide. So please stay tuned:)
  

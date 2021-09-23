@@ -1,49 +1,143 @@
 ---
 title: Mission3_Push_Button
-description: Learn how to
+description: Learn how to program in Swift your board to control an LED using a button.
 ---
 
 # Mission3_Push_Button
 
+In the two previous projects, the LEDs turn on and off automatically. Now, you will control the LED manually using a button.
 
 
 ## What you need
 
+The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
 
+- SwiftIO board
+- Shield
+- Button module
+- 4-pin cable
 
 
 ## Circuit
+
+The shield is a modular circuit board to make it easier to connect circuits. The pins on the two sides are the same as those on the SwiftIO board. Besides, it has many grove connectors, and you can use a 4-pin cable to connect the pin instead of four jumper wires.
+
+1. Place the shield on top of your SwiftIO board. Make sure you connect them in the right direction.
+
+2. Connect the button module to pin D10 using a 4-pin cable. You can notice each cable has four colors of wires: the black is usually for ground, the red one is for power.
+
+Ok, the circuit is complete. It is so convenient, isn't it?
+
+
+
+<img
+  src={require('./img/buttonSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
 
 
 ## Example code
 
 ```swift
+// Import the SwiftIO library to use everything in it.
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
 import SwiftIOBoard
 
-let led = DigitalOut(Id.RED) // Initialize the red onboard led.
-let button = DigitalIn(Id.D10) // Initialize an input pin D10 on board.
-while true {
+// Initialize the red onboard led.
+let led = DigitalOut(Id.RED) 
+// Initialize the input pin D10 on the board.
+let button = DigitalIn(Id.D10) 
 
+while true {
     // Read the button value. If it is pressed, turn on the led.
     if button.read() {
         led.write(false)
     } else {
         led.write(true)
     }
-
+    // Wait for 10ms and then continue to read values.
     sleep(ms: 10)
 }
 ```
 
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/0Ta5kAsnW8A'
+    controls={true}
+  />
+</div>
+
 
 ## Background
+
+### Button
+
+A button, or pushbutton, is always used to control other devices. You can see it in a light switch, remote control, etc. This button is momentary, so its state will only change as you press it. Once you release it, it will go back to its original state.
+
+
+<img
+  src={require('./img/button.png').default}
+  alt="button" width="960"
+/>
+
+This kind of button usually has four legs. Every two legs are shorted, like 1 and 3, 2 and 4. If you connect both 1 and 3 to your circuit, the current can flow through it all the time. So the button cannot control other components.
+
+So it's a good idea to connect the two legs on a diagonal line in the circuit, like 1 and 4.
+
+While the button module in your kit uses the grove connector, you can directly build the circuit without worrying about the wrong connection.
+
+Also, there is a known issue with the button: the [bounce](../general/simpleio/debounce#debounce). The button module uses the hardware debounce method, so you will not meet with this issue.
 
 
 
 ## Code analysis
 
+```swift
+import SwiftIO
+import SwiftIOBoard
+```
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) to use everything in it. **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+
+```swift
+let led = DigitalOut(Id.RED)
+let button = DigitalIn(Id.D10)
+```
+
+Initialize the red onboard LED and the digital pin (D10) the button connects to.
+
+In the loop, you will use the **if-else** statement to check the button states. It has the following form:
+
+```swift
+if condition {
+    statement1
+} else {
+    statement2
+} 
+```
+The condition has two results, either true or false. If it is true, statement1 will be executed; if it's false, statement2 will be executed.
+
+Then let's look back to the code.
+
+```swift
+if button.read() {
+    led.write(false)
+} else {
+    led.write(true)
+}
+```
+The method `read()` allows you to get the input value. The return value is either `true` or `false`. So you can know the states of the button according to the values. If the button is pressed, the value will be `true`, so the pin output a low voltage to turn on the onboard LED. Once you release the button, the input value is `false`, the LED will turn off.
+
+
 
 ## Reference
+
+[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+
+[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - read the input value from a digital pin.
+
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) - find the corresponding pin id of SwiftIO board.
+
