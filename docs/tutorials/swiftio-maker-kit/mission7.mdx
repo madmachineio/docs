@@ -1,6 +1,6 @@
 ---
 title: Mission7_DC_Motors
-description: Learn how to
+description: Learn how to drive a DC motor using PWM and program your board in Swift to realize it.
 ---
 
 # Mission7_DC_Motors
@@ -11,11 +11,12 @@ In this mission, let's DIY a small fan. You will use a DC motor and control its 
 
 ## What you need
 
-The parts you will need are all included in the Maker kit.
+The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
 
 - SwiftIO board
 - Shield
 - Motor
+- Motor dirver module
 - Fan blade
 - Potentiometer module
 - 4-pin cable
@@ -27,7 +28,7 @@ The parts you will need are all included in the Maker kit.
 
 2. Connect the potentiometer module to pin A0 using a 4-pin cable.
 
-3. Connect Motor Driver module to pin PWM2B (D10). Then connect the DC motor to the module and attach the fan blade to the shaft.
+3. Connect motor driver module to pin PWM2B (D10). Then connect the DC motor to the module and attach the fan blade to the shaft.
 
 <img
   src={require('./img/motorSchematic.png').default}
@@ -38,6 +39,7 @@ The parts you will need are all included in the Maker kit.
 ## Example code
 
 ```swift
+// Import the SwiftIO library to use everything in it.
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
@@ -69,11 +71,11 @@ import ReactPlayer from 'react-player/youtube';
 
 ### DC motor
 
-DC motor, or Direct Current Motor, could convert the electricity into motion.
+DC motor, or Direct Current Motor, can convert the electricity into motion.
 
 It normally has two legs, a positive one and a negative one. As you connect it to the power, it will start to rotate. And if you connect the legs in an opposite direction, the motor still works but will rotate the opposite way.
 
-Then why does it rotate when applying voltage? That's because as the current flows, there will be an electromagnet field, and will thus cause the motor to rotate. The speed of rotation could be controlled by the PWM signal. You could adjust its duty cycle to change the speed.
+Then why does it rotate when applying voltage? That's because as the current flows, there will be an electromagnet field, and will thus cause the motor to rotate. The speed of rotation can be controlled by the PWM signal. You can set the duty cycle to change the speed.
 
 ## Code analysis
 
@@ -82,7 +84,7 @@ import SwiftIO
 import SwiftIOBoard
 ```
 
-First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift). SwiftIO is used to control the input and output of the SwiftIO board. SwiftIOBoard defines the pin name of the board.
+First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
 
 ```swift
 let a0 = AnalogIn(Id.A0)
