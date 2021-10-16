@@ -143,12 +143,12 @@ python3 ~/mm-sdk/mm/src/__main__.py build
 
 ### Download an executable to the board
 
-After a successful building, there would be `.build/release/feather.bin` in your project directory. Note that the `.build` directory is hiden by default.
+After building your project successfully, there would be `.build/release/feather.bin` in your project directory. Note that the `.build` directory is hidden by default.
 
 Follow those steps to download the executable:
 
-1. Insert SD card to the board and connect the it to your computer through an USB cable
-2. Press the **Download** button and wait the onboard RGB LED turns to static **green**)
+1. Insert an SD card into the board and connect it to your computer through USB cable
+2. Press the **Download** button and wait until the onboard RGB LED turns to static **green**)
 2. A USB disk drive should be mounted on your computer
 3. Copy the `feather.bin` to the SD card root directory
 4. Eject the USB drive and the program would run automatically
