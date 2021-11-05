@@ -45,7 +45,7 @@ For the code, you will use the `AnalogIn` class.
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
-import SwiftIOFeather
+import MadBoard
 
 // Initialize the pin A0 as a analog input pin.
 let pin = AnalogIn(Id.A0)
@@ -106,7 +106,7 @@ The resistance between ① and ③ is its maximum value. The wiper divides it in
 
 ```swift
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 ```
 Import the [**SwiftIO**](https://swiftioapi.madmachine.io/) library to use the related functionalities and the [**SwiftIOFeather**](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) library to use the corresponding pin id. If you use the SwiftIO board, you need to import the `SwiftIOBoard` instead.
 

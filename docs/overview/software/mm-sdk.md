@@ -95,7 +95,7 @@ cd DemoProgram
 ```
 or
 ```shell
-python3 ~/mm-sdk/mm/src/__main__.py init -b SwiftIOFeather
+python3 ~/mm-sdk/mm/src/mm.py init -b SwiftIOFeather
 ```
 
 The `Package.swift` should look like below
@@ -138,7 +138,7 @@ cd ~/Documents/DemoProgram
 ```
 or
 ```shell
-python3 ~/mm-sdk/mm/src/__main__.py build
+python3 ~/mm-sdk/mm/src/mm.py build
 ```
 
 ### Download an executable to the board
@@ -163,7 +163,7 @@ cd ~/Documents/DemoProgram
 ```
 or
 ```shell
-python3 ~/mm-sdk/mm/src/__main__.py download
+python3 ~/mm-sdk/mm/src/mm.py download
 ```
 
 This command will find the corresponding bin file, copy it to the SD card and eject the SD card automatically.

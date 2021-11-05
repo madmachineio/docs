@@ -43,7 +43,7 @@ It's time for the code. Let's see how it works. You can find the example code at
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
-import SwiftIOFeather
+import MadBoard
 
 // Initialize the onboard green LED with other parameters set to default.
 let green = DigitalOut(Id.GREEN)
@@ -112,7 +112,7 @@ While the onboard LED is connected to 3.3V internally. If you set it to high vol
 
 ``` swift
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 ```
 
 [SwiftIO](https://swiftioapi.madmachine.io/) consists of all the functionalities to control your board. All programs must first reference it to use everything in it, like classes and functions.
