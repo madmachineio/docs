@@ -36,7 +36,7 @@ Just connect the SwiftIO board to your computer through the download port using 
 import SwiftIO
 
 // Import the board library to use the Id of the specific board. 
-import SwiftIOBoard
+import MadBoard
 
 // Initialize the blue LED 
 let led = DigitalOut(Id.BLUE)
@@ -114,7 +114,7 @@ Let's look into the code in detail:
 
 ```swift
 import SwiftIO
-import SwiftIOBoard
+import MadBoard
 ```
 [SwiftIO](https://swiftioapi.madmachine.io/) consists of all the functionalities to control your board. All programs must first reference it so you can use everything in it, like classes and functions.
 

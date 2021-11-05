@@ -43,7 +43,7 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 import SwiftIO
 
 // Import the board library to use the Id of the specific board.
-import SwiftIOBoard
+import MadBoard
 
 // Initialize the analog pin and the PWM pin 
 let a0 = AnalogIn(Id.A0)
@@ -81,7 +81,7 @@ Then why does it rotate when applying voltage? That's because as the current flo
 
 ```swift
 import SwiftIO
-import SwiftIOBoard
+import MadBoard
 ```
 
 First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
