@@ -32,7 +32,7 @@ SwiftIO Feather is a simplified version and doesn't have a serial port, but you 
 
 2. Click the port for your board. You would notice the red dot turns green, and the port is connected successfully. If you are not sure which port, you can disconnect your board and see which one disappears.
 
-![Connect serial port](img/connectport.png)
+![Connect serial port](img/connectPort.png)
 
 3. Unfold the port menu. Click the **Baud Rate** and set it to 115200. Click the **View Mode** to change it to String Mode.
 
