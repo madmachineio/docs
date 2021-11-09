@@ -9,13 +9,9 @@ Hi guys! Welcome✨!
 
 Thanks very much for your support in such an early stage! Hope we can grow together in the long term 😘!
 
-Let's talk about MadMachine project. At present, the hardware is stable enough. But the software still needs improvement. We received some issues about the software:
-- The IDE has problems in different OS environments
-- The USB drive may not appear after pressing the DOWNLOAD button
+Let's talk about MadMachine project. At present, the hardware is stable enough. But the software still needs improvement. We received some issues about the software, e.g. the USB drive may not appear after pressing the DOWNLOAD button.
 
 So we want to share you with some techniques used in our project. After reading this article, you will know the principle of our project and what to do if you encounter some issues before we solve them.
-
-
 
 ## Background
 
@@ -42,11 +38,11 @@ Unlike the **swift-project1** and **swift-embedded** that run on bare-metal, we 
 
 ## How does the building procedure work?
 
-If your project is built successfully, you will find a file `swiftio.bin` generated in the directory `.build`. After you copy it to the root directory of the SD card, eject it, the SwiftIO board will reset and run your code.
+If your project is built successfully, you will find a file `swiftio.bin` or `feather.bin` generated in the directory `.build`. After you copy it to the root directory of the SD card, eject it, the board will reset and run your code.
 
-When you click the build button or download button, the IDE will use related tools and libraries in [mm-sdk](https://github.com/madmachineio/mm-sdk/releases) to build the whole project. At present, the build script is written in Python. Later, when Swift package manager could run well in Windows, we are going to rewrite it using Swift. So we can take full advantage of the package management feature of SPM. Now, let me explain in detail the whole process of building. Suppose you create a project named **Blink**:
+When you click the build button or download button, the MadMachine tool will use related tools and libraries in [mm-sdk](https://github.com/madmachineio/mm-sdk/releases) to build the whole project. At present, the build script is written in Python. Later, when Swift package manager could run well in Windows, we are going to rewrite it using Swift. So we can take full advantage of the package management feature of SPM. Now, let me explain in detail the whole process of building. Suppose you create a project named **Blink**:
 
-When you click the **build** or **download button** in the IDE, the IDE will:
+When you click the **build** or **download button**, the tool will:
 
 1. Open a terminal and change the directory to the Blink project
 2. Execute `path_to/mm-sdk/tools_mac/scripts/dist/mm/mm build --sdk path_to/mm-sdk --module ~/Document/MadMachine/Library`
@@ -109,19 +105,7 @@ For my part, our project is more like a combination of **Arduino** and **MicroPy
 
 In addition, We would gradually provide more and more Swift libraries and try our best to take full advantage of the Swift language. Imagine that one day, you could program different screens in SwiftUI style. How cool that would be : )
 
-## Some issues from your feedback
-
-### IDE related
-
-The IDE is based on the Electron framework, and you could regard it as a graphical interface of mm-sdk. The design principle is to give beginners an easy-to-start environment to edit and build their own projects. The main purpose of the IDE is to help users to invoke the build script, copy `swiftio.bin` to the USB drive and eject the USB drive in the background.
-
-#### Can’t find the SwiftIO library when building
-
-The IDE would copy built-in Examples and Library to the user's `Documents/MadMachine` folder when you first run it. But it may encounter permission problems. If it failed to copy those files, you would meet errors when building your project. Check out if there are those two directories in your `Documents/MadMachine` first.
-
-#### Get messy code when building a project under Windows
-
-This is a known issue in the Swift compiler. Swift does not officially support Windows yet. Since Swift 5.3 would officially support Windows in a very short time, we’ll check this out then.
+## Issue from your feedback
 
 ### USB drive related
 

@@ -5,36 +5,14 @@ description: Every project is based on a specific board, since you will use the 
 
 # Select a board for your project
 
-## Choose when creating a new project
+### Choose when creating a new project
 
-When you create a new project, you can choose the board you would like to use.
+When you create a new project, you can choose the board you would like to use. You can go to [this tutorial](create-new-project) to see how you create a new project.
 
-Open the MadMachine IDE, click **Create a new MadMachine project**.
+### Change the board for an existing project
 
-![Create a project](img/create.png)
+If the example projects use a different board, you can change it to make projects run on your board.
 
-At first, you will name the project. Then you select the **Board Type**. 
+In the file `Package.mmp`, change the board type and save the file. 
 
-![project info](img/projectInfo.png)
-
-In the dropdown menu, you can find two boards now. Choose the one you are using. 
-
-![board type](img/boardType.png)
-
-After creating a project, you can notice the message on the status bar that matches the board.
-
-![board info in status bar](img/statusBar.png)
-
-## Change the board for an existing project
-
-Do you want to change the board in some of your projects? OK, no problem.
-
-You can do that in the file `Package.swift`. Change the board type and click the save button. For example, you will change board from SwiftIOFeather to SwiftIOBoard.
-
-![](img/boardChange1.png)
-
-![](img/boardChange2.png)
-
-When the file is saved, the message in the status bar will change accordingly.
-
-![](img/boardChange3.png)
+![](img/changeBoard.png)

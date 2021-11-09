@@ -1,6 +1,6 @@
 ---
 title: MM SDK
-description: For advanced users, you don't need to download the MadMachine IDE. You can edit your code wherever you like and use mm sdk to build it into the bin file.
+description: For advanced users, you don't need to install the MadMachine extension. You can edit your code wherever you like and use mm sdk to build it into the bin file.
 ---
 
 # MM SDK
@@ -12,8 +12,6 @@ The mm-sdk contains everything you need to build a MadMachine project, either a 
 A MadMachine project is structured the same as a [Swift package](https://swift.org/package-manager).
 
 Download the latest release depending on your OS on the [Releases page](https://github.com/madmachineio/mm-sdk/releases).
-
-The latest features would be added to this SDK first and then integrated into the MadMachine IDE.
 
 ## What is inside the SDK
 

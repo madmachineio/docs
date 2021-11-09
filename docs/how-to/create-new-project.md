@@ -5,21 +5,24 @@ description: After you get your board, you can try to build many interesting pro
 
 # Create a new project
 
-When you open the IDE, it will appear as follows. You need to click on **Create a new MadMachine project**. The right pane will display the projects you created or opened.
+1. Click the **Explorer** icon on VS Code. Click **MadMachine** on the botton and then click **New Project**. 
+![create a project.](img/create.png)
 
-![create a project](img/create.png)
+2. Choose the **project type**. It decides whether you create an executable project or would like to write a library. Usually, you'll choose executable to allow the project to run on your board.
 
-Then complete the project info.
+![Choose project type.](img/projectType.png)
 
-- The **Project name** is necessary for your project.
-- Keep the location as it is. The project folder is in the directory `Documents/MadMachine/Projects` by default. 
-- The **Project Type** decides whether you create an executable project or would like to write a library. Usually, you'll keep it as an executable that allows the project to run on your board.
-- The **Board Type** is used to select the right board you are going to use.
+3. Select the **board** for your project. 
 
-![project info](img/projectInfo.png)
+![Choose board type.](img/boardType.png)
 
-Click **Create**.
+4. Decide the **project name**. Press the **Enter** key.
 
-And now, you are ready to write your own project.
+![Set the project name.](img/projectName.png)
 
-![](img/createProject.png)
+5. Choose a **directory** to store the project and click **Open**.
+
+![Choose a location for the project.](img/location.png)
+
+
+The new project will appear in a new window. And now, you are ready to write code for your own project.
