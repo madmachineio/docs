@@ -6,6 +6,7 @@ description: After you get your board, you can try to build many interesting pro
 # Create a new project
 
 1. Click the **Explorer** icon on VS Code. Click **MadMachine** on the botton and then click **New Project**. 
+
 ![create a project.](img/create.png)
 
 2. Choose the **project type**. It decides whether you create an executable project or would like to write a library. Usually, you'll choose executable to allow the project to run on your board.
