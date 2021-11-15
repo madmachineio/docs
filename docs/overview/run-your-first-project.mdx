@@ -5,79 +5,105 @@ description: You will use the Swift Programming Language to blink a LED and real
 
 # Run your first project
 
-Now that you‘ve got your board, let's start with a hello world project - LED blink. 
+Now let's learn how to program your board and run your first project. You will start with a hello world project - LED blink. 
 
-## Step 1: Download and install the MadMachine IDE
+## Step 1: Install the MadMachine extension in Visual Studio Code
 
-At first, you certainly need a tool to edit your code. MadMachine IDE allows you to write code, compile and download it to your board. 
+At first, you need a tool to deal with your code. You could install the MadMachine extension for Visual Studio Code. It allows you to create a new project, compile and download it to your board. 
 
-You can get the latest IDE for macOS [here](https://github.com/madmachineio/MadMachineIDE/releases). 
-
-
-:::note
-Your computer should have Xcode to allow the code to compile successfully. 
-:::
-
-The IDE for Windows doesn't support our new features since we are waiting for the Window support of Swift language...
-
-Double click the downloaded file and follow the installation instructions. If you have any problem, you can refer to [FAQ](./faq.md). 
+1. In the Visual Studio Code, click the **Extension** icon on the left activity bar.
+2. Enter **madmachine** in the search box to find the extension in its marketplace.
+3. Click the **Install** button.
 
 <img
-  src={require('./img/downloadIDE.png').default}
-  alt="Download the IDE" width="960"
+  src={require('./img/install.png').default}
+  alt="Install the MadMachine extension" width="960"
+/>
+
+When you install the MadMachine extension, the extension Serial Port Helper will be installed as well. It allows you to view values or debug. Of course, you could use other similar tools instead.
+
+<img
+  src={require('./img/extensions.png').default}
+  alt="The MadMachine extension and serial port has been installed" width="960"
 />
 
 :::info
-For advanced users, you may edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.
+For advanced users, you could edit your code wherever you like and use the [mm-sdk](https://github.com/madmachineio/mm-sdk) to compile your code.
 :::
 
+## Step 2: Set the extension
+
+The extension relies on the mm sdk to do all its work. So you need to indicate its path before using the extension. You only set it the first time you use this extension.
+
+1. **Download** the latest [sdk](https://github.com/madmachineio/mm-sdk/releases) according to your operating system and unzip it.
+
+2. Then come back to the VS code. In the menu bar, select **Code** / **Preferences** / **Settings**.
+
+<img
+  src={require('./img/settings.png').default}
+  alt="Set the MadMachine extension" width="960"
+/>
+
+3. In the Settings, select **Extensions** / **MadMachine**. Enter the **path** of the sdk in the box that matches your operating system. Windows is not supported since we are waiting for the Window support of Swift language...
+
+<img
+  src={require('./img/sdkPath.png').default}
+  alt="Indicate the path of sdk." width="960"
+/>
 
 
-## Step 2: Code in the IDE
+## Step 3: Write code
 
 Now, you're ready to code. 
 
-1. **Open** the MadMachine IDE. Now it's empty on the right side, as you create and try more projects, it will be filled with all your projects.
-
-
-<img
-  src={require('./img/createProject1.png').default}
-  alt="Open IDE" width="800"
-/>
-
-2. Click **Create a new MadMachine project**.
+1. Click the **Explore** icon on the left bar. Then click the **MadMachine** extension on the bottom to show three buttons. Click **New Project**.
 
 <img
-  src={require('./img/createProject2.png').default}
-  alt="Create a project" width="800"
+  src={require('./img/create.png').default}
+  alt="Create a new project." width="960"
 />
 
-3. **Name** the project. We call it `Blink`. You can choose any descriptive name you like for the project. Choose the **board** you are going to use. Leave the rest as they are. Then click **Create**.
+2. Choose the project as an **executable**. 
 
 <img
-  src={require('./img/createProject3.png').default}
-  alt="Name project" width="800"
+  src={require('./img/projectType.png').default}
+  alt="Choose project type." width="960"
 />
 
-4. The new project is created. The left panel may be empty when the window opens as it needs time to load the files.
+3. Choose the **board** you are going to use.
 
 <img
-  src={require('./img/createProject4.png').default}
-  alt="New project" width="960"
+  src={require('./img/boardType.png').default}
+  alt="Choose the board." width="960"
 />
 
-5. Now it's time to write the code. Click on the left panel `Sources` / `Blink` / `main.swift` to open the file. You will always edit the code in the file `main.swift` in your future projects. Copy and paste the following sample code into the file.
+4. **Name** the project. You could choose any descriptive name you like for the project. Then press the **Enter** key.
+
+<img
+  src={require('./img/projectName.png').default}
+  alt="Enter project name." width="960"
+/>
+
+5. Choose a **location** to store the project and press **Open**. 
+
+<img
+  src={require('./img/location.png').default}
+  alt="Choose a file location." width="960"
+/>
+
+6. The project will open in a new window. Click on the Explorer `Sources` / `Blink` / `main.swift` to open the file. You will always edit the code in the file `main.swift` for your future projects. Copy and paste the following sample code into the file.
 
 ```swift
 import SwiftIO
 import MadBoard
 
-let green = DigitalOut(Id.GREEN)
+let led = DigitalOut(Id.BLUE)
 ​
 while true {
-    green.write(true)
+    led.write(true)
     sleep(ms: 1000)
-    green.write(false)
+
+    led.write(false)
     sleep(ms: 1000)
 }
 ```
@@ -87,26 +113,9 @@ while true {
   alt="code" width="960"
 />
 
-:::info
-There are also built-in example codes in the IDE. You can view them by clicking the button <img
-  src={require('./img/example.png').default}
-  alt="example" width="20"
-/> on the bottom left corner. Double click on the projects `Blink` in the folder `GettingStarted`. The code will show up in a new window. 
+## Step 4: Prepare SD card and confirm USB connection
 
-Please make sure the board you are using is the same as the example. You can follow the instructions [here](../how-to/select-board.md) to change the board used in code.
-:::
-
-## Step 3: Prepare SD card and confirm USB connection
-
-You may notice the message on the status bar saying the board is not connected yet. And the download button on the upper left corner is not clickable. 
-
-<img
-  src={require('./img/status.png').default}
-  alt="Board status" width="960"
-/>
-
-
-So connect the board to your computer first.
+After finishing the code, you need to download it to your board. So follow the steps below to connect the board to your computer first.
 
 1. Make sure that you have inserted an **SD card** into the slot.
 
@@ -116,14 +125,14 @@ So connect the board to your computer first.
   alt="Insert SD card" width="480"
 />
 
-2. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO Feather board has only the download port. SwiftIO board has both download and serial port, so make sure you connect the right port.
+2. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO Feather board has only the download port. SwiftIO board has both download and serial ports, so make sure you connect the correct port.
 
 <img
   src={require('./img/downloadPort.png').default}
   alt="Connect board to computer" width="960"
 />
 
-3. Press the **Download button**. Once pressed, your board will appear as a USB Drive on your computer. There are two buttons on your board. The one labeled "**Download**" or "**DL**" is the correct one. The positions of the button on the two boards are as below.  
+3. Press the **Download button**. Once pressed, your board will appear as a USB Drive on your computer. There are two buttons on your board. The one labeled "**Download**" or "**DL**" is the correct one.
 
 <img
   src={require('./img/downloadButton.png').default}
@@ -149,27 +158,25 @@ Bad quality USB cable or some third-party USB hub may cause connection failure. 
 />
 
 
-## Step 4: Build and download the code to your board
+## Step 5: Download code to your board
 
-1. Once the SD card is mounted successfully, the message on the status bar will change to **"XXX ready"**. XXX corresponds to the board you're using.
-
-2. Click the Download <img
-  src={require('./img/download.png').default}
-  alt="download" width="20"
-/> button.
+1. Click **MadMachine** / **Build** to build the project. It will generate a file that could run on your board.
 
 <img
-  src={require('./img/clickDownload.png').default}
+  src={require('./img/build.png').default}
+  alt="Build the code" width="960"
+/>
+
+2. Click **Download** on the MadMachine extension to download the file to your board. 
+
+<img
+  src={require('./img/download.png').default}
   alt="Download the code" width="960"
 />
 
-The IDE begins to build your project and download it to your board if there is no error. 
+If it says it cannot find the board, you could wait a little longer. Maybe your board is building the connection with your computer. And make sure you have followed step 3 above.
 
-After the code is downloaded, the USB drive will be removed automatically.
 
-<img
-  src={require('./img/downloaded.png').default}
-  alt="Finished" width="960"
-/>
+After the code is downloaded to your board successfully, the USB drive will be removed automatically.
 
 Congratulations! The onboard green LED begins to blink per second.

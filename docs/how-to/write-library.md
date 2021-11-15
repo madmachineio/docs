@@ -1,15 +1,12 @@
 ---
 title: Write a library
-description: As you try more project, you may use some new components or realize some complicated functions. You can write a new library to simplify and organize your project.
+description: As you try more projects, you may use some new components or realize some complicated functions. You can write a new library to simplify and organize your project.
 ---
 
 # Write a library
 
 A library usually contains a block of codes that provides specific functionalities. You can use it in any of your projects to realize those functionalities and don't need to copy all of its code. Let's see how to deal with it.
 
-:::note
-Only the Mac version of MadMachine IDE supports the Swift Package Manager now. So the tutorial below is based on the Mac version. We will find ways to support the Windows version later. For the moment, you could try our CLI tool [MM SDK](../overview/software/mm-sdk.md).
-:::
 
 ## How to write a library
 The LEDs sometimes need a high voltage to be on, sometimes low voltage. It's so confusing. Why not write a library to make it easier?
@@ -19,26 +16,20 @@ Let's find out why there are different situations to light the LED.
 
 It depends on how the LED is connected to your circuit. There are two ways to connect the LED:
 
-- In the first circuit, the LED is connected to the power and a digital pin. Since the current always flows from high to low voltage, if the pin outputs a high voltage, there is no voltage difference between the two ends of the LED, so the LED is off. When the pin outputs a low voltage, the current can flow from the power to the pin and the LED will be on. This is how the onboard LED works.
+- In the first circuit, the LED is connected to the power and a digital pin. Since the current always flows from high to low voltage, if the pin outputs a high voltage, there is no voltage difference between the two ends of the LED, so the LED is off. When the pin outputs a low voltage, the current can flow from the power to the pin, and the LED will be on. The onboard LED works in this way.
 
 - In the second circuit, the LED is connected to the digital pin and ground. If the pin outputs a high voltage, the current flows from the pin to the ground, and the LED will be on. If it outputs a low voltage, the LED is off.
 
 ![](img/LEDcircuit.png)
 
 ### Create a new project
-Now that you make it clear how to turn on the LED, you can write your library.
-
-Open the MadMachine IDE. Create a new project.
+Let's start to write the library. Create a new project.
 
 ![](img/create.png)
 
-Name the project. In the **Project Type** drop-down menu, choose **Library**.
+Choose **Library** as the project type. You can notice two options: an executable is a program that could run on your board; a library provides some functionalities and can be used in other projects. Then complete the project info as you do for other projects.
 
-You can notice two options: an executable is a program that could run on your board; a library provides some functionalities and can be imported to other projects.
-
-Click **Create**.
-
-![](img/createLibrary.png)
+![](img/library.png)
 
 Well, the project is ready. Let's look at the file `Package.swift`. It defines your project name and the dependencies. It is created automatically once you create your project. Usually, you'll not make any changes to this file. Here are some quick overviews of this file:
 - One project is a **package**. You can see its name `MadLed` in line 4. 

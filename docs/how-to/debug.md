@@ -24,19 +24,20 @@ SwiftIO Feather is a simplified version and doesn't have a serial port, but you 
 
 
 
-## Step 3: Open serial monitor on the IDE
+## Step 3: Open serial monitor
 
-1. Click on the serial monitor button ![serial monitor](img/serialButton.png) in the upper right corner. The Serial window will pop up.
+1. The serial extension is on the left bar. Click on the icon, and you will see the available ports. There is a small red dot before each port, which means the ports are not connected.
 
-2. Select the **UART Port** for your board. 
+![Serial port](img/serial.png)
 
-    If you are not sure which port is the right one, you can disconnect your board and see which one disappears. And if you can't find the port, close the serial monitor, wait a while, then open it again.
+2. Click the port for your board. You would notice the red dot turns green, and the port is connected successfully. If you are not sure which port, you can disconnect your board and see which one disappears.
 
-3. Click **Connect**.  
+![Connect serial port](img/connectPort.png)
 
-![](img/serialConnect.png)
+3. Unfold the port menu. Click the **Baud Rate** and set it to 115200. Click the **View Mode** to change it to String Mode.
 
+![Set baud rate](img/baudrate.png)
 
 ## Step 4: Find the problem
 
-Press the reset button on your board to restart the code. When the code runs again, you can see the values on the window. According to the values, you can see which line of code is not executed or has an error by mistake. 
+Press the reset button on your board to restart the code. When the code runs again, you can see the values on the output window. According to the printed values, you can see which line of code is not executed or has an error by mistake. 
