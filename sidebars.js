@@ -109,6 +109,13 @@ module.exports = {
         'tutorials/swiftio-maker-kit/mission12',
       ],
     },
+    {
+      type: 'category',
+      label: 'SwiftIO Circuit Playgrounds',
+      items: [
+        'tutorials/swiftio-circuit-playgrounds/led',
+      ],
+    },
 
   ],
 
