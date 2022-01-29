@@ -1,8 +1,271 @@
 ---
-title: Overview
-description: Learn how to
+title: Button-controlled LED
+description: Learn how a button works and use it to control an LED.
 ---
 
-# Button
+# Button-controlled LED
 
-// TODO
+The button is a commonly used input component. It is widely used in a light switch, remote control, keyboard, etc, to control the current flow in the circuit. Now it’s your turn to build a LED light control using a button.  
+
+**Learning goals**
+* Know about digital input. 
+* Understand how to use the button in your circuit. 
+* Get to know why a pull resistor is necessary.
+* Learn the if-else statement.
+* Get a rough idea of interrupt and debounce. 
+
+## Background
+
+### What is digital input?
+The microcontroller could not only send output voltage but also receive signals. You have looked at the digital output in the previous chapter, let’s have a look at digital input now.
+
+Like digital output, digital input has two states as well: high and low. When an input signal comes in, its voltage value will be compared with a specific threshold. If it’s higher than the threshold, it’s high, and if it’s lower, it’s low. It is kinda like a multimeter in your circuit. 
+
+According to the input value, you could easily know the exact state of the external devices, for example, check if the button is pressed or not.
+
+The digital pins on the board could act as both input and output, so you need to initialize the pin as input or output in your code.
+
+
+## New component
+
+### Pushbutton 
+Pushbutton is known as a momentary switch. By default, the circuit inside the button is disconnected, so the current will be blocked. Only when you press it, the internal metals would come into contact, then the current could flow successfully through the circuit. Once you release it, the button will go back to its original state, thus the current is blocked again. 
+
+Symbol: 
+
+
+:::note
+How to connect the button in the circuit?
+
+This kind of button usually has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button state would not influence the circuit. So the best way is to connect the two legs on a diagonal, like 1 and 4.
+:::
+
+
+
+### Pull resistor
+As you have known, the input will always be either high or low. But if the input pin is connected to nothing, what will the input value be? High or low?
+
+This is hard to say. The state of that pin will be uncertain. It will change randomly between high and low states. This state is called floating. To ensure a stable state, a pull-up or pull-down resistor is needed.
+
+* **Pull-up resistor**
+
+The Pull-up resistor connects the pin to power. In this case, the button should connect to the input pin and ground. 
+
+By default, when the button is not pressed, the current flows from power to the input pin, so it reads high level. If the button is pressed, the current flows from power directly to the ground, thus the pin reads low level.
+       
+* **Pull-down resistor**
+
+The Pull-down resistor connects the pin to the ground. If so, the button should connect to the power and input pin. 
+
+By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the current flows from power to the input pin, and the pin reads high level.
+
+You would usually need them when you use a button. On this board, there are already internal pull-up and pull-down resistors. By default, the pull-down resistor is connected. You could change it according to actual usage.
+
+## Circuit
+There are two buttons on your playgrounds. They are connected respectively to D1 and D21. 
+
+
+
+:::note
+The circuits above are simplified for your reference.
+:::
+
+## Preparation
+Let’s see the new class you are going to use in this project.
+
+Class
+DigitalIn: this class is used to get the current state of a specified input pin.
+Method
+init(_:mode:)
+Initialize the digital input pin. 
+The first parameter is the id of the pin. 
+The second parameter defines pin mode that sets the pull resistors, pullDown by default.
+read()
+Read from an input pin. It has a return value - the voltage on the pin, represented as true or false. 
+setInterrupt(_:enable:callback:)
+It allows you to define the interrupt mechanism in your project.
+This method needs three parameters:
+mode: set the edge to trigger the interrupt: .rising, .falling, .bothEdges. 
+enable: decide whether to begin the interrupt detection once you set it. By default, it is enabled.
+callback: call a block of code, known as closure. It requires a function that needs no parameter and returns nothing, that is, a void function. 
+
+
+## Exercise
+1. Control LED using a button
+2. Blink LED using interrupt
+
+### 1. Control LED using a button
+Let’s start to build a simple LED switch. When you press the button, the LED turns on. When you release the button, the LED turns off.
+
+
+**Example code**
+
+```swift
+// Import the SwiftIO library to control input and output the SwiftIOFeather to use the id of the pins.
+
+import SwiftIO
+import SwiftIOFeather
+
+// Initialize the input pin for the button and output pin for the LED.
+let led = DigitalOut(Id.D19)
+let button = DigitalIn(Id.D1)
+
+// Keep repeating the following steps.
+while true {
+    // Read the input pin to check the button state.
+    let value = button.read()
+    // If the value is true, the button is pressed, turn on the LED. Otherwise, turn off the LED.
+    if value == true {
+        led.write(true)
+    } else {
+        led.write(false)
+    }
+}
+```
+
+
+
+**Code analysis**
+
+Let’s get familiar with the following code before coding. 
+
+```swift
+let button = DigitalIn(Id.D1)
+```
+
+The button is an instance created for the DigitalIn class. As you could see, the id of the pin is necessary. That’s the pin the button connects: D1. 
+
+And there is another optional parameter that has already a default value: mode. By default, the pin is connected to the pull down resistor. 
+
+```swift
+button.read() 
+```
+
+Use the instance method read() to get the state from the pin. The return value tells you if it is high or low voltage.
+
+```swift
+if value == true {
+    led.write(true)
+} else {
+    led.write(false)
+}
+```
+
+Here the microcontroller will judge the value read from the pin. If the value equals true, it means the button is pressed, so use write() to output high voltage. 
+
+
+:::note
+You might notice two similar symbols are so confusing: = and ==. 
+Well, = is to make a constant or variable equal to the value, while == compares if values are equal. 
+:::
+
+
+
+### 2. Blink LED using interrupt
+
+In the project above, the microcontroller is doing nothing but checking the input value over and over again. But what if you want to do something else in the loop? When should the microcontroller check the pin state? It’s hard to decide.
+
+So there comes another important mechanism - interrupt for the digital input.
+
+The interrupt allows the microcontroller to quickly respond to an external event. How does it work?
+
+* Normally the microcontroller executes its main program. 
+* Once the interrupt occurs, it will suspend the normal execution and then start the task with higher priority. This task is called interrupt handler or ISR (Interrupt Service Routine). 
+* After it is finished, the microcontroller goes back to where it stopped and continues the main program.
+
+:::note
+There are two points about the ISR:
+1. Generally, the ISR should be done as fast as possible. 
+2. And it doesn’t need any parameters and returns anything. Usually, it’s better to change the state or number of some values.
+:::
+
+
+An interrupt may come from different sources. Here you are dealing with an interrupt triggered by the state change. There are three conditions in total:
+* Rising edge: when the signal changes from low to high. 
+* Falling edge: when the signal changes from high to low. 
+* Both of them.
+
+So when setting the interrupt,  you need to tell the microcontroller the specific condition: rising edge, falling edge, or both edges. Then once the specified edge is detected, the interrupt begins.
+
+You may wonder why to use the interrupt. Well, since with an interrupt, the microcontroller could respond instantly to what it is supposed to do. So the interrupt is very suitable for time-critical events. Besides, it could do other tasks while the interrupt isn’t triggered, instead of waiting there all the time to check the pin. 
+
+
+**Example code**
+
+```swift
+// Import the SwiftIO library to control input and output the SwiftIOFeather to use the id of the pins.
+import SwiftIO
+import SwiftIOFeather
+
+// Initialize the input pin for the button and output pin for the LED.
+let button = DigitalIn(Id.D1)
+let led = DigitalOut(Id.D19)
+
+// Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
+button.setInterrupt(.rising) {
+    led.toggle()
+}
+
+// Stop the board’s work when the interrupt doesn’t happen.
+while true {
+    sleep(ms: 9999)
+}
+```
+
+**Code analysis**
+
+```swift
+button.setInterrupt(.rising) {
+    led.toggle()
+}
+```
+
+To set the interrupt, you need to decide the way to trigger it. Here the rising edge will be detected. 
+The closure is not passed directly in the parameter, since it is the last parameter, and meets the special syntax in Swift. So you write the closure in the curly braces instead.
+
+`toggle()` could reverse the output no matter it’s current state. So the LED will be changed between on and off every time the interrupt happens.
+
+```swift
+while true {
+    sleep(ms: 9999)
+}
+```
+
+It is to ensure the board stops its work. For the sleep time, just add a big enough value. Without it, the board will run really quickly again and again doing nothing.
+
+
+
+## Go further 
+Congratulations! You’ve finished the previous example and understand digital input. Now let’s dive deeper into something more complicated. Don’t be upset if you are confused. This part is to provide you with more information. You could continue the learning process regardless of these concepts, and go back later if you get more familiar with all the basic knowledge.
+
+### Debounce 
+When you press or release the button, you might think the button would exactly come to a stable state, closed or open. 
+
+However, due to its mechanical structure, there would be several bounces inside the button before the internal metals finally settle down. This means once pressed, inside the button the connection will change several times between two states: establish the connection and disconnect the circuit, until the button comes to a perfect connection. The button bounce isn’t visible to your eye. You could observe it by viewing the wave in the oscilloscope. 
+
+
+The signal will thus change several times during this short period. While the microcontroller works much faster, it would read the values during this uncertain period and these noises might be considered as multiple presses.
+
+So you need the debounce method. There are many solutions, including hardware debounce and software debounce.
+
+* **Hardware debounce**
+This kind of solution is to specially design the circuit to eliminate the button bounce. So does the button on the kit. 
+Inside the circuit, there is a capacitor (C1 shown in the image below) to filter the instant changes of the voltage. After the button is pressed or released, the voltage will gradually change to another level rather than accidentally change several times between the two levels.
+
+
+* **Software debounce**
+Usually, the key point is to check many times or wait a few milliseconds to determine the final button state, since a fast press would at least last about 20ms. You could have a look at the reference code here: Example > SimpleIO > Debounce. 
+
+:::note
+Since the button on the kit uses the hardware debounce method, you will not meet this problem. But it is still an important issue when you DIY some projects using other buttons.
+:::
+
+
+## Summary
+In this section, you get to know digital input, as well as the input component - the button. And you use digital input and digital output together to realize an interactive project, the LED is controlled by you. It’s really interesting. They are not as difficult as you think, right? Besides, you learn some more concepts, like interrupt and debounce.  
+
+## More info
+Find out more details in the links below: 
+
+* [Pull resistor](https://eepower.com/resistor-guide/resistor-applications/pull-up-resistor-pull-down-resistor/#)
+* [Button bounce](https://circuitdigest.com/electronic-circuits/what-is-switch-bouncing-and-how-to-prevent-it-using-debounce-circuit)

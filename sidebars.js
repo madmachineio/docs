@@ -114,6 +114,7 @@ module.exports = {
       label: 'SwiftIO Circuit Playgrounds',
       items: [
         'tutorials/swiftio-circuit-playgrounds/led',
+        'tutorials/swiftio-circuit-playgrounds/button',
       ],
     },
 
