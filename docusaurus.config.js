@@ -111,6 +111,24 @@ module.exports = {
       darkTheme: require("prism-react-renderer/themes/vsDark"),
       additionalLanguages: ['swift'],
     },
+    algolia: {
+      // If Algolia did not provide you any appId, use 'BH4D9OD16A'
+      appId: '6R1F0BVDSY',
+
+      // Public API key: it is safe to commit it
+      apiKey: 'b30fc6d1e1a317e265f80464ff6433b9',
+
+      indexName: 'docs-madmachine',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+      externalUrlRegex: 'external\\.com|domain\\.com',
+
+      // Optional: Algolia search parameters
+      searchParameters: {},
+    },
     gtag: {
       // You can also use your "G-" Measurement ID here.
       trackingID: 'G-8H7H6DLEJ5',
