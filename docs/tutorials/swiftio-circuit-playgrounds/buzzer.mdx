@@ -49,7 +49,9 @@ The buzzer is connected to the pin PWM5A.
 
 
 
-Note: the circuits above are simplified for your reference.
+:::note
+The circuits above are simplified for your reference.
+:::
 
 ## Preparation
 Let’s look at the PWM class used for this project:
@@ -106,6 +108,7 @@ while true {
 
 
 **Code analysis**
+
 The following table explains some new knowledge about programming - array and for-in loop. They are of great use as you create more projects. 
 let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
 Here you create an array to store the frequencies of the signal. These frequencies are the notes from do to do. They constitute an octave.
@@ -215,50 +218,29 @@ Try to adjust the brightness of the LED using two buttons. One is reserved to in
 
 
 ```swift
+// Import two necessary libraries.
 import SwiftIO
 import SwiftIOFeather
 
-
-Import two necessary libraries.
-
-
+// Initialize the PWM pin.
 let led = PWMOut(Id.PWM4A)
 
-
-Initialize the PWM pin.
-
-
+// Set the frequency of the PWM signal and set the duty cycle to 0 to keep the LED off.
 led.set(frequency: 1000, dutycycle: 0)
 
-Set the frequency of the PWM signal and set the duty cycle to 0 to keep the LED off.
-
-
+// Store the max and min values of duty cycle to two constants. 
 let maxDutycycle: Float = 1.0
 let minDutycycle: Float = 0.0
 
-
-Store the max and min values of duty cycle to two constants. 
-
-
 let stepDutycycle: Float = 0.1
-
-Decide the change of duty cycle.
-
-
+// Create a variable to store the value of duty cycle.
 var dutycycle: Float = 0.0
 
-Create a variable to store the value of duty cycle.
-
-
+// Initialize the digital pins. downButton is to dim the LED and the upButton is to brighten the LED.
 let downButton = DigitalIn(Id.D1)
 let upButton = DigitalIn(Id.D21)
 
-
-
-
-Initialize the digital pins. downButton is to dim the LED and the upButton is to brighten the LED.
-
-
+// Each time the button used to dim LED is pressed, the LED will dim a little until it reaches the minimum brightness.
 downButton.setInterrupt(.rising) {
     dutycycle -= stepDutycycle
     dutycycle = max(dutycycle, minDutycycle)
@@ -266,12 +248,7 @@ downButton.setInterrupt(.rising) {
     led.setDutycycle(dutycycle)
 }
 
-
-
-Each time the button used to dim LED is pressed, the LED will dim a little until it reaches the minimum brightness.
-
-
-
+// Once the other button is pressed, the LED becomes dimmer until it reaches the maximum brightness.
 upButton.setInterrupt(.rising) {
     dutycycle += stepDutycycle
     dutycycle = min(dutycycle, maxDutycycle)
@@ -279,20 +256,11 @@ upButton.setInterrupt(.rising) {
     led.setDutycycle(dutycycle)
 }
 
-
-
-Once the other button is pressed, the LED becomes dimmer until it reaches the maximum brightness.
-
-
-
+// Stop the board’s work when the button is not pressed.
 while true {
     sleep(ms: 1000)
 }
 ```
-
-Stop the board’s work when the button is not pressed.
-
-
 
 **Code analysis**
 
@@ -306,13 +274,17 @@ downButton.setInterrupt(.rising) {
 ```
 
 You're going to use interrupt to make sure if the button is pressed. 
+
 There are three operations for the interrupt, but they could be executed in a short time, so you could set them as ISR.
-max() is used to get the bigger one between the values. In this way, even if the result of the calculation is smaller than its minimum, the duty cycle will be still 0 to keep the LED at the minimum brightness. 
-The upButton is quite similar.
+
+`max()` is used to get the bigger one between the values. In this way, even if the result of the calculation is smaller than its minimum, the duty cycle will be still 0 to keep the LED at the minimum brightness. 
+
+The `upButton` is quite similar.
 
 
 
 ## Summary
+
 Congratulations! In this section, you get to know the PWM signal and understand some related concepts. And use it to control the buzzer, the LED. The buzzer is changed by frequency and the LED is changed by the duty cycle.
 
 ## More info

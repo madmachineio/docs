@@ -1,8 +1,90 @@
 ---
-title: Overview
+title: Movement sensing using accelerometer
 description: Learn how to
 ---
 
-# Accelerometer
+# Movement sensing using accelerometer 
 
-// TODO
+Let’s measure the movement of the object in three-dimensional space.
+
+You might don’t have heard of accelerometers, but you must experience them in everyday life. For example, on the mobile phone, when you rotate it, you will find the screen display rotate as well. Since the accelerometer inside the phone senses the movement and then responds to it accordingly. Now let’s take a closer look at it.
+
+**Learning goals**
+
+* Understand how the movement is sensed by the accelerometer.
+* Know about gravitational acceleration. 
+
+## New component
+
+### Accelerometer
+
+The accelerometer, aka 3-axis accelerometer, is used to measure the acceleration on 3 axes: x, y, z-axis. The acceleration describes the change of the velocity with time. 
+
+To better understand how the accelerometer works, let’s imagine a small ball inside a vacuum box. Here are some situations: 
+
+* There is no gravity or any other factor that might affect the position of the ball. So the ball will float in the middle. 
+* If you suddenly move the box to the left, the ball will move in the opposite direction and a force will be applied to that wall. This is like the experience when you take a bus. If the bus suddenly speeds up, your body feels a force backward and then moves backward. This force is known as inertial force. 
+* And if the box is on the earth, the ball will fall down due to gravity. 
+              
+The accelerometer measures the acceleration by detecting the force. It could sense the gravity and measure the vibration or movement. The force caused by gravity or acceleration would change the internal capacitance of the sensor and thus change the voltage in the circuit.
+
+Now let’s see several examples to better understand it.
+
+* If the sensor is still, it will only feel the gravity. When the sensor faces up on the table, it will get a force downwards on the z-axis; when the sensor is perpendicular to the table as in the second image, there will be a force on the y-axis. No matter it is at any angle, the gravity on it could be broken down into 3 axes. 
+
+* If the sensor moves toward a certain direction, there will always be a corresponding inertial force and the gravity force.
+
+The acceleration has magnitude and direction. It could be positive or negative. It’s measured in meters per second squared (m/s2). The gravitational acceleration on earth equals 1g (9.8m/s2). 
+
+The accelerometer you are going to use supports I2C communication. The data it sends on the bus is a raw value. The value ranges from -32768 to 32767 (16-bit). Then the value could also be converted to the acceleration value proportionally according to the measurement range. The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. If you choose ±2g, -32768 equals -2g and 32768 equals 2g. 
+
+## Circuit
+The accelerometer is also connected to I2C0.
+
+:::note
+The circuits above are simplified for your reference.
+:::
+
+## Preparation
+Let’s talk about the device driver of this sensor.
+Class
+LIS3DH: it has set the necessary sensor command in advance. You could use the provided methods to communicate with the sensor.
+Method
+init()
+Initialize the sensor to start the communication. 
+It needs the I2C interface. The address has already the default value.
+readValue()
+Read the acceleration on three axes. 
+It will return three values in float.
+
+## Exercise
+1. Read acceleration 
+
+### 1. Read acceleration
+Let’s use the sensor to know how the movement is. You move or tilt the sensor in different directions, and the corresponding values printed on the window change
+
+**Example code**
+```swift
+// Import SwiftIO and SwiftIOFeather library. Import LIS3DH to read the value from the sensor.
+import SwiftIO
+import SwiftIOFeather
+import LIS3DH
+
+// Initialize the I2C pins and the sensor.
+let i2c = I2C(Id.I2C0)
+let acc = LIS3DH(i2c)
+
+// Read the accelerations and each of them.
+while true {
+    let value = acc.readValue()
+    print("x: \(value.x)g")
+    print("y: \(value.y)g")
+    print("z: \(value.z)g")
+    print("\n")
+    sleep(ms: 1000)
+}
+```
+
+## Summary 
+
+Well, how’s your experiment going? You try the accelerometer in this project. It could detect its movement and position. The acceleration is measured in g. Move the kit at will and see if the value changes with it.

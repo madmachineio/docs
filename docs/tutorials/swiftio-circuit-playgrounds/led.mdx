@@ -6,26 +6,30 @@ description: Learn about basic concepts on electronics and try to blink an LED.
 # LED blink
 
 
-Now it’s time for your first project! Let’s start by learning how to use the most basic and commonly used component: the LED. It’s everywhere in life, for lighting, indication, or decoration. 
+Now it’s time for your first project! Let’s start by learning how to use the most basic and commonly used component: the LED. It’s everywhere in life, for lighting, indication, or decoration...
 
 For those coming from the software programming world, you may be familiar with the traditional “hello world” program. In the world of electronics, we have a similar starter project: blinking an LED! 
 
 
 **Learning goals**
-
 * Understand how the digital output signal works.
 * Learn about some new components: diode, LED, resistor.
-* Get to know ohm’s law and figure out the relations between current, voltage, and resistance.
-* Learn about connections in a circuit.
+* Get to know ohm's law and figure out the relations between current, voltage, and resistance.
+* Learn about types of circuit connections.
 * Start to write code and learn some Swift programming knowledge.
 
 ## Background
 
 ### What is digital output?
 
-In electronics and telecommunication, electronic signals carry data from one device to another to send and receive all kinds of information. They are always time-varying, which means the voltage changes as time goes on. 
+In electronics and telecommunication, electronic signals carry data from one device to another to send and receive all kinds of information. They are always time-varying, which means the voltage changes as time goes on. Different voltages can convey infos and be decoded to a specified message. Depending on the ways the voltage changes, the signals are divided into two types: digital signal and analog signal. You'll take a look at the digital signal in this chapter.
 
-A Digital signal can have two states: on or off. The states are determined by the voltage values. The digital pins on the SwiftIO Feather have voltage values of either 3.3 volts (high) or 0 volts (low).
+<img
+  src={require('./img/digitalSignal.png').default}
+  alt="Digital signal wave" width="480"
+/>
+
+In most cases, a **Digital signal** has two states: on or off. It is suitable to represent the states of some components, like LED which is either turned on or off, the button which will be only pressed or released...
 
 Here are different expressions to represent two voltage states:
 
@@ -35,42 +39,80 @@ Here are different expressions to represent two voltage states:
 | high | low |
 | 3.3V | 0V |
 
+
 :::note
-For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true...
+For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true.
 :::
 
-You can use a digital output to control the LED both built onto the board or external LEDs (not included). When you apply a high signal to the LED, it will turn on, and if you apply a low signal, it will be off. NOTE: sometimes a high signal can mean `false` while a low signal means `true`! It all depends on your circuit. 
+You can use a digital output to control the LED both built onto the board or external LEDs (not included). For the LED module on your kit, when you apply a high signal to the LED, it will turn on, and if you apply a low signal, it will be off. 
 
 GPIO (general-purpose input/output) pins can handle digital output and input signals. You’ll set it as output in your code.
 
 ## New component
 
 ### Diode
+
+
 The diode is a polarized component. It has a positive side (anode) and a negative side (cathode). In the circuit, the current can only flow in a single direction, from anode to cathode. If you connect it in an opposite direction, the current will not be allowed to pass through.
 
-Symbol: 
+<img
+  src={require('./img/diode.png').default}
+  alt="Diode" width="240"
+/>
+
+Symbol: <img
+  src={require('./img/diodeSymbol.png').default}
+  alt="Diode symbol" width="80" align="center"
+/>
 
 
 ### LED
 
 LED (Light-emitting diode) is a type of diode. Only when you connect it in the right direction – connect the anode to power and the cathode to ground - is the current allowed to flow, lighting up the LED.
 
-Note: How to identify the two legs of LED?
+<img
+  src={require('./img/LED.png').default}
+  alt="LED" width="180"
+/>
+
+:::tip
+How to identify the two legs of LED?
 1. Typically the long leg is positive and the short leg is negative. 
 2. Alternatively, sometimes you will find a notch on the negative side.
-
+:::
 
 The LED allows a limited range of current, normally no more than 20mA. So you should add a resistor when connecting it to your circuit. Or the LED might burn out when driving too much current.
-Symbol: 
+
+Symbol: <img
+  src={require('./img/LEDSymbol.png').default}
+  alt="LED symbol" width="80" align="center"
+/>
 
 When you connect the LED in the circuit, there are two cases to control the LED:
-Connect the anode to a digital output pin and cathode to ground. When connected this way, when the pin outputs a high signal, the LED turns on. This is how the LED is connected on the Feather board.
 
-Pin is the digital output pin, R is a resistor, is the LED, and GND is ground
+* Connect the anode to a digital output pin and cathode to ground. When connected this way, when the pin outputs a high signal, the LED turns on. This is how the LED is connected on the Feather board.
 
-Another method is to connect the anode to a power source and connect the cathode to a digital output pin. When the digital output signal is high, there is no voltage difference between either end of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on.
+<img
+  src={require('./img/LEDConnectGND.png').default}
+  alt="LED connection to light it with high voltage" width="480"
+/>
 
-Vcc is a power source, R is a resistor,  is the LED, and pin is the digital output pin
+_Pin is the digital output pin, R is a resistor, <img
+  src={require('./img/LEDSymbol.png').default}
+  alt="LED symbol" width="40" align="center"
+/> is an LED, and GND is ground_
+
+* Another method is to connect the anode to a power source and connect the cathode to a digital output pin. When the digital output signal is high, there is no voltage difference between either end of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on.
+
+<img
+  src={require('./img/LEDConnect3V3.png').default}
+  alt="LED connection to light it with low voltage" width="480"
+/>
+
+_Vcc is a power source, R is a resistor, <img
+  src={require('./img/LEDSymbol.png').default}
+  alt="LED symbol" width="40" align="center"
+/> is an LED, and pin is a digital output pin_
 
 
 There are many types of LEDs. The LED on your SwiftIO Circuit Playgrounds is a small variant designed to be convenient for mass production.
@@ -79,16 +121,30 @@ There are many types of LEDs. The LED on your SwiftIO Circuit Playgrounds is a s
 
 The resistor functions as a current-limiting component which, just as its name suggests, can resist the current in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current is measured in ohm (Ω).
 
+<img
+  src={require('./img/10kResistor.png').default}
+  alt="resistor" width="240"
+/>
+
 Symbol: (international), (US)
 
-:::note
 How can you tell how much resistance a resistor provides?
+
 Each resistor has a specific resistance. Note the colored bands in the diagram. Each band corresponds to a certain number. Here is an online guide and calculator to determine how to total the value of all the bands together. 
-:::
+
 
 :::info Challenge
 What’s the resistance of the sample resistor R1 pictured above, as well as the resistors R2 and R3 below? See below for the answer! 
 
+<img
+  src={require('./img/330Resistor.png').default}
+  alt="resistor" width="240"
+/>
+
+<img
+  src={require('./img/470kResistor.png').default}
+  alt="resistor" width="240"
+/>
 
 <details>
     <summary> Answer</summary>
