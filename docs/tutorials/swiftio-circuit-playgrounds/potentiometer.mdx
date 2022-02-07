@@ -1,8 +1,232 @@
 ---
-title: Overview
+title: Potentiometer
 description: Learn how to
 ---
 
 # Potentiometer
 
-// TODO
+Let’s read the analog input value controlled by a potentiometer.
+
+Now you are going to see another useful component - the potentiometer. It is widely used as a switch to provide a certain range of variable values, like adjust the volume, speed, etc. You have learned some digital stuff, now let’s look into analog signals.
+
+**Learning goals**
+
+* Learn about analog signals and distinguish them from digital signals.
+* Understand the working principle of  potentiometer.
+* Know how to use the serial monitor.
+
+## Background 
+
+### What is an analog signal?
+
+You have learned digital signals and used some devices that have two determined values. In that case, the voltage value is either 0V or 3.3V. However, there are other situations where you get values in between, like 2V. Let’s know something about analog signals.
+
+Unlike the digital signal that will change suddenly from one level to another, the analog signal smoothly changes its voltage value with time. It is a continuous signal, and there could be infinite possible values from minimum to maximum voltage (0 - 3.3V). 
+
+But how does the microcontroller read the analog voltage at a specific time?
+
+The microcontroller can’t directly read the analog value. There is an analog to digital converter (ADC). It could convert an analog voltage on a specified pin to a corresponding digital number that could be read by the microcontroller. The resolution is used to describe the possible values that the microcontroller could measure.
+
+For example, if the resolution is 2-bit, the input voltage will be measured into four levels. And if the resolution is 3-bit, there are 8 possible values. And you could see the value obtained from the 3-bit one is more precise than the 2-bit one.
+
+To know the input value, the SwiftIO Feather board has a built-in ADC. It has a 12-bit resolution, so there are 4096 (2^12) analog levels, from 0 to 4095. This value is known as raw value. During its work, the analog input would be represented as a raw value. Then it will be mapped to a voltage value between 0V and 3.3V. Higher resolution means more possible values, so the voltage obtained will be more accurate.
+For example, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 2047 corresponds to 1.65V. Here is the equation for the conversion:
+
+actual voltage/reference voltage = raw value/ADC resolution
+Where,
+ADC resolution = 4095
+reference voltage = 3.3V
+
+
+Then you could get the input voltage based on the raw value. Of course, you could directly read the voltage by using the related API.
+
+## New component
+
+### Potentiometer
+
+Potentiometer (pot for short, also called knob) is a kind of variable resistor. You could adjust its available resistance in the circuit to change a different voltage, since there is a movable wiper between two ends of the potentiometer. You could easily change its position manually. 
+
+Symbols: (international), (US)
+
+As shown in the image above, it has three terminals. The resistance between two ends represents its maximum resistance. The middle one is connected to a wiper. As you rotate the knob, the position of the wiper changes and the actual resistance in the circuit changes proportionally. 
+
+For example, if you connect the outer pin ① to the ground, the other outer pin ③ to power, and the middle pin ② to the input pin, let’s see how it works. When you turn it clockwise, the wiper moves gradually far away from ①, the actual resistance between ① and ② in the circuit increases. And the voltage measured on pin ② would increase with it, gradually to 3.3V. If you turn it anticlockwise, the result is the opposite.
+
+## New concept
+
+### Voltage divider
+A voltage divider circuit is commonly used to get some smaller voltage levels that are a fraction of the input voltage. Usually, there are resistors connected in series. As the current flows through the resistors, the voltage drops.
+
+The voltage divider calculation is based on the ohm’s law. Here’s the equation: 
+VR1 = Vin * R1(R1+R2)
+Vin: input voltage
+VR1: voltage drop on R1
+
+Since the two resistors are in series, the current flows through them are just the same. So the ratio of R1’s resistance to the total resistance equals the ratio of voltage drop to the incoming voltage supply.
+The potentiometer is a typical example of the voltage divider. The whole resistor is cut into two parts by the wiper. As the wiper goes, the ratio of the resistor changes and the voltage drop changes accordingly.
+
+## Circuit
+There are two potentiometers on your playgrounds. They are connected respectively to A0 and A11.
+
+
+
+:::note
+The circuits above are simplified for your reference.
+:::
+
+## Preparation
+
+Here is something about analog signals that you are going to use.
+Class
+AnalogIn: this class allows you to read the analog input. 
+Method
+init(_:)
+Initialize the analog pin. You just need to set the pin id.
+readVoltage()
+Directly read the voltage value on the pin. 
+The return value is a float between 0 and 3.3.
+readPercent()
+Read the input value and represent it as a percentage. 
+The return value is between 0 and 1.
+Global function
+print(_:)
+Print the value out and it could be seen on the serial monitor.
+
+## Exercise
+1. Read input value
+2. Control buzzer sound output
+3. Change LED brightness
+
+### 1. Read input value
+In this demo, you will rotate the potentiometer to change the input value and print it on the serial monitor.
+After you connect the board to the computer through the serial port, the value is printed on the serial monitor window one by one per second. As you twist the potentiometer, the number changes. It gradually goes to the maximum or minimum value depending on the direction you twist.
+
+
+**Example code**
+
+```swift
+// Import the SwiftIO library to control input and output, and the SwiftIOFeather to use the pin name.
+import SwiftIO
+import SwiftIOFeather
+
+// Initialize the analog pin A0.
+let knob = AnalogIn(Id.A0)
+
+// Read the voltage value and print it out every second.
+while true {
+    let value = knob.readVoltage()
+    print(value)
+    sleep(ms: 1000)
+}
+```
+
+**Code analysis**
+
+Here are some explanations of the API above.
+
+```swift
+let value = knob.readVoltage()
+```
+
+Declare a constant to store the returned voltage value.
+
+There are three different methods in the AnalogIn class that would return the value in different forms: raw value, voltage value or a percentage. This method directly returns the voltage.
+
+```swift
+print(value)
+```
+It allows you to print the value out. You could see it on the serial monitor. 
+
+It is a useful tool to debug your code. If there is something unexpected in your program, you could add it after each statement related to a value. Then you could infer which step goes wrong according to the results.
+
+
+**Serial monitor**
+
+A serial monitor is like a link between your board and the computer. You could view the value transmitted between them in it by using the function print(_:). 
+When you download the code, you need to connect the download port on the board to the computer. Now you will change it to the serial port on the shield.
+
+Then go back to the MadMachine IDE. You could find the button  on the toolbar. When you click on it, the serial window shows up. 
+
+Click the Select button to choose the port in the drop-down menu. If you don’t know which port is the right one, you could disconnect your board and see which one disappears.
+
+Click Connect.
+
+If everything works well, the value starts to appear on the screen. 
+
+If you can’t find the exact port in the serial monitor, please check if you forget to connect the serial port to your computer. Or maybe the board is still trying to build a connection with the computer through the serial port. Please try again: Close the serial monitor window. Then wait several minutes and open the serial monitor. Find the port in the dropdown list and connect.
+
+
+
+### 2. Control buzzer sound output
+You will use a potentiometer to change the sound of the buzzer. 
+
+Example code
+
+```swift
+// Import the SwiftIO to realize the related functionalities and the SwiftIOFeather to use the pin name.
+import SwiftIO
+import SwiftIOFeather
+
+// Initialize the analog pin and PWM pin.
+let knob = AnalogIn(Id.A0)
+let buzzer = PWMOut(Id.PWM5A)
+
+// Read the input value in percentage. Then calculate the value into the frequency. Set the PWM with the frequency and a suitable duty cycle.
+while true {
+    let value = knob.readPercent()
+    let f = 50 + Int(1000 * value)
+    buzzer.set(frequency: f, dutycycle: 0.5)
+    sleep(ms: 20)
+}
+```
+
+
+**Code analysis**
+
+```swift
+let value = knob.readPercent()
+```
+
+Here you use another method readPercent() to get the input value represented as a percentage.
+
+```swift
+let f = 50 + Int(1000 * value)
+```
+
+The value is certainly too small to serve as frequency. You will do some calculation to increase it. And you could try to change the calculation to get a different range of pitch. 
+
+
+### 3. Change LED brightness
+
+The potentiometer could also be used to change the brightness of LEDs. 
+
+**Example code**
+
+```swift
+// As usual, import the two basic libraries.
+import SwiftIO
+import SwiftIOFeather
+
+// Initialize the analog pin and PWM pin.
+let knob = AnalogIn(Id.A0)
+let led = PWMOut(Id.PWM4A)
+
+// Set the PWM to control the LED. 
+led.set(frequency: 1000, dutycycle: 0)
+
+// Read the input value. The value is represented in percentage, while the duty cycle is also between 0 and 1, so you could directly use the reading value to set the PWM.
+while true {
+    let dutycycle = knob.readPercent()
+    led.setDutycycle(dutycycle)
+
+    sleep(ms: 20)
+}
+```
+
+## Summary
+
+In this chapter, you get the hang of analog signals: their character, the difference between analog signals and digital signals, the working principle of ADC. And you also learn about the voltage divider and how the potentiometer works. What’s more, an important tool - the serial monitor to view the result and debug code.
+
+## More info
+
+* [Voltage divider](https://learn.sparkfun.com/tutorials/voltage-dividers)

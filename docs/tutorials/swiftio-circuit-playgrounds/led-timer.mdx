@@ -1,0 +1,69 @@
+---
+title: LED blink using timer
+description: Learn how to
+---
+
+# LED blink using timer
+
+You’ll try a new way to blink the LED with a timer. 
+
+You have successfully made the LED to blink, and also learnt about the interrupt in the last exercises. So this time, you will use a timer to set the interrupt to blink the LED.
+
+**Learning goals**
+* Learn how to use a timer to trigger the interrupt.
+* Blink the LED in a new way.
+
+
+
+## Background
+
+### What is a timer?
+You have known about the interrupt that is triggered by the state change of an input pin. With this mechanism, the microcontroller doesn't need to check a specific condition all the time to know if it’s ready for the interrupt. It could just do other work and will respond to the interrupt once the condition is met.
+And this time, you will know about another way to trigger the interrupt using a timer. It allows the interrupt to happen at every specified time interval. 
+For example, in the first section, you make the LED to blink using sleep(). It pauses the microcontroller there for a certain amount of time and does nothing, which would be quite a waste of time if you want it to do something else. If you use a timer, the microcontroller could do many other things and would stop automatically if it’s time for the interrupt execution. 
+
+
+
+## Preparation
+
+Class
+Timer: this class is used to enable interrupt at a specific time interval.
+Method
+init()
+Initialize a timer.
+setInterrupt(ms:mode:start:_:)
+Set the condition to trigger the interrupt.
+The first parameter is the time interval, measured in ms.
+The mode decides how many times the interrupt will happen. There are two options: .oneShot and .period. And by default, it’s set to .period to make the interrupt happen continuously.
+The parameter start is to decide whether it will start as you invoke this method, or you will start it manually later by using start().
+The last one is to set the task with higher priority. It needs functions with no parameter and return value..
+
+## Exercise
+1. LED blink using timer
+
+
+### 1. LED blink using timer
+You will turn the LED on and off every second as you did before, but in a new way.
+
+**Example code**
+
+```swift
+// Import the SwiftIO library to control input and output the SwiftIOFeather to use the id of the pins.
+import SwiftIO
+import SwiftIOFeather
+
+// Initialize a digital pin for LED and a timer.
+let led = DigitalOut(Id.D19)
+let timer = Timer()
+
+// Set an interrupt to reverse the LED state every second.
+timer.setInterrupt(ms: 1000) {
+    led.toggle()
+}
+
+// Other times, the microcontroller just stops its work.
+while true {
+    sleep(ms: 9999)
+}
+
+```
