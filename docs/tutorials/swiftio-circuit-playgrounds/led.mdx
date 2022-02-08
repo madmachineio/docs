@@ -75,18 +75,19 @@ LED (Light-emitting diode) is a type of diode. Only when you connect it in the r
   alt="LED" width="180"
 />
 
+Symbol: <img
+  src={require('./img/LEDSymbol.png').default}
+  alt="LED symbol" width="80" align="center"
+/>
+
 :::tip
 How to identify the two legs of LED?
 1. Typically the long leg is positive and the short leg is negative. 
 2. Alternatively, sometimes you will find a notch on the negative side.
 :::
 
-The LED allows a limited range of current, normally no more than 20mA. So you should add a resistor when connecting it to your circuit. Or the LED might burn out when driving too much current.
+The LED allows a **limited range of current**, normally no more than 20mA. So you should add a resistor when connecting it to your circuit. Or the LED might burn out when driving too much current.
 
-Symbol: <img
-  src={require('./img/LEDSymbol.png').default}
-  alt="LED symbol" width="80" align="center"
-/>
 
 When you connect the LED in the circuit, there are two cases to control the LED:
 
@@ -102,7 +103,7 @@ _Pin is the digital output pin, R is a resistor, <img
   alt="LED symbol" width="40" align="center"
 /> is an LED, and GND is ground_
 
-* Another method is to connect the anode to a power source and connect the cathode to a digital output pin. When the digital output signal is high, there is no voltage difference between either end of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on.
+* Another method is to connect the anode to a power source and connect the cathode to a digital output pin. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on.
 
 <img
   src={require('./img/LEDConnect3V3.png').default}
@@ -119,21 +120,28 @@ There are many types of LEDs. The LED on your SwiftIO Circuit Playgrounds is a s
 
 ### Resistor
 
-The resistor functions as a current-limiting component which, just as its name suggests, can resist the current in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current is measured in ohm (Ω).
+The resistor functions as a current-limiting component which, just as its name suggests, can resist the current in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current is measured in **ohm (Ω)**.
 
 <img
   src={require('./img/10kResistor.png').default}
   alt="resistor" width="240"
 />
 
-Symbol: (international), (US)
+Symbol: <img
+  src={require('./img/resistorSymbol1.png').default}
+  alt="International resistor symbol" width="80" align="center"
+/> (international), <img
+  src={require('./img/resistorSymbol2.png').default}
+  alt="American resistor symbol" width="80" align="center"
+/> (US)
 
+:::info
 How can you tell how much resistance a resistor provides?
 
-Each resistor has a specific resistance. Note the colored bands in the diagram. Each band corresponds to a certain number. Here is an online guide and calculator to determine how to total the value of all the bands together. 
+Each resistor has a specific resistance. Note the colored bands in the diagram. Each band corresponds to a certain number. [Here](https://www.allaboutcircuits.com/tools/resistor-color-code-calculator/) is an online guide and calculator to determine how to total the value of all the bands together. 
 
+**Challenge**
 
-:::info Challenge
 What’s the resistance of the sample resistor R1 pictured above, as well as the resistors R2 and R3 below? See below for the answer! 
 
 <img
@@ -150,7 +158,7 @@ What’s the resistance of the sample resistor R1 pictured above, as well as the
     <summary> Answer</summary>
 
 * R1: 10KΩ with a tolerance of ± 5%
-* R2: 330Ω with a tolerance of ± 20%
+* R2: 330Ω with a tolerance of ± 5%
 * R3: 470KΩ with a tolerance of ± 1%
 
 </details>
@@ -163,137 +171,186 @@ This kind of resistor is useful primarily when you DIY some stuff. However, the 
 ### Ohm’s law
 
 When starting with electronics, you must get familiar with these three concepts: voltage, current, and resistance:
-Voltage measures potential energy between two points. 
-Current describes the rate of flow of electric charges that flow through the circuit. 
-And resistance is the capability to resist the flow of current.
-An intuitive and common analogy is water pressure in a tank; Imagine a water tank with water inside and an opening at the bottom. 
-In this scenario, the water level is like voltage, the opening is like resistance, and the amount of water spilling out is like current. 
-Looking at the first figure, very little water will come out (current) because there isn’t much pressure (the water level) and the opening is small (resistance). In the second example, we’ve increased the water level (voltage), but kept the same sized opening (resistance), which results in an increase in the flow of the water (current). Finally, in the last one, we’ve also increased the size of the opening (reduced resistance), keeping the water level the same, resulting in another increase in flow (current).
+* **Voltage** measures potential energy between two points. 
+* **Current** describes the rate of flow of electric charges that flow through the circuit. 
+* And **resistance** is the capability to resist the flow of current.
 
+An intuitive and common **analogy** is water pressure in a tank. Imagine a water tank with water inside and an opening at the bottom. 
 
+<img
+  src={require('./img/tank.png').default}
+  alt="ohm's law analogy" width="960"
+/>
 
-Ohm’s law describes how they interact with each other:
-V = I* R
-V: voltage (unit: volts or V)
-I: current (unit: amps or A)
-R: resistance (unit: ohm or Ω)
+In this scenario, the water pressure (water level) is like voltage, the opening is like resistance, and the amount of water spilling out is like current. 
+
+* Looking at the first figure, very little water will come out (current) because there isn’t much pressure (voltage) and the opening is small (resistance). 
+* In the second example, we’ve increased the water level (voltage), but kept the same sized opening (resistance), which results in an increase in the flow of the water (current). 
+* Finally, in the last one, we’ve also increased the size of the opening (reduced resistance), keeping the water level (voltage) the same, resulting in another increase in flow (current).
+
+**Ohm’s law** describes how voltage, current and resistance interact with each other:
+
+**V = I * R**
+
+* _V: voltage (unit: volts or V)_
+
+* _I: current (unit: amps or A)_
+
+* _R: resistance (unit: ohm or Ω)_
+
 
 Using some simple algebra, we can also put forward the following formulas:
 
-R = V / I
+**R = V / I**
+
 and 
-I = V / R
+
+**I = V / R**
 
 
-As stated previously, most/all pins on the SwiftIOFeather output a digital high signal of 3.3V. If the resistance is 330Ω, the current would be 0.01A. 
+As stated previously, all digital pins on the SwiftIO Feather board output a high signal of 3.3V. If the resistance is 330Ω, the current would be 0.01A. 
+
+:::info Exercise
 
 Given an LED with the following characteristics, how many ohm resistor should you use to complete the circuit, using the 3.3V digital out pin source?
-Power dissipation: 45mW
-Optoelectronic characteristics (at 20mA)
-Forward current: 15mA max
-Forward voltage: 3.0V" 
+
+* Power dissipation: 45mW
+* Optoelectronic characteristics (at 20mA)
+* Forward current: 15mA max
+* Forward voltage: 3.0V
 
 Here is the equation:
-R = (V-Vled) / Iled
-V: supply voltage
-Vled: forward voltage for the LED, that is, voltage drop as the current across the LED. 
-Iled: forward current for the LED (usually 10-20mA). It’s the maximum current. If you don’t have the specs about LED, you could normally suppose it to be 20mA.
+
+**R = (V-Vled) / Iled**
+
+* V: supply voltage
+* Vled: forward voltage for the LED, that is, voltage drop as the current across the LED. 
+* Iled: forward current for the LED (usually 10-20mA). It’s the maximum current. If you don’t have the specs about LED, you could normally suppose it to be 20mA.
 
 The resistor for the LED is:
-R = (3.3 - 3.0) / 0.02 = 15Ω
-The resistance of the LED itself is very small, so you don’t need to take it into consideration. 
-Frequently you will be unable to find a resistor that matches the exact theoretical value. When this happens, you can use a resistor that has a slightly greater resistance.
-In general, the resistance calculated is a minimum requirement. You can also choose a resistor with much larger resistance. Doing so will cause the LED’s brightness to change with it. (Greater resistance will cause the LED to be dimmer)
 
+R = (3.3 - 3.0) / 0.015 = 20Ω
+
+The resistance of the LED itself is very small, so you don’t need to take it into consideration. 
+
+Frequently you will be unable to find a resistor that matches the exact theoretical value. When this happens, you can use a resistor that has a slightly greater resistance.
+
+In general, the resistance calculated is a minimum requirement. You can also choose a resistor with much larger resistance. Doing so will cause the LED’s brightness to change with it. (Greater resistance will cause the LED to be dimmer)
+:::
 
 ### Serial circuit and parallel circuit
 
 Serial and parallel circuits are the ways to connect more than two devices in the circuit. 
-In a serial circuit, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same.
-In a parallel circuit, the devices share two common nodes, like R3 and R4. Node (a) connects both two devices, so the current could flow through either of them. The voltage between two nodes (a and b) is the same, so the voltages spent on R3 and R4 are the same.
-                   
+
+In a **serial circuit**, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same.
+
+In a **parallel circuit**, the devices share two common nodes, like R3 and R4. Node (a) connects both two devices, so the current could flow through either of them. The voltage between two nodes (a and b) is the same, so the voltages spent on R3 and R4 are the same.
+
+<img
+  src={require('./img/serialParallel.png').default}
+  alt="Serial and parallel circuit" width="960"
+/>                  
 
 In your real situation, the circuit would not be that easy. The serial and parallel circuit would both be used when building the circuit.
 
-
 Let’s look at an example. You will know better about two circuits.
-In the first circuit, the two lamps are connected in series, so the switch can control both of them. If any of the lamps breaks down, even if the switch is closed, the other lamp will not be lit. 
-In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the corresponding switch that is connected to it in series: switch1 controls the lamp1, switch2 controls the lamp2. And the two lamps work separately.
 
-     
+* In the first circuit, the two lamps are connected in series, so the switch can control both of them. If any of the lamps breaks down, even if the switch is closed, the other lamp will not be lit. 
+* In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the corresponding switch that is connected to it in series: switch1 controls the lamp1, switch2 controls the lamp2. And the two lamps work separately.
+
+<img
+  src={require('./img/serialParallelCombination.png').default}
+  alt="Both serial and parallel circuit connection" width="960"
+/>     
 
 ### Open, closed and short circuit
 
 In addition to the previously mentioned types of circuits, there are three more you need to know about: open circuit, closed circuit, and short circuit. 
-The first figure is a closed circuit. This allows current to flow freely from the positive terminal through a load that consumes electric power, finally returning back to the negative terminal. 
-In an open circuit, there is a gap somewhere on the circuit, therefore disallowing any current to flow through it.
-Current tends to flow through the path with lower resistance, if you accidentally connect the positive to the negative terminal of the power supply, the current will flow directly through this path and bypass the other paths with higher resistance. This causes a short circuit. When the current reaches sufficiently  high levels, this can cause serious damage.
 
+* The first figure is a **closed circuit**. This allows current to flow freely from the positive terminal through a load that consumes electric power, finally returning back to the negative terminal. 
+* In an **open circuit**, there is a gap somewhere on the circuit, therefore disallowing any current to flow through it.
+* Current tends to flow through the path with lower resistance, if you accidentally connect the positive to the negative terminal of the power supply, the current will flow directly through this path and bypass the other paths with higher resistance. The resistance of wires are so small that we normally ignore it. This causes a **short circuit**. When the current reaches sufficiently high levels, this can cause serious damage.
+
+<img
+  src={require('./img/threeCircuits.png').default}
+  alt="Open, closed and short circuits" width="960"
+/>  
 
 
 ### Current safety
 In a complete circuit, the current will always flow from the point of higher voltage (usually power) to the one of lower voltage (usually ground or GND). Consumed energy is turned into light, heat, sound, etc. 
-If you were to connect the power directly to the ground using a wire, this would cause a short circuit. Shorts can (and usually do) cause damage to your circuit and board, and is also very possible to start a fire.  
-Another warning: if you’re not careful about selecting an appropriately strong resistor to resist the level of current flowing through the circuit, the resistor can burn and cause damage (and additionally be a fire hazard). 
+
+If you were to connect the power directly to the ground using a wire, this would cause a short circuit. It can (and usually do) cause damage to your circuit and board, and is also very possible to start a fire.  
+
+Another warning: if you’re not careful about selecting an appropriately strong resistor to resist the level of current flowing through the circuit, the devices can be burnt and damaged (and additionally cause a fire hazard). 
 
 
 ## Circuit - LED module
 
 The image below shows how the LED module is connected to the SwiftIO Feather board in a simplified way. 
-The LED is connected to D19. GND and 3V3 are connected respectively to the corresponding pin on the board. On circuit diagrams, the red line is usually for power and the black line for ground.
+
+The LED is connected to **D19**. GND and 3V3 are connected respectively to the corresponding pin on the board. On circuit diagrams, the red line is usually for power and the black line for ground.
+
 The circuits are all built when designing the board, so you don’t need to connect any wires. And as mentioned before, the white sockets are used to build the circuit after the board is disassembled.
 
+<img
+  src={require('./img/LEDCircuit.png').default}
+  alt="LED module on the kit" width="960"
+/>
 
-  
-Note: the circuits above are simplified for your reference.
+
+:::note
+The circuits above are simplified for your reference.
+:::
 
 ## Preparation 
-Before coding, let’s look at the class DigitalOut you will use to control the digital output.
-Class
-DigitalOut: as indicated by its name, this class is used to control digital output, to set it to high or low voltage.
+
+**Class**
+
+**`DigitalOut`** - as indicated by its name, this class is used to control digital output, to get high or low voltage.
+
 Method
-init(_:mode:value:)
-Initialize the digital output pin. 
-The first parameter needs the pin id. The id is listed in the Id enumeration. The parameters mode and value have already their default value.
-write(_:)
-Set the pin to output high or low voltage. 
-Its parameter is a boolean type: true or false. true corresponds to a high level and false corresponds to a low level. 
-toggle()
-Reverse the digital output between high and low.
-high()
-Output high voltage.
-low()
-Output low voltage.
-Global function
-sleep(ms:)
-Make the current state last for a certain time, measured in milliseconds.
+
+* `init(_:mode:value:)` - Initialize a digital output pin. The first parameter needs the pin id which is listed in the Id enumeration. The parameters `mode` and `value` already have a default value.
+
+* `write(_:)` - Set the pin to output high or low voltage. Its parameter is a boolean type: `true` or `false`. `true` corresponds to a high level and `false` corresponds to a low level. 
+
+* `toggle()` - Reverse the digital output between high and low.
+
+* `high()` - Output high voltage.
+
+* `low()` - Output low voltage.
+
+**Global function**
+
+`sleep(ms:)` - Make the microcontroller suspend its work for a certain time, measured in milliseconds.
 
 
 ## Exercise
-1. Blink an LED
-2. LED morse code
+1. [Blink an LED](./led.mdx#1-blink-an-led)
+2. [LED morse code](./led.mdx#2-led-morse-code)
 
-## 1. Blink an LED
+### 1. Blink an LED
 
 In your first try, let’s make the LED blink - on for one second, then off for one second, and repeat it over and over again.
 
+<img
+  src={require('./img/blink.png').default}
+  alt="LED blink" width="480"
+/>
 
-
-### Example code
+**Example code**
 
 ```swift
+// First import the SwiftIO and SwiftIOFeather libraries into the project to use related functionalities.
 import SwiftIO
 import SwiftIOFeather
 
-
-// First you need to import the SwiftIO and SwiftIOFeather libraries into the project.
-
+// Initialize the specified pin used for digital output.
 let led = DigitalOut(Id.D19)
 
-// Initialize the specified pin used for digital output.
+// The code in the loop will run over and over again. 
 while true {
-    // The code in the loop will run over and over again. 
-
     //Output high voltage to turn on the LED.   
     led.write(true)
     // Keep the LED on for 1 second.
@@ -302,36 +359,41 @@ while true {
     // Turn off the LED and then keep that state for 1s.
     led.write(false)
     sleep(ms: 1000)
-
-
+}
 ```
 
-}
+**Code analysis**
 
-### Code analysis 
 Here are some key statements for this program, make sure you understand them before you start to code.
 
-//Comment
-This is the comment for the code used to explain how the program works. It always starts with two slashes. 
+```swift
+// Comment
+```
+
+This is the comment for the code used to explain how the program works and also for future reference. It always starts with two slashes. 
 
 ```swift
 import SwiftIO
 import SwiftIOFeather
 ```
 
-These two libraries are necessary for all your projects with the SwiftIO Feather board. A library contains a predefined collection of code to allow you to code easily.
+These two libraries are necessary for all your projects with the SwiftIO Feather board. In short, a library contains a predefined collection of code and provides some specified functionalities. You can use the given commands directly without caring about how everything is realized.
 
-SwiftIO is used to control input and output. It includes all the necessary commands to talk to your board easily. 
-SwiftIOFeather contains all the ids of SwiftIO feather board. Both the SwiftIO and SwiftIO feather board use the SwiftIO library, but their pin ids are different, so you need to add the corresponding library of id to distinguish them.
+`SwiftIO` is used to control input and output. It includes all the necessary commands to talk to your board easily. 
+
+`SwiftIOFeather` contains all the ids of SwiftIO feather board. Both the SwiftIO and SwiftIO feather board use the SwiftIO library, but their pin ids are different, so you need to add the corresponding library of id to distinguish them.
 
 ```swift
 let led = DigitalOut(Id.D19)
 ```
 
-let is the keyword to declare a constant. Only after you declare it, you can use it later. Constant is like a container whose content will never change. Its name could be whatever you like and it’s better to be descriptive, instead of a random name like abc. If the name of your constant consists of several words, then except the first word, the first letter of other words needs to be capitalized. This is known as the camel case.
-The class, in brief, is more like a mold that you could use to create different examples, known as instances, with similar characteristics. 
+`let` is the keyword to declare a constant. A **constant** is like a container whose content will never change. But before using it, you need to declare it in advance. Its name could be whatever you like and it’s better to be descriptive, instead of a random name like abc. If the name of your constant consists of several words, then except the first word, the first letter of the rest words needs to be capitalized. This is known as the camel case.
 
-The constant led is the instance of the DigitalOut class. To initialize it, the pin id is necessary. Id is an enumeration including the ids of all pins. As for enumeration, enum for short, could group a set of related values. Just remember that the id needs to be written as Id.D0. There are two more optional parameters. Since they already have their default value, you could leave them as they are. Only after you initialize that pin, it would get prepared for the following instructions. 
+The **class**, in brief, is more like a mold that you could use to create different examples, known as instances, with similar characteristics. The class `DigitalOut` provides ways to change digital output, so all its instance can set high or low voltage. The process of creating an instance is called initialization.
+
+The constant `led` is the instance of the `DigitalOut` class. To initialize it, the pin id is required. `Id` is an enumeration including the ids of all pins. As for **enumeration**, enum for short, it could group a set of related values. Just remember that the id needs to be written as `Id.D19`. There are two more optional parameters with a default value, so you could leave them as they are. 
+
+In this way, the pin D19 would work as a digital output pin and get prepared for the following instructions. 
 
 ```swift
 while true {
@@ -341,28 +403,30 @@ while true {
 It’s a dead loop in which the code will run over and over again unless you power off the board. The code block inside the brackets needs to be indented by 4 spaces.
 
 :::note
-Sometimes you find nothing to put in this loop, you could just leave it here, and do not omit it.
+Sometimes you find nothing that needs to run repeatedly, you could add `sleep` in it to make the board sleep and keep in a known state.
 :::
 
 ```swift
 led.write(true)
 ```
 
-The led instance has access to all the instance methods in the DigitalOut class. write() is one of its methods. You’ll use dot syntax to access it: the instance name, followed by a dot, the method in the end. Then you decide the voltage level for the output, true for high voltage, false for low voltage. If a value is either true or false, it is regarded as Bool.
-
-Both method and function group a block of code and you could easily realize the same functionality by calling their name. Their difference is that the method is inside a class. 
+The `led` instance has access to all the instance methods in the `DigitalOut`. `write()` is one of its methods. You’ll use **dot syntax** to access it: the instance name, followed by a dot, the method in the end. Then you decide the voltage level as its parameter, `true` for high voltage, `false` for low voltage. A value either `true` or `false` is of **Boolean** type.
 
 ```swift
 sleep(ms: 1000)
 ```
 
-This is a global function. So you could directly invoke it. It has a parameter name ms and a parameter (the specified period). During sleep time, the microcontroller would suspend all its processes and stay there until the time is up.
+This is a global function thus you could directly invoke it. It has a parameter name `ms` and a parameter (the specified period). During sleep time, the microcontroller would suspend all its processes and stay there until the time is up.
 
-Why do I need to add it? The microcontroller executes any state change extremely quickly. If you just change the output state between high and low, the LED will be on and off so quickly that you could not see it. So a small period is added here to slow the speed of change.
+:::info
+Both method and function group a block of code and you could realize the same functionality by calling their name. Their difference is that a method belongs to a class and a function is independent. 
+:::
+
+Why do I need to add it? The microcontroller executes any state change extremely quickly. If you just change the output state between high and low, the LED will be on and off so quickly that you could not notice it. So a small period is added here to slow the speed of change. If you want the LED blink faster, you could reduce the sleep time.
 
 
-:::note
-When using methods or functions, why do some parameters need to add a name and some don't? 
+:::info
+When using methods or functions, why do some parameters need to add a name and others don't? 
 Let’s look at the source code below for example: 
 
 ```swift
@@ -373,27 +437,37 @@ There is an underscore “_” before the value. This means the name could be om
 ```swift
 func sleep(ms: Int)
 ```
-While ms doesn’t have the underscore symbol before it, so the name is necessary.
+While `ms` doesn’t have the underscore symbol before it, so the name is necessary.
+
 
 :::
 
-## 2. LED morse code
-### Example code
-Have you heard of Morse code? It encodes characters into a sequence of dashes and dots. To reproduce it, you could use long flash and short flash respectively. In morse code, s is represented by three dots, o is represented by three dashes. So the SOS signal would need three short flashes, three long flashes, and then three short flashes. 
+### 2. LED morse code
+
+**Example code**
+
+Have you heard of Morse code? It encodes characters into a sequence of dashes and dots to send messages. To reproduce it, you could use long flash and short flash respectively. In morse code, s is represented by three dots, o is represented by three dashes. So the SOS signal needs three short flashes, three long flashes, and then three short flashes again. 
 
 ```swift
+// Import the two necessary libraries to use all their functionalities.
 import SwiftIO
 import SwiftIOFeather
 
+// Initialize the digital output pin.
 let led = DigitalOut(Id.D19)
 
+// Define the LED states to represent the letter s and o.
 let sSignal = [false, false, false]
 let oSignal = [true, true ,true]
 
+// This function sets the LED blink rate according to the values in the array.
 func send(_ values: [Bool], to light: DigitalOut) {
+    // Decide the duration of slow flash and quick flash.
     let long = 1000
     let short = 500
 
+    // Iterate all the values in the array. The value will decide how long the LED will be illuminated. 
+    // If the value is true, the LED will be on for 1m, and if it’s false, the LED will be on for 0.5s.
     for value in values {
         light.high()
         if value {
@@ -406,7 +480,9 @@ func send(_ values: [Bool], to light: DigitalOut) {
     }
 }
 
-
+// Blink the LED.
+// At first, the LED starts 3 fast blink to represent s. Then it’s 3 slow blink to represent o, and 3 fast blink again to represent s.
+// Wait 1s before repeating again.
 while true {
     send(sSignal, to: led)
     send(oSignal, to: led)
@@ -415,18 +491,13 @@ while true {
 }
 ```
 
-
-
-
-
 ### Code analysis
 
-It works if you set the digital pin to high or low voltage manually. But it requires a lot of repetitive work. Why not try a more convenient way to simplify the code.
 ```swift
 let sSignal = [false, false, false]
 let oSignal = [true, true, true]
 ```
-Here, two arrays are used to store the info of two letters. Since there are only two states: fast or slow flash, you could use boolean value to represent two states.
+Here, two arrays are used to store the info of two letters. Since there are only two states: fast or slow flash, you could use boolean value to represent two states. `false` will corresponds to slow flash later.
 
 An array could store a series of ordered values of the same type in a pair of square brackets. The values here are all boolean values. 
 
@@ -437,29 +508,29 @@ func send(_ values: [Bool], to light: DigitalOut) {
 ```
 You will create a function to decide the blink rate according to the values. 
 
-BTW, it’s ok if you directly set the LED, the new function here is to make your code more organized and clear.
+BTW, It works if you set the digital pin to high or low voltage one by one manually. But it requires a lot of repetitive work. The new function here is to make your code more organized and clear.
 
-This function needs two parameters. One is an array of values that stores the info to represent the letters. The second is the digital pin that the LED is connected to.
+This function needs two parameters. One is an array of boolean values that stores the info to represent a single letter. The second is the digital pin that the LED is connected to.
 
-Why not use the values (like sSignal) and the pin (led) above, but add two parameters?
-
-Usually, it's better not to use the variable or constants that are declared out of itself in the function. All stuff needed is passed in as its parameters. As you invoke the function, you will then tell which pin is going to be used and what the values are. 
+:::info
+Usually, it's better not to use the variable or constants that are declared out of the function itself. **All stuff needed is passed in as its parameters**. As you invoke the function, you will then tell which pin is going to be used and what the values are. Thus you could use this piece of code in other project without modifying the code. This practice would be really helpful as you work on great projects in the future.
+:::
 
 ```swift
 let long = 1000
 let short = 500
 ```
 
-They set the duration of LED on-time. You store the value in the two constants so it would be more clear as you use them later.
+They set the duration of LED on-time. You store the value in the two constants so it would be clearer as you use them later.
 
 ```swift
 for value in values {
     ...
 }
 ```
-This is a for-in loop. It has two keywords: for and in. It’s used to repeat similar operations to simplify the code. 
-It is always used with arrays. The code inside the curly brackets would repeat several times to iterate all the elements in the array.
-value represents the elements in the array values. It doesn’t matter if you use value or a, b, c to name it. And it’s better to use a descriptive name.
+This is a **for-in loop**. It has two keywords: `for` and `in`. It’s used to repeat similar operations for each element. It is usuallt used with arrays. The code inside the curly brackets would repeat several times to iterate all the elements in the array.
+
+`value` represents the elements in the array `values`. It doesn’t matter if you use `value` or a, b, c to name it. But it’s better to use a descriptive name.
 
 ```swift
 if condition {
@@ -468,27 +539,28 @@ if condition {
     task2
 }
 ```
-This is a conditional statement. The if-else statement makes it possible to do different tasks according to the condition. The condition is always a boolean expression that will return either true or false. And it will use some comparison operators to evaluate the value as follows:
+This is a **conditional statement**. The **if-else** statement makes it possible to do different tasks according to the condition. The condition is always a boolean expression that will return either true or false. And it will use some comparison operators to evaluate the value as follows:
 
-* Equal to: a == b
-* Not equal to: a != b
-* Greater than: a > b
-* Less than: a < b
-* Greater than or equal to: a >= b
-* Less than or equal to: a <= b
+* Equal to: `a == b`
+* Not equal to: `a != b`
+* Greater than: `a > b`
+* Less than: `a < b`
+* Greater than or equal to: `a >= b`
+* Less than or equal to: `a <= b`
 
 If the condition evaluates true, task1 will be executed and task2 will be skipped. If the condition is false, task2 will be executed instead of task1.
-In the code above, the value is judged to know how long the LED should be on.
+
+In the code above, the `value` is judged to know how long the LED should be on.
 
 ```swift
 light.high()
 light.low()
 ```
-Set high or low voltage. This is similar to the method write(), but it’s more straightforward. You could choose the usage you like. 
+Set high or low voltage. This is similar to the method `write()`, but it’s more straightforward. The statement `led.write(true)` of course works.
 
 
 ## Summary
-Congratulations! In this section, you change the digital output and successfully blink the LED. What’s more, you also learn some basic electronic knowledge and Swift programming. Do you understand how the blink works now? Make sure you clarify the program logic and the basic idea before going to the next part. 
+Congratulations! In this section, you successfully blink the LED by setting the output. What’s more, you also learn some basic electronic knowledge and Swift programming. Do you understand how the blink works now? Make sure you clarify the program logic and the basic idea before going to the next part. 
 
 
 ## More info
@@ -503,8 +575,7 @@ https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html)
 * [Serial and parallel circuit](
 https://www.allaboutcircuits.com/textbook/direct-current/chpt-5/what-are-series-and-parallel-circuits/)
 
-* [Online circuit simulator](
-https://www.circuitlab.com/)
+* [Online circuit simulator](https://www.circuitlab.com/)
 
 
 
