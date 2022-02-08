@@ -109,6 +109,21 @@ module.exports = {
         'tutorials/swiftio-maker-kit/mission12',
       ],
     },
+    {
+      type: 'category',
+      label: 'SwiftIO Circuit Playgrounds',
+      items: [
+        'tutorials/swiftio-circuit-playgrounds/led',
+        'tutorials/swiftio-circuit-playgrounds/button',
+        'tutorials/swiftio-circuit-playgrounds/led-timer',
+        'tutorials/swiftio-circuit-playgrounds/buzzer',
+        'tutorials/swiftio-circuit-playgrounds/potentiometer',
+        'tutorials/swiftio-circuit-playgrounds/humiture',
+        'tutorials/swiftio-circuit-playgrounds/accelerometer',
+        'tutorials/swiftio-circuit-playgrounds/lcd',
+        'tutorials/swiftio-circuit-playgrounds/speaker',
+      ],
+    },
 
   ],
 
