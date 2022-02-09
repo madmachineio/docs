@@ -5,39 +5,48 @@ description: Learn how a button works and use it to control an LED.
 
 # Button-controlled LED
 
-The button is a commonly used input component. It is widely used in a light switch, remote control, keyboard, etc, to control the current flow in the circuit. Now it’s your turn to build a LED light control using a button.  
+The button is a commonly used input component and widely used in a light switch, remote control, keyboard, etc, to control the current flow in the circuit. Now it’s your turn to build a LED light control using a button.  
 
 **Learning goals**
 * Know about digital input. 
 * Understand how to use the button in your circuit. 
 * Get to know why a pull resistor is necessary.
-* Learn the if-else statement.
 * Get a rough idea of interrupt and debounce. 
 
-## Background
+## 🔸Background
 
 ### What is digital input?
-The microcontroller could not only send output voltage but also receive signals. You have looked at the digital output in the previous chapter, let’s have a look at digital input now.
+The microcontroller could not only send output voltage but also receive signals. You learned about digital output in the previous tutorial, and now you will discover how digital input works.
 
-Like digital output, digital input has two states as well: high and low. When an input signal comes in, its voltage value will be compared with a specific threshold. If it’s higher than the threshold, it’s high, and if it’s lower, it’s low. It is kinda like a multimeter in your circuit. 
+Like digital output, digital input has two states: high and low. When an input signal comes in, its voltage will be compared with specific thresholds. If the voltage higher than the threshold, it’s high, and if it’s lower, it’s low. You can regard it as a multimeter used to measure voltage, but only has two results.
 
 According to the input value, you could easily know the exact state of the external devices, for example, check if the button is pressed or not.
 
-The digital pins on the board could act as both input and output, so you need to initialize the pin as input or output in your code.
+The digital pins on the board act as both input and output, so you need to initialize the pin as input in your code.
 
 
-## New component
+## 🔸New component
 
 ### Pushbutton 
-Pushbutton is known as a momentary switch. By default, the circuit inside the button is disconnected, so the current will be blocked. Only when you press it, the internal metals would come into contact, then the current could flow successfully through the circuit. Once you release it, the button will go back to its original state, thus the current is blocked again. 
+Pushbutton is known as a momentary switch. In the simplified circuit below, by default, the circuit inside the button is disconnected, therefore block the current flow. As you press it, the internal metals comes into contact, so the current can flow successfully through the circuit. Once you release it, the button will go back to its original state and the current is blocked again. 
 
-Symbol: 
+<img
+  src={require('./img/button.png').default}
+  alt="Button" width="960"
+/>
+
+Symbol: <img
+  src={require('./img/buttonSymbol.png').default}
+  alt="Button symbol" width="80" align="center"
+/>
 
 
-:::note
+:::info
 How to connect the button in the circuit?
 
-This kind of button usually has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button state would not influence the circuit. So the best way is to connect the two legs on a diagonal, like 1 and 4.
+This kind of button usually has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button is of no use since the current flows all the time. 
+
+To make things easier, it is a good idea to connect the two legs on a diagonal, like 1 and 4, 2 and 3.
 :::
 
 
@@ -45,58 +54,72 @@ This kind of button usually has four legs. Each two of them are shorted, like 1 
 ### Pull resistor
 As you have known, the input will always be either high or low. But if the input pin is connected to nothing, what will the input value be? High or low?
 
-This is hard to say. The state of that pin will be uncertain. It will change randomly between high and low states. This state is called floating. To ensure a stable state, a pull-up or pull-down resistor is needed.
+This is hard to say. The state of that pin will be uncertain and change randomly between high and low states. This state is called **floating**. To ensure a stable state, a pull-up or pull-down resistor is needed.
 
-* **Pull-up resistor**
+**Pull-up resistor**
 
-The Pull-up resistor connects the pin to power. In this case, the button should connect to the input pin and ground. 
+The **pull-up resistor** connects the input pin to power. In this case, the button should connect to the input pin and ground. 
 
-By default, when the button is not pressed, the current flows from power to the input pin, so it reads high level. If the button is pressed, the current flows from power directly to the ground, thus the pin reads low level.
+By default, when the button is not pressed, the input pin reads actually the power voltage which is high. If the button is pressed, the current flows from power directly to the ground and the pin reads low level.
        
-* **Pull-down resistor**
+**Pull-down resistor**
 
-The Pull-down resistor connects the pin to the ground. If so, the button should connect to the power and input pin. 
+The **pull-down resistor** connects the input pin to ground. If so, the button should connect to the power and input pin. 
 
-By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the current flows from power to the input pin, and the pin reads high level.
+By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the current flows from power to the input pin, and the pin reads power voltage which is high.
 
-You would usually need them when you use a button. On this board, there are already internal pull-up and pull-down resistors. By default, the pull-down resistor is connected. You could change it according to actual usage.
+<img
+  src={require('./img/pullResistor.png').default}
+  alt="Pull up and pull down resistor" width="960"
+/>
 
-## Circuit
-There are two buttons on your playgrounds. They are connected respectively to D1 and D21. 
+In this way, the input pin is always at a determined state.
 
+You would usually need them with a button. On this board, there are already internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.
+
+## 🔸Circuit
+There are two buttons on your kit. They are connected respectively to **D1** and **D21**. 
+
+<img
+  src={require('./img/buttonCircuit.png').default}
+  alt="Button module on the kit" width="960"
+/>
+
+<img
+  src={require('./img/buttonCircuitDiagram.png').default}
+  alt="Button circuit diagram" width="360"
+/>
 
 
 :::note
 The circuits above are simplified for your reference.
 :::
 
-## Preparation
+## 🔸Preparation
 Let’s see the new class you are going to use in this project.
 
-Class
-DigitalIn: this class is used to get the current state of a specified input pin.
-Method
-init(_:mode:)
-Initialize the digital input pin. 
-The first parameter is the id of the pin. 
-The second parameter defines pin mode that sets the pull resistors, pullDown by default.
-read()
-Read from an input pin. It has a return value - the voltage on the pin, represented as true or false. 
-setInterrupt(_:enable:callback:)
-It allows you to define the interrupt mechanism in your project.
-This method needs three parameters:
-mode: set the edge to trigger the interrupt: .rising, .falling, .bothEdges. 
-enable: decide whether to begin the interrupt detection once you set it. By default, it is enabled.
-callback: call a block of code, known as closure. It requires a function that needs no parameter and returns nothing, that is, a void function. 
+**Class**
+
+**`DigitalIn`** - this class is used to get the current state of a specified input pin.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:mode:)` | Initialize the digital input pin. <br /> The first parameter is the **id** of the pin. <br />The second parameter defines pin **mode** that sets the pull resistors, `pullDown` by default. |
+| `read()` | Read from an input pin. It has a return value - the voltage on the pin, represented as `true` or `false`. |
+| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project. This method needs three parameters: <br />`mode`: set the edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />`enable`: decide whether to begin the interrupt detection once you set it. By default, it is `true` (enabled). <br />`callback`: call a block of code, known as **closure**. It requires a function that needs no parameter and returns nothing, that is, a **void function**. |
 
 
 ## Exercise
-1. Control LED using a button
-2. Blink LED using interrupt
+1. [Control LED using a button](./button.mdx#1-control-led-using-a-button)
+2. [Blink LED using interrupt](./button.mdx#2-blink-led-using-interrupt)
 
 ### 1. Control LED using a button
 Let’s start to build a simple LED switch. When you press the button, the LED turns on. When you release the button, the LED turns off.
 
+<img
+  src={require('./img/buttonLED.png').default}
+  alt="Control LED with button" width="960"
+/>
 
 **Example code**
 
