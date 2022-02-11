@@ -9,8 +9,8 @@ The button is a commonly used input component and widely used in a light switch,
 
 **Learning goals**
 * Know about digital input. 
-* Understand how to use the button in your circuit. 
-* Get to know why a pull resistor is necessary.
+* Understand how to use a button in your circuit. 
+* Learn about the pull-up and pull-down resistor.
 * Get a rough idea of interrupt and debounce. 
 
 ## 🔸Background
@@ -22,7 +22,7 @@ Like digital output, digital input has two states: high and low. When an input s
 
 According to the input value, you could easily know the exact state of the external devices, for example, check if the button is pressed or not.
 
-The digital pins on the board act as both input and output, so you need to initialize the pin as input in your code.
+As mentioned before, the digital pins on the board act as both input and output, you need to initialize the pin as input in your code.
 
 
 ## 🔸New component
@@ -41,20 +41,17 @@ Symbol: <img
 />
 
 
-:::info
-How to connect the button in the circuit?
-
 This kind of button usually has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button is of no use since the current flows all the time. 
 
-To make things easier, it is a good idea to connect the two legs on a diagonal, like 1 and 4, 2 and 3.
-:::
+To make things easier, it is a good idea to **connect the two legs on a diagonal**, like 1 and 4, 2 and 3.
+
 
 
 
 ### Pull resistor
 As you have known, the input will always be either high or low. But if the input pin is connected to nothing, what will the input value be? High or low?
 
-This is hard to say. The state of that pin will be uncertain and change randomly between high and low states. This state is called **floating**. To ensure a stable state, a pull-up or pull-down resistor is needed.
+That's hard to say. The state of that pin will be uncertain and change randomly between high and low states. This state is called **floating**. To ensure a stable state, a pull-up or pull-down resistor is needed.
 
 **Pull-up resistor**
 
@@ -66,7 +63,7 @@ By default, when the button is not pressed, the input pin reads actually the pow
 
 The **pull-down resistor** connects the input pin to ground. If so, the button should connect to the power and input pin. 
 
-By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the current flows from power to the input pin, and the pin reads power voltage which is high.
+By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the pin reads power voltage which is high.
 
 <img
   src={require('./img/pullResistor.png').default}
@@ -75,9 +72,16 @@ By default, the pin connects directly to the ground, so the pin keeps in a low s
 
 In this way, the input pin is always at a determined state.
 
-You would usually need them with a button. On this board, there are already internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.
+You would usually need pull-up or pull-down resistor with a button. The SwiftIO Feather board has internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.
 
-## 🔸Circuit
+<img
+  src={require('./img/pullUpDownResistor.png').default}
+  alt="Pull up and pull down resistor on board" width="480"
+/>
+
+_This is a simplified version for better understanding._
+
+## 🔸Circuit - button module
 There are two buttons on your kit. They are connected respectively to **D1** and **D21**. 
 
 <img
@@ -100,13 +104,13 @@ Let’s see the new class you are going to use in this project.
 
 **Class**
 
-**`DigitalIn`** - this class is used to get the current state of a specified input pin.
+**`DigitalIn`** - this class allows to get current state of a specified input pin.
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(_:mode:)` | Initialize the digital input pin. <br />**`id`**: the id of the digital pin. <br />**`mode`**: set the pull resistors, `pullDown` by default. |
-| `read()` | Read from an input pin. <br />It has a return value - the voltage on the pin, represented as `true` or `false`. |
-| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project. This method needs three parameters: <br />**`mode`**: set the edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />**`enable`**: decide whether to begin the interrupt detection once you set it. By default, it is `true` (enabled). <br />**`callback`**: pass in a closure as the paramter. It needs no parameter and returns nothing: () -> void. |
+| `init(_:mode:)` | Initialize the digital input pin. <br />- **`id`**: the id of the digital pin. <br />- **`mode`**: set the pull resistors, `pullDown` by default. |
+| `read()` | Read voltage level from an input pin. <br />- **Return value** - the voltage represented as `true` or `false`. |
+| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project. <br />- **`mode`**: set the type of edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />- **`enable`**: decide whether to enable the interrupt once you set it. By default, it is `true` (enabled). <br />- **`callback`**: pass in a function as the paramter. The function should needs no parameter and returns nothing: () -> void. |
 
 
 ## 🔸Projects
@@ -124,7 +128,7 @@ Let’s start to build a simple LED switch. When you press the button, the LED t
 **Example code**
 
 ```swift
-// Import the SwiftIO library to control input and output the MadBoard to use the id of the pins.
+// Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
@@ -151,7 +155,7 @@ while true {
 let button = DigitalIn(Id.D1)
 ```
 
-The button is an instance created for the `DigitalIn` class. Of course, the id of the pin is necessary. It’s the pin the button connects: D1.
+The button is an instance created for the `DigitalIn` class. As usual, the id of the pin is necessary. It’s the pin the button connects: D1.
 
 And there is an optional parameter `mode` with a default value `pullDown`, which means a pull-down resistor connects to the pin. There are two more options: `pullUp` (pull-up resistor), `pullNone` (no pull resistors).
 
@@ -204,7 +208,7 @@ There are two points about the ISR:
 1. Generally, the ISR should be done as fast as possible, usually in nanoseconds. 
 2. The functions don't need any parameters and return anything.
 
-In short, it's better to change a value or toggle digital output for the ISR. And you should not add `print()` (take about several milliseconds). Or your program may go wrong.
+In short, it's better to change a value or toggle digital output for the ISR. And you should not add `print()` which take about several milliseconds. Or your program may go wrong.
 :::
 
 
@@ -218,9 +222,9 @@ An interrupt may come from different sources. Now you are dealing with an interr
   alt="Rising edge and falling edge" width="480"
 />
 
-So when setting the interrupt,  you need to tell the microcontroller the specific condition to trigger it: rising edge, falling edge, or both edges. Then once the specified edge is detected, the interrupt begins.
+So when setting the interrupt,  you need to tell the microcontroller the specific condition to trigger it: rising edge, falling edge, or both edges. Then once the specified edge is detected, the interrupt happens.
 
-You may wonder why to use the interrupt. Well, with interrupt mechanism, the microcontroller can 
+With interrupt mechanism, the microcontroller can 
 * respond instantly to what it is supposed to do, which is vital for time-critical events. 
 * perform other tasks while the interrupt hasn't been triggered, thus increasing the efficiency.
 
@@ -228,7 +232,7 @@ You may wonder why to use the interrupt. Well, with interrupt mechanism, the mic
 **Example code**
 
 ```swift
-// Import the SwiftIO library to control input and output the MadBoard to use the id of the pins.
+// Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
@@ -236,10 +240,13 @@ import MadBoard
 let button = DigitalIn(Id.D1)
 let led = DigitalOut(Id.D19)
 
-// Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
-button.setInterrupt(.rising) {
+// Define a new function used to toggle the LED.
+func toggleLed() {
     led.toggle()
 }
+
+// Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
+button.setInterrupt(.rising, callback: toggleLed)
 
 // Keep sleeping if the interrupt hasn't been triggered.
 while true {
@@ -250,22 +257,58 @@ while true {
 **Code analysis**
 
 ```swift
-button.setInterrupt(.rising) {
+func toggleLed() {
     led.toggle()
 }
+```
+
+This newly declared function would be passed as parameter for the interrupt. It needs no parameter and don't have return values, which meets the requirement for the ISR. 
+
+`toggle()` can reverse the output from the current state to the other,from low to high, or from high to low. 
+
+Btw, changing the digital output level normally can be finished quickly, so it can be set as ISR.
+
+```swift
+button.setInterrupt(.rising, callback: toggleLed)
 ```
 
 The interrupt will be triggered when a rising edge is detected. The rising edge here corresponds to the moment the button is pressed.
 
 
-The third parameter is about closure. To simply put, the closure 
+The third parameter `callback` needs a specified type of functions: () -> void. It means the function has no parameters and return values. 
 
+This parameter calls the function `toggleLed` defined above. Thus, once there is a rising edge, the microcontroller will come to this piece of code,  then go to that function `toggleLed` that `callback` calls and finally know it needs to toggle the output. After finished, the microcontroller return to the previous task, in this case, sleep again.
 
+:::info
 
+Previously, you invoke them to do some work. Actually, a function can accept another function as its parameters, as long as the passed-in function follows the specified pattern.
 
+Let's see an example!
 
+```swift
+func add1(_ num: Int) -> Int {
+    return num + 1
+}
 
-`toggle()` could reverse the output no matter it’s current state. After the digital output is initialized, the LED is off. When the interrupt happens, the LED turns on. And if the rising edge is detected again, the LED turns off. As a result, the LED will change state every time you press the button.
+func multiply3(_ num: Int) -> Int {
+    return num * 3
+}
+
+func arithmetic(num: Int, formula: (Int) -> Int) -> Int {
+    return formula(num)
+}
+
+var value = 5
+// 6
+value = arithmetic(num: value, formula: add1)
+// 18
+value = arithmetic(num: value, formula: multiply3)
+```
+
+The function `arithmetic` needs a number and a formula to compute the number. The `formula` accepts an integer and returns an integer: (Int) -> Int. The other two functions `add1` and `multiply3` is in the same pattern. So `arithmetic` can accept either them as a parameter, as well as other functions of this pattern. In this way, the function `arithmetic` becomes general purpose and can apply different methods of computation.
+
+:::
+
 
 ```swift
 while true {
@@ -273,7 +316,7 @@ while true {
 }
 ```
 
-It is to ensure the board keep sleeping while interrupt doesn't happen. The sleep time can be a random value. Without it, the board will run extremely quickly again and again but doing nothing.
+It makes the board sleep while interrupt hasn't occurred. The sleep time can be a random value. Without it, the board will run extremely quickly again and again but do nothing.
 
 
 
@@ -281,7 +324,7 @@ It is to ensure the board keep sleeping while interrupt doesn't happen. The slee
 Congratulations! Now let’s dive deeper into something more complicated. Don’t be upset if you are confused. This part talks about the signal noise produced by buttons. You could skip this part and go back later as you get more familiar with all knowledge.
 
 ### Debounce 
-When you press or release a button, you might think the button would immediately come to a stable state, closed or open. However, there would be some unexpected situations sometimes. 
+When you press or release a button, you might think the button would immediately come to a stable state, closed or open. So the LED should always be on when pressing the button and turn off once the button is released. However, there may be some unexpected situations sometimes. 
 
 The button has metals inside it which will move as you press or release it. Due to this mechanical structure, there may be several bounces before the internal metals finally settle down. So once the button is pressed or released, it may change several times between two states: establish the connection and disconnect the circuit before coming to a stable state.
 
@@ -297,7 +340,7 @@ So you need debounce methods to avoid this situation. There are many solutions, 
 
 **Hardware debounce**
 
-It lies in eliminating the influence of bounce when designing the circuit. So does the button on this kit. 
+It lies in eliminating the influence of bounce when designing the circuit. So does the button module on this kit. Let's talk about one method used for the kit. There are also many other ways, of course.
 
 <img
   src={require('./img/debounce.png').default}
@@ -306,11 +349,9 @@ It lies in eliminating the influence of bounce when designing the circuit. So do
 
 A capacitor (C1 shown in the image below) is added to smooth the voltage changes. After the button is pressed or released, the voltage will gradually change to another level rather than accidentally change several times between the two levels.
 
-There are also many other ways, of course.
-
 **Software debounce**
 
-It focuses on making your board ignore the bounce to get the real state. Usually, the key point is to check many times or wait a few milliseconds to skip this unstable period. Usually, a fast press would at least last about 20ms. So after this period, the value read from the pin should be the one needed. You could have a look at [this reference code](../general/simpleio/debounce.mdx#example-code). 
+It makes your board ignore the bounce and wait for the real state. Usually, you'll check many times or wait a few milliseconds to skip this unstable period. After this period, the value read from the pin should be the one needed. A fast press would at least last about 20ms. You could have a look at [this reference code](../general/simpleio/debounce.mdx#example-code). 
 
 :::note
 Since the button on the kit uses a hardware debounce method, you will not meet this problem. But it is still an important phenomenon when you DIY some projects using buttons.

@@ -5,9 +5,9 @@ description: Learn how to
 
 # LED blink using timer
 
-You’ll try a new way to blink the LED with a timer. 
+In this tutorial, you’ll try a new way to blink the LED - blink triggered by a timer. 
 
-You have successfully made the LED to blink, and also learnt about the interrupt in the last exercises. So this time, you will use a timer to set the interrupt to blink the LED.
+In the previous projects, you successfully blink LEDs, and also learn about the interrupt. So this time, you will use a timer to set the interrupt to blink the LED.
 
 **Learning goals**
 * Learn how to use a timer to trigger the interrupt.
@@ -15,31 +15,43 @@ You have successfully made the LED to blink, and also learnt about the interrupt
 
 
 
-## Background
+## 🔸Background
 
 ### What is a timer?
-You have known about the interrupt that is triggered by the state change of an input pin. With this mechanism, the microcontroller doesn't need to check a specific condition all the time to know if it’s ready for the interrupt. It could just do other work and will respond to the interrupt once the condition is met.
-And this time, you will know about another way to trigger the interrupt using a timer. It allows the interrupt to happen at every specified time interval. 
+You have known that the interrupt can be triggered by the state change of an input pin. With this mechanism, the microcontroller can trigger an interrupt once a rising edge or falling edge is detected.
+
+And this time, you will know about another way to trigger the interrupt using a timer. It allows the interrupt to happen at every specified time interval.
+
 For example, in the first section, you make the LED to blink using sleep(). It pauses the microcontroller there for a certain amount of time and does nothing, which would be quite a waste of time if you want it to do something else. If you use a timer, the microcontroller could do many other things and would stop automatically if it’s time for the interrupt execution. 
 
 
+## 🔸Circuit - LED module
+<img
+  src={require('./img/LEDCircuit.png').default}
+  alt="LED module on the kit" width="960"
+/>
 
-## Preparation
+<img
+  src={require('./img/LEDCircuitDiagram.png').default}
+  alt="LED circuit diagram" width="360"
+/>
 
-Class
-Timer: this class is used to enable interrupt at a specific time interval.
-Method
-init()
-Initialize a timer.
-setInterrupt(ms:mode:start:_:)
-Set the condition to trigger the interrupt.
-The first parameter is the time interval, measured in ms.
-The mode decides how many times the interrupt will happen. There are two options: .oneShot and .period. And by default, it’s set to .period to make the interrupt happen continuously.
-The parameter start is to decide whether it will start as you invoke this method, or you will start it manually later by using start().
-The last one is to set the task with higher priority. It needs functions with no parameter and return value..
+:::note
+The circuits above are simplified for your reference.
+:::
 
-## Exercise
-1. LED blink using timer
+## 🔸Preparation
+
+**Class**
+**`Timer`** -  this class is used to set interrupt at a specific time interval.
+
+| Method | Explanation |
+| ------ | ------------|
+| `init(mode:period)` | Initialize a timer. <br />- **`mode`**: decide how many times the interrupt will happen: `.oneShot` or `.period`, `.period` by default to make the interrupt happen continuously. <br />- **`period`**: the time interval, measured in ms.|
+| `setInterrupt(`<br />`start:_:)` | Set the condition to trigger the interrupt.  <br /> - **`start`**: decide whether it will start as you invoke this method, or you will start it manually later by using start(). <br />- **`callback`**: set the task for interrupt. It needs functions with no parameter and return value. |
+
+## 🔸Projects
+1. [LED blink using timer](./led-timer#1-led-blink-using-timer)
 
 
 ### 1. LED blink using timer
@@ -50,14 +62,14 @@ You will turn the LED on and off every second as you did before, but in a new wa
 ```swift
 // Import the SwiftIO library to control input and output the SwiftIOFeather to use the id of the pins.
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 
 // Initialize a digital pin for LED and a timer.
 let led = DigitalOut(Id.D19)
-let timer = Timer()
+let timer = Timer(period: 1000)
 
 // Set an interrupt to reverse the LED state every second.
-timer.setInterrupt(ms: 1000) {
+timer.setInterrupt() {
     led.toggle()
 }
 
@@ -67,3 +79,25 @@ while true {
 }
 
 ```
+**Code analysis**
+
+```swift
+let timer = Timer(period: 1000)
+```
+
+
+
+```swift
+timer.setInterrupt() {
+    led.toggle()
+}
+```
+
+
+
+## 🔸Summary
+
+
+
+
+## 🔸More info
