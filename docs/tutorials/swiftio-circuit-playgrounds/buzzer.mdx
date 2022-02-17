@@ -1,89 +1,137 @@
 ---
-title: Buzzer
+title: Simple melody with buzzer
 description: Learn how to
 ---
 
 # Simple melody with buzzer 
 
-The project with light is not enough, now it’s time to make some noise. You’ll work with the buzzer. It would produce sharp sounds and it is widely used for notification and confirmation, like alarm, or simple music in toys. Are you curious about how it produces sound? Let’s figure it out together. 
+Now it’s time to make some noise🎶. 
 
+You’ll work with a new component - buzzer. It can produce sharp sounds and is widely used for notification and confirmation, like alarms, or simple music in toys. 
 
+Are you curious about how the sound comes from it? Let’s figure it out together. 
 
 **Learning goals**
-* Understand how the buzzer produces the sound.
-* Get to know two different types of buzzers.
+* Understand how a buzzer produces sound.
+* Know two different types of buzzers.
 * Clarify the working principle of the PWM signal.
-* Learn the basic usage of array and for-in loop. 
 
-## Background
+## 🔸Background
 
 ### What is PWM?
-In the previous project, you made the SwiftIO feather board output 0 volt and 3.3 volts to turn on and off a LED. You may wonder how to make the LED dimmer. Is there a way to get a voltage between two levels? Well, the pulse width modulation (PWM) could deal with it.
-The PWM is a square wave signal with only two states: on (when the signal is high) and off (when the signal is low). The on-time of the signal is called pulse width. So just as its name suggests, PWM is to change the proportion of on-time to control the output. It would change extremely quickly the pin state between on and off. This change is so fast that it couldn't be recognized by your eyes. In this way, you get an average voltage between 0V and 3.3V. Here are some basic concepts of PWM:
-The duty cycle describes the percentage of the on-time in a period. 0 means the signal is always low. 1 means it is always high. And if the duty cycle is 0.5, the voltage should be high for 50% of the time and low for 50% of the time. And the average voltage is 1.65V.
+In the previous projects, you tried the digital output to turn on and off an LED. Then how can you change the LED's brightness? Well, the **pulse width modulation (PWM)** could deal with it.
 
-One period consists of on-time and off-time. It’s the time that a cycle lasts. The frequency of the signal is the inverse of the period. It describes the number of cycles in one second. For example, 1000Hz means that there are 1000 cycles in total per second, and the period is 1ms. 
+The PWM signal is also a square wave signal with two states: on (when the signal is high) and off (when the signal is low). The on-time of the signal is called **pulse width**. So as its name suggests, PWM is to change the proportion of on-time to control the output. It would change extremely quickly the pin state between on and off. It's so fast that your eyes can't notice it. In this way, you seem to get an average voltage between 0V and 3.3V. 
 
-PWM could be used in many situations, for example, adjusting LED brightness, controlling a servo, or playing notes. In actual usage, you would set the duty cycle or the frequency according to your project.
+<img
+  src={require('./img/PWM.png').default}
+  alt="PWM signal" width="480"
+/>
 
-## New component
+Here are some more concepts about PWM:
+
+The **duty cycle** describes the percentage of the on-time in a period. 0 means the signal is always low. 1 means it is always high. A signal with a duty cycle of 0.5 should be high for 50% of the time and low for 50% of the time. And the average voltage is 1.65V.
+
+One **period** consists of on-time and off-time. It’s the time that a cycle lasts. The **frequency** of the signal is the inverse of the period. It describes the number of cycles in one second. For example, 1000Hz means that there are 1000 cycles in total per second, and the period is 1ms. 
+
+<img
+  src={require('./img/PWMFrequency.png').default}
+  alt="PWM frequency" width="480"
+/>
+
+PWM could be used in many situations, for example, adjusting LED brightness, controlling a servo, or playing notes. You may set the duty cycle or the frequency of a signal according to your projects.
+
+## 🔸New component
 
 ### Buzzer
 
-The buzzer is the first component you are going to use to produce sounds. 
-How does it emit the sound? This is due to the diaphragm inside the buzzer. As you apply a current that always changes with time to a buzzer, the diaphragm will vibrate back and forth quickly. The vibration of the diaphragm then vibrates the surrounding air, hence you hear the sound from the buzzer. If there is no current, the diaphragm will go back to its original position. The sound would thus stop.
-Symbol: 
-   
+The buzzer is the first component you'll use to produce sounds. 
 
-There are two kinds of buzzers: active buzzer and passive buzzer. 
-The active buzzer contains an internal circuit that could create alternating voltage. So once you power this kind of buzzer, it would make a sound automatically. But it could only produce one constant sound since the wave generated by the internal circuit is determined. At last, the active buzzer is polarised and needs to connect in the right direction. 
-The passive buzzer needs a PWM signal to drive it. The pitch of a sound depends on the frequency of the signal. Higher frequency would lead to a higher pitch. And the one in the kit is a passive buzzer.
+<img
+  src={require('./img/buzzer.png').default}
+  alt="buzzer" width="120"
+/>
 
-## New concept
+Symbol: <img
+  src={require('./img/buzzerSymbol.png').default}
+  alt="buzzer symbol" width="80" align="center"
+/>
+
+How does it emit the sound? It's due to the diaphragm inside it. As you apply a current that always changes with time to a buzzer, the diaphragm will vibrate back and forth quickly. The vibration of the diaphragm then vibrates the surrounding air, hence you hear the sound from the buzzer. If there is no current, the diaphragm will go back to its original position. The sound would thus stop.
+
+<img
+  src={require('./img/buzzerPrinciple.png').default}
+  alt="How buzzer works" width="480"
+/>
+
+There are two kinds of buzzers: active buzzer and passive buzzer.
+
+* The active buzzer contains an internal circuit that could create alternating voltage. So once you power this kind of buzzer, it would make a sound automatically. But it could only produce one constant sound since the wave generated by the internal circuit is determined. At last, the active buzzer is polarised and needs to connect in the right direction. 
+* The passive buzzer needs a PWM signal to drive it. The pitch of a sound depends on the frequency of the signal. Higher frequency would lead to a higher pitch. And the one in the kit is a passive buzzer.
+
+## 🔸New concept
 ### Pitch
-You must be familiar with do, re, mi… They correspond respectively to the note C, D, E, F, G, A, B. It starts from C and doesn’t follow the normal order of the alphabet.
+You must be familiar with the notes: do, re, mi... They correspond respectively to the note C, D, E, F, G, A, B. The notes start from C but aren't in alphabetical order.
+
 The pitch of each note is decided by the frequency. High pitch corresponds to high frequency, low pitch corresponds to low frequency. Each note matches a corresponding frequency as in the following chart. When it comes to Middle C, the frequency is about 262 Hz. So to make the buzzer play a piece of melody, you need to find the frequency and duration of each note according to the score.
 
-## Circuit 
+<img
+  src={require('./img/note.png').default}
+  alt="notes" width="960"
+/>
+
+## 🔸Circuit 
 The buzzer is connected to the pin PWM5A.
 
+<img
+  src={require('./img/buzzerCircuit.png').default}
+  alt="Buzzer circuit" width="960"
+/>
 
+<img
+  src={require('./img/buzzerCircuitDiagram.png').default}
+  alt="Buzzer circuit diagram" width="360"
+/>
 
 :::note
 The circuits above are simplified for your reference.
 :::
 
-## Preparation
+## 🔸Preparation
 Let’s look at the PWM class used for this project:
-Class
-PWMOut: it is used to set the PWM output from the board.
-Method
-init(_:frequency:dutycycle:)
-Initialize the PWM output pin. 
-The first parameter is the id of the pin. The next two are predefined parameters. By default, once you initialize the pin, you will get a PWM signal with 1000 Hz frequency and 0.0 duty cycle. 
-set(frequency:dutycycle:)
-It sets the frequency and duty cycle of the PWM signal.
-setDutycycle(_:)
-It will set only the duty cycle of the PWM output.
-suspend()
-It will suspend the PWM signal.
+
+**Class**
+
+**`PWMOut`** - set the PWM output from the board.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:frequency:dutycycle:)` | Initialize the PWM output pin. <br />- **`id`**: id of the pin. <br />- **`frequency`**: frequency of the PWM signal, 1000Hz by default. <br />- **`dutycycle`**: duty cycle of PWM signal, 0 by default. |
+| `set(frequency:dutycycle:)` | Set the frequency and duty cycle of the PWM signal. |
+| `setDutycycle(_:)` | Set the duty cycle of the PWM output. |
+| `suspend()` | Suspend the PWM signal. |
 
 
-## Exercise
-1. Play a scale using a buzzer
-2. Breathing LED
-3. Adjustable LED using a button
+## 🔸Projects
+1. [Musical scale](./buzzer#1-musical-scale)
+2. [Breathing LED](./buzzer#2-breathing-led)
+3. [LED brightness control](./buzzer#3-led-brightness-control)
 
 
-### 1. play a scale
+### 1. Musical scale
 In this exercise, the buzzer will generate sound and play a scale.
+
+<img
+  src={require('./img/buzzerSound.png').default}
+  alt="SOund from a buzzer" width="480"
+/>
 
 **Example code**
 
 ```swift
-// Import the SwiftIO library to set the input and output, and the SwiftIOFeather to use the pin id.
+// Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 
 // Create an instance and initialize the PWM pin.
 let buzzer = PWMOut(Id.PWM5A)
@@ -102,37 +150,56 @@ for frequency in frequencies {
 buzzer.suspend()
 
 while true {
+    sleep(ms: 9999)
 }
-
 ```
 
 
 **Code analysis**
 
 The following table explains some new knowledge about programming - array and for-in loop. They are of great use as you create more projects. 
+
+```swift
 let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
+```
+
 Here you create an array to store the frequencies of the signal. These frequencies are the notes from do to do. They constitute an octave.
+
 The frequencies is a constant, so the array cannot be changed later. If you want to change the array, you need to change let to var to make it a variable.
+
+```swift
 buzzer.set(frequency: frequency, dutycycle: 0.5)
-You are going to set the frequencies, so the method set(frequency:dutycycle:) is more suitable in this case. 
+```
+
+You are going to set the frequencies, so the method `set(frequency:dutycycle:)` is more suitable in this case. 
+
 The frequency corresponds to the frequencies in the array. And the duty cycle could be any float number between 0.0 and 1.0.
+
+```swift
 buzzer.suspend()
+```
+
 It will suspend the output, thus stop the sound from the buzzer.
 
 
 
-### 2. breathing LED
+### 2. Breathing LED
+
 After the musical scale, let’s deal with the LED again. The PWM signal could not only drive the buzzer, but also change LED brightness. By applying PWM output, the LED changes between on and off quickly. You could not notice this change, and the LED seems to be brighter and dimmer. 
+
 So let’s try the breathing LED. You could find it on mobile phones when a new message comes. The LED gradually changes from dark to light, then to dark over and over again.
 
-
+<img
+  src={require('./img/breathingLED.png').default}
+  alt="Breathing LED" width="960"
+/>
 
 **Example code**
 
 ```swift
-// Import the SwiftIO library to set the input and output, and the SwiftIOFeather to use the pin id.
+// Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 
 // Initialize the pin for PWM output.
 let led = PWMOut(Id.PWM4A)
@@ -175,43 +242,86 @@ while true {
 
 **Code analysis**
 
+```swift
 let stepDutycycle: Float = 0.01
+```
+
 The duty cycle is always between 0 and 1. So the maximum and minimum value is stored in a constant.
+
 There are some built-in data types in the Swift language, like Int, float, double, bool, etc. Each type corresponds to different values and the value range. If the values in your program don't match or exceed the default range, the compilation will fail. 
+
 If you don’t explicitly determine the data type, Swift would use type inference to decide the type of each value. If you simply write 0 here, Swift would judge the value as an Int. When dealing with decimal numbers, there are also two possibilities: float or double, and the default choice of Swift language is double. Since the duty cycle is a float number, the value is declared as a float as well.
+
 The LED’s brightness is decided by the duty cycle, so you need to change the duty cycle of the PWM. 
+
 To make sure the brightness changes smoothly in our eyes, the change should not be too big. Let’s suppose the change is 0.01 each time.
 
+```swift
 var dutycycle: Float = 0.0
+```
+
 A variable always stores a value that would change later in your code. In this case, the duty cycle will always change, so you will create a variable instead of constant.
+
+```swift
 var upDirection = true
+```
+
 This variable is used to decide whether the LED will become brighter or dimmer. 
+
+```swift
 led.setDutycycle(dutycycle)
+```
+
 Set the duty cycle of PWM output. The LED brightness will change according to its value.
+
+```swift
 sleep(ms: 10)
+```
+
 The value range is 0 - 1, and the change is 0.01 each time. So the loop will last 100 times. Then let’s suppose the LED changes from off to full brightness in 1 seconds, you will get the duration for each state - 10ms. 
+
+```swift
 if upDirection {
     ...
 } else {
     ...
 }
+```
+
 This conditional statement will do some calculation with the duty cycle according to the value of upDirection. 
+
 If it is true, the duty cycle will increase by the value of stepDutycle. Until its value exceeds the maximum, the upDirection will be false.
+
 If it’s false, the duty cycle will decrease by the value. When it is below its minimum, the upDirection will be true again.
+
+```swift
 dutycycle += stepDutycycle
+```
+
 “+=” combines the addition and assignment. 
+
 It actually means “dutycycle = dutycycle + stepDutycycle”. 
+
 And “-=” means “dutycycle = dutycycle - stepDutycycle”.
+
+```swift
 if dutycycle >= maxDutycycle {
     upDirection = false
 }
+```
+
 This statement is to know whether the duty cycle exceeds its range. If so, the upDirection is changed to false, thus this loop will be ended. 
 
 
 
 
-### 3. Adjustable LED using a button
+### 3. LED brightness control
 Try to adjust the brightness of the LED using two buttons. One is reserved to increase the brightness, the other is to reduce the brightness.
+
+<img
+  src={require('./img/buttonPWM.png').default}
+  alt="Change LED brightness with a button" width="480"
+/>
 
 
 **Example code**
@@ -220,7 +330,7 @@ Try to adjust the brightness of the LED using two buttons. One is reserved to in
 ```swift
 // Import two necessary libraries.
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 
 // Initialize the PWM pin.
 let led = PWMOut(Id.PWM4A)
@@ -283,13 +393,13 @@ The `upButton` is quite similar.
 
 
 
-## Summary
+## 🔸Summary
 
 Congratulations! In this section, you get to know the PWM signal and understand some related concepts. And use it to control the buzzer, the LED. The buzzer is changed by frequency and the LED is changed by the duty cycle.
 
-## More info
+## 🔸More info
 
-Here are some detailed info to find out more:
+Here are some links to help you find out more detail:
 
 * [PWM](https://www.youtube.com/watch?v=rBQVfCUuhfs)
 * [Buzzer](https://www.cuidevices.com/product-spotlight/piezo-and-magnetic-buzzers)
