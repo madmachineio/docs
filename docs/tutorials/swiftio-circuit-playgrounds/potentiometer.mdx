@@ -1,11 +1,11 @@
 ---
 title: Potentiometer
-description: Learn how to
+description: Learn how to 
 ---
 
 # Potentiometer
 
-You have learned some digital stuff, now let’s look into analog signals. You'll connect a potentiometer to your circuit the read analog values.
+You have learned a lot about digital signals and tried many projects with digital devices. Now let’s know something about analog signals. The potentiometer is a typical component to give you analog readings. You'll connect a potentiometer to your circuit and read analog values.
 
 **Learning goals**
 
@@ -17,9 +17,7 @@ You have learned some digital stuff, now let’s look into analog signals. You'l
 
 ### What is an analog signal?
 
-As mentioned before, the signals can be divided into two types: digital signal and analog signal. You have learned a lot about digital signals and tried many projects with digital devices. Now let’s know something about analog signals.
-
-Unlike the digital signal changing suddenly from one level to another, the analog signal is **continuous**. Its voltages change smoothly with time, which means there are infinite possible values from minimum to maximum voltage (0 - 3.3V). 
+As mentioned before, the signals can be divided into two types: digital signal and analog signal. Unlike the digital signal changing among several values, the analog signal is **continuous**. Its voltages change smoothly with time, which means there are infinite possible values from minimum to maximum voltage (0 - 3.3V). 
 
 <img
   src={require('./img/analogSignal.png').default}
@@ -30,7 +28,7 @@ But the microcontrollers are digital components, how do they read the analog vol
 
 Indeed, the microcontrollers cannot directly read analog values. It needs an analog to digital converter (ADC). The ADC converts analog voltages on a pin to corresponding digital values. In this way, the microcontrollers can finally read analog voltages.
 
-The ability to measurement analog values depends on the ADC resolution. The **resolution** tells the count of possible values. For example, if the resolution is 2-bit, there can be 4 possible values: 0, 1, 2, 3. These values are called **raw values**. And if it's is 3-bit, there are 8 possible values (0-7).
+The ability to measure analog values depends on the ADC resolution. The **resolution** tells the count of possible values. For example, if the resolution is 2-bit, there can be 4 possible values: 0, 1, 2, 3. These values are called **raw values**. And if it's is 3-bit, there are 8 values (0-7).
 
 <img
   src={require('./img/resolution.png').default}
@@ -45,16 +43,18 @@ Here is the equation for the conversion:
 
 **voltage = 3.3 / 4095 * raw value**
 
-As you can see, higher resolution means more possible values, so the voltage obtained will be more accurate.
+As you can see, higher resolution means more possible values, so the voltage obtained will be more accurate. Fo instance, as shown in the image above, if you get a raw value of 6 with a 3-bit ADC, the voltage should be around 3.3 / 7 * 6 ≈ 2.8V. But the same voltage might be considered as 3.3V with a 2-bit ADC.
+
+
 
 
 ## 🔸New component
 
 ### Potentiometer
 
-**Potentiometer** (pot for short, also called knob) is a kind of variable resistor. You can rotate it to change its resistance and thus change the voltage in a circuit. It is commonly used to control the volume on audio devices, as a menu control on home appliances, etc. 
+**Potentiometer** (pot for short, also called knob) is a kind of variable resistor. You can rotate it to change its resistance and thus change the voltage in a circuit. It is commonly used to control the volume on audio devices, as a menu selector knob on home appliances, etc. 
 
-A potentiometer has a movable wiper inside it. As you rotate it clockwise or anticlockwise, the wiper moves to change the available resistance in your circuit. 
+The potentiometer has a movable wiper inside it. As you rotate it clockwise or anticlockwise, the wiper moves with it to change the available resistance in the circuit. 
 
 <img
   src={require('./img/potentiometer.png').default}
@@ -94,7 +94,7 @@ The voltage divider calculation is based on the ohm’s law. Here’s the equati
 * _Vin: input voltage_
 * _VR1: voltage drop on R1_
 
-Since the two resistors are in series, the current flows through them are the same. So the ratio of R1’s resistance to the total resistance equals the ratio of voltage drop to the incoming voltage supply.
+Since the two resistors are in series, the current flows through them are the same. The sum of VR1 and VR2 should equal Vin. So the ratio of R1’s resistance to the total resistance equals the ratio of voltage drop to the incoming voltage supply.
 
 The potentiometer is a typical example of it. The whole resistor is cut into two parts by the wiper. As the wiper goes, the ratio of the resistor changes, thus the voltage drop changes accordingly.
 
@@ -141,6 +141,10 @@ In this project, you will rotate the potentiometer to change the input value. Yo
 
 After you connect the board to the computer through the serial port, the value is printed on the serial monitor window one by one per second. When you turn the potentiometer, the value changes. It gradually goes to the maximum or minimum value according to the direction you twist.
 
+<img
+  src={require('./img/readPot.png').default}
+  alt="Read analog values changed by potentiometer" width="960"
+/>
 
 **Example code**
 
@@ -183,11 +187,11 @@ A serial monitor is like a link between your board and the computer. You could v
 
 When you download the code, you connect the download port on the board to the computer. Now you need to connect the serial port on the shield.
 
-When you install the MadMachine extension for VS Code, a serial tool Serial Port Helper will installed automatically. Of course you cound use any other tool that you're familiar with.
+When you install the MadMachine extension for VS Code, a serial tool **Serial Port Helper** will installed automatically. Of course you cound use any other tool that you're familiar with.
 
 1. Click the icon as shown below to open the tool. 
 
-  It will show all available ports. The second one is the one needed. The port name may be different for your board. If you are not sure which is the right one, you can disconnect your board and then connect again to see which port disappears and reappears.
+  It will show all available ports. In this case, the second port is the one needed. The port name may be different for your board. If you are not sure which is the right one, you can disconnect your board and then connect again to see which port disappears and reappears.
 
   <img
     src={require('./img/serial.png').default}
@@ -212,23 +216,33 @@ When you install the MadMachine extension for VS Code, a serial tool Serial Port
 
 4. The serial communication is now set up. If there is data transmission, you should see the messages on OUTPUT window.
 
-
+  <img
+    src={require('./img/printReading.png').default}
+    alt="Print values on serial monitor" width="960"
+  />
 
 ### 2. Control buzzer sound output
-You will use a potentiometer to change the sound of the buzzer. 
+You will use a potentiometer to change the sound of the buzzer. The pitch becomes higher when you turn it clockwise and lower when you turn it anticlockwise. 
 
-Example code
+<img
+  src={require('./img/potBuzzer.png').default}
+  alt="Change buzzer sound with a potentiometer" width="480"
+/>
+
+**Example code**
 
 ```swift
-// Import the SwiftIO to realize the related functionalities and the MadBoard to use the pin name.
+// Import the SwiftIO to control input and output and the MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-// Initialize the analog pin and PWM pin.
+// Initialize the analog pin for the potentiometer and PWM pin for the LED.
 let knob = AnalogIn(Id.A0)
 let buzzer = PWMOut(Id.PWM5A)
 
-// Read the input value in percentage. Then calculate the value into the frequency. Set the PWM with the frequency and a suitable duty cycle.
+// Read the input value in percentage. 
+// Then calculate the value into the frequency. 
+// Set the PWM with the frequency and a duty cycle.
 while true {
     let value = knob.readPercent()
     let f = 50 + Int(1000 * value)
@@ -243,35 +257,47 @@ while true {
 ```swift
 let value = knob.readPercent()
 ```
-
-Here you use another method readPercent() to get the input value represented as a percentage.
+Here you use another method `readPercent()` to get the input value represented as a percentage.
 
 ```swift
 let f = 50 + Int(1000 * value)
 ```
 
-The value is certainly too small to serve as frequency. You will do some calculation to increase it. And you could try to change the calculation to get a different range of pitch. 
+The reading values are too small to serve as frequencies. You then map it to bigger values to get frequencies from 50 to 1050. 
+
+```swift
+buzzer.set(frequency: f, dutycycle: 0.5)
+```
+The PWM pins will output signals with the specified frequencies to drive the buzzer. So when you turn the potentiometer clockwise, the buzzer pitch will increase gradually.
+
 
 
 ### 3. Change LED brightness
 
-The potentiometer could also be used to change the brightness of LEDs. 
+The potentiometer can also be used to change the brightness of LEDs. In this project, you'll turn the potentiometer to brighten and dim an LED.
+
+<img
+  src={require('./img/potLED.png').default}
+  alt="Change LED brightness with a potentiometer" width="480"
+/>
 
 **Example code**
 
 ```swift
-// As usual, import the two basic libraries.
+// Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-// Initialize the analog pin and PWM pin.
+// Initialize the analog pin for the potentiometer and PWM pin for the LED.
 let knob = AnalogIn(Id.A0)
 let led = PWMOut(Id.PWM4A)
 
 // Set the PWM to control the LED. 
 led.set(frequency: 1000, dutycycle: 0)
 
-// Read the input value. The value is represented in percentage, while the duty cycle is also between 0 and 1, so you could directly use the reading value to set the PWM.
+// Read the input value. 
+// The value is represented in percentage, while the duty cycle is also between 0 and 1, 
+// so you can directly use the reading value to set the PWM.
 while true {
     let dutycycle = knob.readPercent()
     led.setDutycycle(dutycycle)
@@ -282,4 +308,5 @@ while true {
 
 ## 🔸More info
 
+* [Analog vs Digital](https://learn.sparkfun.com/tutorials/analog-vs-digital/all)
 * [Voltage divider](https://learn.sparkfun.com/tutorials/voltage-dividers)
