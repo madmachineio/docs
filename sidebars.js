@@ -121,7 +121,7 @@ module.exports = {
         'tutorials/swiftio-circuit-playgrounds/led-timer',
         'tutorials/swiftio-circuit-playgrounds/buzzer',
         'tutorials/swiftio-circuit-playgrounds/potentiometer',
-        // 'tutorials/swiftio-circuit-playgrounds/humiture',
+        'tutorials/swiftio-circuit-playgrounds/humiture',
         // 'tutorials/swiftio-circuit-playgrounds/accelerometer',
         // 'tutorials/swiftio-circuit-playgrounds/lcd',
         // 'tutorials/swiftio-circuit-playgrounds/speaker',
