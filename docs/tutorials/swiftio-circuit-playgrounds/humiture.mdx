@@ -84,9 +84,14 @@ Nowadays, more and more digital sensors are used. They contain all stuff on a si
 
 ### Humiture sensor
 
-Humiture sensor allows you to measure both the temperature and humidity. There are different types of sensors that allows you to read temperature. SHT3x is one kind of digital temperature and humidity sensor and uses I2C to communicate with the microcontroller. It can give you a more accurate readings.
+Humiture sensor allows you to measure both the temperature and humidity. SHT3x is one kind of digital temperature and humidity sensor and uses I2C to communicate with the microcontroller.
 
-The sensor contains components sensitive to temperature and humidity, which will lead to corresponding voltage values in the circuit during measurement. Then it will give you raw values after calibration. You could use the formula provided on its datasheet to get temperature in Celsius and relative humidity in percentage.
+<img
+  src={require('./img/humiture.png').default}
+  alt="binary and hexadecimal table" width="240"
+/>
+
+The sensor contains components sensitive to temperature and humidity. For temperature measurement, a thermistor is always used. Its resistance changes with the temperature. As for humidity, the sensing element, a polymer in most cases, changes its conductivity due to water vapor content in the air. Then they cause voltage change in the circuit. Finally, the sensor gives you raw values after calibration. You could use the formula provided on its datasheet to get the temperature in Celsius and relative humidity in percentage.
 
 
 
@@ -94,13 +99,13 @@ The sensor contains components sensitive to temperature and humidity, which will
 
 ### Number system
 
-The number system is the way used to represent the number. The Decimal number system (base-10) is what you are familiar with. It is based on ten symbols, 0 to 9, and is what you always use in everyday life. Besides, there are two more important systems in the microcontroller world.
+The number system is the way used to represent numbers. The **Decimal** number system (base-10) is what you use in everyday life. The ten digits are from 0 to 9, and for larger values, you get more digits on units, tens, hundreds, thousands and so on. Besides, there are two more common types in the microcontroller world.
 
-Binary is the base-2 number system. The data will always start  with 0b. The two digits 0 and 1 are used to represent all numbers. This is how the data is stored on your computer. For a binary number, each digit is called a bit. A byte consists of 8 bits.  
+**Binary** is the base-2 number system. Only two digits (0 and 1) are used to represent all numbers. The data will always start with the prefix 0b. For a binary number, each digit is a bit. A byte consists of 8 bits.  
 
-Hexadecimal is the base-16 number system. The data always starts with 0x. It used 16 symbols, digits 0 to 9, and letters A to F to represent all numbers. A to F is equivalent to 10 to 15 respectively. Hexadecimal provides a more convenient way to represent those long binaries. 
+**Hexadecimal** is the base-16 number system. The data always starts with the prefix 0x. It used 16 symbols, digits 0 to 9, and letters A to F to represent all numbers. A to F is equivalent respectively to 10 to 15. Hexadecimal provides a more convenient way to represent those long binaries. 
 
-These three kinds of numbers could be converted to either one. The following chart shows how the numbers from 0 to 15 are represented in binary and hexadecimal. 
+Take decimal number 48 for example, it's equivalent to 0b00110000 in binary and 0x30 in hexadecimal.
 
 <img
   src={require('./img/numberSystem.png').default}
@@ -108,7 +113,7 @@ These three kinds of numbers could be converted to either one. The following cha
 />
 
 ## 🔸Circuit
-The humiture is connected to I2C0.
+The humiture sensor is connected to I2C0 (pin SCL0 and SDA0).
 
 <img
   src={require('./img/humitureCircuit.png').default}
@@ -121,33 +126,128 @@ The humiture is connected to I2C0.
 />
 
 :::note
-The circuits above are simplified for your reference.
+The circuits above are simplified versions for your reference.
 :::
 
 
 ## 🔸Preparation
 
-### Overview 
-The sensor used here is SHT3x. You could find its datasheet by searching on the Internet. The datasheet lists all the data needed. 
+Before start, you could find the [datasheet](https://sensirion.com/media/documents/213E6A3B/61641DC3/Sensirion_Humidity_Sensors_SHT3x_Datasheet_digital.pdf) by searching on the Internet. The datasheet lists all commands to configure the sensor and the ways to read values. 
 
-Each time you use the sensor, just find the command in it, send the corresponding data to communicate with the sensor. These commands for each sensor are determined, and it is annoying to check the datasheet every time you use it. 
+When dealing with all kinds of sensors, you will spend most of your time setting different commands for sensors. And if the sensor returns data, then read the values. In fact, the commands for sensors are usually determined and rarely change. So a library, aka driver, would be written to cover all the common usages of sensors and provide you with simple APIs. In this way, you could directly use the functionalities in the library instead of referring to the long datasheet.
 
-So usually, a library, aka the device driver, would be used to cover all the common usages of each type of sensor, and then provide you with simple APIs. In this way, you could directly invoke the methods in the library instead of referring to the long datasheet.
+Well, take the library [`SHT3x`](https://github.com/madmachineio/MadDrivers/blob/main/Sources/SHT3x/SHT3x.swift) for example, let’s see how the I2C is used. 
 
-Well, take the library SHT3x for example, let’s see how the I2C is used. As always, here you will find related APIs for this project.
+**Class**
 
-### Class
-I2C: this class controls the I2C communication between the board and the sensors. The data you are going to deal with using I2C is always 8-bit long.
-Method
-write(_:to:)
-Write data to the slave device. The first parameter is the data that is going to be sent to the slave. The second one needs the device address.
-read(count:from:)
-Read data from the slave device. The first parameter defines the number of 8-bit data you would get. The second one is the device address.
+**`I2C`** - this class controls the I2C communication between the board and the sensors. The data are sent or read in bytes.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:speed:)` | Initialize an I2C interface for the communication. <br /> - `id`: the id of the I2C pin. <br /> - `speed`: the clock speed for the I2C communication, standard by default. |
+| `write(_:count:to:`) | Write data to the slave device. <br /> **Parameter**<br /> - `data`: an arrary of bytes sent to slave device. <br /> - `count`: the count of bytes in the array. By default, it's nil which means all bytes in `data` will be sent. <br /> - `to`: the address of the slave device. <br /> **Return value**<br /> A result indicating whether the communication is finished successfully. |
+| `read(into:count:from:)` | Read data from the slave device.<br />  **Parameter**<br /> - `into`: the buffer to store the coming data. It needs an UInt8 array which is passed as inout in order to be changed. <br /> - `count`: number of bytes received from device. <br /> - `from`: the address of the slave device. <br /> **Return value**<br /> A result indicating whether the communication is finished successfully. |
 
 
-### Know about details 
+### SHT3x 
 
-Let’s look at each part of the library in detail. Here is the library source code: https://github.com/madmachineio/MadDrivers/blob/main/Sources/SHT3x/SHT3x.swift. 
+<details>
+  <summary>Click to view SHT3x source code.</summary>
+
+```swift
+import SwiftIO
+
+final public class SHT3x {
+    
+    let i2c: I2C
+    let address: UInt8
+
+    private var readBuffer = [UInt8](repeating: 0, count: 6)
+    
+    // Initialize the I2C bus and reset the sensor.
+    public init(_ i2c: I2C, address: UInt8 = 0x44) {
+        self.i2c = i2c
+        self.address = address
+        
+        reset()
+    }
+    // Reset the sensor.
+    public func reset() {
+        sleep(ms: 2)
+        try? writeValue(.softReset)
+        sleep(ms: 2)
+    }
+
+    // Get the temperature in Celcius.
+    public func readCelsius() -> Float {
+        try? getSensorData(into: &readBuffer)
+        let rawTemp = UInt16(readBuffer[0]) << 8 | UInt16(readBuffer[1])
+        return 175.0 * Float(rawTemp) / 65535.0 - 45.0
+    }
+
+    // Read the temperature in Fahrenheit.
+    public func readFahrenheit() -> Float {
+        try? getSensorData(into: &readBuffer)
+        let rawTemp = UInt16(readBuffer[0]) << 8 | UInt16(readBuffer[1])
+        return 315.0 * Float(rawTemp) / 65535.0 - 49.0
+    }
+
+    // Read the current relative humidity.
+    public func readHumidity() -> Float {
+        try? getSensorData(into: &readBuffer)
+        let rawHumi = UInt16(readBuffer[3]) << 8 | UInt16(readBuffer[4])
+        return 100.0 * Float(rawHumi) / 65535.0
+    }
+}
+
+extension SHT3x {
+    // Some common command with 16-bit data used to communicate with the sensor.
+    private enum Command: UInt16 {
+        case readStatus     = 0xF32D
+        case clearStatus    = 0x3041
+        case softReset      = 0x30A2
+        case heaterEnable   = 0x306D
+        case heaterDisable  = 0x3066
+        
+        case measureHigh    = 0x2400
+        case measureMedium  = 0x240B
+        case measureLow     = 0x2416
+        
+        case measureStretchHigh     = 0x2C06
+        case measureStretchMedium   = 0x2C0D
+        case measureStretchLow      = 0x2C10
+    }
+    
+    // Split the command into two bytes and send them to the sensor.
+    private func writeValue(_ command: Command) throws {
+        let value = command.rawValue
+        let result = i2c.write([UInt8(value >> 8), UInt8(value & 0xFF)], to: address)
+        if case .failure(let err) = result {
+            throw err
+        }
+    }
+
+    // Read 
+    private func readValue(into buffer: inout [UInt8]) throws {
+        for i in 0..<buffer.count {
+            buffer[i] = 0
+        }
+        let result = i2c.read(into: &buffer, from: address)
+        if case .failure(let err) = result {
+            throw err
+        }
+    }
+
+    private func getSensorData(into buffer: inout [UInt8]) throws {
+        try writeValue(.measureMedium)
+        sleep(ms: 8)
+        try readValue(into: &buffer)
+    }
+}
+```
+</details>
+
+Let’s look at each part of the library in detail.
 
 ```swift
 import SwiftIO
@@ -155,36 +255,48 @@ import SwiftIO
 Import the SwiftIO library to read or write data.
 
 ```swift
-class SHT3x {
+final public class SHT3x {
 }
 ```
 
-This class groups all the common usages related to the sensor. It has the keyword class and the library name SHT3x. 
+As you know, a class is like a template for all its instances. They share the same properties and methods in the class. You have used some built-in classes in `SwiftIO` library. Now you will define a new class. The statement needs the keyword `class`, followed by a class name `SHT3x`. This class groups all the common usages related to the sensor SHT3x. 
+
+The class is a reference type. So if you create an instance `sensor` and assign it to another constant `sht3x`, they point to the same one. If you change `sht3x`, `sensor` will also change. Like a file on your computer, you create multiple shortcuts, they all refer to the same one. That is why the class is usually used in your projects. Since the corresponding hardware is unique, any setting will cause hardware changes.
+
+The keyword `public` decides the access control of your class. This class should be accessible to other projects in order to use all its functionalities, so it's public. `private` means it is accessible only within its type, such as the enum `Command` used only within this class.
+
+A class can be inherited by other classes normally, but with the keyword `final`, it cannot be inherited any longer.
 
 ```swift
 let i2c: I2C
 let address: UInt8
 ```
 
-The variable or constant inside a class is called property. They must be initialized with a value.
-
-You could notice two properties here: i2c and address. They don’t have an initial value and thus need an initializer.
+The variable or constant inside a class is called **property**. They must be initialized with a value. The two properties above don’t have an initial value and thus need an initializer.
 
 ```swift
-init(_ i2c: I2C, address: UInt8 = 0x44) {
+private var readBuffer = [UInt8](repeating: 0, count: 6)
+```
+
+This statement creates a buffer to store the reading values during I2C communication. It needs to be a UInt8 array. The count is decided by the number of bytes the sensor will send. According to the datasheet, it is 6. In this way, you get an array with 6 bytes with values of 0. They will be replaced with readings later.
+
+
+```swift
+public init(_ i2c: I2C, address: UInt8 = 0x44) {
     self.i2c = i2c
     self.address = address
     reset()
 }
 ```
+The method or property inside a class also needs to be public to be accessible to other projects. The initializer will be used to create instances, so it is also public.
 
-The initializer is a special kind of function. It allows you to assign values to the properties, as well as perform other setups when creating an instance. 
+The initializer is a special kind of function. It allows you to assign values to the properties and perform some setups when creating an instance. 
 
-This initializer takes the two required parameters. The first one of course is the I2C interface. The address of this sensor is always the same and has a default value. So you don’t need to pass the value to it as initialization.
+This initializer takes two parameters. The first one, of course, is the I2C pin id. The address of this sensor is usually the same and thus passed with a default value. In this way, you don’t need to set it as initialization.
 
-You could notice the parameter names are the same as the property names. self is used to refer to the instance itself. Then use the dot syntax to access the property. So the value of the property is set to the value of parameter.
+The parameter names are the same as the property names, so `self` is used to refer to the instance itself. Then use the dot syntax to access the property and assign the parameter value to the property.
 
-When you want to use a method inside the class, you could directly invoke it instead of dot syntax, as the method reset here. After initializing a new instance, the I2C interface is ready and the sensor will be reset.
+The method inside a class can be directly used without dot syntax, as the method `reset` here. After initializing a new instance of `SHT3x`, the I2C communication gets ready, and the sensor is reset.
 
 ```swift
 func readCelsius() -> Float { 
