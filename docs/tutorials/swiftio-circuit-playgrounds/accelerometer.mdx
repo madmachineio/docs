@@ -5,9 +5,7 @@ description: Learn how to
 
 # Movement sensing using accelerometer 
 
-Let’s measure the movement of the object.
-
-You may not have heard of accelerometers, but you must experience them in everyday life. For example, when you rotate your mobile phone, you may find the screen display rotate portrait to landscape. Actually, it's due to the accelerometer inside the phone. It senses the movement and then responds to it accordingly. Now let’s take a closer look at it.
+You may not have heard of accelerometers, but you must experience them in everyday life. For example, when you rotate your mobile phone, you may find the screen display rotate from portrait to landscape. And it's due to the accelerometer inside the phone. It senses the movement and then responds to it accordingly. Now let’s take a closer look at it.
 
 **Learning goals**
 
@@ -18,14 +16,14 @@ You may not have heard of accelerometers, but you must experience them in everyd
 
 ### Accelerometer
 
-The accelerometer, aka 3-axis accelerometer, is useful to measure motion and gives the accelerations on x, y, z-axis. You could infer the movement according to the values. 
+The accelerometer, aka 3-axis accelerometer, measures motion and gives the accelerations on x, y, z-axis. You could infer the movement according to the values. 
 
 <img
   src={require('./img/accelerometer.png').default}
   alt="Accelerometer" width="320"
 />
 
-The accelerometer can sense gravity and measure motion, like vibration, rotation. The sensor contains a structure whose part moves when an acceleration is applied. The internal capacitance of the sensor changes with it, and thus voltage in circuits also changes.
+It can sense gravity and measure motion, like vibration, rotation. The sensor contains a structure whose part moves when an acceleration is applied. It will change the internal capacitance of the sensor, and thus voltage in circuits also changes. 
 
 <img
   src={require('./img/mems.png').default}
@@ -58,12 +56,12 @@ Now let’s go back to the sensor.
 
 The acceleration describes the change of velocity with time, in meters per second squared (m/s2). It has directions and can be either positive or negative. The gravitational acceleration on earth equals 1g (9.8m/s2). The accelerations measured by the sensor are in g.
 
-The accelerometer you are going to use supports I2C communication. The data it sends on the bus is raw values ranging from -32768 to 32767 (16-bit). Then the values will be converted to the acceleration value proportionally according to the measurement range. 
+The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit can only connects to I2C interface. The data it sends over the bus is raw values ranging from -32768 to 32767 (16-bit). Then the values will be converted to the acceleration value proportionally according to the measurement range. 
 
-The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. If you choose ±2g, -32768 equals -2g and 32768 equals 2g, which gives more precise readings within the limited range.
+The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. If you choose ±2g (which is the default range), -32768 equals -2g and 32768 equals 2g, which gives more precise readings within the limited range.
 
 ## 🔸Circuit - accelerometer module
-The accelerometer module is connected to **I2C0**.
+The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
 
 <img
   src={require('./img/accelerometerCircuit.png').default}
@@ -83,19 +81,19 @@ The circuits above are simplified versions for your reference.
 
 **Class**
 
-**`LIS3DH`** - it provides predefined methods for you to get readings from the accelerometer in an easy way.
+**`LIS3DH`** - it is the library for LIS3DH accelerometer. It provides predefined methods for you to get readings from the sensor in an easy way.
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init()` | Initialize the sensor to start the communication. It needs an I2C interface. The address has a default value. |
-| `readXYZ()` | Read the acceleration on 3-axis. It will return three values in float. |
+| `init(_:address:)` | Initialize the sensor to start the communication.  <br /> Parameters: <br /> - `id`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. 0x18 by default. |
+| `readXYZ()` | Read the acceleration on 3-axis. <br /> Return value: <br /> Accelerations on x, y, z-axis on float. |
 
 ## 🔸Exercise
 1. [Read acceleration](./accelerometer#1-read-acceleration)
-2. [Tilt indicator](./accelerometer#2-tilt-indicator)
+2. [Digital dice](./accelerometer#2-digital-dice)
 
 ### 1. Read acceleration
-Let’s use the sensor to sense movements. As you move or tilt your board in different directions, the values printed on the window change accordingly.
+Let’s use the sensor to sense movements. As you move or tilt your board in different directions, the values printed on the window change accordingly. You can have a better idea of how the accelerations change with movement.
 
 **Example code**
 
@@ -171,8 +169,12 @@ let package = Package(
 
 ### 2. Digital dice
 
-Let's build a dice with the accelerometer. You can shake or tilt the sensor to change the accelerations. It simulates the process of rolling a dice. After that, you put it back on your table or keep it in horizontal position, you should get a random number from 1 to 6.
+Let's build a dice with the accelerometer. You can shake or tilt the sensor to change the accelerations. It simulates the process of rolling a dice. After that, you put it back on your table or keep it in a horizontal position, you should get a random number from 1 to 6.
 
+<img
+  src={require('./img/dice.png').default}
+  alt="Dice" width="480"
+/>
 
 **Example code**
 
@@ -201,13 +203,14 @@ let dice = LIS3DH(i2c)
 // Initialize an LED used as an indicator when shaking the sensor.
 let indicator = DigitalOut(Id.D19)
 
-// Create a variable to store the time period when the sensor settle down.
+// Create a variable to store the time after the sensor stops movement.
 var steadyCount = 999
 
+// Read accelerations to judge if the sensor is in motion. 
+// Once the movement stops, a random number prints out.
 while true {
     let diceValue = dice.readXYZ()
     
-
     if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
         indicator.high()
         steadyCount = 0
@@ -265,7 +268,7 @@ let package = Package(
 let indicator = DigitalOut(Id.D19)
 ```
 
-This LED is served as an indicator when shaking the sensor. Or you may not sure what happens.
+This LED is served as an indicator when shaking the sensor.
 
 ```swift
 var steadyCount = 999
@@ -287,10 +290,10 @@ if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
 ```
 An if-else statement is used to judge the sensor's state.
 
-* The accelerations should increase in magnitude when you shake the sensor. Since the accelerations have directions, you need to use `abs` to get absolute values. During that time, you turn on the LED as an indicator. The variable `steadyCount` is set to 0 and always be 0 when the sensor is still in motion.
+* The accelerations should increase in magnitude when you shake the sensor. Since the accelerations have directions, you need to use `abs` to get absolute values. During that time, you turn on the LED as an indicator. Besides, the variable `steadyCount` is set to 0 and always be 0 when the sensor is still in motion.
 
 * Once you stop shaking the sensor, the accelerations on the x and y-axis decrease and should be lower than the threshold. Then the count starts to increase until it exceeds the set value. If so, it means the sensor is kept in a horizontal position. This is similar to the period after a dice is thrown. At last, you should see a number printed on your serial window.
 
-In this exercise, the key point is to decide when the sensor is no longer in motion. Here you will store the time to make sure the state lasts for a certain period. 
+In this exercise, the key point is to decide when the sensor is no longer in motion. Here you store the time to make sure the state lasts for a certain period. 
 
 
