@@ -1,73 +1,120 @@
 ---
 title: Movement sensing using accelerometer
-description: Learn how to
+description: Learn how to 
 ---
 
 # Movement sensing using accelerometer 
 
-Let’s measure the movement of the object in three-dimensional space.
-
-You might don’t have heard of accelerometers, but you must experience them in everyday life. For example, on the mobile phone, when you rotate it, you will find the screen display rotate as well. Since the accelerometer inside the phone senses the movement and then responds to it accordingly. Now let’s take a closer look at it.
+You may not have heard of accelerometers, but you must experience them in everyday life. For example, when you rotate your mobile phone, you may find the screen display rotate from portrait to landscape. And it's due to the accelerometer inside the phone. It senses the movement and then responds to it accordingly. Now let’s take a closer look at it.
 
 **Learning goals**
 
-* Understand how the movement is sensed by the accelerometer.
-* Know about gravitational acceleration. 
+* Understand how an accelerometer senses movements.
+* Know about acceleration. 
 
-## New component
+## 🔸New component
 
 ### Accelerometer
 
-The accelerometer, aka 3-axis accelerometer, is used to measure the acceleration on 3 axes: x, y, z-axis. The acceleration describes the change of the velocity with time. 
+The accelerometer, aka 3-axis accelerometer, measures motion and gives the accelerations on x, y, z-axis. You could infer the movement according to the values. 
 
-To better understand how the accelerometer works, let’s imagine a small ball inside a vacuum box. Here are some situations: 
+<img
+  src={require('./img/accelerometer.png').default}
+  alt="Accelerometer" width="320"
+/>
 
-* There is no gravity or any other factor that might affect the position of the ball. So the ball will float in the middle. 
-* If you suddenly move the box to the left, the ball will move in the opposite direction and a force will be applied to that wall. This is like the experience when you take a bus. If the bus suddenly speeds up, your body feels a force backward and then moves backward. This force is known as inertial force. 
-* And if the box is on the earth, the ball will fall down due to gravity. 
+It can sense gravity and measure motion, like vibration, rotation. The sensor contains a structure whose part moves when an acceleration is applied. It will change the internal capacitance of the sensor, and thus voltage in circuits also changes. 
+
+<img
+  src={require('./img/mems.png').default}
+  alt="mems" width="960"
+/>
+
+To better understand how the accelerometer works, let’s imagine a small ball inside a vacuum box. There are several situations: 
+
+* There is no gravity in a vacuum box, so the ball floats in the middle. 
+* If you suddenly move the box to the left, the ball will move towards the opposite direction and hit the box. This is similar to the experience when you take a bus. If the bus suddenly speeds up, your body feels a force backward and then moves backward. This force is known as inertial force. 
+* If air comes into the box, the ball will fall due to gravity. 
+
+<img
+  src={require('./img/ballinbox.png').default}
+  alt="A ball in box to show the acceleration" width="960"
+/>
               
-The accelerometer measures the acceleration by detecting the force. It could sense the gravity and measure the vibration or movement. The force caused by gravity or acceleration would change the internal capacitance of the sensor and thus change the voltage in the circuit.
+Now let’s go back to the sensor.
 
-Now let’s see several examples to better understand it.
+* If the sensor is still, it only feels the gravity. When the sensor faces up on the table, it gets a force downwards on the z-axis. When the sensor is perpendicular to the table, there will be a force on the x or y-axis.
 
-* If the sensor is still, it will only feel the gravity. When the sensor faces up on the table, it will get a force downwards on the z-axis; when the sensor is perpendicular to the table as in the second image, there will be a force on the y-axis. No matter it is at any angle, the gravity on it could be broken down into 3 axes. 
+<img
+  src={require('./img/accelerometerDirection.png').default}
+  alt="Accelerometer in three directions" width="960"
+/>
 
-* If the sensor moves toward a certain direction, there will always be a corresponding inertial force and the gravity force.
+* If the sensor moves toward some directions, the sensor should sense corresponding inertial force and gravity force.
 
-The acceleration has magnitude and direction. It could be positive or negative. It’s measured in meters per second squared (m/s2). The gravitational acceleration on earth equals 1g (9.8m/s2). 
 
-The accelerometer you are going to use supports I2C communication. The data it sends on the bus is a raw value. The value ranges from -32768 to 32767 (16-bit). Then the value could also be converted to the acceleration value proportionally according to the measurement range. The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. If you choose ±2g, -32768 equals -2g and 32768 equals 2g. 
 
-## Circuit
-The accelerometer is also connected to I2C0.
+The acceleration describes the change of velocity with time, in meters per second squared (m/s2). It has directions and can be either positive or negative. The gravitational acceleration on earth equals 1g (9.8m/s2). The accelerations measured by the sensor are in g.
+
+The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit can only connects to I2C interface. The data it sends over the bus is raw values ranging from -32768 to 32767 (16-bit). Then the values will be converted to the acceleration value proportionally according to the measurement range. 
+
+The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. If you choose ±2g (which is the default range), -32768 equals -2g and 32768 equals 2g, which gives more precise readings within the limited range.
+
+## 🔸Circuit - accelerometer module
+The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
+
+<img
+  src={require('./img/accelerometerCircuit.png').default}
+  alt="Accelerometer circuit" width="960"
+/>
+
+<img
+  src={require('./img/accelerometerCircuitDiagram.png').default}
+  alt="Accelerometer circuit diagram" width="360"
+/>
 
 :::note
-The circuits above are simplified for your reference.
+The circuits above are simplified versions for your reference.
 :::
 
-## Preparation
-Let’s talk about the device driver of this sensor.
-Class
-LIS3DH: it has set the necessary sensor command in advance. You could use the provided methods to communicate with the sensor.
-Method
-init()
-Initialize the sensor to start the communication. 
-It needs the I2C interface. The address has already the default value.
-readValue()
-Read the acceleration on three axes. 
-It will return three values in float.
+## 🔸Preparation
 
-## Exercise
-1. Read acceleration 
+**Class**
+
+**`LIS3DH`** - it is the library for LIS3DH accelerometer. It provides predefined methods for you to get readings from the sensor in an easy way.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:address:)` | Initialize the sensor to start the communication.  <br /> Parameters: <br /> - `id`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. 0x18 by default. |
+| `readXYZ()` | Read the acceleration on 3-axis. <br /> Return value: <br /> Accelerations on x, y, z-axis on float. |
+
+## 🔸Exercise
+1. [Read acceleration](./accelerometer#1-read-acceleration)
+2. [Digital dice](./accelerometer#2-digital-dice)
 
 ### 1. Read acceleration
-Let’s use the sensor to know how the movement is. You move or tilt the sensor in different directions, and the corresponding values printed on the window change
+Let’s use the sensor to sense movements. As you move or tilt your board in different directions, the values printed on the window change accordingly. You can have a better idea of how the accelerations change with movement.
 
 **Example code**
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'main.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
 ```swift
-// Import SwiftIO and SwiftIOFeather library. Import LIS3DH to read the value from the sensor.
+// Import SwiftIO to set the communication and MadBoard to use pin id. 
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
+// Import LIS3DH to read the accelerations from the sensor.
 import LIS3DH
 
 // Initialize the I2C pins and the sensor.
@@ -76,7 +123,7 @@ let acc = LIS3DH(i2c)
 
 // Read the accelerations and each of them.
 while true {
-    let value = acc.readValue()
+    let value = acc.readXYZ()
     print("x: \(value.x)g")
     print("y: \(value.y)g")
     print("z: \(value.z)g")
@@ -84,7 +131,169 @@ while true {
     sleep(ms: 1000)
 }
 ```
+</TabItem>
+<TabItem value="package">
 
-## Summary 
+```swift"
+import PackageDescription
 
-Well, how’s your experiment going? You try the accelerometer in this project. It could detect its movement and position. The acceleration is measured in g. Move the kit at will and see if the value changes with it.
+let package = Package(
+    name: "Humiture",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", .branch("main")),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(
+            name: "Humiture",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // highlight-next-line
+                .product(name: "LIS3DH", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "HumitureTests",
+            dependencies: ["Humiture"]),
+    ]
+)
+```
+</TabItem>
+</Tabs>
+
+
+### 2. Digital dice
+
+Let's build a dice with the accelerometer. You can shake or tilt the sensor to change the accelerations. It simulates the process of rolling a dice. After that, you put it back on your table or keep it in a horizontal position, you should get a random number from 1 to 6.
+
+<img
+  src={require('./img/dice.png').default}
+  alt="Dice" width="480"
+/>
+
+**Example code**
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'main.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift
+// Import SwiftIO to set input and output.
+import SwiftIO
+// Import MadBoard to use the id of the pins.
+import MadBoard
+// Import this driver to read accelerations on x, y, z-axis.
+import LIS3DH
+
+// Initialize an I2C interface and use it to set the sensor.
+let i2c = I2C(Id.I2C0)
+let dice = LIS3DH(i2c)
+
+// Initialize an LED used as an indicator when shaking the sensor.
+let indicator = DigitalOut(Id.D19)
+
+// Create a variable to store the time after the sensor stops movement.
+var steadyCount = 999
+
+// Read accelerations to judge if the sensor is in motion. 
+// Once the movement stops, a random number prints out.
+while true {
+    let diceValue = dice.readXYZ()
+    
+    if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
+        indicator.high()
+        steadyCount = 0
+    } else {
+        steadyCount += 1
+        if steadyCount == 50 {
+            indicator.low()
+            print(Int.random(in: 1...6))
+        }
+    }
+
+    sleep(ms: 5)
+}
+
+```
+</TabItem>
+<TabItem value="package">
+
+```swift"
+import PackageDescription
+
+let package = Package(
+    name: "Humiture",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", .branch("main")),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(
+            name: "Humiture",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // highlight-next-line
+                .product(name: "LIS3DH", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "HumitureTests",
+            dependencies: ["Humiture"]),
+    ]
+)
+```
+</TabItem>
+</Tabs>
+
+
+**Code analysis**
+
+```swift
+let indicator = DigitalOut(Id.D19)
+```
+
+This LED is served as an indicator when shaking the sensor.
+
+```swift
+var steadyCount = 999
+```
+
+This statement declares a new variable used to store the time. While you shake the sensor, the accelerations change in undetermined states. This count can infer if the sensor comes to a horizontal position after a shake.
+
+```swift
+if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
+    indicator.high()
+    steadyCount = 0
+} else {
+    steadyCount += 1
+    if steadyCount == 50 {
+        indicator.low()
+        print(Int.random(in: 1...6))
+    }
+}
+```
+An if-else statement is used to judge the sensor's state.
+
+* The accelerations should increase in magnitude when you shake the sensor. Since the accelerations have directions, you need to use `abs` to get absolute values. During that time, you turn on the LED as an indicator. Besides, the variable `steadyCount` is set to 0 and always be 0 when the sensor is still in motion.
+
+* Once you stop shaking the sensor, the accelerations on the x and y-axis decrease and should be lower than the threshold. Then the count starts to increase until it exceeds the set value. If so, it means the sensor is kept in a horizontal position. This is similar to the period after a dice is thrown. At last, you should see a number printed on your serial window.
+
+In this exercise, the key point is to decide when the sensor is no longer in motion. Here you store the time to make sure the state lasts for a certain period. 
+
+
