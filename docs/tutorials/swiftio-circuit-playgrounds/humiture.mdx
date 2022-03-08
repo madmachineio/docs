@@ -157,9 +157,9 @@ Well, take the library [`SHT3x`](https://github.com/madmachineio/MadDrivers/blob
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(_:speed:)` | Initialize an I2C interface for the communication. <br /> - `id`: the id of the I2C pin. <br /> - `speed`: the clock speed for the I2C communication, standard (100kbps) by default. |
-| `write(_:count:to:`) | Send data to the specified slave device. <br /> **Parameter**<br /> - `data`: an arrary of bytes sent to slave device. <br /> - `count`: the count of bytes. By default, it's nil which means all bytes in `data` will be sent. Be sure the count should be smaller than the array count. <br /> - `to`: the address of the slave device. <br /> **Return value**<br /> A result indicating whether the communication is finished successfully or a type of error. |
-| `read(into:count:from:)` | Read data from the specified slave device.<br />  **Parameter**<br /> - `into`: the buffer to store the coming data. It needs an UInt8 array which is passed as inout in order to be changed. <br /> - `count`: number of bytes received from device. <br /> - `from`: the address of the slave device. <br /> **Return value**<br /> A result indicating whether the communication is finished successfully or a type of error. |
+| `init(_:speed:)` | Initialize an I2C interface for the communication. <br />**Parameter:**<br /> - `id`: the id of the I2C pin. <br /> - `speed`: the clock speed for the I2C communication, standard (100kbps) by default. |
+| `write(_:count:to:`) | Send data to the specified slave device. <br /> **Parameter:**<br /> - `data`: an arrary of bytes sent to slave device. <br /> - `count`: the count of bytes. By default, it's nil which means all bytes in `data` will be sent. Be sure the count should be smaller than the array count. <br /> - `to`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
+| `read(into:count:from:)` | Read data from the specified slave device.<br />  **Parameter:**<br /> - `into`: the buffer to store the coming data. It needs an UInt8 array which is passed as inout in order to be changed. <br /> - `count`: number of bytes received from device. <br /> - `from`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
 
 
 ### SHT3x 
@@ -492,7 +492,7 @@ Don’t worry if you do not quite understand the code above. This library is pro
 As you see, it's not easy to configure the sensor and get readings from it. But with existing libraries, coding becomes much easier. Now it's time to use the library `SHT3x`.
 
 
-## 🔸Exercise
+## 🔸Projects
 1. [Read temperature and humidity](./humiture#1-read-temperature-and-humidity)
 
 ### 1. Read temperature and humidity
