@@ -124,7 +124,7 @@ module.exports = {
         'tutorials/swiftio-circuit-playgrounds/humiture',
         'tutorials/swiftio-circuit-playgrounds/accelerometer',
         'tutorials/swiftio-circuit-playgrounds/lcd',
-        // 'tutorials/swiftio-circuit-playgrounds/speaker',
+        'tutorials/swiftio-circuit-playgrounds/speaker',
       ],
     },
 
