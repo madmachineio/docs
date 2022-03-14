@@ -70,41 +70,45 @@ The audio signal is analog and the data always change with time. There are some 
 
 **Sample rate** describes how many times the signal is sampled in one second, measured in hertz (hz). There is a known law about the sample rate: it should be more than twice the original sound frequency, or it will cause distortion.
 
-**Sample depth** corresponds to the number of possible values between the minimum and maximum sound. The common choices are 16, 24, 32-bit. The higher the sample depth, the more audio data will be stored, so the sound will more likely to be reproduced.
+**Sample depth** corresponds to the number of possible values between the minimum and maximum sound. The common choices are 16, 24, 32-bit. The higher the sample depth, the more audio data will be stored, so the original sound will be more likely to be reproduced.
 
-When you wear headphones to listen to music, you can hear sounds in your left and right ear. This audio is called stereo. It has two channels: **left channel and right channel**. The two channels have different waveforms. 
+When you wear earphones to listen to music, you can hear sounds in your left and right ear. The L and R are used respectively for the **left and right channels**. If only one channel is sampled, the sound is **mono**. **Stereo** means the audio has multiple channels, ususully the right and left channel, and thus needs two speakers.
 
-Since the maximum frequency for human ears is about 20KHz, the sample rate should be double, that is, about 40KHz. The CD audio is sampled at 44,100Hz, that means there are 44100 sampled signals in a second, so this rate is widely used for all kinds of audio material. And it is usually sampled as 16-bit and has two channels. 
+As mentioned before, the maximum frequency for human hearing is about 20KHz, the sample rate should be double to recreate it, that is, about 40KHz. The CD audio is usually sampled at 44,100Hz, in other words, 44100 samples per second, and thus could cover almost all sounds humans can hear. What's more, CD-quality audio has a sample depth of 16-bit and has 2 channels. 
 
 **Audio format**
 
-There are many audio formats that you can see when you listen to music: mp3, wave, aac, flac… Different formats will affect the sound quality when you hear it. Wave and flac are lossless audio formats, while mp3 and aac are lossy formats. Let’s talk about the two common formats: wav and mp3.
+Maybe you have heard of some audio file formats: MP3, WAV, AAC, FLAC, and so on. These formats can be divided into two types: lossless file format and lossy file format. The difference is the way all audio data is stored. For example, WAV and FLAC are lossless, while MP3 and AAC are lossy. Let’s have a look at the two common formats: WAV and MP3.
 
-Wave file contains not only a list of raw samples, but also a header in front to indicate the information about sampling. It stores the original audio data as they are. So the WAV file has no data loss and doesn’t require decoding. However, it is large in size as it keeps all the audio data.
+* **WAV** (or WAVE) file stores the raw PCM data. But others don't know how sound is sampled given only the data. So WAV file has a header at the beginning which tells the sampling information. This format stores all original audio data, thus it is large in file size. Beside, it doesn’t require any decoding method when open the file.
 
-MP3 files use some compression algorithms to remove some of the frequencies that human ears are not sensitive to. And to many of the listeners, this quality loss is not perceptible. Compared to the wav file, MP3 is much smaller and is really handy to download from the Internet. Since it uses compression algorithms, the file needs to be decoded to play it.  
+* **MP3** files use compression algorithms to remove some of the frequencies that human ears are not sensitive to. Moreover, this quality loss is not perceptible to most listeners. Compared to the WAV file, MP3 is much smaller in size and is really handy to download from the Internet. Because it uses compression algorithms, the music player needs to decode it to open the file.  
 
 ## 🔸New component
 
 ### Speaker
 
-The working principle of the speaker is similar to the buzzer. When the current flows, the internal diaphragm would move back and forth, thus causing the air vibration which leads to the sound you hear. The differences between speaker and buzzer lie in that the diaphragm inside a speaker would move to different positions according to the signal, so the speaker could produce multiple sounds, also, the sound is of higher quality. So the speaker is suitable to reproduce the audio signal it receives and is widely used to play music. 
+The working principle of the speaker is similar to the buzzer. When the current flows, the magnet filed generate in the circuit cause the internal diaphragm move back and forth, thus causing the air vibration. The air molecules vibrate and bump into each other, which leads to the sound you hear. 
 
-Symbol: 
+The diaphragm in a buzzer can only move back and forth among several positions. The different sounds are generated by changing the speed of vibration. However, the diaphragm inside a speaker can move to different positions according to the signal. So a speaker can produce various sounds, and the sound is of higher quality. In this way, the speaker is suitable to reproduce the audio signal it receives and is widely used to play music. 
 
-The speaker needs an analog signal to produce sounds. The audio info transmitted through the I2S bus is a digital signal. It is not the signal that the speaker requires, so there is an additional chip beside the speaker that could convert the digital signal to an analog signal, known as DAC. 
+Symbol: <img
+  src={require('./img/speakerSymbol.png').default}
+  alt="Speaker symbol" width="80" align="center"
+/>
 
-Even after successfully converted to an analog signal, the audio signal is not strong enough to drive a speaker and could only drive a headphone. So there comes an amplifier. It could make the signal appropriate for the speaker. In this way, the speaker finally plays the music.
+The speaker needs an analog signal to produce sounds. But the audio signal transmitted through the I2S bus is a digital signal, which is is not the signal that the speaker requires. Thus there is an additional chip beside the speaker that can convert the digital signal to an analog signal, known as **DAC**. 
 
-Let’s find out how the audio is generated by the speaker. 
+The analog signal from the DAC can only drive a headphone, but is not strong enough to drive a speaker. So an **amplifier** is needed to amplify the signal for the speaker. 
 
-* First, you get a WAV file, not an MP3 file. The WAV file is uncompressed and stores the raw audio info, while the MP3 file adopts some technique to compress the audio and reserves the overall audio quality.  We’ll find it more in the next chapter. 
-* Then the microcontroller reads the audio file and gets the data.
-* The audio signal is transmitted on the I2S bus, then converted to an analog signal and amplified for the speaker. At last, you hear the music from the speaker. 
+The chip MAX98357 provides both two functionalities and have been added into the circuit. It accepts I2S audio signal from your board. In this way, the speaker can play the music. 
+
+This chip needs stereo audio and can output audio with left channel, right channel, or both channels. However, we have configured it to only output left channel data when designing the circuit.
+
 
 ## 🔸Circuit
 
-The speaker is connected to I2SOut0.
+The speaker is connected to **I2SOut0** (SYNC0, BCLK0, TX0).
 
 <img
   src={require('./img/speakerCircuit.png').default}
@@ -122,58 +126,154 @@ The circuits above are simplified versions for your reference.
 
 ## 🔸Preparation
 
-Class 
-I2SOut: this class is used to write audio data to external devices using I2S protocol. 
-Method 
-init(_ idName: IdName, rate: Int = 16_000, bits: Int = 16, channel: SampleChannel = .monoLeft,
- mode: Mode = .philips)
-Initialize an I2S output interface.
-The first parameter is the pin id.
-The rate decides the sampling rate of the audio. The default rate is 16000 Hz.
-The bits is the sampling depth of the audio. It is 16-bit by default.
-There are three channels: left, right and stereo. By default, it is .monoLeft.
-The mode is about different ways that define how the data is formed. The .philips is the default mode.
+**Class**
+
+**`I2SOut`** - send audio data to external devices using I2S protocol. 
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:rate:bits:`<br />`channel:mode:)` | Initialize an I2S output interface.<br /> **Parameter:** <br />- `idName`: the specified I2SOut pin.<br />- `rate`: the sample rate of the audio. The default rate is 16000 Hz.<br />- `bits`: the sample depth of the audio, 16-bit by default.<br /> - `channel`: the audio channel settings: left, right and stereo. By default, it is `.monoLeft`.<br /> - `mode`: define when the data is sent. The `.philips` is the default mode. |
+| `write(_:count:`<br />`timeout:`) | Send audio data out to devices. <br />**Parameter:** <br />- `sample`: the audio data stored in a UInt8 array. <br />- `count`: the count of data to be sent. |
+
+## 🔸Projects
+
+1. [Play scales](./speaker#1-play-scales)
 
 
-write(_ sample: [UInt8], count: Int? = nil, timeout: Int? = nil)
-Send audio data out to devices.
+### 1. Play scales
 
-
-## 🔸Exercise
-
-1. Play scales with different sounds
-
-
-### 1. Play scales with different sounds
-
-Different waveforms can generate different sounds. In this exercise, you will generate a square wave and a triangle wave manually. Then play the scale using two sounds.
+Different waveforms can generate different sounds. In this project, you will generate a square wave and a triangle wave manually. Then play the scale using two sounds.
 
 <img
   src={require('./img/music.png').default}
   alt="Music" width="480"
 />
 
+**Example code**
+```swift
+// Import the SwiftIO library to control input and output.
+import SwiftIO
+// Import the MadBoard to use the id of the pins.
+import MadBoard
+
+// Initialize the speaking using I2S communication. The default setting is 16k sample rate, 16bit sample bits.
+let speaker = I2SOut(Id.I2SOut0)
+
+// The frequencies of note C to B in octave 4.
+let frequency: [Float] = [
+    261.626,
+    293.665,
+    329.628,
+    349.228,
+    391.995,
+    440.000,
+    493.883
+]
+
+// Set the samples of the waveforms.
+let sampleRate = 16_000
+let rawSampleLength = 1000
+var rawSamples = [Int16](repeating: 0, count: rawSampleLength)
+var amplitude: Int16 = 20_000
+
+while true {
+
+    let duration: Float = 1.0
+
+    // Iterate through the frequencies from C to B to play a scale. 
+    // The sound waveform is square wave, so you will hear buzzing sound.
+    generateSquare(amplitude: amplitude, &rawSamples)
+    for f in frequency {
+        playWave(samples: rawSamples, frequency: f, duration: duration)
+    } 
+    sleep(ms: 1000)
+
+    // Iterate through the frequencies from C to B to play a scale.
+    // The sound waveform is triangle wave, and the sound is much softer.
+    generateTriangle(amplitude: amplitude, &rawSamples)
+    for f in frequency {
+        playWave(samples: rawSamples, frequency: f, duration: duration)
+    } 
+    sleep(ms: 1000)
+
+    // Decrease the amplitude to lower the sound.
+    // If it's smaller than zero, it restarts from 20000.
+    amplitude -= 2000
+    if amplitude <= 0 {
+        amplitude = 20_000
+    }
+}
+
+// Generate samples for a square wave with a specified amplitude and store them in an array.
+func generateSquare(amplitude: Int16, _ samples: inout [Int16]) {
+    let count = samples.count
+    for i in 0..<count / 2 {
+        samples[i] = -(amplitude / 2)
+    }
+    for i in count / 2..<count {
+        samples[i] = amplitude / 2
+    }
+}
+
+// Generate samples for a triangle wave with a specified amplitude and store the them in an array.
+func generateTriangle(amplitude: Int16, _ samples: inout [Int16]) {
+    let count = samples.count
+
+    let step = Float(amplitude) / Float(count)
+    for i in 0..<count / 4{
+        samples[i] = Int16(step * Float(i))
+    }
+    for i in count / 4..<count / 4 * 3 {
+        samples[i] = (amplitude / 2) - Int16(step * Float(i))
+    }
+    for i in count / 4 * 3..<count {
+        samples[i] = -(amplitude / 2) + Int16(step * Float(i))
+    }
+}
+
+
+func playWave(samples: [Int16], frequency: Float, duration: Float) {
+    let playCount = Int(duration * Float(sampleRate))
+    var data = [Int16](repeating: 0, count: playCount)
+
+    let step: Float = frequency * Float(samples.count) / Float(sampleRate)
+
+    var volume: Float = 1.0
+    let volumeStep = 1.0 / Float(playCount)
+
+    for i in 0..<playCount {
+        let pos = Int(Float(i) * step) % samples.count 
+        data[i] = Int16(Float(samples[pos]) * volume)
+        volume -= volumeStep
+    }
+    data.withUnsafeBytes { ptr in
+        let u8Array = ptr.bindMemory(to: UInt8.self)
+        speaker.write(Array(u8Array))
+    }
+}
+```
+
+
 **Code analysis**
-You can find the complete code here. 
 
 ```swift
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 ```
 
-Import the SwiftIO library to set I2S and the SwiftIOFeather to use pin ids.
+Import the `SwiftIO` library to set I2S communication and the `MadBoard` to use pin ids.
 
 ```swift
 let speaker = I2SOut(Id.I2SOut0)
 ```
 
-Initialize an I2SOut interface reserved for the speaker. It will have a 16k sample rate and 16-bit sample bits by default.
+Initialize an `I2SOut` interface reserved for the speaker. It will have a 16k sample rate and 16-bit sample bits by default.
 
 ```swift
 let frequency: [Float] = [261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883]
 ```
 
-Store frequencies for note C, D, E, F, G, A, B. That constitutes a scale.
+Store frequencies for note C, D, E, F, G, A, B in octave 4. That constitutes a scale, which will be played by the speaker.
 
 ```swift
 let sampleRate = 16_000
@@ -184,10 +284,10 @@ var amplitude: Int16 = 20_000
 
 Define the parameters for the audio data: 
 
-* The signal is sampled at 16000 Hz, so there will be 16000 data 1 second.
-* rawSampleLength decides the count of samples of the generated waves. 
-* rawSamples stores the samples of the audio signal. At first, all values are filled with 0 and the count is decided by rawSampleLength.
-* amplitude is the difference between the minimum and maximum.
+* The signal is sampled at 16000 Hz, so there will be 16000 data per second.
+* `rawSampleLength` decides the count of samples of the generated waves. 
+* `rawSamples` stores the samples of the audio signal. At first, all values are filled with 0 and the count is decided by `rawSampleLength`.
+* `amplitude` is the difference between the minimum and maximum.
 
 ```swift
 while true {

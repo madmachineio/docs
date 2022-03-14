@@ -51,20 +51,21 @@ module.exports = {
     'how-to/write-library',
   ],
 
-  learnSidebar: [
-    'learn/overview',
-  ],
+  // learnSidebar: [
+  //   'learn/overview',
+  // ],
 
   tutorialSidebar: [
     'tutorials/overview',
     {
       type: 'category',
-      collapsible: false,
+      collapsed: false,
       label: 'General',
       items: [
 
         {
           type: 'category',
+          collapsed: false,
           label: 'GettingStarted',
           items: [
             'tutorials/general/getting-started/blink',
@@ -75,6 +76,7 @@ module.exports = {
         },
         {
           type: 'category',
+          collapsed: false,
           label: 'SimpleIO',
           items: [
             'tutorials/general/simpleio/button-control-led',
@@ -94,7 +96,7 @@ module.exports = {
     },
     {
       type: 'category',
-      collapsible: false,
+      collapsed: false,
       label: 'SwiftIO Maker Kit',
       items: [
         'tutorials/swiftio-maker-kit/mission1',
@@ -113,7 +115,7 @@ module.exports = {
     },
     {
       type: 'category',
-      collapsible: false,
+      collapsed: false,
       label: 'SwiftIO Circuit Playgrounds',
       items: [
         'tutorials/swiftio-circuit-playgrounds/led',

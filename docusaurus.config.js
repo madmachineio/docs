@@ -36,12 +36,12 @@ module.exports = {
           position: 'left',
           label: 'How-to',
         },
-        {
-          type: 'doc',
-          docId: 'learn/overview',
-          position: 'left',
-          label: 'Learn',
-        },
+        // {
+        //   type: 'doc',
+        //   docId: 'learn/overview',
+        //   position: 'left',
+        //   label: 'Learn',
+        // },
         {
           type: 'doc',
           docId: 'tutorials/overview',
