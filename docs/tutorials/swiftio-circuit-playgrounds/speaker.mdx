@@ -5,14 +5,12 @@ description: Learn how to
 
 # Play music with a speaker
 
-In this tutorial, let's learn something about audio. You'll play a piece of music using a speaker.
-
 You have tried to produce sound using a buzzer. It sounds indeed so sharp. So this time, you are going to enjoy the music played by the speaker. It provides a higher audio quality.
 
 **Learning goals**
-* Learn how the speaker produces different sounds.
+* Learn how a speaker produces different sounds.
 * Understand the difference between buzzer and speaker.
-* Have a general idea of I2S.
+* Have a general idea of I2S protocol.
 * Know about different sound waveforms.
 * Learn about audio sampling.
 * Realize the difference between WAVE and MP3 files.
@@ -23,8 +21,8 @@ You have tried to produce sound using a buzzer. It sounds indeed so sharp. So th
 
 **I2S**, short for inter-integrated circuit sound, is specially designed for audio data transmission. It uses three wires for communication:
 
-* **SCK** (Serial clock): or Bit Clock (BCLK), it carries the clock signal. Its clock frequency equals Sample Rate * Bits per channel * Number of channels.
-* **FS** (Frame Sync): or Word Select (WS), it tells the audio data being transmitted is for right or left channel.
+* **SCK** (Serial clock): or Bit Clock (BCLK), it carries the clock signal. Its clock frequency equals _Sample Rate x Bits per channel x Number of channels_.
+* **FS** (Frame Sync): or Word Select (WS), it tells that the audio data being transmitted is for the right or left channel.
 * **SD** (Serial data): it is used to transfer audio data. 
 
 <img
@@ -32,9 +30,9 @@ You have tried to produce sound using a buzzer. It sounds indeed so sharp. So th
   alt="I2S" width="480"
 />
 
-The SwiftIO Feather board always serves as a master device. There are two I2S interfaces: 
+The SwiftIO Feather board always serves as a master device. It has two I2S interfaces: 
 * one is **I2SOut**. It sends out data to other audio devices, like speakers, so the serial data line is TX, used to send data.
-* the other is **I2SIn**, and the corresponding serial data line only receives the audio data. It can be used with, for example, microphones to collect sound info.
+* the other is **I2SIn**, and the corresponding serial data line (RX) only receives audio data. It can be used with, for example, microphones to collect sound info.
 
 ## 🔸New concept
 ### Audio
@@ -43,16 +41,16 @@ You listen to music in everyday life, but do you know how audio is stored on you
 
 **Waveform**
 
-The waveforms of sound are various. Sine wave, square wave, triangle wave, and sawtooth wave are the four commonly used forms. The [sounds](https://www.perfectcircuit.com/signal/difference-between-waveforms) produced by them are quite different. The combinations of different waveforms can produce really amazing sounds.  
+The waveforms of sound are various. Sine, square, triangle, and sawtooth waves are four commonly-used forms. The [sounds](https://www.perfectcircuit.com/signal/difference-between-waveforms) produced by them are quite different. Random combinations of different waveforms can produce really amazing sounds.  
 
 <img
   src={require('./img/waveforms.png').default}
   alt="Wave forms" width="960"
 />
 
-We’ll talk about the sine wave in following part and only deal with periodic waveforms. Sine wave is the fundamental waveform. Other period waveforms can be divided into several different sine waves. 
+We’ll talk about the sine wave in the following part and only deal with periodic waveforms. The **sine wave** is the fundamental wave. Almost all other period waveforms can be broken down into several different sine waves using Fourier Transforms.
 
-A periodic waveform repeats the wave in a period and produces constant sound. The **frequency** measures how many times the wave repeats in a second, measured in hertz (hz). The wave below repeats the minimum wave 5 times, so the frequency is 5Hz. The higher the frequency, the higher the pitch. The frequencies of human hearing are about 20Hz to 20kHz. 
+A periodic waveform repeats the wave in a period and produces constant sound. The **frequency** measures how many times the wave repeats in a second, measured in hertz (hz). For example, the wave below repeats the minimum wave 5 times, so the frequency is 5Hz. The higher the frequency, the higher the pitch. And the frequencies of human hearing are about 20Hz to 20kHz. 
 
 <img
   src={require('./img/sineWave.png').default}
@@ -68,19 +66,19 @@ The audio signal is analog and the data always change with time. There are some 
   alt="Sampling" width="480"
 />
 
-**Sample rate** describes how many times the signal is sampled in one second, measured in hertz (hz). There is a known law about the sample rate: it should be more than twice the original sound frequency, or it will cause distortion.
+**Sample rate** describes how many times the signal is sampled in one second, measured in hertz (hz). There is a known law about the sample rate: Nyquist rate. It says the sample rate should be **more than twice the frequency of the original signal**, or it will cause distortion.
 
-**Sample depth** corresponds to the number of possible values between the minimum and maximum sound. The common choices are 16, 24, 32-bit. The higher the sample depth, the more audio data will be stored, so the original sound will be more likely to be reproduced.
+**Sample depth** corresponds to the number of possible values for each sample. The common choices are 16, 24, 32-bit. The higher the sample depth, the more audio data can be sampled, so the original sound will be more likely to be reproduced.
 
-When you wear earphones to listen to music, you can hear sounds in your left and right ear. The L and R are used respectively for the **left and right channels**. If only one channel is sampled, the sound is **mono**. **Stereo** means the audio has multiple channels, ususully the right and left channel, and thus needs two speakers.
+When you wear earphones to listen to music, you can hear sounds in your left and right ear. The L and R are used respectively for the **left and right channels**. If only one channel is sampled, the sound is **mono**. **Stereo** means the audio has multiple channels, usually the right and left channel, and thus needs two speakers.
 
-As mentioned before, the maximum frequency for human hearing is about 20KHz, the sample rate should be double to recreate it, that is, about 40KHz. The CD audio is usually sampled at 44,100Hz, in other words, 44100 samples per second, and thus could cover almost all sounds humans can hear. What's more, CD-quality audio has a sample depth of 16-bit and has 2 channels. 
+As mentioned before, the maximum frequency for human hearing is about 20KHz, the sample rate should be double to recreate sounds, that is, about 40KHz. The **CD audio** is usually sampled at 44,100Hz, in other words, 44100 samples per second, and thus covers almost all sounds humans can hear. And CD-quality audio has a sample depth of 16-bit and has 2 channels. 
 
 **Audio format**
 
-Maybe you have heard of some audio file formats: MP3, WAV, AAC, FLAC, and so on. These formats can be divided into two types: lossless file format and lossy file format. The difference is the way all audio data is stored. For example, WAV and FLAC are lossless, while MP3 and AAC are lossy. Let’s have a look at the two common formats: WAV and MP3.
+Maybe you have heard of some audio file formats: MP3, WAV, AAC, FLAC, and so on. These formats can be divided into two types: **lossless file format and lossy file format**. The difference is the way audio data is stored. For example, WAV and FLAC are lossless, while MP3 and AAC are lossy. Let’s have a look at the two frequently-used formats as an example: WAV and MP3.
 
-* **WAV** (or WAVE) file stores the raw PCM data. But others don't know how sound is sampled given only the data. So WAV file has a header at the beginning which tells the sampling information. This format stores all original audio data, thus it is large in file size. Beside, it doesn’t require any decoding method when open the file.
+* **WAV** (or WAVE) file stores the raw PCM data. It has a header at the beginning which tells the sampling information. Or else others cannot know how data is sampled. This format stores all original audio data, thus is large in file size, but doesn’t require any decoding method to open the file.
 
 * **MP3** files use compression algorithms to remove some of the frequencies that human ears are not sensitive to. Moreover, this quality loss is not perceptible to most listeners. Compared to the WAV file, MP3 is much smaller in size and is really handy to download from the Internet. Because it uses compression algorithms, the music player needs to decode it to open the file.  
 
@@ -88,7 +86,7 @@ Maybe you have heard of some audio file formats: MP3, WAV, AAC, FLAC, and so on.
 
 ### Speaker
 
-The working principle of the speaker is similar to the buzzer. When the current flows, the magnet filed generate in the circuit cause the internal diaphragm move back and forth, thus causing the air vibration. The air molecules vibrate and bump into each other, which leads to the sound you hear. 
+The working principle of the speaker is similar to the buzzer. When the current flows, the magnet field generated in the circuit cause the internal diaphragm to move back and forth, thus causing the air vibration. The air molecules vibrate and bump into each other, which leads to the sound you hear. 
 
 The diaphragm in a buzzer can only move back and forth among several positions. The different sounds are generated by changing the speed of vibration. However, the diaphragm inside a speaker can move to different positions according to the signal. So a speaker can produce various sounds, and the sound is of higher quality. In this way, the speaker is suitable to reproduce the audio signal it receives and is widely used to play music. 
 
@@ -174,14 +172,14 @@ let frequency: [Float] = [
 let sampleRate = 16_000
 let rawSampleLength = 1000
 var rawSamples = [Int16](repeating: 0, count: rawSampleLength)
-var amplitude: Int16 = 20_000
+var amplitude: Int16 = 10_000
 
 while true {
 
     let duration: Float = 1.0
 
     // Iterate through the frequencies from C to B to play a scale. 
-    // The sound waveform is square wave, so you will hear buzzing sound.
+    // The sound waveform is a square wave, so you will hear a buzzing sound.
     generateSquare(amplitude: amplitude, &rawSamples)
     for f in frequency {
         playWave(samples: rawSamples, frequency: f, duration: duration)
@@ -189,7 +187,7 @@ while true {
     sleep(ms: 1000)
 
     // Iterate through the frequencies from C to B to play a scale.
-    // The sound waveform is triangle wave, and the sound is much softer.
+    // The sound waveform is a triangle wave, and the sound is much softer.
     generateTriangle(amplitude: amplitude, &rawSamples)
     for f in frequency {
         playWave(samples: rawSamples, frequency: f, duration: duration)
@@ -198,9 +196,9 @@ while true {
 
     // Decrease the amplitude to lower the sound.
     // If it's smaller than zero, it restarts from 20000.
-    amplitude -= 2000
+    amplitude -= 1000
     if amplitude <= 0 {
-        amplitude = 20_000
+        amplitude = 10_000
     }
 }
 
@@ -208,10 +206,10 @@ while true {
 func generateSquare(amplitude: Int16, _ samples: inout [Int16]) {
     let count = samples.count
     for i in 0..<count / 2 {
-        samples[i] = -(amplitude / 2)
+        samples[i] = -amplitude
     }
     for i in count / 2..<count {
-        samples[i] = amplitude / 2
+        samples[i] = amplitude
     }
 }
 
@@ -219,19 +217,19 @@ func generateSquare(amplitude: Int16, _ samples: inout [Int16]) {
 func generateTriangle(amplitude: Int16, _ samples: inout [Int16]) {
     let count = samples.count
 
-    let step = Float(amplitude) / Float(count)
-    for i in 0..<count / 4{
+    let step = Float(amplitude) / Float(count / 2)
+    for i in 0..<count / 4 {
         samples[i] = Int16(step * Float(i))
     }
     for i in count / 4..<count / 4 * 3 {
-        samples[i] = (amplitude / 2) - Int16(step * Float(i))
+        samples[i] = amplitude - Int16(step * Float(i))
     }
     for i in count / 4 * 3..<count {
-        samples[i] = -(amplitude / 2) + Int16(step * Float(i))
+        samples[i] = -amplitude + Int16(step * Float(i))
     }
 }
 
-
+// 
 func playWave(samples: [Int16], frequency: Float, duration: Float) {
     let playCount = Int(duration * Float(sampleRate))
     var data = [Int16](repeating: 0, count: playCount)
@@ -279,7 +277,7 @@ Store frequencies for note C, D, E, F, G, A, B in octave 4. That constitutes a s
 let sampleRate = 16_000
 let rawSampleLength = 1000
 var rawSamples = [Int16](repeating: 0, count: rawSampleLength)
-var amplitude: Int16 = 20_000
+var amplitude: Int16 = 10_000
 ```
 
 Define the parameters for the audio data: 
@@ -287,84 +285,58 @@ Define the parameters for the audio data:
 * The signal is sampled at 16000 Hz, so there will be 16000 data per second.
 * `rawSampleLength` decides the count of samples of the generated waves. 
 * `rawSamples` stores the samples of the audio signal. At first, all values are filled with 0 and the count is decided by `rawSampleLength`.
-* `amplitude` is the difference between the minimum and maximum.
+* `amplitude` is the peak value of the wave and should be positive.
 
-```swift
-while true {
-
-    let duration: Float = 1.0
-
-    generateSquare(amplitude: amplitude, &rawSamples)
-    for f in frequency {
-        playWave(samples: rawSamples, frequency: f, duration: duration)
-    } 
-    sleep(ms: 1000)
-
-    generateTriangle(amplitude: amplitude, &rawSamples)
-    for f in frequency {
-        playWave(samples: rawSamples, frequency: f, duration: duration)
-    } 
-    sleep(ms: 1000)
-
-    amplitude -= 2000
-    if amplitude <= 0 {
-        amplitude = 20_000
-    }
-}
-```
-
-In the loop, you will always play scales. The pitch is decided by the frequencies. How the samples sound is decided by the wave form. 
-
-The first time, it’s a square wave, the sound is like the one you hear from a buzzer. After that, it’s a triangle wave, the sound is softer and clearer.  Then the amplitude decreases and will turn down the speaker.
 
 ```swift
 func generateSquare(amplitude: Int16, _ samples: inout [Int16]) {
     let count = samples.count
     for i in 0..<count / 2 {
-        samples[i] = -(amplitude / 2)
+        samples[i] = -amplitude
     }
     for i in count / 2..<count {
-        samples[i] = amplitude / 2
+        samples[i] = amplitude
     }
 }
 ```
 
-This function allows you to generate a square wave as below. It will calculate the samples in a period and store them, thus the array samples is set as inout and can be changed inside the function. When you play the audio, the following waves just repeat these samples.
+This newly defined function allows you to generate a periodic square wave. You only need to calculate  the samples in one period. The other periods of waves will repeat these samples. The parameter `samples` needs an array to store the samples, so is set as `inout` to be changed inside the function. 
 
-The signal just has two states, so the calculation is quite simple. The first half samples are all the minimum and the second half are all the maximum.
+A square wave has only two states (0 and 1), so the calculation is quite simple. The first half samples are all negative, and those of the second half are positive. Their value are all decided by the parameter `amplitude`.
 
 <img
   src={require('./img/generateSquareWave.png').default}
-  alt="Generate square wave" width="720"
+  alt="Generate square wave" width="600"
 />
+
 
 ```swift
 func generateTriangle(amplitude: Int16, _ samples: inout [Int16]) {
     let count = samples.count
 
-    let step = Float(amplitude) / Float(count)
-    for i in 0..<count / 4{
+    let step = Float(amplitude) / Float(count / 2)
+    for i in 0..<count / 4 {
         samples[i] = Int16(step * Float(i))
     }
     for i in count / 4..<count / 4 * 3 {
-        samples[i] = (amplitude / 2) - Int16(step * Float(i))
+        samples[i] = amplitude - Int16(step * Float(i))
     }
     for i in count / 4 * 3..<count {
-        samples[i] = -(amplitude / 2) + Int16(step * Float(i))
+        samples[i] = -amplitude + Int16(step * Float(i))
     }
 }
 ```
 
-This function is used to generate a triangle wave. The count is the amount of samples in a period. The samples change linearly in stages. No matter whether they increase or decrease, the variation is always the same and decided by the step.
+This function is used to generate samples for a triangle wave in a period. The constant `count` is the total of audio samples. The `step` is the change between two continuous samples.
 
-All samples are calculated into three parts: 
-* In the first part, the samples gradually increase to half amplitude. The increment is decided by the step.
-* In the second part, the samples decrease from half amplitude to minus half amplitude. 
-* In the third part, the samples go up from minus half amplitude.
+The samples change linearly and are divided into three parts: 
+* At first, the samples gradually increase to the maximum (`amplitude`).
+* In the second part, the samples decrease from the maximum (`amplitude`) to the minimum (minus `amplitude`). 
+* In the third part, the samples go up from the minimum (minus `amplitude`).
 
 <img
   src={require('./img/generateTriangleWave.png').default}
-  alt="Generate triangle wave" width="720"
+  alt="Generate triangle wave" width="600"
 />
 
 ```swift
@@ -389,19 +361,53 @@ func playWave(samples: [Int16], frequency: Float, duration: Float) {
 }
 ```
 
-This function is what you use to play the audio using the generated sample.
-* playCount calculates the total amount of samples. sampleRate is the amount in 1s and the duration is a specified time. Then you will get an array data with a given count of samples.
-* To better understand the step, let’s look at an example. Let’s suppose a square wave. You get a sample of its first period. The count of samples is 1000. The frequency of the signal is 200. So there will be 200000 samples in total in one second. If the sample rate is at 10000, it needs only this amount of samples in one second. Then you can get 1 sample every 2 samples, like samples[0], samples[2]...So the step here is 2. In brief, the step decides how the sample is used.
+This function sends the samples to audio devices over an I2S bus.
+
+* `playCount` calculates the total amount of samples. `sampleRate` is the amount of samples in 1s, and `duration` is a specified time in seconds. If the note duration is 2 seconds and the sample rate is 16000Hz, the count equals 32000.
+
+* The array `data` is used to store the audio data for the speaker. All elements are 0 by default whose count equals the count of samples calculated before.
+
+* To better understand the constant `step`, assuming a square wave that has 20 samples in a period. Its frequency is 2Hz. Therefore, there will be 40 samples in total in one second. If the audio sample rate is at 10Hz, it needs only 10 samples in one second. You can choose some of the samples: 1 sample every 4 samples, like samples[0], samples[4]... So the step here is 20 * 2 / 10 = 4.
 
 <img
   src={require('./img/step.png').default}
   alt="Step" width="480"
 />
 
-* volume and volumeStep are used to gradually reduce the volume of each note and make the sound softer. You can try to delete them and see how it sounds. The sound will be stronger.  
-* In the for-in loop, you will get the data from samples. The whole samples are just repetitions of those in the first period. pos gets the index of the sample in samples by getting a remainder. So the value of data[i] actually equals an element in samples multiplied by volume.
+* `volume` and `volumeStep` are used to reduce the volume of each note, so it sounds more natural. You could delete the statement `volume -= volumeStep` and see how it sounds. If the `playCount` is 10, the `volume` will be 1, 0,9, 0.8... for each data. 
+
+* In the `for-in` loop, you will store the desired samples into the array `data`. `pos` gets the index of the sample in `samples`. In the wave above, the `pos` is 0, 4, 8, 12, 16. When `pos` equals 20, it refers to the first sample in the next period. So it restarts from 0. After the samples are multiplied by volume, you get gradually decreased data.
+
 * Send the data using I2S communication so that the speaker plays the note.
 
+```swift
+while true {
+    let duration: Float = 1.0
+
+    generateSquare(amplitude: amplitude, &rawSamples)
+    for f in frequency {
+        playWave(samples: rawSamples, frequency: f, duration: duration)
+    } 
+    sleep(ms: 1000)
+
+    generateTriangle(amplitude: amplitude, &rawSamples)
+    for f in frequency {
+        playWave(samples: rawSamples, frequency: f, duration: duration)
+    } 
+    sleep(ms: 1000)
+
+    amplitude -= 1000
+    if amplitude <= 0 {
+        amplitude = 10_000
+    }
+}
+```
+
+In the while loop, the speaker will play scales over and over again.
+
+* At first, the samples are generated from a square wave. Then use these samples to play a scale. So the sound is like what you hear from a buzzer. 
+* After that, the samples are from a triangle wave. So the sound is softer and clearer.  
+* The `amplitude` decreases to turn down the speaker. The sound will be lower after each while loop until it reaches the minimum. Then `amplitude` increases to the maximum and repeats the variation.
 
 ## 🔸More info
 * [Waveforms](https://pudding.cool/2018/02/waveforms/)
