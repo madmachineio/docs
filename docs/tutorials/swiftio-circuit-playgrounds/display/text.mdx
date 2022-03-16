@@ -1,0 +1,97 @@
+---
+title: Text
+description: Learn how to
+---
+
+# Text
+
+A label is actually a group that contains all characters of the text. You could display it directly on the screen. But it’s better to add it to a new group so that you can organize all the layers.
+A label consists of a designated text and its background. When you create a label, you can set the text, its position, color, scale and font. The label doesn’t have a background color by default. You can set the color independently later.
+Class
+Label: create a label to show text on a screen.
+Method
+init(x: Int = 0, y: Int = 0, scale: Int = 1, text: String? = nil, color: UInt32 = Color.white, font: Font = RobotRegular16())
+Set the text’s parameters to decide how it looks.
+x and y decide the position of this label. The text will be displayed from the origin by default.
+Since a label constitutes a group. scale is inherited from Group and decides the size of text. It keeps the original size by default.
+text is what you want to display.
+color is the color of the text, white by default.
+font decides the typeface of the text. There is a default font for all text. You can also load other pcf font files.
+updateBackgroundColor(_ newColor: UInt32? = nil)
+Set or change the color of the background box.
+updateText(_ newText: String)
+Change the text to a new one. 
+
+
+Here is a sample project to get you familiar with the usage:
+
+```swift
+import SwiftIO
+import SwiftIOFeather
+import ST7789
+import MadDisplay
+import SHT3x
+
+let spi = SPI(Id.SPI0, speed: 50_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+
+let i2c = I2C(Id.I2C0)
+let sensor = SHT3x(i2c)
+
+let display = MadDisplay(screen: screen)
+let group = Group()
+
+let label1 = Label(text: "Hello!")
+label1.updateBackgroundColor(Color.green)
+let label2 = Label(y: 30, scale: 2, text: "Hello world!", color: Color.red)
+let label3 = Label(x: 10, y: 80, text: "Hello!", color: Color.lime, font: ASCII8())
+
+let value = sensor.readCelsius()
+let label4 = Label(y: 120, text: "Temperature: \(value)")
+
+group.append(label1)
+group.append(label2)
+group.append(label3)
+group.append(label4)
+display.update(group)
+
+while true {
+    label4.updateText("Temperature: \(sensor.readCelsius())")
+    display.update(group)
+    sleep(ms: 1000)
+}
+```
+
+As you can see, you can not only display some specific phrases, but also the sensor’s values.
+
+Font
+The fonts used for labels are bitmap fonts. These fonts define a matrix of pixels to show each glyph. You can regard it as a set of images. When displaying text, your board just read    So it’s suitable for text display on such a screen. 
+The text for different websites are usually vector fonts. The texts use mathematical formulas to describe how they look and can be resized. As you zoom in or out your webpage, the text will change without affecting its glyph. So far, we don’t support it as it needs a lot of complicated calculations. 
+So the fonts we talk about later are all bitmap fonts. The two fonts in the example above are built-in fonts. All data of characters are already stored, like RobotRegular16, you can directly use them when creating a label. 
+You may notice the label2 is scaled up. The font itself cannot be resized, but a group can be enlarged. The label2 is a group, so the text in it is forced to change by multiplying each pixel. So some characters may look a little strange.
+
+Besides, you can load other fonts from pcf (portable compiled format) files. It is a bitmap font format and you can use the class PCFFont to get the specific font data. Here is a guide to convert widely used fonts to pcf.
+Note: Don’t forget to copy the pcf file into SD card when you use it. Your board can only read the files on the card, not on your computer. Then indicate its path when using it.
+
+You can load other fonts as below. The sample font file is here.
+...
+let group = Group()
+
+let text1 = Label(text: "Hello!")
+
+let font = PCFFont(path: "/SD:/NotoSansSC-Regular-16.pcf")
+let text2 = Label(y: 20, text: "Hello!", font: font)
+
+group.append(text1)
+group.append(text2)
+
+display.update(group)
+...
+
+
+

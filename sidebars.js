@@ -118,15 +118,39 @@ module.exports = {
       collapsed: false,
       label: 'SwiftIO Circuit Playgrounds',
       items: [
-        'tutorials/swiftio-circuit-playgrounds/led',
-        'tutorials/swiftio-circuit-playgrounds/button',
-        'tutorials/swiftio-circuit-playgrounds/led-timer',
-        'tutorials/swiftio-circuit-playgrounds/buzzer',
-        'tutorials/swiftio-circuit-playgrounds/potentiometer',
-        'tutorials/swiftio-circuit-playgrounds/humiture',
-        'tutorials/swiftio-circuit-playgrounds/accelerometer',
-        'tutorials/swiftio-circuit-playgrounds/lcd',
-        'tutorials/swiftio-circuit-playgrounds/speaker',
+
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Get familiar with modules',
+          items: [
+            'tutorials/swiftio-circuit-playgrounds/modules/led',
+            'tutorials/swiftio-circuit-playgrounds/modules/button',
+            'tutorials/swiftio-circuit-playgrounds/modules/led-timer',
+            'tutorials/swiftio-circuit-playgrounds/modules/buzzer',
+            'tutorials/swiftio-circuit-playgrounds/modules/potentiometer',
+            'tutorials/swiftio-circuit-playgrounds/modules/humiture',
+            'tutorials/swiftio-circuit-playgrounds/modules/accelerometer',
+            'tutorials/swiftio-circuit-playgrounds/modules/lcd',
+            'tutorials/swiftio-circuit-playgrounds/modules/speaker',
+          ],
+        },
+
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Graphical display',
+          items: [
+            'tutorials/swiftio-circuit-playgrounds/display/introduction',
+            'tutorials/swiftio-circuit-playgrounds/display/maddisplay',
+            // 'tutorials/swiftio-circuit-playgrounds/display/shapes',
+            // 'tutorials/swiftio-circuit-playgrounds/display/text',
+            // 'tutorials/swiftio-circuit-playgrounds/display/bmp',
+            //'tutorials/swiftio-circuit-playgrounds/display/go-further',
+          ],
+        },
+
+
       ],
     },
 

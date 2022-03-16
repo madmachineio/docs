@@ -1,0 +1,245 @@
+---
+title: Shapes
+description: Learn how to
+---
+
+# Shapes
+
+As mentioned before, the shapes are actually tiles. Each shape has already used a bitmap and palette to form a tile. So you could create a random shape and directly add the shapes to a group.
+Since they are tiles, these classes are inherited from the class Tile, the three methods in the tile used to set its position works also for them. As mentioned before, the tile’s position is decided by its upper left vertex.
+Here is a simple example to draw different shapes on the screen.
+
+```swift
+import SwiftIO
+import SwiftIOFeather
+import ST7789
+import MadDisplay
+
+let spi = SPI(Id.SPI0, speed: 50_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+
+let display = MadDisplay(screen: screen)
+let group = Group()
+
+let line1 = Line(x0: 0, y0: 119, x1: 240, y1: 119, color: Color.white)
+let line2 = Line(x0: 119, y0: 0, x1: 119, y1: 240, color: Color.white)
+group.append(line1)
+group.append(line2)
+
+let rect = Rect(x: 10, y: 10, width: 80, height: 90, fill: Color.orange, outline: Color.white)
+group.append(rect)
+
+let circle = Circle(x: 175, y: 50, radius: 35, fill: Color.blue)
+group.append(circle)
+
+let roundRect = RoundRect(x: 0, y: 130, width: 60, height: 30, radius: 5, fill: Color.yellow)
+group.append(roundRect)
+
+let triangle = Triangle(x0: 130, y0: 200, x1: 160, y1: 140, x2: 200, y2: 180, fill: Color.lime, outline: Color.white)
+group.append(triangle)
+
+let points = [(85,150), (92,172), (115,172), (95,186), (105,210), (85,194), (65,210), (75,186), (55,172), (78,172)]
+let polygon = Polygon(points, outline: Color.red)
+group.append(polygon)
+
+display.update(group)
+
+while true {
+    sleep(ms: 90000)
+}
+```
+
+
+The demo above draws all the shapes on the screen. Let’s look at them one by one in detail.
+Line
+This class allows you to draw lines by setting the two end points.
+Class
+Line: draw a line on a screen.
+Method
+init(x0:y0:x1:y1:color:)
+Initialize a line. 
+x0 and y0 decide the position of the first point. x1 and y1 decide the second point. 
+Then the rest of the pixels will be calculated and fill all pixels with a designated color.
+setX(:_)
+Change the position of the tile and move it horizontally.
+setY(:_)
+Change the position of the tile and move it vertically.
+setXY(x:y:)
+Set the position of the upper left corner of the tile to a specified coordinate.
+
+You can draw some lines as below:
+let line1 = Line(x0: 0, y0: 0, x1: 59, y1: 239, color: Color.red)
+let line2 = Line(x0: 59, y0: 239, x1: 119, y1: 0, color: Color.orange)
+let line3 = Line(x0: 119, y0: 0, x1: 179, y1: 239, color: Color.yellow)
+let line4 = Line(x0: 179, y0: 239, x1: 239, y1: 0, color: Color.green)
+
+
+
+Rect
+This class allows you to draw rectangles. You could set the size, position and color.
+The coordinates of the upper left vertex determine the starting point of the rectangle. Once the width and height is set, the three other vertices are thus decided. 
+Class
+Rect: draw a rectangle on a screen.
+Method
+init(x:y:width:height:fill:outline:stroke:)
+Initialize a rectangle. 
+x and y decide the position of the rectangle.
+height and width decides its size. 
+fill decides the color of the shape. 
+outline decides the color of the outline. 
+stroke decides the width of the outline. It is 1 by default. It will not change the size of the shape and takes up the rectangle's inner area.
+fill(color:)
+Change the color of the rectangle.
+setOutline(color:)
+Set the color of its outline.
+setX(:_)
+Change the position of the tile and move it horizontally.
+setY(:_)
+Change the position of the tile and move it vertically.
+setXY(x:y:)
+Set the position of the upper left corner of the tile to a specified coordinate.
+
+Let’s see how you can create rectangles:
+let rect1 = Rect(x: 0, y: 0, width: 65, height: 50, fill: Color.yellow, outline: Color.orange, stroke: 2)
+
+
+let rect2 = Rect(x: 10, y: 150, width: 40, height: 40, fill: Color.yellow)
+
+
+let rect3 = Rect(x: 100, y: 0, width: 65, height: 50, outline: Color.orange)
+
+
+
+
+RoundRect
+This class allows you to draw rounded rectangles. You can regard it as 4 lines and 4 quarter circles. 
+Class
+RoundRect: draw a rounded rectangle on a screen.
+Method
+init(x:y:width:height:radius:fill:outline:stroke:)
+Initialize a rounded rectangle. 
+x and y decide the position of the rectangle.
+height and width decides its size. 
+radius sets the radius of the rounded corner.
+fill decides the color of the shape. 
+outline decides the color of the outline. 
+stroke decides the width of the outline. It is 1 by default. It will not change the size of the shape and takes up the rectangle's inner area.
+fill(color:)
+Change the color of the rectangle.
+outline(color:)
+Set the color of its outline.
+setX(:_)
+Change the position of the tile and move it horizontally.
+setY(:_)
+Change the position of the tile and move it vertically.
+setXY(x:y:)
+Set the position of the upper left corner of the tile to a specified coordinate.
+
+Let’s look at some examples:
+let roundRect1 = RoundRect(x: 15, y: 20, width: 55, height: 70, radius: 5, fill: Color.magenta, outline: Color.white, stroke: 3)
+
+
+let roundRect2 = RoundRect(x: 100, y: 50, width: 70, height: 70, radius: 5, fill: Color.magenta)
+
+
+let roundRect3 = RoundRect(x: 40, y: 40, width: 55, height: 70, radius: 5, outline: Color.white, stroke: 2)
+
+
+
+
+Circle
+This class allows you to draw circles on a screen. 
+As you create a circle, its position is decided by its center. When you move it, its position is determined by the upper left corner of the tile.
+Class
+Circle: draw a circle on a screen.
+Method
+init(x:y:radius:fill:outline:stroke:)
+Initialize a circle. 
+x and y decide the position of the circle by setting the center.
+radius sets the radius of the circle.
+fill decides the color of the shape. 
+outline decides the color of the outline. 
+stroke decides the width of the outline. It is 1 by default. It will not change the size of the shape and takes up the inner area.
+fill(color:)
+Change the color of the circle.
+outline(color:)
+Set the color of its outline.
+setX(:_)
+Change the position of the tile and move it horizontally.
+setY(:_)
+Change the position of the tile and move it vertically.
+setXY(x:y:)
+Set the position of the upper left corner of the tile to a specified coordinate.
+
+
+Let’s create some circles:
+let circle1 = Circle(x: 50, y: 50, radius: 50, fill: Color.green, outline: Color.yellow, stroke: 2)
+
+let circle2 = Circle(x: 30, y: 80, radius: 20, fill: Color.white)
+
+let circle3 = Circle(x: 150, y: 150, radius: 50, outline: Color.yellow)
+
+
+
+
+
+Triangle
+You can use it to create triangles. It needs 3 vertices. 
+Class
+Triangle: draw a triangle on a screen.
+Method
+init(x0:y0:x1:y1:x2:y2:fill:outline:)
+Initialize a rounded rectangle. 
+The coordinates are the positions of 3 vertices.
+fill decides the color of the shape. 
+outline decides the color of the outline. 
+fill(color:)
+Change the color of the rectangle.
+setX(:_)
+Change the position of the tile and move it horizontally.
+setY(:_)
+Change the position of the tile and move it vertically.
+setXY(x:y:)
+Set the position of the upper left corner of the tile to a specified coordinate.
+
+
+Let’s draw triangles:
+let triangle1 = Triangle(x0: 0, y0: 0, x1: 0, y1: 100, x2: 50, y2: 50, fill: Color.purple, outline: Color.red)
+
+let triangle2 = Triangle(x0: 100, y0: 30, x1: 39, y1: 135, x2: 161, y2: 135, fill: Color.lime, outline: Color.white)
+
+
+
+
+
+Polygon
+It allows you to draw a random shape. You can set any number of points. Then they will be connected in order to create a closed shape.
+
+Class
+Polygon: draw a polygon on a screen.
+Method
+init(_:outline:)
+Initialize a polygon. 
+It needs an array of coordinates of all points.
+outline decides the color of the outline. 
+setX(:_)
+Change the position of the tile and move it horizontally.
+setY(:_)
+Change the position of the tile and move it vertically.
+setXY(x:y:)
+Set the position of the upper left corner of the tile to a specified coordinate.
+
+
+Let’s create some polygons:
+let points1 = [(100,50), (52,85), (71,140), (129,140), (148,85)]
+let pentagon = Polygon(points, outline: Color.red)
+
+let points2 = [(170,115), (130,115), (110,150), (130,185), (170,185), (190,150)]
+let hexagon = Polygon(points2, outline: Color.green)
+
+You could get the coordinates of regular polygons using this online tool. You could also create a random shape with this online geometry tool and get the coordinate.

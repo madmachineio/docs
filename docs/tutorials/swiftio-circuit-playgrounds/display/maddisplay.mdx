@@ -1,0 +1,245 @@
+---
+title: About MadDisplay
+description: Learn how to
+---
+
+# About MadDisplay
+
+## Introduction
+
+Maybe you dealt with Adobe photoshop or illustrator, the images are organized by different layers. And that’s the point of this library. The display on your screen will be divided in several elements to form the final image.
+ 
+There are four basic elements:
+
+* Bitmap: it stores indexed color of each pixel. The actual color value is stored in the palette.
+* Palette: it stores all colors that the bitmap needs.
+* Tile: it will combine the bitmap and palette to get a colored image.
+* Group: a group could contain one or several tiles, or even groups. It is what you will display on the screen.
+
+The image above shows how it works: 
+
+1. You first get a bitmap where all pixels are set with an indexed color. 
+2. Then you create a palette with actual colors. Each color has an index that matches with those on the bitmap.
+3. You combine the bitmap and palette together. All the pixels on the bitmap get real colors.
+4. After you create one or several tiles, you could add them to a group and display it on the screen.
+
+In this way, the content could be better organized, and you could easily change or move any elements without messing up the whole display.
+
+Let’s begin with a simple display. Here is a sample code to use the 4 concepts in display:
+
+```swift
+import SwiftIO
+import SwiftIOFeather
+import ST7789
+import MadDisplay
+
+let spi = SPI(Id.SPI0, speed: 50_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+
+let display = MadDisplay(screen: screen)
+
+let palette = Palette()
+palette.append(Color.white)
+palette.append(Color.black)
+palette.append(Color.red)
+palette.append(Color.yellow)
+
+let bitmap = Bitmap(width: 200, height: 200, bitCount: 2)
+
+for x in 50...150 {
+    for y in 50...150 {
+        bitmap.setPixel(x:x, y:y, 3)
+    }
+}
+
+let tile = Tile(bitmap: bitmap, palette: palette)
+
+let group = Group()
+group.append(tile)
+
+display.update(group)
+
+while true {
+    sleep(ms: 90000)
+}
+```
+
+After you download the code, you will see the screen as below:
+
+Now, let’s look at each part in detail to understand how it works.
+
+## Palette
+
+The palette contains all the colors for the bitmap in an array. The colors are ordered and their indexes start from 0.
+
+**Class**
+
+**`Palette`** - it is a list of color values.
+
+| Method | Explanation |
+| ------ | ----------- |
+| init(count:) | Initialize a palette to store the color value. It has a parameter - count to decide the amount of colors. The default count is 0. |
+| append(:) | Add a color to the palette. The color value should be UInt32. |
+| subscript(index:) | It allows you to access the color by using its index. It could change it to another color. |
+
+
+Let’s suppose you will create a palette with 4 colors: white, balck, red, yellow. 
+
+There are two ways to get a palette you need:
+
+* The first one is to create a palette with four colors in total and then specify each color by using its index. 
+* The second one will create a palette that contains nothing. You will add the colors one by one.
+
+```swift
+let palette = Palette(count: 4)
+palette[0] = 0xFFFFFF
+palette[1] = 0x000000
+palette[2] = 0xFF0000
+palette[3] = 0xFFFF00
+```
+or
+```swift
+let palette = Palette()
+palette.append(0xFFFFFF)
+palette.append(0x000000)
+palette.append(0xFF0000)
+palette.append(0xFFFF00)
+```
+
+
+You may find the colors directly defined by its value are not so straightforward. You will have to think that the value of red is 0xFF0000 before setting the color. So there is a predefined struct - Color to eliminate this process. It contains several commonly used colors. So the statements above could be:
+
+```swift
+palette.append(Color.white)
+palette.append(Color.black)
+palette.append(Color.red)
+palette.append(Color.yellow)
+```
+
+BTW, maybe you remember that the LCD needs the 16-bit colors, while the colors here are not matched. Well, RGB888 is more frequently used: red, green and blue respectively take 8 bits. And the library has done the conversion for you. So you don’t need to worry about it.
+
+## Bitmap
+
+A bitmap is a collection of pixels. Each pixel corresponds to the index in the palette. 
+Its size is decided by the width and height. And the total amount of colors is decided by the bit count. You could set it to 1, 2, 4, 8, 16, 32. If the bit count is 1, there could be 2 colors for 1 pixel in total. If it’s 2, it could have 4 colors.
+Let’s look at some of the basic API for this class:
+
+**Class**
+
+**`Bitmap`** - it decides the size of the pixels and its values.
+
+| Method | Explanation |
+| ------ | ----------- |
+| init(width:height:bitCount:) | Initialize a bitmap. It has three parameter: width: the width of the area. height: the height of  the area. bitCount: the possible amount of the color. By default, all pixels of the bitmap will adopt the first color in the palette. And its width and height should not exceed the size of the screen. |
+| setPixel(x:y:_:) | Set a specific pixel of the bitmap to a color. x and y decide the position of the pixel. They start from 0, so their maximum values are width-1 and height-1 respectively. The third parameter decides its color. It is the index of the color in the palette. |
+
+
+Let’s create a bitmap and set some pixels using the palette above.
+let bitmap = Bitmap(width: 200, height: 200, bitCount: 2)
+
+```swift
+for x in 50...150 {
+    for y in 50...150 {
+        bitmap.setPixel(x:x, y:y, 3)
+    }
+}
+```
+
+
+Here you get a 200x200 bitmap. It could have 4 colors in total. 
+
+By default, all pixels are set to the first color in the palette whose index is 0. 
+
+Then you will set the pixels from (50,50) to (150,150) and paint them with the fourth color (index 3) in the palette. 
+
+## Tile
+
+Each pixel on the bitmap has an index whose color is listed in the palette. The tile allows you to get a colored bitmap by setting the pixels on the screen with the corresponding colors.
+
+There are some shapes you could directly use to draw on the screen, such as line, rectangle, circle, etc. They are also tiles. You will look into them in more detail later.
+
+**Class**
+
+**`Tile`** - it could set all the pixels of a bitmap to corresponding colors using the palette.
+
+| Method | Explanation |
+| ------ | ----------- |
+| init(x:y:bitmap: palette:) | Initialize a tile. You could set its position by defining the coordinate of the upper left corner. By default, it will start from (0,0). Then it’s the bitmap and its palette to form the tile. |
+| setX(:_) | Change the position of the tile and move it horizontally. |
+| setY(:_) | Change the position of the tile and move it vertically. |
+| setXY(x:y:) | Set the position of the upper left corner of the tile to a specified coordinate. |
+
+
+Let’s create a tile using the bitmap and palette above:
+
+```swift
+let tile = Tile(bitmap: bitmap, palette: palette)
+```
+
+It allows you to get a tile that starts from (0,0). The middle area is filled with yellow and the rest is white.
+
+The tile will then be added to a group. The x and y coordinates determine the tile’s position relative to the group. As you add multiple tiles to a group, you could change the position of any tile by setting the coordinates.
+
+A tile’s area is actually a rectangle no matter how it looks. Its position is decided by the coordinates of the upper left corner.
+
+
+## Group
+
+The group is what you will display on your screen. It could contain several tiles, and even other groups. It allows you to control the elements together, like resize them, move them, overlap them, etc. This is quite like that in the photo or video editing software, you group the elements to organize your work more easily.
+
+Note: the tile or group that you will add to a new group should be unique and not be added to other groups, or there will be errors.
+
+
+**Class**
+
+**`Group`** - it allows you to manage the elements like tiles or groups. 
+
+| Method | Explanation |
+| ------ | ----------- |
+| init(x:y:scale:) | Initialize a group. x and y decide the position of the group on the screen. scale is how you will resize the group. By default, it’s 1, that means the group keeps the original size. Its value is always an integer and should not be smaller than 1. |
+| append(_ group: Group) | Add a new group to this group. It will overlap the elements you added before. |
+| append(_ tile: Tile) | Add a new tile to the group. It will overlap the elements you added before. |
+
+```swift
+let group = Group()
+group.append(tile)
+```
+
+It will add the tile to the group. And then it’s time for the display.
+
+## Display
+
+There is a class called MadDisplay that you will use to display the group.
+
+**Class**
+
+**`MadDisplay`** - it allows you to display a group that contains all the stuff on the screen.
+
+| Method | Explanation |
+| ------ | ----------- |
+| init(screen:colorSpace:) | Get the screen ready for the display. It needs two parameters to configure the display:
+screen: the screen you will use to display the image. It follows a protocol and the screen in your kit just meets the demands. colorSpace: it decides how the pixels on the screen are displayed. It has been set in the library. |
+| update(_:) | Show the group on the screen. You need to pass in a group as its parameter. |
+
+```swift
+let spi = SPI(Id.SPI0, speed: 50_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+
+let display = MadDisplay(screen: screen)
+
+display.update(group)
+```
+
+You need to initialize the screen and then pass it to MadDisplay.
+
+In this exercise, you don’t set the position of tile and group, so they all start from the origin. 

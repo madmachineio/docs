@@ -1,0 +1,103 @@
+---
+title: BMP file
+description: Learn how to
+---
+
+# BMP file
+
+BMP file is an uncompressed image format. You can get the data from it and display the image on a screen.
+Each pixel in a bitmap has a value to represent its color. And there are two ways to store the color: indexed color and RGB color. It all depends on the amount of colors the image uses.
+An indexed color image has a color table or palette that stores the color value. Every single pixel has an index used to get value from the palette. In this way, the image takes up smaller storage and can be transferred faster. There can be 1-bit, 2-bit, 4-bit, 8-bit colors format. 
+1-bit supports 2 colors for each pixel, often black and white. The early computers used this way to display graphics. However, when you look at such images, it seems there are some gray scales in between. That’s due to a technique called dither. It mimics different colors by mixing pixels of given colors. Different densities of the two colors create illusions of other colors to our eyes. 
+A 2-bit image can have 4 color options for one pixel.
+A 4-bit image can have 16 color options for one pixel.
+A 8-bit image can have 256 color options for one pixel.
+
+It’s really convenient to change the colors of an indexed image. You just need to change the palette. Nowaday, such images are not common, but you can still create them using Adobe Photoshop or Aseprite.
+A RGB color image doesn't need a palette and stores a true color value for each pixel.  24-bit and 32-bit images are widely used nowadays. They use 8-bit to represent red, green and blue. When displaying these images, your board reads the color data and directly displays it on a screen, so it will be more convenient than indexed images.
+Let's see how you can display bitmap files on a screen. 
+Class
+BMP: display bitmap files on a screen.
+Method
+init(path: String)
+Initialize a bitmap by indicating the path of the image on the SD card. It will open the file and read the data.
+getBitmap() -> Bitmap
+Get pixel information from the image. 
+If it’s an indexed image, it will get the indexes. 
+If it’s a RGB image, it will read the color values.
+getPalette() -> Palette?
+Read palette from an indexed image. 
+A RGB image doesn’t have a palette, so the return value is an optional type to ensure your program goes well.
+
+ 
+Please make sure to copy the images to SD card so that your board can read it. And the image should be within 240x240 pixels to fit the screen.
+
+
+Indexed bitmap
+Let’s start with an indexed image.
+
+```swift
+import SwiftIO
+import SwiftIOFeather
+import ST7789
+import MadDisplay
+
+let spi = SPI(Id.SPI0, speed: 50_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+let display = MadDisplay(screen: screen)
+
+let bmp = BMP(path: "/SD:/indexed.bmp")
+let bitmap = bmp.getBitmap()
+let palette = bmp.getPalette()!
+
+let tile = Tile(bitmap: bitmap, palette: palette)
+let group = Group()
+group.append(tile)
+display.update(group)
+
+while true {
+    sleep(ms: 9000)
+}
+```
+
+First you need to tell your board where the image is stored. If it’s in the root directory of the SD card, the path is  "/SD:/xxx.bmp".
+As it is an indexed image, you will get its bitmap and palette. Don't forget the palette needs to be unwrapped. Since this image must have a value, you can force unwrap it. Then you create a tile with them. Add the tile to a group and display it. 
+
+RGB bitmap
+What about RGB images? Let’s find out how to display them.
+
+```swift
+import SwiftIO
+import SwiftIOFeather
+import ST7789
+import MadDisplay
+
+let spi = SPI(Id.SPI0, speed: 50_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+let display = MadDisplay(screen: screen)
+
+let bmp = BMP(path: "/SD:/RGB.bmp")
+let bitmap = bmp.getBitmap()
+let colorConverter = bmp.getColorConverter()!
+
+let tile = Tile(bitmap: bitmap, colorConverter: colorConverter)
+let group = Group()
+group.append(tile)
+display.update(group)
+
+while true {
+    sleep(ms: 9000)
+}
+```
+
+At first, you also need to initialize a BMP with its path. It stores the actual color value for each pixel, so you just get a bitmap. Whether it's a 24 or 32 bit image, the color value will be calculated automatically into 16-bit for the screen.
