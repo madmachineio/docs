@@ -14,7 +14,7 @@ The [SwiftIO](https://swiftioapi.madmachine.io/) library provides you with easy 
 
 ## MadBoards
 
-The [MadBoards](https://github.com/madmachineio/MadBoards) library consists of the id of each board. Different boards correspond to a unique list of id, since the numbers of pins are not the same. There are two boards now: SwiftIOBoard and SwiftIOFeather. When you write the code, you need to import the right one to use the pin id.
+The [MadBoards](https://github.com/madmachineio/MadBoards) library consists of the id of each board. Different boards correspond to a unique list of id, since the numbers of pins are not the same. However, you just need to import `MadBoard` to your project no matter the board you are using. When you create a project, you have decided desired board.
 
 ## MadDrivers
 

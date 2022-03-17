@@ -117,7 +117,7 @@ import MadBoard
 
 [SwiftIO](https://swiftioapi.madmachine.io/) consists of all the functionalities to control your board. All programs must first reference it to use everything in it, like classes and functions.
 
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) defines the corresponding pin id of the SwiftIO Feather board. The pins of different boards are different. So this library tells the IDE you are dealing with this board, not any other board. Then you could use the id in it. If you use the SwiftIO board, you need to import the `SwiftIOBoard` instead.
+[MadBoard](https://github.com/madmachineio/MadBoards) defines the corresponding pin id of the different boards. You will not tell a specific board here since you have chosen a specified board for your project when creating it.
 
 ``` swift
 let green = DigitalOut(Id.GREEN)
@@ -160,4 +160,4 @@ In the loop, the pin outputs high voltage and then sleeps for 1 second. So in th
 
 [`sleep(ms:)`](https://swiftioapi.madmachine.io/Functions.html#/s:7SwiftIO5sleep2msySi_tF) - suspend the microcontroller's work and thus make the current state last for a specified time, measured in milliseconds.
 
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

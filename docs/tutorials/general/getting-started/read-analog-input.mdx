@@ -108,7 +108,7 @@ The resistance between ① and ③ is its maximum value. The wiper divides it in
 import SwiftIO
 import MadBoard
 ```
-Import the [**SwiftIO**](https://swiftioapi.madmachine.io/) library to use the related functionalities and the [**SwiftIOFeather**](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) library to use the corresponding pin id. If you use the SwiftIO board, you need to import the `SwiftIOBoard` instead.
+Import the [**SwiftIO**](https://swiftioapi.madmachine.io/) library to use the related functionalities and the [**MadBoard**](https://github.com/madmachineio/MadBoards) library to use the corresponding pin id. If you use the SwiftIO board, you need to import the `SwiftIOBoard` instead.
 
 ```swift
 let pin = AnalogIn(Id.A0)
@@ -135,4 +135,4 @@ Print the result directly to the serial port. You can view the results on the se
 
 - `readVoltage()` - read the input voltage from a pin. It will return a float between 0 and 3.3.
 
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

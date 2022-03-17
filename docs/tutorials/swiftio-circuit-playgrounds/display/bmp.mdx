@@ -38,11 +38,11 @@ Let’s start with an indexed image.
 
 ```swift
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 import ST7789
 import MadDisplay
 
-let spi = SPI(Id.SPI0, speed: 50_000_000)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 let cs = DigitalOut(Id.D9)
 let dc = DigitalOut(Id.D10)
 let rst = DigitalOut(Id.D14)
@@ -73,11 +73,11 @@ What about RGB images? Let’s find out how to display them.
 
 ```swift
 import SwiftIO
-import SwiftIOFeather
+import MadBoard
 import ST7789
 import MadDisplay
 
-let spi = SPI(Id.SPI0, speed: 50_000_000)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 let cs = DigitalOut(Id.D9)
 let dc = DigitalOut(Id.D10)
 let rst = DigitalOut(Id.D14)
