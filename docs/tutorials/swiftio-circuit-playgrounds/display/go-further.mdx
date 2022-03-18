@@ -8,13 +8,7 @@ description: Learn how to
 
 After going through each element, you will know some details to better understand the usage.
 
-Coordinates
-You may notice that bitmap, tile and group have coordinates. That's quite confusing, let’s make it clear together.
 
-The Bitmap has its coordinate system to locate all pixels. The point a is its origin (0,0). All other pixels have coordinates relative to a.
-The Tile includes the Bitmap. It also has a coordinate system. The point b is its origin. The bitmap’s position in the tile is decided by the coordinates of point a relative to b. 
-Both the Tile and SubGroup are in Group. Their location in the Group are determined respectively by the coordinates of point b and d relative to point c. And the SubGroup overlaps the tile. You can use Group[0] to access Tile and Group[1] to access SubGroup.
-The Group is what will be displayed on the screen. The point e is the origin of the screen. The location of the Group is set by the coordinates of the point c. 
 
 
 
