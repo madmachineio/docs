@@ -1,9 +1,9 @@
 ---
-title: Introduction
+title: MadDisplay
 description: Learn how to
 ---
 
-# Introduction
+# MadDisplay
 
 
 If you have dealt with Adobe photoshop or illustrator, you must be familiar with the operations based on different layers. And that’s the point of this library. You can create and group different elements as you like to form a wonderful display.
@@ -51,7 +51,7 @@ let bl = DigitalOut(Id.D2)
 // Initialize the screen with the pins above.
 let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-// Create an instance for dispay later using the screen.
+// Create an instance using the screen for dispay later.
 let display = MadDisplay(screen: screen)
 
 // Create a palette with four colors.
@@ -319,6 +319,9 @@ In the image below,
 
 ## 🔸Projects
 
+
+### 1. Random particle animation
+
 In this project, you will see multiple small squares appear randomly on the screen. And their color also changes randomly. 
 
 And actually, all squares come from one bitmap. This bitmap is used to generate tiles in different positions. 
@@ -334,7 +337,7 @@ import ST7789
 import MadDisplay
 
 // Initialize the pins for the screen.
-let spi = SPI(Id.SPI0, speed: 50_000_000)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 let cs = DigitalOut(Id.D9)
 let dc = DigitalOut(Id.D10)
 let rst = DigitalOut(Id.D14)
@@ -343,7 +346,7 @@ let bl = DigitalOut(Id.D2)
 // Initialize the screen with the pins above.
 let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-// Create an instance for dispay later using the screen.
+// Create an instance using the screen used to display graphics.
 let display = MadDisplay(screen: screen)
 
 // Create a palette with one color.
@@ -375,5 +378,127 @@ while true {
     palette[0] = colorsrandomElement()!
 
     sleep(ms: 100)
+}
+```
+
+### 2. Spiral animation
+
+In this second project, squares will appear one by one on the screen following a spiral path. After filling the screen, they will disappear one by one. 
+
+**Example code**
+
+```swift
+// Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
+import SwiftIO
+import MadBoard
+// Import the driver for the screen and graphical library for display.
+import ST7789
+import MadDisplay
+
+// Initialize the pins for the screen.
+let spi = SPI(Id.SPI0, speed: 30_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+// Initialize the screen with the pins above.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+
+// Create an instance using the screen used to display graphics.
+let display = MadDisplay(screen: screen)
+
+// Store the colors for the palette.
+let colors = [Color.red, Color.yellow, Color.lime, Color.cyan, Color.magenta, Color.orange]
+
+// Create a palette and add two colors to it.
+let palette = Palette()
+palette.append(Color.black)
+palette.append(colors.randomElement()!)
+
+// The size of the bitmap, which means the size of the squares that appear on the screen.
+var step = 20
+
+// Create a bitmap. 
+// The middle area will be filled with the second color in the palette.
+// So it looks like a colored square with black stroke.
+let bitmap = Bitmap(width: step, height: step, bitCount: 1)
+for x in (step / 4)...(step / 4 * 3) {
+    for y in (step / 4)...(step / 4 * 3) {
+        bitmap.setPixel(x: x, y: y, 1)
+    }
+}
+
+let group = Group()
+
+// The starting coordinate for the tiles.
+var xmin = 0
+var xmax = 240 - step
+var ymin = 0
+var ymax = 240 - step
+
+// Create tiles with the given bitmap and palette. 
+// Add them to the group and update the display.
+// So a square appears on the screen at specified position.
+func displaySquare(x: Int, y: Int) {
+    let tile = Tile(x: x, y: y, bitmap: bitmap, palette: palette)
+    group.append(tile)
+    display.update(group)
+    sleep(ms: 20)
+}
+
+// Remove the last tile from the group and repeat it until the group is empty.
+// You will see squares disppear from the screen in order.
+func removeSquare() {
+    while group.getLength() > 0 {
+        group.pop()
+        display.update(group)
+        sleep(ms: 20)
+    }
+}
+
+while true {
+    // A cycle consists of four steps: a row on top, a column at left, a row on bottom, and a column at right. 
+    // They create a clockwise path.
+
+    for x in stride(from: xmin, to: xmax, by: step) {
+        displaySquare(x: x, y: ymin)
+    }
+
+    for y in stride(from: ymin, to: ymax, by: step) {
+        displaySquare(x: xmax, y: y)
+    }
+
+    for x in stride(from: xmax, to: xmin, by: -step) {
+        displaySquare(x: x, y: ymax)
+
+    }
+    
+    for y in stride(from: ymax, to: ymin, by: -step) {
+        displaySquare(x: xmin, y: y)
+    }
+
+    // Change the range to draw smaller spiral path.
+    xmax -= step
+    ymax -= step
+    ymin += step
+    xmin += step
+
+    // Once the screen is filled, remove the squares one by one anticlockwise.
+    // Change the palette's color to change the color for next animation.
+    if xmin >= xmax {
+        
+        sleep(ms: 200)
+        removeSquare()
+        sleep(ms: 200)
+
+        xmin = 0
+        xmax = 240 - step
+        ymin = 0 
+        ymax = 240 - step
+
+        palette[1] = colors.randomElement()!
+    }
+
 }
 ```

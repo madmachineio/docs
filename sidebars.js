@@ -144,7 +144,7 @@ module.exports = {
             'tutorials/swiftio-circuit-playgrounds/display/introduction',
             'tutorials/swiftio-circuit-playgrounds/display/maddisplay',
             'tutorials/swiftio-circuit-playgrounds/display/shapes',
-            // 'tutorials/swiftio-circuit-playgrounds/display/text',
+            'tutorials/swiftio-circuit-playgrounds/display/text',
             // 'tutorials/swiftio-circuit-playgrounds/display/bmp',
             //'tutorials/swiftio-circuit-playgrounds/display/go-further',
           ],

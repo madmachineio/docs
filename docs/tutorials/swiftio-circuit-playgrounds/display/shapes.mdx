@@ -5,12 +5,12 @@ description: Learn how to
 
 # Shapes
 
-As mentioned before, the shapes in this library are tiles in fact. These classes are inherited from the class `Tile`, the three methods in the tile used to set its position also work for them. The tile’s position is decided by its upper left vertex.
+As mentioned before, the shapes in this library are tiles. These classes actually inherit from the class `Tile`. Therefore, the three methods in the tile used to set its position (`setX`, `setY`, `setXY`) also work for them. Also, the position of a shape is decided by its upper left corner.
 
-Here is a simple example for different shapes on the screen.
+Here is a simple example for a quick view of all shapes:
 
 ```swift
-// // import the SwiftIO library to set SPI communication and MadBoard to use pin id.
+// Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
 import SwiftIO
 import MadBoard
 // Import the driver for the screen and graphical library for display.
@@ -51,7 +51,7 @@ group.append(roundRect)
 let triangle = Triangle(x0: 130, y0: 200, x1: 160, y1: 140, x2: 200, y2: 180, fill: Color.lime, outline: Color.white)
 group.append(triangle)
 
-// Set the vertex of a star and use them to create a star.
+// Set the vertices of a star and use them to create a star.
 let points = [(85,150), (92,172), (115,172), (95,186), (105,210), (85,194), (65,210), (75,186), (55,172), (78,172)]
 let polygon = Polygon(points, outline: Color.red)
 group.append(polygon)
@@ -69,7 +69,7 @@ while true {
   alt="Draw shapes" width="240"
 />
 
-The demo above draws all shapes on the LCD. Let’s look at them one by one in detail.
+This demo draws all shapes on the LCD. Let’s look at them one by one in detail.
 
 ## 🔸Shapes
 
@@ -84,9 +84,7 @@ This class allows you to draw lines by setting the two endpoints.
 | Method | Explanation |
 | ------ | ----------- |
 | `init(x0:y0:`<br />`x1:y1:color:)` | Initialize a line. <br />**Parameters:**<br /> -`x0`, `y0`: the coordinate of the first point. <br /> - `x1`, `y1`: the coordinate of the second point. <br /> - `color`: the color of the line in UInt32. |
-| `setX(:_)` | Move the line horizontally. <br />**Parameter:**<br /> - `x`: the x-coordinate of the upper left corner of this tile. |
-| `setY(:_)` | Move the line vertically. <br />**Parameter:**<br /> - `y`: the x-coordinate of the upper left corner of this tile.|
-| `setXY(x:y:)` | Set the coordinate of the upper left corner of the tile to move the line. <br />**Parameters:**<br /> - `x`, `y`: the coordinate of the destination. |
+
 
 A line is also a tile. When you move a line, you set the coordinate of its upper left corner. 
 
@@ -125,9 +123,7 @@ The upper left vertex is the starting point of the rectangle. Then you tell the 
 | `init(x:y:width:height:`<br />`fill:outline:stroke:)` | Initialize a rectangle. <br />**Parameter:**<br /> - `x`, `y`: the coordinate of upper left corner of the rectangle. <br />- `height`, `width`: the height and width of the rectangle to decide its size. <br />- `fill`: the color of the shape. <br />- `outline`: the color of the outline. <br /> - `stroke`: the width of the outline, 1 by default. It takes up the rectangle's inner area and thus will not change the size of the entire shape. |
 | `fill(color:)`| Fill the inner area of the rectangle with the specified color. |
 | `setOutline(color:)` | Set the color of the outline of the rectangle. |
-| `setX(:_)` | Move the rectangle horizontally. <br />**Parameter:**<br /> - `x`: the x-coordinate of the destination. |
-| `setY(:_)` | Move the rectangle vertically. <br />**Parameter:**<br /> - `y`: the x-coordinate of the destination.|
-| `setXY(x:y:)` | Set the coordinate of the upper left vertex of the rectangle to move it. <br />**Parameters:**<br /> - `x`, `y`: the coordinate of the destination. |
+
 
 
 Let’s see how you can create rectangles:
@@ -156,9 +152,7 @@ This class allows you to draw rounded rectangles. You can regard it as a combina
 | `init(x:y:`<br />`width:height:`<br />`radius:fill:`<br />`outline:stroke:)` | Initialize a rounded rectangle. <br />**Parameter:**<br />- `x`, `y`: the coordinate of upper left corner of this tile.<br />- `height`, `width`: the height and width of the rounded rectangle.<br />- `radius:` the radius of the rounded corner which is a quarter circle.<br />- `fill`: the color of the shape.<br />- `outline`: the color of the outline.<br />- `stroke`: the width of the outline, 1 by default. It takes up the rounded rectangle's inner area and doesn't change the size of the shape. |
 | `fill(color:)` | Fill the rounded rectangle with the specified color. |
 | `outline(color:)` | Set the color of its outline. |
-| `setX(:_)` | Move the rounded rectangle horizontally. <br />**Parameter:**<br /> - `x`: the x-coordinate of the destination. |
-| `setY(:_)` | Move the rounded rectangle vertically. <br />**Parameter:**<br /> - `y`: the x-coordinate of the destination.|
-| `setXY(x:y:)` | Set the coordinate of the upper left vertex of the rectangle to move it. <br />**Parameters:**<br /> - `x`, `y`: the coordinate of the destination. |
+
 
 In the image below, the orange area is the rounded rectangle. The dashed line marks the pixels for this tile. The coordinate you set when creating a rectangle is the upper left vertex of the tile, that is, the green circle.
 <img
@@ -191,12 +185,9 @@ As you create a circle, its position is decided by its center. When you move it,
 
 | Method | Explanation |
 | ------ | ----------- |
-| init(x:y:radius:fill:outline:stroke:) | Initialize a circle. x and y decide the position of the circle by setting the center. radius sets the radius of the circle. fill decides the color of the shape. outline decides the color of the outline. stroke decides the width of the outline. It is 1 by default. It will not change the size of the shape and takes up the inner area. |
-| fill(color:) | Change the color of the circle. |
-| outline(color:) | Set the color of its outline. |
-| setX(:_) | Change the position of the tile and move it horizontally. |
-| setY(:_) | Change the position of the tile and move it vertically. |
-| setXY(x:y:) | Set the position of the upper left corner of the tile to a specified coordinate. |
+| `init(x:y:radius:fill:`<br />`outline:stroke:)` | Initialize a circle. <br />**Parameters:**<br /> - `x`, `y`: the position of the circle by setting the center. <br />- `radius`: the radius of the circle. <br /> - `fill`: the color of the shape. <br />- `outline`: the color of the outline. <br />- `stroke`: the width of the outline, 1 by default. It takes up the inner area and does not change the size of the shape. |
+| `fill(color:)` | Set the color of the circle. |
+| `outline(color:)` | Set the color of its outline. |
 
 
 Let’s create some circles:
@@ -216,7 +207,7 @@ let circle3 = Circle(x: 150, y: 150, radius: 50, outline: Color.yellow)
 
 ### Triangle
 
-You can use it to create triangles. It needs 3 vertices. 
+You can use it to create triangles. 3 vertices are needed to decide a triangle.
 
 **Class**
 
@@ -224,15 +215,12 @@ You can use it to create triangles. It needs 3 vertices.
 
 | Method | Explanation |
 | ------ | ----------- |
-| init(x0:y0:x1:y1:x2:y2:fill:outline:) | Initialize a rounded rectangle. The coordinates are the positions of 3 vertices.
-fill decides the color of the shape. outline decides the color of the outline. 
-| fill(color:) | Change the color of the rectangle. |
-| setX(:_) | Change the position of the tile and move it horizontally. |
-| setY(:_) | Change the position of the tile and move it vertically. |
-| setXY(x:y:) | Set the position of the upper left corner of the tile to a specified coordinate. |
+| `init(x0:y0:`<br />`x1:y1:x2:y2:`<br />`fill:outline:)` | Initialize a rounded rectangle. <br />**Parameters:**<br /> - `x0`, `y0`, `x1`, `y1`, `x2`, `y2`: the coordinates of 3 vertices.<br /> - `fill`: the color of the triangle. <br />- `outline`: the color of the outline. 
+| `fill(color:)` | Change the color of the triangle. |
 
 
 Let’s draw triangles:
+
 ```swift
 let triangle1 = Triangle(x0: 0, y0: 0, x1: 0, y1: 100, x2: 50, y2: 50, fill: Color.purple, outline: Color.red)
 let triangle2 = Triangle(x0: 100, y0: 30, x1: 39, y1: 135, x2: 161, y2: 135, fill: Color.lime, outline: Color.white)
@@ -247,7 +235,7 @@ let triangle2 = Triangle(x0: 100, y0: 30, x1: 39, y1: 135, x2: 161, y2: 135, fil
 
 ### Polygon
 
-It allows you to draw a random shape. You can set any number of points. Then they will be connected in order to create a closed shape.
+It allows you to draw a random shape. You can set any number of points. Then they will be connected in order and create a closed shape.
 
 **Class**
 
@@ -255,10 +243,7 @@ It allows you to draw a random shape. You can set any number of points. Then the
 
 | Method | Explanation |
 | ------ | ----------- |
-| init(_:outline:) | Initialize a polygon. It needs an array of coordinates of all points. outline decides the color of the outline. |
-| setX(:_) | Change the position of the tile and move it horizontally. |
-| setY(:_) | Change the position of the tile and move it vertically. |
-| setXY(x:y:) | Set the position of the upper left corner of the tile to a specified coordinate. |
+| `init(_:outline:)` | Initialize a polygon. <br />**Parameters:**<br /> - `points`: an array of coordinates of all vertices. <br /> - `outline`: the color of the stroke. |
 
 
 Let’s create some polygons:

@@ -1,12 +1,26 @@
 ---
-title: Label
+title: Text
 description: Learn how to
 ---
 
-# Label
+# Text
 
-A label is actually a group that contains all characters of the text. You could display it directly on the screen. But it’s better to add it to a new group so that you can organize all the layers.
-A label consists of a designated text and its background. When you create a label, you can set the text, its position, color, scale and font. The label doesn’t have a background color by default. You can set the color independently later.
+In this tutorial, you will see how to display text on a screen.
+
+## Label
+
+The label class provides you with an easy way to display text on a screen.
+
+A label is a group that contains all characters of the text. Each character is a tile in the group. 
+
+<img
+  src={require('./img/labelGroup.png').default}
+  alt="Label is a group that contains several tiles" width="480"
+/>
+
+When creating a label, you set its text, its position, color, scale and font. By default, a label doesn’t have a background color. You can set it later using `updateBackgroundColor`. The background is also a tile and will be added to the group.
+
+You could display a label directly on the screen as it's a group. And it’s better to take it as a subgroup and add it to a whole group so you can organize all contents better.
 
 
 **Class**
@@ -15,34 +29,47 @@ A label consists of a designated text and its background. When you create a labe
 
 | Method | Explanation |
 | ------ | ----------- |
-| init(x:y:scale:text:color:font:) | Set the text’s parameters to decide how it looks. <br />**Parameter:**<br />- x and y decide the position of this label. The text will be displayed from the origin by default. Since a label constitutes a group.<br />- scale is inherited from Group and decides the size of text. It keeps the original size by default.<br />- text is what you want to display.<br />- color is the color of the text, white by default.<br />- font decides the typeface of the text. There is a default font for all text. You can also load other pcf font files. |
-| updateBackgroundColor(_:) | Set or change the color of the background box. |
-| updateText(_:) | Change the text to a new one. |
+| `init(x:y:scale:text:`<br />`color:font:)` | Create a new label. <br />**Parameters:**<br />- `x`,`y`: the position of this label, the origin by default.<br />- `scale`: the scale for the text, 1 by default which means original size. <br />- `text` is what you want to display.<br />- `color`: the color of the text, white by default.<br />- `font`: the typeface of the text. There is a default font for all text. You can also load other pcf font files. |
+| `updateBackgroundColor(_:)` | Set or change the color of the background box. <br />**Parameter:**<br /> - `newColor`: a new color used to change the background color. |
+| `updateText(_:)` | Change the text to a new one. <br />**Parameter:**<br /> - `newText`: text used to replace the original one. |
 
+The coordinate set when you create a new label is the position of upper left corner as shown below.
+
+<img
+  src={require('./img/label.png').default}
+  alt="Label" width="240"
+/>
 
 Here is a sample project to get you familiar with the usage:
 
 ```swift
+// Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
 import SwiftIO
 import MadBoard
+// Import the driver for the screen and graphical library for display.
 import ST7789
 import MadDisplay
+// Import it to read temperatures.
 import SHT3x
 
+// Initialize the pins for the screen.
 let spi = SPI(Id.SPI0, speed: 30_000_000)
 let cs = DigitalOut(Id.D9)
 let dc = DigitalOut(Id.D10)
 let rst = DigitalOut(Id.D14)
 let bl = DigitalOut(Id.D2)
-
+// Initialize the screen with the pins above.
 let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
+// Initialize the I2C pin and the sensor to prepare for the temperature measurement.
 let i2c = I2C(Id.I2C0)
 let sensor = SHT3x(i2c)
 
+// Create an instance for display using the screen.
 let display = MadDisplay(screen: screen)
 let group = Group()
 
+// Create different labels and add them to the group.
 let label1 = Label(text: "Hello!")
 label1.updateBackgroundColor(Color.green)
 let label2 = Label(y: 30, scale: 2, text: "Hello world!", color: Color.red)
@@ -57,37 +84,74 @@ group.append(label3)
 group.append(label4)
 display.update(group)
 
+// Read the temperature and update the readings on the screen every second.
 while true {
     label4.updateText("Temperature: \(sensor.readCelsius())")
     display.update(group)
     sleep(ms: 1000)
 }
 ```
+BTW, don't forget to add the dependency `SHT3x` in the file `package.swift`.
 
-As you can see, you can not only display some specific phrases, but also the sensor’s values.
+<img
+  src={require('./img/labelDisplay.png').default}
+  alt="Display text on the screen" width="240"
+/>
+
 
 ## Font
 
-The fonts used for labels are bitmap fonts. These fonts define a matrix of pixels to show each glyph. You can regard it as a set of images. When displaying text, your board just read    So it’s suitable for text display on such a screen. 
+The fonts used for labels are **bitmap fonts**. These fonts define a matrix of pixels to show each glyph. You can regard it as a set of images. When displaying text, your board reads pixel info for each character. So it’s suitable for text display on such a screen. 
 
-The text for different websites are usually vector fonts. The texts use mathematical formulas to describe how they look and can be resized. As you zoom in or out your webpage, the text will change without affecting its glyph. So far, we don’t support it as it needs a lot of complicated calculations. 
+Besides, the texts on different websites are usually **vector font**. They use mathematical formulas to describe how they look. As you zoom in or zoom out a webpage, the text will be resized without affecting its glyph. So far, we don’t support it as it needs a lot of complicated calculations. 
 
-So the fonts we talk about later are all bitmap fonts. The two fonts in the example above are built-in fonts. All data of characters are already stored, like RobotRegular16, you can directly use them when creating a label. 
+<img
+  src={require('./img/bitmapVectorFont.png').default}
+  alt="Bitmap and vector font" width="240"
+/>
 
-You may notice the label2 is scaled up. The font itself cannot be resized, but a group can be enlarged. The label2 is a group, so the text in it is forced to change by multiplying each pixel. So some characters may look a little strange.
+The fonts we talk about later are all bitmap fonts. The two fonts in the example above are built-in fonts. All data of characters are already decoded, like [`RobotRegular16`](https://github.com/madmachineio/MadDisplay/blob/main/Sources/MadDisplay/Font/RobotRegular16.swift), so you can directly use them when creating a label. 
 
-Besides, you can load other fonts from pcf (portable compiled format) files. It is a bitmap font format and you can use the class PCFFont to get the specific font data. Here is a guide to convert widely used fonts to pcf.
+The text itself cannot be enlarged, but a group can. A label is a group, so the text in it is forced to change by multiplying each pixel. So some characters may look a little strange.
 
-Note: Don’t forget to copy the pcf file into SD card when you use it. Your board can only read the files on the card, not on your computer. Then indicate its path when using it.
+<img
+  src={require('./img/scale.png').default}
+  alt="Scale" width="480"
+/>
 
-You can load other fonts as below. The sample font file is here.
+You can load other fonts from **pcf** (portable compiled format) files. It is a bitmap font format. You can use the class `PCFFont` to get the specific font data. [Here](https://learn.adafruit.com/custom-fonts-for-pyportal-circuitpython-display?view=all) is a guide to convert widely used fonts to pcf.
+
+:::note
+Don’t forget to copy the pcf file into the SD card when you use it. After all, your board can only read the files on the card, not on your computer🤣. Then indicate its path when using it.
+:::
+
+You can load other fonts as below. The sample font file is [here](https://github.com/madmachineio/MadDisplay/tree/main/font).
 
 ```swift
-...
+// Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
+import SwiftIO
+import MadBoard
+// Import the driver for the screen and graphical library for display.
+import ST7789
+import MadDisplay
+
+// Initialize the pins for the screen.
+let spi = SPI(Id.SPI0, speed: 30_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+// Initialize the screen with the pins above.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+
+let display = MadDisplay(screen: screen)
+
 let group = Group()
 
 let text1 = Label(text: "Hello!")
 
+// Load the font info from the pcf font and use it to create a label.
 let font = PCFFont(path: "/SD:/NotoSansSC-Regular-16.pcf")
 let text2 = Label(y: 20, text: "Hello!", font: font)
 
@@ -95,7 +159,10 @@ group.append(text1)
 group.append(text2)
 
 display.update(group)
-...
+
+while true {
+    sleep(ms: 1000)
+}
 ```
 
 
