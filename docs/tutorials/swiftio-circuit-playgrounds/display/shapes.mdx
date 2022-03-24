@@ -71,7 +71,7 @@ while true {
 
 This demo draws all shapes on the LCD. Let’s look at them one by one in detail.
 
-## 🔸Shapes
+## 🔸Introduction
 
 ### Line
 
@@ -263,4 +263,126 @@ let hexagon = Polygon(points2, outline: Color.green)
 
 You could get the coordinates of regular polygons using [this online tool](https://www.mathopenref.com/coordpolycalc.html). You could also create a random shape with [this online geometry tool](https://www.math10.com/en/geometry/geogebra/geogebra.html) and get the coordinates.
 
-## 🔸Projects
+## 🔸Project
+
+In this project, you'll use the shapes above to create a simple animation. 
+
+**Example code**
+
+```swift
+// import the SwiftIO library to set SPI communication and MadBoard to use pin id.
+import SwiftIO
+import MadBoard
+// Import the driver for the screen and graphical library for display.
+import ST7789
+import MadDisplay
+
+// Initialize the pins for the screen.
+let spi = SPI(Id.SPI0, speed: 30_000_000)
+let cs = DigitalOut(Id.D9)
+let dc = DigitalOut(Id.D10)
+let rst = DigitalOut(Id.D14)
+let bl = DigitalOut(Id.D2)
+
+// Initialize the screen with the pins above.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+// Create an instance using the screen for dispay later.
+let display = MadDisplay(screen: screen)
+
+let group = Group()
+
+// Draw yellow lines on the screen. 
+for y in stride(from: 0, to: 80, by: 10) {
+    drawLine(x0: 0, y0: 0, x1: 239, y1: y, color: Color.yellow)
+}
+
+for x in stride(from: 239, to: 160, by: -10) {
+    drawLine(x0: 239, y0: 0, x1: x, y1: 239, color: Color.yellow)
+}
+
+for y in stride(from: 239, to: 160, by: -10) {
+    drawLine(x0: 239, y0: 239, x1: 0, y1: y, color: Color.yellow)
+}
+
+for x in stride(from: 0, to: 80, by: 10) {
+    drawLine(x0: 0, y0: 239, x1: x, y1: 0, color: Color.yellow)
+}
+
+// Update the screen each time you draw a line.
+func drawLine(x0: Int, y0: Int, x1: Int, y1: Int, color: UInt32) {
+    let line = Line(x0: x0, y0: y0, x1: x1, y1: y1, color: color)
+    group.append(line)
+    display.update(group)
+}
+
+// Draw a black rectangle as backgroud to hide the lines.
+// It will move gradually from the right.
+let blackBg = Rect(x: 240, y: 0, width: 240, height: 240, fill: Color.black)
+group.append(blackBg)
+for x in stride(from: 240, through: 0, by: -20) {
+    blackBg.setX(x)
+    display.update(group)
+}
+
+// Fill the screen with circles.
+for y in stride(from: 20, to: 280, by: 40) {
+    for x in stride(from: 20, to: 280, by: 40) {
+        let circle = Circle(x: x, y: y, radius: 20, fill: Color.purple, outline: Color.white, stroke: 2)
+        group.append(circle)
+    }
+}
+display.update(group)
+
+for y in stride(from: 0, to: 280, by: 40) {
+    for x in stride(from: 0, to: 280, by: 40) {
+        let circle = Circle(x: x, y: y, radius: 20, outline: Color.white, stroke: 2)
+        group.append(circle)
+    }
+}
+
+display.update(group)
+sleep(ms: 1000)
+
+// Remove all tiles in the group to clear the screen.
+while group.getLength() > 0 {
+    group.pop()
+}
+display.update(group)
+
+// Draw a white rectangle used as background later.
+let whiteBg = Rect(x: 0, y: 0, width: 240, height: 240, fill: Color.white)
+group.append(whiteBg)
+display.update(group)
+sleep(ms: 1000)
+
+// Create four circles used for animation later.
+let circle0 = Circle(x: 10, y: 119, radius: 10, fill: Color.red)
+let circle1 = Circle(x: 50, y: 119, radius: 10, fill: Color.lime)
+let circle2 = Circle(x: 90, y: 119, radius: 10, fill: Color.blue)
+let circle3 = Circle(x: 130, y: 119, radius: 10, fill: Color.magenta)
+let circles = [circle0, circle1, circle2, circle3]
+
+// Create a subgroup for the circles.
+let circleGroup = Group()
+group.append(circleGroup)
+
+while true {
+    // Add the circle to the circleGroup and move the circleGroup to display it on the middle of the screen.
+    // You will see the circles appear one after another on the screen.
+    for i in 0..<circles.count {
+        circleGroup.append(circles[i])
+        circleGroup.setX(109 - i * 20)
+        display.update(group)
+        sleep(ms: 1000)
+    }
+
+    // Remove the circles from the circleGroup and display the circleGroup on the middle of the screen.
+    // You will see circles disappear one by one.
+    for i in (0..<circles.count).reversed() {
+        circleGroup.remove(circles[i])
+        circleGroup.setX(129 - i * 20)
+        display.update(group)
+        sleep(ms: 1000)
+    }
+}
+```

@@ -5,9 +5,11 @@ description: Learn how to
 
 # Text
 
-In this tutorial, you will see how to display text on a screen.
+In this tutorial, let's see how to display text on a screen. You can display some specified phrases or sensor's readings 
 
-## Label
+## 🔸Introduction
+
+### Label
 
 The label class provides you with an easy way to display text on a screen.
 
@@ -99,7 +101,7 @@ BTW, don't forget to add the dependency `SHT3x` in the file `package.swift`.
 />
 
 
-## Font
+### Font
 
 The fonts used for labels are **bitmap fonts**. These fonts define a matrix of pixels to show each glyph. You can regard it as a set of images. When displaying text, your board reads pixel info for each character. So it’s suitable for text display on such a screen. 
 
@@ -110,7 +112,7 @@ Besides, the texts on different websites are usually **vector font**. They use m
   alt="Bitmap and vector font" width="240"
 />
 
-The fonts we talk about later are all bitmap fonts. The two fonts in the example above are built-in fonts. All data of characters are already decoded, like [`RobotRegular16`](https://github.com/madmachineio/MadDisplay/blob/main/Sources/MadDisplay/Font/RobotRegular16.swift), so you can directly use them when creating a label. 
+The fonts we talk about later are all bitmap fonts. The two fonts in the example above are built-in fonts. All data of characters are already decoded, like the default font [`RobotRegular16`](https://github.com/madmachineio/MadDisplay/blob/main/Sources/MadDisplay/Font/RobotRegular16.swift), so you can directly use them when creating a label. 
 
 The text itself cannot be enlarged, but a group can. A label is a group, so the text in it is forced to change by multiplying each pixel. So some characters may look a little strange.
 
@@ -125,7 +127,7 @@ You can load other fonts from **pcf** (portable compiled format) files. It is a 
 Don’t forget to copy the pcf file into the SD card when you use it. After all, your board can only read the files on the card, not on your computer🤣. Then indicate its path when using it.
 :::
 
-You can load other fonts as below. The sample font file is [here](https://github.com/madmachineio/MadDisplay/tree/main/font).
+You can load the sample font file [`NotoSansSC-Regular-16`](https://github.com/madmachineio/MadDisplay/tree/main/font).
 
 ```swift
 // Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
@@ -164,5 +166,8 @@ while true {
     sleep(ms: 1000)
 }
 ```
+
+
+## 🔸Project
 
 

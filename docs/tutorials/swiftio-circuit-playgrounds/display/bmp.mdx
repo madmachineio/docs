@@ -5,35 +5,71 @@ description: Learn how to
 
 # BMP file
 
-BMP file is an uncompressed image format. You can get the data from it and display the image on a screen.
-Each pixel in a bitmap has a value to represent its color. And there are two ways to store the color: indexed color and RGB color. It all depends on the amount of colors the image uses.
-An indexed color image has a color table or palette that stores the color value. Every single pixel has an index used to get value from the palette. In this way, the image takes up smaller storage and can be transferred faster. There can be 1-bit, 2-bit, 4-bit, 8-bit colors format. 
-1-bit supports 2 colors for each pixel, often black and white. The early computers used this way to display graphics. However, when you look at such images, it seems there are some gray scales in between. That’s due to a technique called dither. It mimics different colors by mixing pixels of given colors. Different densities of the two colors create illusions of other colors to our eyes. 
-A 2-bit image can have 4 color options for one pixel.
-A 4-bit image can have 16 color options for one pixel.
-A 8-bit image can have 256 color options for one pixel.
+In this tutorial, you will learn about the way to display bmp images on a screen.
 
-It’s really convenient to change the colors of an indexed image. You just need to change the palette. Nowaday, such images are not common, but you can still create them using Adobe Photoshop or Aseprite.
+## 🔸Introduction
+
+As mentioned before, BMP file is a raster image format and stores uncompressed image data. It is device independent and thus can be displayed on a small screen easily.
+
+Each pixel on a bitmap contains a color value. There are two ways to store the color: indexed and RGB color. 
+
+**Indexed image**
+
+An **indexed color image** has a color table or palette that stores the color value. Every single pixel stores an index used to get color from the palette. In this way, the image takes up smaller storage and can transfer faster. There are usually 1-bit, 2-bit, 4-bit, 8-bit indexed colors. 
+
+* 1-bit supports 2 colors for each pixel, often black and white. The early computers used this way to display graphics.  
+* A 2-bit image can have 4 color options for one pixel.
+* A 4-bit image can have 16 color options for one pixel.
+* A 8-bit image can have 256 color options for one pixel.
+
+The image below shows how indexed images work. The original is a 24-bit RGB image. The others use indexed colors and are generated using photoshop. The 1-bit image has only black and white colors. The 2-bit one has two more colors: pink and dark green. The 4-bit and 8-bit contain more colors and thus are closer to the original.
+
+
+<img
+  src={require('./img/indexed.png').default}
+  alt="Indexed image" width="960"
+/>
+
+:::info
+You may find there are some gray scales in the 1-bit image above. That’s due to a technique called **dither**. It mimics different colors by mixing pixels of given colors. Different densities of two colors create illusions of other colors to our eyes. With this technique, you could create images with limited colors.
+
+After you enlarge that image, you will see only black and white are used. 
+<img
+  src={require('./img/dither.png').default}
+  alt="Dither" width="480"
+/>
+
+If the image is turned into 1-bit indexed color without using dithering, it will be as follows:
+<img
+  src={require('./img/withoutDither.png').default}
+  alt="i-bit indexed image without dither" width="240"
+/>
+:::
+
+For indexed images, you can change its palette to change how it looks. Nowaday, such images are not common, but you can still create them using Adobe Photoshop or Aseprite.
+
+**RGB image**
+
 A RGB color image doesn't need a palette and stores a true color value for each pixel.  24-bit and 32-bit images are widely used nowadays. They use 8-bit to represent red, green and blue. When displaying these images, your board reads the color data and directly displays it on a screen, so it will be more convenient than indexed images.
+
 Let's see how you can display bitmap files on a screen. 
-Class
-BMP: display bitmap files on a screen.
-Method
-init(path: String)
-Initialize a bitmap by indicating the path of the image on the SD card. It will open the file and read the data.
-getBitmap() -> Bitmap
-Get pixel information from the image. 
-If it’s an indexed image, it will get the indexes. 
-If it’s a RGB image, it will read the color values.
-getPalette() -> Palette?
-Read palette from an indexed image. 
-A RGB image doesn’t have a palette, so the return value is an optional type to ensure your program goes well.
+
+**Class**
+
+**`BMP`** - display a bitmap image on a screen.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(path:transparentColor:)` | Initialize a bitmap by indicating the path of the image on the SD card. It will open the file and read the data. <br />**Parameters:** <br /> - path: . <br /> - transparentColor: . |
+| `getBitmap() -> Bitmap` | Get pixel information from the image. <br />If it’s an indexed image, it will get the indexes. If it’s a RGB image, it will read the color values. |
+| `getPalette() -> Palette?` | Read palette from an indexed image. A RGB image doesn’t have a palette, so the return value is an optional type to ensure your program goes well. |
 
  
 Please make sure to copy the images to SD card so that your board can read it. And the image should be within 240x240 pixels to fit the screen.
 
 
-Indexed bitmap
+**Indexed bitmap**
+
 Let’s start with an indexed image.
 
 ```swift
@@ -68,7 +104,8 @@ while true {
 First you need to tell your board where the image is stored. If it’s in the root directory of the SD card, the path is  "/SD:/xxx.bmp".
 As it is an indexed image, you will get its bitmap and palette. Don't forget the palette needs to be unwrapped. Since this image must have a value, you can force unwrap it. Then you create a tile with them. Add the tile to a group and display it. 
 
-RGB bitmap
+**RGB bitmap**
+
 What about RGB images? Let’s find out how to display them.
 
 ```swift
