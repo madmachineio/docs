@@ -1,0 +1,39 @@
+---
+title: Before you start
+description: Learn how to
+---
+
+# Before you start
+
+On a tiny LCD screen, you can draw many interesting stuffs. In the last chapter, you try a simple usage by writing pixels on it. This is the most basic way. If you want to show something more complicated with plenty of elements and animation, that method would not be suitable anymore. 
+
+So you are going to use a library called `MadDisplay` that allows you to display graphics, images, texts in an easy way. BTW, this library refers to Adafruit’s [displayio](https://learn.adafruit.com/circuitpython-display-support-using-displayio). It is really well-structured and inspires us a lot.
+
+Before using the library `MadDisplay`, you will need to add it to your project to use these functionalities. Just indicate its position and name in the file `Package.swift` as below:
+
+```swift title="Package.swift"
+import PackageDescription
+let package = Package(
+    name: "Display",
+    dependencies: [
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDisplay.git", .branch("main")),
+    ],
+    targets: [
+        .target(
+            name: "Display",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // highlight-next-line
+                "MadDisplay"
+            ]),
+        .testTarget(
+            name: "DisplayTests",
+            dependencies: ["Display"]),
+    ]
+)
+
+```

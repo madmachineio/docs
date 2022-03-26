@@ -13,16 +13,21 @@ As mentioned before, BMP file is a raster image format and stores uncompressed i
 
 Each pixel on a bitmap contains a color value. There are two ways to store the color: indexed and RGB color. 
 
+### RGB image
+
+We have talked a lot about RGB images before. An RGB color image doesn't need a palette and stores true color values for each pixel. Red, green and blue are used to create extensive colors. 24-bit and 32-bit images are the most common nowadays, which use 8-bit to represent red, green, and blue. 
+
+
 ### Indexed image
 
-An **indexed color image** has a color table or palette that stores the color value. Every single pixel stores an index used to get color from the palette. In this way, the image takes up smaller storage and can transfer faster. There are usually 1-bit, 2-bit, 4-bit, 8-bit indexed colors. 
+An **indexed color image** has a color table or palette that stores the color value. Every single pixel stores an index used to get color from the palette. In this way, the image takes up smaller storage and can transfer faster. There are usually 1-bit, 2-bit, 4-bit, 8-bit indexed images. 
 
 * 1-bit supports 2 colors for each pixel, often black and white. The early computers used this way to display graphics.  
 * A 2-bit image can have 4 color options for one pixel.
 * A 4-bit image can have 16 color options for one pixel.
 * A 8-bit image can have 256 color options for one pixel.
 
-The image below shows how indexed images work. The original is a 24-bit RGB image. The others use indexed colors and are generated using photoshop. The 1-bit image has only black and white colors. The 2-bit one has two more colors: pink and dark green. The 4-bit and 8-bit contain more colors and thus are closer to the original.
+The image below shows how indexed images work. The original is a 24-bit RGB image. The others use indexed colors and are generated using photoshop. The 1-bit image has only black and white colors. The 2-bit one has two more colors: pink and dark green. The 4-bit and 8-bit ones contain more colors and thus are closer to the original.
 
 
 <img
@@ -57,18 +62,12 @@ You can easily change how indexed images look by changing their palette. As you 
 
 Nowadays, indexed images are not widely-used, but you can still create them using Adobe Photoshop or Aseprite.
 
-### RGB image
-
-We have talked a lot about RGB images before. An RGB color image doesn't need a palette and stores true color values for each pixel. Red, green and blue are used to create extensive colors. 24-bit and 32-bit images are the most common nowadays, which use 8-bit to represent red, green, and blue. 
 
 
-## Projects
-
-Let's see how you can display bitmap images on a screen. 
 
 **Class**
 
-**`BMP`** - display a bitmap image on a screen.
+**`BMP`** - display a bmp image on a screen.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -80,7 +79,12 @@ Let's see how you can display bitmap images on a screen.
 Please make sure to copy the images to the SD card so that your board can read it. And the image should be within 240x240 pixels to fit the screen.
 :::
 
-### 1. Display Indexed bitmap
+## 🔸Projects
+
+1. [Display indexed bitmap](./bmp#1-display-indexed-bitmap)
+2. [Display RGB bitmap](./bmp#2-display-rgb-bitmap)
+
+### 1. Display indexed bitmap
 
 Let’s start with an indexed image.
 

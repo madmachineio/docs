@@ -12,24 +12,24 @@ If you have dealt with Adobe photoshop or illustrator, you must be familiar with
 
 There are four core concepts for this library:
 
-* **Bitmap**: it stores an indexed color for each pixel. The actual color values are defined in a Palette.
+* **Bitmap**: it stores indexed colors for all pixels. The actual color values are defined in a Palette.
 * **Palette**: it stores all colors that the bitmap needs in order.
-* **Tile**: it will combine the bitmap and palette to get colored pixels.
-* **Group**: a group can contain one or several tiles, or even groups. It is what you will display on the screen. 
+* **Tile**: it combines the bitmap and palette to get colored pixels.
+* **Group**: a group can contain one or several tiles and even groups. It is what you display on a screen. 
 
 The image below shows how it works in general: 
 
 1. first create a bitmap where all pixels are filled with indexed colors. 
 2. create a palette with actual colors. Each color has an index that matches with those on the bitmap.
 3. combine the bitmap and palette to get a tile. All pixels are filled with RGB colors now.
-4. add tiles (and groups) to a group and display that group on the screen.
+4. add tiles (and groups) to a final group. That group contains the graphics in order and wait to be displayed on a screen.
 
 <img
   src={require('./img/layers.png').default}
   alt="Layers" width="960"
 />
 
-In this way, you could well organize the elements for the display and easily change or move any of the elements without messing up the whole display.
+In this way, you can well organize the elements for the display and easily change or move any of the elements without messing up the whole display.
 
 Let’s begin with a simple project to understand them better. Here is the sample code:
 
@@ -97,7 +97,7 @@ Now, let’s break it down to understand how these parts work.
 
 ###  Palette
 
-Palette is an ordered color table that contains all the color info needed for a bitmap. The index of colors starts from 0.
+Palette is an ordered color table that contains all the color values for a bitmap. The index of colors starts from 0.
 
 **Class**
 
@@ -107,7 +107,7 @@ Palette is an ordered color table that contains all the color info needed for a 
 | ------ | ----------- |
 | `init(count:)` | Initialize a palette to store color values. <br />**Parameter:**<br /> - `count`: the number of colors. The default count is 0 which means an empty palette. |
 | `append(:)` | Add color to the end of a palette. <br />**Parameter:**<br /> - `color`: a color value in UInt32. |
-| `subscript(index:)` | It allows you to access the color by using its index. It can used to change a specified color in palette with another color. |
+| `subscript(index:)` | Access the color by using its index. It can used to change a specified color in palette with another color. |
 
 
 Let’s say you will create a palette with 4 colors: white, balck, red, yellow. 
@@ -119,7 +119,7 @@ Let’s say you will create a palette with 4 colors: white, balck, red, yellow.
 
 There are two ways to get the palette:
 
-* The first one is to create a palette with four colors in total. By default, all colors are black. Then you replace each color by using its index with the desired color. 
+* create a palette with four colors in total. By default, all colors are black. Then you replace each color by using its index with the desired color. 
 
     ```swift
     let palette = Palette(count: 4)
@@ -129,7 +129,7 @@ There are two ways to get the palette:
     palette[3] = 0xFFFF00
     ```
 
-* The second method is to create an empty palette and then add the colors one by one.
+* or create an empty palette and then add the colors one by one in order.
 
     ```swift
     let palette = Palette()
@@ -149,25 +149,25 @@ palette.append(Color.red)
 palette.append(Color.yellow)
 ```
 :::info
-BTW, maybe you remember that the LCD needs 16-bit colors. However, the colors here are UInt32. Well, RGB888 is more frequently used. Red, green, and blue take respectively 8 bits. The library has done the conversion for you. So you don’t need to worry about it.
+BTW, maybe you remember that the LCD needs 16-bit colors. However, the colors here are UInt32. Well, RGB888 is the most frequently-used format. Red, green, and blue take respectively 8 bits. The library has done the conversion for you. So you don’t need to worry about it.
 :::
 
 ### Bitmap
 
-A bitmap is a collection of pixels. Each pixel corresponds to the index in a palette. Have you seen some coloring books? You use colors with corresponding numbers to paint it. The uncolored original marked with color numbers works similar to the bitmap here.
+A bitmap is a collection of pixels. Each pixel stores an index of a palette. Have you seen some coloring books? You use colors with corresponding numbers to paint it. The uncolored original marked with color numbers works similar to the bitmap here.
 
-The width and height when initializing a bitmap decide its size. And the bit count decides the total amount of colors. You could set it to 1, 2, 4, 8, 16, 32. If the bit count is 1, there can be 2 possible colors for 1 pixel, so the bitmap can use two colors.
+The width and height of the bitmap decide its size. The bit count decides the total amount of possible colors. It can be 1, 2, 4, 8, 16, 32. If the bit count is 1, a pixel can have 2 possible colors, and the bitmap can use two colors.
 
 Let’s look at some of the basic API for this class:
 
 **Class**
 
-**`Bitmap`** - this class is used to create a bitmap and set all its pixels with indexed color.
+**`Bitmap`** - this class is used to create a bitmap and set all its pixels with indexed colors.
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(width:height:`<br />`bitCount:)` | Initialize a bitmap. Its width and height should not exceed those of the screen. By default, all pixels adopt the first color in a palette.<br />**Parameters:** <br /> - `width`: the width of the bitmap. <br /> - `height`: the height of the bitmap. <br /> - `bitCount`: the possible amount of colors.   |
-| `setPixel(x:y:_:)` | Set a specified pixel to a color index. <br />**Parameters:** <br /> - `x` and `y`: coordinates of the pixel. They start from 0, so their maximum values are width-1 and height-1 respectively. <br /> - `value`: a color index in a palette. |
+| `init(width:height:`<br />`bitCount:)` | Initialize a bitmap. Its width and height should not exceed those of the screen. By default, all pixels adopt the first color in a palette.<br />**Parameters:** <br /> - `width`: the width of the bitmap. <br /> - `height`: the height of the bitmap. <br /> - `bitCount`: the amount of possible colors.   |
+| `setPixel(x:y:_:)` | Set the color index of a pixel. <br />**Parameters:** <br /> - `x` and `y`: coordinates of the pixel. They start from 0, so their maximum values are width-1 and height-1 respectively. <br /> - `value`: a color index in a palette. |
 
 
 Let’s create a bitmap and set pixels using the palette created above.
@@ -182,7 +182,7 @@ for x in 50...150 {
 }
 ```
 
-Here you create a 200x200 bitmap with 4 possible colors. By default, all pixels are set to the first color in the palette whose index is 0. So it's white. Then you will set the pixels from (50,50) to (150,150) on the middle and paint them with the fourth color (index 3) in the palette. 
+Here the bitmap is 200x200, 40000 pixels in total. It has 4 possible colors (0, 1, 2, 3). By default, all pixels are set to the value of 0, which is the first color of the palette. So they are white by default. Then you set the pixels from (50,50) to (150,150) on the middle of the bitmap and paint them with the fourth color (index 3) in the palette. 
 
 <img
   src={require('./img/bitmap.png').default}
@@ -191,7 +191,7 @@ Here you create a 200x200 bitmap with 4 possible colors. By default, all pixels 
 
 ### Tile
 
-Each pixel on a bitmap has an index whose color info is stored in a palette. Now it's time to fill the colors. A tile combines them together to get colored pixels.
+Each pixel on a bitmap has an index whose color info is in a palette. Now it's time to fill the colors. A tile combines them to get colored pixels.
 
 **Class**
 
@@ -199,7 +199,7 @@ Each pixel on a bitmap has an index whose color info is stored in a palette. Now
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(x:y:`<br />`bitmap:`<br />`palette:)` | Initialize a tile with the given bitmap and palette. <br />**Parameters:** <br /> - `x`, `y`: the position by defining the coordinate of the upper left corner, (0,0) by default. <br /> - `bitmap`, `tile`: the bitmap and its palette to form the tile. |
+| `init(x:y:`<br />`bitmap:`<br />`palette:)` | Initialize a tile with the given bitmap and palette. <br />**Parameters:** <br /> - `x`, `y`: the position of the tile by defining the coordinate of the upper left corner, (0,0) by default. <br /> - `bitmap`, `tile`: the bitmap and its palette to form the tile. |
 | `setX(:_)` | Move the tile horizontally. <br />**Parameter:** <br /> - `x`: the x coordinate of the destination relative to its group to place the tile. It can be positive or negative. |
 | `setY(:_)` | Move the tile vertically. <br />**Parameter:** <br /> - `y`: the y coordinate of the destination relative to its group to place the tile. It can be positive or negative.|
 | `setXY(x:y:)` | Set the coordinate of the upper left corner of the tile to move the tile. <br />**Parameters:** <br /> - `x`, `y`: the x, y-coordinate of the destination relative to its group to place the tile. They can be positive or negative. |
@@ -211,25 +211,23 @@ Let’s create a tile using the bitmap and palette above:
 let tile = Tile(x: 20, y: 20, bitmap: bitmap, palette: palette)
 ```
 
-As the image below, the middle area of the tile is in yellow and the rest is in white.
+As the image below, the middle area of the tile is in yellow, and the rest is in white. (20,20) decides the tile's position relative to the group to which it belongs.
 
 <img
   src={require('./img/tile.png').default}
   alt="Tile" width="480"
 />
 
-A bimtap can use different palettes to get different result. Just like coloring books, you can use a different combination of colors to get a different look.
+A bitmap can use different palettes to get different colors. Just like coloring books can be painted with a different combination of colors.
 
-The tile will be added to a group later. The x and y coordinates determine the tile’s position relative to its group and can be either positive or negative.
-
-A tile’s area is always a rectangle no matter how it looks. Its position is decided by the coordinates of the upper left corner.
+The tile will be added to a group later. A tile’s area is always a rectangle, no matter how it looks. The coordinates of the upper left corner decide the position of a tile and can be positive or negative. It is relative to the group to which it belongs.
 
 <img
   src={require('./img/tileOrigin.png').default}
   alt="The origin of a tile" width="480"
 />
 
-There are some predefined shapes, such as line, rectangle, circle, etc. They are also tiles. You will look into them in more detail later.
+There are some predefined [shapes](./shapes), such as line, rectangle, circle, etc. They are also tiles. You will look into them in more detail later.
 
 ### Group
 
@@ -241,29 +239,31 @@ A tile (or a group) can only belong to one group and cannot be added to several 
 
 **Class**
 
-**`Group`** - it allows you to create a group to manage the elements like tiles or groups. 
+**`Group`** - it allows you to create a group to manage other elements including tiles or groups. 
 
 | Method | Explanation |
 | ------ | ----------- |
 | `init(x:y:scale:)` | Initialize a group. <br />**Parameters:** <br /> - `x` and `y`: the position of the group on the screen. <br /> - `scale`: the scale to resize the group. By default, it’s 1, which means the original size. Its value is always an integer and should not be smaller than 1. |
-| `append(_ group:)` | Add a new group to the group. It will overlap the elements you added before.  <br />**Parameter:** <br /> - group: a group to be added. |
-| `append(_ tile:)` | Add a new tile to the group. It will overlap the elements you added before.  <br />**Parameter:** <br /> - tile: a tile to be added. |
+| `append(_ group:)` | Add a subgroup to the group. It will overlap the elements you added before.  <br />**Parameter:** <br /> - group: a group to be added. |
+| `append(_ tile:)` | Add a tile to the group. It will overlap the elements you added before.  <br />**Parameter:** <br /> - tile: a tile to be added. |
 
 ```swift
 let group = Group()
 group.append(tile)
 ```
 
-It will add the tile to the group. The group is placed on (0,0) by default. While the tile is set to (20,20) relative to group. So the display are as below:
+It will add the tile to the group. The group is placed on (0,0) by default. While the tile is set to (20,20) relative to group. So their positions are as below:
 
 <img
   src={require('./img/group.png').default}
   alt="Group" width="240"
 />
 
+The group is the final composition of all graphics. It will ont be displayed on the screen.
+
 ### Display
 
-Finally, it’s time for the display. There is a class called `MadDisplay` that you will use to display the group above.
+Finally, it’s time for the display. You will use the class `MadDisplay` to display the group above.
 
 **Class**
 
@@ -271,7 +271,7 @@ Finally, it’s time for the display. There is a class called `MadDisplay` that 
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(screen:colorSpace:)` | Initialize a display and get the screen ready. <br />**Parameters:** <br /> - `screen`: the screen you will use to display the image. It adopts a protocol, and so does the instance of the screen ST7789.<br />- `colorSpace`: it decides how the pixels on the screen are displayed, including color depth, etc. It is nil, so it will adopt the setting in the screen instance. |
+| `init(screen:colorSpace:)` | Initialize a display and get the screen ready. <br />**Parameters:** <br /> - `screen`: the screen you will use to display the image. It adopts a protocol, and so does the instances of the screen ST7789.<br />- `colorSpace`: it decides how the pixels on the screen are displayed, including color depth, etc. It is nil, so it will adopt the setting in the screen instance. |
 | `update(_:)` | Show the group on the screen. Every time there is a change in the group, you need to update again to show it on the screen. <br />**Parameter:** <br /> - `group`: the group to be displayed. |
 
 
@@ -302,7 +302,7 @@ You may notice that bitmap, tile and group all use coordinates. It may seem so c
 
 In the image below,
 
-* the **group** is what will be displayed on the screen. It contains a tile and a subgroup. Point a is the origin of the screen. The location of the group is set by the coordinates of the point b relative to a. So **b** is (30,30).
+* the **group** is what will be displayed on the screen. It contains a tile and a subgroup. Point a is the origin of the screen. The location of the group is set by the coordinates of the point **b** relative to point a. So b is (30,30).
 
 * a **tile** is a colored bitmap, so all its pixels have the same position as its bitmap. Point c is its origin. The tile's location is relative to the group to which it belongs. In other words, the point b serves as its origin and the coordinate of **c** is relative to b. So it's (50,50) relative to b and (80,80) relative to the screen.
 
@@ -319,12 +319,19 @@ In the image below,
 
 ## 🔸Projects
 
+1. [Random particle animation](./maddisplay#1-random-particle-animation)
+2. [Spiral animation](./maddisplay#2-spiral-animation)
 
 ### 1. Random particle animation
 
 In this project, you will see multiple small squares appear randomly on the screen. And their color also changes randomly. 
 
-And actually, all squares come from one bitmap. This bitmap is used to generate tiles in different positions. 
+Actually, all squares come from one bitmap. This bitmap is used to generate multiple tiles in different positions. 
+
+<img
+  src={require('./img/randomSquare.png').default}
+  alt="Square appear randomly on screen" width="240"
+/>
 
 **Example code**
 
@@ -384,6 +391,11 @@ while true {
 ### 2. Spiral animation
 
 In this second project, squares will appear one by one on the screen following a spiral path. After filling the screen, they will disappear one by one. 
+
+<img
+  src={require('./img/spiral.png').default}
+  alt="Square appear randomly on screen" width="240"
+/>
 
 **Example code**
 

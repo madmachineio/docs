@@ -141,7 +141,7 @@ module.exports = {
           collapsed: false,
           label: 'Graphical display',
           items: [
-            'tutorials/swiftio-circuit-playgrounds/display/introduction',
+            'tutorials/swiftio-circuit-playgrounds/display/before-start',
             'tutorials/swiftio-circuit-playgrounds/display/maddisplay',
             'tutorials/swiftio-circuit-playgrounds/display/shapes',
             'tutorials/swiftio-circuit-playgrounds/display/text',
