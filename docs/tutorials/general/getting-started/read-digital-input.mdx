@@ -94,7 +94,7 @@ import MadBoard
 
 [SwiftIO](https://swiftioapi.madmachine.io/) consists of all the functionalities to control your board. All programs must first reference it to use everything in it, like classes and functions.
 
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) defines the corresponding pin id of the SwiftIO Feather board. The pins of different boards are different. So this library tells the IDE you are dealing with this board, not any other board. Then you could use the id in it. If you use the SwiftIO board, you need to import the `SwiftIOBoard` instead.
+[MadBoard](https://github.com/madmachineio/MadBoards) defines the corresponding pin id of the different boards. You will not tell a specific board here since you have chosen a specified board for your project when creating it.
 
 ``` swift
 let pin = DigitalIn(Id.D1)
@@ -122,4 +122,4 @@ The function `print()` can print the values out. You can view them on the serial
 
 `print()` - print the values out.
 
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

@@ -196,7 +196,7 @@ import SwiftIO
 import MadBoard
 import PWMTone 
 ```
-[SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOBoard/Id.swift) are the basic libraries used in all these projects.
+[SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) are the basic libraries used in all these projects.
 
 And you will use another library [PWMTone](https://github.com/madmachineio/PWMTone). It allows you to set the PWM in accordance with the musical score. But before you use it, you need to add it to your project. In the file `Package.swift`, add the library and indicate its location as the two highlighted lines.
 
@@ -276,4 +276,4 @@ These two statements aim to raise an octave, so the pitch of the music sounds hi
 
 [PWMTone](https://github.com/madmachineio/PWMTone) - play notes and change how it sounds by setting PWM signals. 
 
-[SwiftIOFeather](https://github.com/madmachineio/MadBoards/blob/main/Sources/SwiftIOFeather/Id.swift) - find the corresponding pin id of SwiftIO Feather board.
+[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of your board.
