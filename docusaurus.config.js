@@ -54,7 +54,7 @@ module.exports = {
           position: 'left',
           label: 'References',
         },
-        // {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/madmachineio/docs',
           label: 'GitHub',
@@ -151,7 +151,11 @@ module.exports = {
             'https://github.com/madmachineio/docs/',
           routeBasePath: '/',
         },
-        blog: false,
+        blog: {
+          blogTitle: 'Docusaurus blog!',
+          blogDescription: 'A Docusaurus powered blog!',
+          postsPerPage: 'ALL',
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
