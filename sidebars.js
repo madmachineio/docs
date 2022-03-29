@@ -155,6 +155,9 @@ module.exports = {
           items: [
             'tutorials/swiftio-circuit-playgrounds/projects/overview',
             'tutorials/swiftio-circuit-playgrounds/projects/doorbell',
+            'tutorials/swiftio-circuit-playgrounds/projects/etchASketch',
+            'tutorials/swiftio-circuit-playgrounds/projects/metronome',
+            'tutorials/swiftio-circuit-playgrounds/projects/morseCode',
 
           ],
         },
