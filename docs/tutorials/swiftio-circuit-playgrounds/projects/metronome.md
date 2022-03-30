@@ -5,18 +5,31 @@ description: You'll
 
 # Metronome
 
-In this project, you will make a digital metronome. 
+In this project, you will make a digital metronome. The buzzer produces a beep for each beat, and meanwhile, the LCD shows an indicator. Two knobs are used to change beat settings. 
+
+<img
+  src={require('./img/metronomeProject.png').default}
+  alt="How this project works" width="960"
+/>
 
 ## Background
 
-A metronome is a helpful tool when you practice a instrument. It alerts at a regular interval. And you can change its tempo.
+A metronome is a helpful tool when you practice an instrument. It ticks at a regular interval to help you to stick to a regular tempo. And also, you can change the tempo of the metronome according to your music.
 
-**Beat** is a basic unit of time in music. A measure of a piece of music usually consists of several beats.
+<img
+  src={require('./img/metronome.png').default}
+  alt="Metronome" width="120"
+/>
 
+Let's take a look at some concepts:
 
-**BPM**, or beat per minute, measures the tempo of a piece of music. For example, 60 BPM means there would be 60 beats in a minute. Each beat lasts 1 second.
+**Beat** is a basic unit of time in music. When you tap your toes along with a song, you are actually follow its beat. In music, all beats are divided into mutiple sections, called **measures**. A measure usually consists of several beats. 
 
+**Time signature** descibes the count of beats in a measure and tells which note serves as one beat. 4/4 time signature is the most widely-used. In this case, a measure has 4 beat, and a quarter note is one beat, an eighth note is one half beat, etc. 2/4 means 2 beats per measure and a quarter note serves as one beat. You could learn more about it [here](https://www.skoove.com/blog/time-signatures-explained/).
 
+**BPM**, or beat per minute, measures the tempo of a piece of music. For example, 60 BPM means there are be 60 beats in a minute, each one lasts 1 second. Normally, a metronome provides tempo options from 40 to 208 BPM.
+
+You'll build a simplified metronome and care only about beat count in one measure and BMP.
 
 ## Circuit
 
@@ -29,9 +42,10 @@ You will use two potentiometers (A0, A11), the buzzer (PWM5A) and the LCD (SPI0)
 
 ## Program overview
 
-1. Read analog values from the potentiometers to calculate the beats per measure and the BPM.
+1. Read analog values from the potentiometers to calculate the beats in a measure and the BPM.
 2. Display the beat settings on the LCD. 
-3. A bar will display at the origin and move downward with each beat.
+3. A bar will display at the origin for the first beat and move downward with each beat.
+4. The buzzer generates a beep for each beat.
 4. If you twist the left potentiometer, the BPM changes.
 5. If you twist the right potentiometer, the count of beats per measure changes.
 
@@ -51,7 +65,7 @@ let beatPot = AnalogIn(Id.A11)
 let buzzer = PWMOut(Id.PWM5A)
 
 // Initialize the pins for the screen.
-let spi = SPI(Id.SPI0, speed: 50_000_000)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 let cs = DigitalOut(Id.D9)
 let dc = DigitalOut(Id.D10)
 let rst = DigitalOut(Id.D14)

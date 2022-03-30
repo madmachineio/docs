@@ -5,7 +5,16 @@ description: You'll
 
 # Etch a sketch
 
-In this project, you will make a etch a sketch using the modules on your kit. 
+In this project, you will make an Etch A Sketch toy.
+
+The etch a sketch is a drawing toy. It uses two knobs to control the stylus. As you move the knobs, the stylus moves and leaves lines on the display. The left knob moves the stylus horizontally and the right one vertically.
+
+So you will use two knobs on your kit to draw pixels on the LCD. Two buttons are used for other settings: one is to clear the screen and the other is to change the position of stylus.
+
+<img
+  src={require('./img/etchASketch.png').default}
+  alt="Etch A Sketch" width="360"
+/>
 
 ## Circuit
 
@@ -37,7 +46,7 @@ import ST7789
 import MadDisplay
 
 // Initialize the pins for the screen.
-let spi = SPI(Id.SPI0, speed: 50_000_000)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 let cs = DigitalOut(Id.D9)
 let dc = DigitalOut(Id.D10)
 let rst = DigitalOut(Id.D14)
