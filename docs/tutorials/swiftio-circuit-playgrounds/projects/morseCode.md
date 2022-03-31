@@ -5,24 +5,49 @@ description: You'll explore more with some advanced projects.
 
 # Morse code
 
-You have used an LED to generate SOS signal and know a little about morse code in previous tutorial. Now you will learn more about it and typing messages with it.
+You have used an LED to generate an SOS signal and know a little about morse code in previous tutorial. Now you will learn more about it and type messages with it.
+
+<img
+  src={require('./img/morseProject.png').default}
+  alt="Morse Code project" width="240"
+/>
 
 ## Background
 
-As mentioned before, morse code uses sequence of dits and dahs (dots and dashes) to represent characters. The duration of a dah is three times the duration of a dit. Here is the chart of morse code.
+As mentioned before, morse code uses a sequence of dits and dahs (dots and dashes) to represent characters. The duration of the dah is three times the duration of the dit. Here is the chart of morse code. 
 
+<img
+  src={require('./img/morseCode.png').default}
+  alt="Morse Code Chart" width="480"
+/>
 
+There are also some requirements for the gap between each code: 
+* The gap between morse codes (dits and dahs) within a character equals a dit duration. 
+* The gap between letters equals 3 dit duration. 
+* And the gap between words equals 7 dit duration. 
 
-
+In this project, you will send morse code using a button. A long button press represents the dah, and a short press represents the dit. And you'll not follow all these requirements strictly. It's a little hard to always type within the specified time.
 
 ## Circuit
 
-You will use a button (D1) as an input and an LCD (SPI0) for text display. A button (D1) and An LED (D19) is used as notifications.
+You will use a button (D1) as an input and an LCD (SPI0) for text display. A button (D1) and An LED (D19) serve as notifications.
 
 <img
   src={require('./img/morseCircuit.png').default}
   alt="Modules for this project" width="960"
 />
+
+## Program overview
+
+1. Read digital values from the button.
+2. Once it's true, the button is pressed. Check how long the button is pressed. 
+3. If the button press is longer than 300ms, the morse code is a dah, or else it's a dit.
+4. Once the button is released, store the time after it.
+5. The threshold for the gap between words is 150ms, and the gap between letters is 60ms. The sound from the buzzer serves as notifications.
+6. If the morse code for a letter is done, find the corresponding letters and display it on the screen.
+7. Repeat the process until a word is finished. Add a space after the word.
+
+As you can see, the key point of this program is the state of the button. If it's pressed, you need to know it's a long press or short press. If it's released, you need to store the gap before the next press to tell it's the gap between letters or words.
 
 
 ## Example code
