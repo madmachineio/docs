@@ -6,7 +6,7 @@ author_url: https://twitter.com/madmachineio
 tags: [embedded, Swift]
 ---
 
-Hi everyone! Since @ted said there will be some new work groups in the Swift community. I want to share some experience of embedded development (using Swift). I know this must be very unfamiliar for most of you guys. But the embedded/IoT development is trending in recent years. Since the hardware is becoming more powerful, the software is immediately becoming complex. The consequence is that the software development has turned into a frustrating procedure because most embedded engineers have to use C without any alternatives.
+Hi everyone! Since @tkremenek said there will be some new work groups in the Swift community. I want to share some experience of embedded development (using Swift). I know this must be very unfamiliar for most of you guys. But the embedded development is trending in recent years especially in the IoT area. Since the hardware is becoming more powerful, the software is immediately becoming complex. The consequence is that the software development has turned into a frustrating procedure because most embedded engineers have to use C without any alternatives.
 
 Indeed, the industry is seeking for improvements. But there still has not a common solution. I believe Swift do has the potential to be somebody in this area (another is Rust). Swift team also has their plan to expand Swift in system level programming, let’s making Swift ruling the world : )
 
@@ -166,16 +166,21 @@ Currently, the MadMachine microcontroller board includes a 32MB external RAM. Th
 
 Remember what is XIP? Yes, this board does contain an 8MB ROM. Technically you could link your application to the ROM address and write to the ROM, so you don’t need the SD card anymore. (It’s relatively slow to write data to the ROM)
 
-## Room for improvement
+## Room for improvements
+
+### Language evolve
 
 As I mentioned before, the Swift team would pay attention to the performance and deterministic in Swift 6. They are the most important features to program in the embedded world. I'll list them here:
 
 * Performance
 * Deterministic
 
+
+### Binary size
+
 Next, the binary size becomes a critical problem. Even if the hardware would evolve over time, we must try to improve the situation. At present, there are mainly two ways:
 
-* **Implement [**another Swift standard**](https://github.com/compnerd/uswift) library dedicated for constrained environments**
+* **Implement [another Swift standard library](https://github.com/compnerd/uswift) dedicated for constrained environments**
     
     This would be the only choice for some low-end microcontrollers (They may have only 64KB ROM or even lower). But in such situation, I think people prefer to use C rather than any kinds of modern languages.
 
@@ -183,8 +188,19 @@ Next, the binary size becomes a critical problem. Even if the hardware would evo
 
     Personally I prefer this way. In many cases, people chooses a language not because the language itself, but the powerful built-in functions and mass libraries. We’d better try our best to keep the fundamental std the same so we can leverage the whole ecosystem rather than the language syntax.
 
-Unlike Rust implementing its standard library into two parts (core and std), the Swift std is designed high coupling as a whole module due to performance requirement. This makes it hard to reduce its size. Even if you use a standard `Int` type or simple assignment statements, you have to import the whole standard library.
+Unlike Rust implementing its standard library into [two parts](https://docs.rust-embedded.org/book/intro/no-std.html) (core and std), the Swift std is designed high coupling as a whole module due to performance requirement. This makes it hard to reduce its size. Even if you use a standard `Int` type or simple assignment statements, you have to import the whole standard library.
 
 BTW, Swift team is working hard for linking time optimization technology. We just don’t know how well it would be for reducing the binary size. Hope it would work great! 
 
+### Concurrency
 
+Swift has added this missing part in Swift 5.5. I havn't looked into it carefully. Seems the main part is implemented as a runtime level [**library**](https://github.com/apple/swift/tree/main/stdlib/public/Concurrency), it dependes on the externel [**libdispatch**](https://github.com/apple/swift-corelibs-libdispatch). At last, libdispatch depends on a series of OS APIs such as pthread (Plz correct me if I'm wrong).
+
+Wow, this is really unfriendly for Bare-metal or RTOS development. We still have a tough nut to crack.
+
+
+## Summary
+
+The embedded/bare-metal development has already existed near half a century. It is equivalent to assembly or C programming in such a long period. In recent years, it becomes more and more difficult to do so due to the rapid evolvement of embedded hardware. The whole industry is in urgent need of some new ways to improve the situcation. But still, there is no result. And Swift is really suitable in such use cases.
+
+IMHO, it’s more easy for Swift to expand into a brand new and growing field rather than replace other lanugages in some existing scene. Especially, there’s almost no competitor in this area.
