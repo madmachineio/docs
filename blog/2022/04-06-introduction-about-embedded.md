@@ -6,12 +6,7 @@ author_url: https://twitter.com/madmachineio
 tags: [embedded, Swift]
 ---
 
-Hi everyone! Since @tkremenek said there would be some new work groups in the Swift community, I want to share my experience in embedded development using Swift. I know this must be very unfamiliar to most of you guys. But the embedded development has been trending in recent years, especially in the IoT area. Since the hardware is becoming more powerful, the software is immediately becoming more complex. Besides, most embedded engineers have to use C without alternatives. The consequence is that software development has turned into a frustrating procedure.
-
-Indeed, the industry is seeking improvements. But there still has not been a universal solution. I believe Swift does have the potential to be somebody in this area (another is Rust). The Swift team also has plans to expand Swift in system level programming. Let’s make Swift rule the world : )
-
-
-## What is "Embedded, Bare-metal, Real-time, Microcontroller, Arduino, Raspberry Pi."
+## What is "Embedded, Bare-metal, Real-time, Microcontroller, Arduino, Raspberry Pi"
 
 Sorry to put so many technical terms at this beginning. I met so many people who felt confused about these terms. Of course, you will because it's hard to find any precise definitions if you google them. First, I'll give a brief explanation about them.
 
@@ -204,3 +199,5 @@ Wow, this is really unfriendly for Bare-metal or RTOS development. We still have
 The embedded/bare-metal development has already existed near half a century. It is equivalent to assembly or C programming in such a long period. In recent years, it becomes more and more difficult due to the rapid evolvement of embedded hardware. The whole industry is in urgent need of some new ways to improve the situcation. But still, there is no result. And Swift is really suitable in such use case.
 
 IMHO, it’s more easy for Swift to expand into a brand new and growing field rather than replace other lanugages in some existing scene. Especially, there’s almost no competitor in this area.
+
+Since the [**global chip shortage**](https://en.wikipedia.org/wiki/2020%E2%80%93present_global_chip_shortage) started in 2020, we have paused the hardware development until we can purchase the core components. Please [**stay tuned**](https://twitter.com/madmachineio). This must be cool and fun!
