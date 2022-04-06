@@ -163,7 +163,7 @@ while true {
         beatLabel.updateText("Beat: \(currentBeat + 1) / \(beatsConfig)")
         display.update(group)
           
-        // The first beat in the measure will sounds higher than other beat, so you can know when a meaure starts.
+        // The first beat in the measure will sound higher than other beat, so you can know when a measure starts.
         currentBeat == 0 ? buzz(highFrequency) : buzz(highFrequency)
     
         // Go to the next beat and move the indicator downwards.
