@@ -1,27 +1,27 @@
 ---
 slug: A brief introduction about Swift in embedded development
-title: Introduce embedded development
+title: Introduce embedded development using Swift
 author: Andy Liu
 author_url: https://twitter.com/madmachineio
 tags: [embedded, Swift]
 ---
 
-Hi everyone! Since @tkremenek said there will be some new work groups in the Swift community. I want to share some experience of embedded development (using Swift). I know this must be very unfamiliar for most of you guys. But the embedded development is trending in recent years especially in the IoT area. Since the hardware is becoming more powerful, the software is immediately becoming complex. The consequence is that the software development has turned into a frustrating procedure because most embedded engineers have to use C without any alternatives.
+Hi everyone! Since @tkremenek said there would be some new work groups in the Swift community, I want to share my experience in embedded development using Swift. I know this must be very unfamiliar to most of you guys. But the embedded development has been trending in recent years, especially in the IoT area. Since the hardware is becoming more powerful, the software is immediately becoming more complex. Besides, most embedded engineers have to use C without alternatives. The consequence is that software development has turned into a frustrating procedure.
 
-Indeed, the industry is seeking for improvements. But there still has not a common solution. I believe Swift do has the potential to be somebody in this area (another is Rust). Swift team also has their plan to expand Swift in system level programming, let’s making Swift ruling the world : )
+Indeed, the industry is seeking improvements. But there still has not been a universal solution. I believe Swift does have the potential to be somebody in this area (another is Rust). The Swift team also has plans to expand Swift in system level programming. Let’s make Swift rule the world : )
 
 
 ## What is "Embedded, Bare-metal, Real-time, Microcontroller, Arduino, Raspberry Pi."
 
-Sorry to put so many technical terms at this beginning. I met so many people who felt confused about these terms. Of course you will, because it's hard to find any precise definitions if you google them. First, I'll give a brief explanation about them.
+Sorry to put so many technical terms at this beginning. I met so many people who felt confused about these terms. Of course, you will because it's hard to find any precise definitions if you google them. First, I'll give a brief explanation about them.
 
-* **Embedded**: At the very beginning, the meaning of embedded application is pretty intuitive. It is a kind of software built into any machine other than a general-purpose computer. But its meaning is becoming vague and confused nowadays. You could find so many different explanations with google. I prefer the one on [wikipedia](https://en.wikipedia.org/wiki/Embedded_software): **If the main software functions are not initiated/controlled via a human interface, but through machine-interfaces, you could call it embedded application**, from simple firmware that controls the microwave oven to complicated Android-based automotive HMIs. Many people might think it is relevant to the complexity and performance of applications, or if an OS is used, and that’s not the case. 
+* **Embedded**: At the very beginning, the meaning of embedded application is pretty intuitive. It refers to a kind of software built into any machine other than a general-purpose computer. But its meaning is becoming vague and confused nowadays. You could find so many different explanations with google. I prefer the one on [wikipedia](https://en.wikipedia.org/wiki/Embedded_software): **If the main software functions are not initiated/controlled via a human interface, but through machine-interfaces, you could call it embedded application**, from simple firmware that controls the microwave oven to complicated Android-based automotive HMIs. Many people might think it is relevant to the complexity and performance of applications, or if an OS is used, and that’s not the case. 
 
-* **Bare-metal**: This term means your code runs on the hardware directly, without any typical OS. It has nothing to do with specific hardware. You could write a bare-metal program on a simple microcontroller or (possibly) on a complicated x86-64 machine.
+* **Bare-metal**: This term means your code runs on the hardware directly, without any typical OS. It has nothing to do with specific hardware. You can write a bare-metal program on a simple microcontroller or (possibly) on a complicated x86-64 machine.
 
 * **Real-time**: Real-time programs must guarantee a response within specified time constraints, often referred to as "deadlines". In short, the operation time must be [deterministic](https://www.electronicdesign.com/technologies/embedded-revolution/article/21767162/determinism-means-more-than-faster-processors). You can write a real-time program on the hardware directly (Bare-metal) or based on a real-time OS. BTW, the typical OS such as macOS, Windows, Linux, iOS, Android, none of them guarantee real-time, so it's really hard (most time impossible) to write a real-time program based on those platforms.
 
-* [**Microcontroller/MCU**](https://en.wikipedia.org/wiki/Microcontroller): A microcontroller is a small computer combined with various peripherals. Most of the peripherals are used to communicate with external machines or sensors. **Typically, a microcontroller contains everything (CPU, ROM, RAM, peripherals) in a single chip.** You just need to power it up, then code execution begins. Normally, the microcontroller's performance/complexity is much less than any regular computer, so developers prefer to write their application directly on the hardware (Bare-metal). But the situation is changing in recent years. Many microcontrollers become more and more powerful and complex rapidly. It's more challenging to develop bare-metal applications on them.
+* [**Microcontroller/MCU**](https://en.wikipedia.org/wiki/Microcontroller): A microcontroller is a small computer combined with various peripherals. Most of the peripherals are used to communicate with external machines or sensors. **Typically, a microcontroller contains everything (CPU, ROM, RAM, peripherals) in a single chip.** You just need to power it up, then code execution begins. Normally, the microcontroller's performance/complexity is much less than any regular computer, so developers prefer to write their application directly on the hardware (Bare-metal). But the situation is changing in recent years. Many microcontrollers are becoming more and more powerful and complex rapidly. It's more challenging to develop bare-metal applications on them.
 
 * [**Arduino**](https://www.arduino.cc/): A very famous brand/company that produces a series of microcontroller boards. The boards can be programmed using C or C++. The greatest advantage of Arduino is the massive amount of C/C++ libraries and the huge community. When programming an Arduino board, you are actually doing **bare-metal** programming. However, you don't need to deal with the low-level hardware details because Arduino provides a series C/C++ API, which is very easy for software engineers to get started.
 
@@ -31,23 +31,23 @@ Sorry to put so many technical terms at this beginning. I met so many people who
 
 ## The difference when programming for a general-purpose computer and an embedded one
 
-After knowing those terms above, you may find out the main different for a normal application and an embedded application: **the former targets humans while the latter targets machines**.
+After knowing those terms above, you may find out the main difference between a normal application and an embedded application: **the former targets humans while the latter targets machines**.
 
-A normal application runs in general-purpose computers in our daily life: PC, Mac, Cellphone, tablet, etc. On those computers, people can install any application they like, run them simultaneously. In this situation, the computer is controlled by a human interface. **The primary task of the OS is to guarantee all the apps/processes won't affect each other.**
+A normal application runs on general-purpose computers in our daily life: PC, Mac, Cellphone, tablet, etc. On those computers, people can install any application they like, run them simultaneously. In this situation, the computer is controlled by a human interface. **The primary task of the OS is to guarantee all the apps/processes won't affect each other.**
 
-By contrast, the application in an embedded device mainly focuses on machines. All demands are fixed. Therefore, **there's always only one dedicated application is running.**
+By contrast, the application in an embedded device mainly focuses on machines. All demands are fixed. Therefore, **only one dedicated application is running normally.**
 
 ### Hardware difference: MMU
 
-It's not hard to tell many differences between a general-purpose computer and an embedded device/microcontroller. But don't be confused by those intricate details. IMHO, there's only one key difference: if there is a [**memory management unit**](https://en.wikipedia.org/wiki/Memory_management_unit).
+It's not hard to tell many differences between a general-purpose computer and an embedded device/microcontroller. But don't be confused by those intricate details. IMHO, there's only one key difference: if there is a [**memory management unit**](https://en.wikipedia.org/wiki/Memory_management_unit) (MMU).
 
-MMU is a computer hardware unit which decides whether the CPU supports a general-purpose OS. It gives OS the capability to run multiple apps/processes simultaneously. Each process has its own virtual address space. MMU maps them to the actual physical RAM.
+MMU is a computer hardware unit that decides whether the CPU supports a general-purpose OS. It gives OS the capability to run multiple apps/processes simultaneously. Each process has its own virtual address space. MMU maps them to the actual physical RAM.
 
-By contrast, the microcontroller is used under a more stable circumstance. It doesn't need to support multiple processes. **All the code, including application, libraries, OS (if you have one), share the same address space.** Besides, all the hardware components such as ROM, RAM, peripherals are also mapped into the same address space.
+By contrast, the microcontroller is used under a more stable circumstance. It doesn't need to support multiple processes. **All the code, including application, libraries, OS (if you have one) share the same address space.** Besides, all the hardware components such as ROM, RAM, peripherals are also mapped into the same address space.
 
 The single address space greatly simplifies the compute architectures, and it brings another characteristic of the microcontroller: where the application is stored.
 
-We know **a normal application is stored at the external storage**, such as hard driver, SSD, EMMC, SD card etc. File system is used to allow the OS to find and load the exact application. The OS needs to copy the application into RAM before running. Then the CPU and MMU can work together to translate the memory addresses and run the app.
+We know **a normal application is stored at the external storage**, such as hard driver, SSD, EMMC, SD card etc. File system allows the OS to find and load the exact application. The OS needs to copy the application into RAM before running. Then the CPU and MMU can work together to translate the memory addresses and run the app.
 
 When you develop an application for the microcontroller, **all addresses are fixed after linking**. Then you could put the application in the ROM, which has its own address. So it takes only a few milliseconds to run your code after the device power-up. It's called **execute in place (XIP)**. 
 
@@ -55,7 +55,7 @@ When you develop an application for the microcontroller, **all addresses are fix
 
 As a Swift programmer, you must be familiar with app development on macOS or iOS. The OS manages computer hardware, software resources, and provides common services for applications. The OS is like a huge black box. All the resources are restricted to the system API. **You can not talk to the hardware directly but through a batch of system APIs.** Any simple application might depend on many hidden system-level libraries (most of them are dynamic linked). The OS will help to invoke these libraries at run time. 
 
-By contrast, **every microcontroller application is self-contained**. It means all the stuff are static linked together, including the application code, dependent libraries and the OS itself. In such context, the OS is normally provided at source code level (sometimes binary), you could consider it a normal scheduler library as any other dependencies. Actually, there is a term to describe such kind of OS: [**Library operating system**](https://en.wikipedia.org/wiki/Operating_system#Library).
+By contrast, **every microcontroller application is self-contained**. It means all the stuff are static linked together, including the application code, dependent libraries and the OS itself. In such context, the OS is normally provided at the source code level (sometimes binary), and you could consider it a normal scheduler library like any other dependencies. Actually, there is a term to describe such kind of OS: [**Library operating system**](https://en.wikipedia.org/wiki/Operating_system#Library).
  
 In most cases, the software arch for microcontrollers is much simpler than the one on general-purpose computers. In such situation, the OS is just another dependency, you can even modify (but not recommend) the OS if you need.
 
@@ -67,11 +67,11 @@ C is still a popular language for low-level embedded programming. That’s becau
 
 * **C is the most widely supported language by various hardware archs in the embedded world.** It is considered a kind of portable assembler. You don’t have any other choices if you are targeting a rarely-seen hardware platform.
 
-* Even the absolute quantity of embedded devices is huge, **most of them need relatively simple software architecture**. In such cases, you don’t need to use a higher abstraction provided by modern programming languages.
+* Even though the absolute quantity of embedded devices is huge, **most of them need relatively simple software architecture**. In such cases, you don’t need to use a higher abstraction provided by modern programming languages.
 
-In recent years, the embedded device evolves, hence both the performance and complexity increase rapidly. Embedded engineers are not stoping trying different ways to handle the increasing complexity. There comes Arduino (C++), MicroPython, Espruino (JavaScript), TinyGo (Golang), Meadow (C#), etc. But except C++, non of those languages are designed for system-level programming naturally.
+In recent years, the embedded device evolves and hence both the performance and complexity increase rapidly. Embedded engineers are trying different ways to handle the increasing complexity. There comes Arduino (C++), MicroPython, Espruino (JavaScript), TinyGo (Golang), Meadow (C#), etc. But except C++, none of those languages are designed for system-level programming naturally.
 
-As I know, only Swift and Rust announce themselves are (modern) system-level languages in recent decade. When I first have the thought of porting Swift to the embedded world, I have compared Swift and Rust carefully. My conclusion is that Rust is too complicated for application development. But now, **in 2022, you can see Rust has already gained a reputation as system-level programming language**. More and more people try to use Rust in [**embedded development**](https://www.rust-lang.org/what/embedded) and they have really [**active community**](https://github.com/rust-embedded). Unbelievable, are people gluttons for punishment nowadays😅? Come on! Swift! We can do this!
+As I know, only Swift and Rust announce themselves are (modern) system-level languages in recent decades. When I first have the thought of porting Swift to the embedded world, I have compared Swift and Rust carefully. My conclusion is that Rust is too complicated for application development. But now, **in 2022, you can see Rust has already gained a reputation as a system-level programming language**. More and more people try to use Rust in [**embedded development**](https://www.rust-lang.org/what/embedded) and they have really [**active community**](https://github.com/rust-embedded). Unbelievable, are people gluttons for punishment nowadays😅? Come on! Swift! We can do this!
 
 Here are some typical features a system-level language should have:
 * Compiled language
@@ -81,7 +81,7 @@ Here are some typical features a system-level language should have:
 * No GC
 * Deterministic
 
-Both Swift and Rust have these features. Unfortunately, Swift isn’t that fast and deterministic as Rust currently, because there are many hidden operations behind the code and it’s hard to find them out now. Since the core team has put this as a main goal in [**Swift 6**](https://forums.swift.org/t/on-the-road-to-swift-6/32862), I believe everything is ready for Swift in the embedded world.
+Both Swift and Rust have these features. Unfortunately, Swift isn’t that fast and deterministic as Rust currently. Because there are many hidden operations behind the code, and it’s hard to find them out now. Since the core team has put this as a main goal in [**Swift 6**](https://forums.swift.org/t/on-the-road-to-swift-6/32862), I believe everything is ready for Swift in the embedded world.
 
 ### Cross compile
 
@@ -137,13 +137,13 @@ As you can see in the demonstration, there’re only two hardware archs: x86_64 
 
 For example, when you create an instance of a class in Swift code, you need some memory space in the heap. Different OS might have different API for this operation. So Swift toolchain implemented a very fundamental abstraction layer to cover these differences. This (library) is called Swift [**Runtime**](https://github.com/apple/swift/tree/main/stdlib/public/runtime) and it’s implemented in C++ ([so it can interact with OS's C API directly](https://gankra.github.io/blah/c-isnt-a-language/)). In the example above, the function is [**swift_allocObject**](https://github.com/apple/swift/blob/b952184adffd228a4e6673137972b338bd34a7b3/stdlib/public/runtime/HeapObject.cpp#L137). The runtime is used for very low-level management such as casting, ARC, metadata, etc. It’s not something magic, but another low-level library. BTW, you can not access this Runtime library in Swift code directly, it is only used by the Swift compiler when necessary.
 
-If you want to use Swift on some new archs or OSes, you need to connect the Runtime invocations with the OS API first, or at least stub them out. Once you implemented those APIs used by the Runtime, most of the Swift code could run correctly. 
+If you want to use Swift on some new archs or OSes, you need to connect the Runtime invocations with the OS API first, or at least stub them out. Once you implemented those APIs used by the Runtime, most of the Swift code can run correctly. 
 
 ### Connect Swift Runtime to Zephyr
 
 As I mentioned before, embedded devices are becoming more complex and have higher performance. For the MadMachine project, I chose NXP RT10xx series microcontroller which has a 600MHz ARM Cortex-M7 core and various complex peripherals. It’s not easy to leverage all the capabilities on bare-metal.
 
-I use a Real-time OS named [**Zephyr**](https://www.zephyrproject.org/). It is a Linux Foundation project which focuses on the area that Linux can’t cover. It provides a batch of standard APIs to access the low-level peripherals. Many semiconductor companies such as NXP contribute to implementation for these APIs. So you don’t need to spend that much energy on the low-level details when developing an application.
+So I use a Real-time OS named [**Zephyr**](https://www.zephyrproject.org/). It is a Linux Foundation project which focuses on the area that Linux can’t cover. It provides a batch of standard APIs to access the low-level peripherals. Many semiconductor companies such as NXP contribute to implementation for these APIs. So you don’t need to spend that much energy on the low-level details when developing an application.
 
 The Zephyr Real-time OS is provided via [**source code**](https://github.com/zephyrproject-rtos/zephyr), and it uses Kconfig to configure the kernel (just like the Linux kernel). **A normal C application based on Zephyr is compiled with the OS source together**. But for a specific hardware, you could compile the whole OS layer as a library and use it at linking time. This is how the MadMachine project works.
 
@@ -194,13 +194,13 @@ BTW, Swift team is working hard for linking time optimization technology. We jus
 
 ### Concurrency
 
-Swift has added this missing part in Swift 5.5. I havn't looked into it carefully. Seems the main part is implemented as a runtime level [**library**](https://github.com/apple/swift/tree/main/stdlib/public/Concurrency), it dependes on the externel [**libdispatch**](https://github.com/apple/swift-corelibs-libdispatch). At last, libdispatch depends on a series of OS APIs such as pthread (Plz correct me if I'm wrong).
+Swift has added this missing part in Swift 5.5. I haven't looked into it carefully. Seems the main part is implemented as a runtime level [**library**](https://github.com/apple/swift/tree/main/stdlib/public/Concurrency). It dependes on the externel [**libdispatch**](https://github.com/apple/swift-corelibs-libdispatch) which depends on a series of OS APIs such as pthread (Plz correct me if I'm wrong).
 
 Wow, this is really unfriendly for Bare-metal or RTOS development. We still have a tough nut to crack.
 
 
 ## Summary
 
-The embedded/bare-metal development has already existed near half a century. It is equivalent to assembly or C programming in such a long period. In recent years, it becomes more and more difficult to do so due to the rapid evolvement of embedded hardware. The whole industry is in urgent need of some new ways to improve the situcation. But still, there is no result. And Swift is really suitable in such use cases.
+The embedded/bare-metal development has already existed near half a century. It is equivalent to assembly or C programming in such a long period. In recent years, it becomes more and more difficult due to the rapid evolvement of embedded hardware. The whole industry is in urgent need of some new ways to improve the situcation. But still, there is no result. And Swift is really suitable in such use case.
 
 IMHO, it’s more easy for Swift to expand into a brand new and growing field rather than replace other lanugages in some existing scene. Especially, there’s almost no competitor in this area.
