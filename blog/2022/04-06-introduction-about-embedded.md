@@ -6,9 +6,11 @@ author_url: https://twitter.com/madmachineio
 tags: [embedded, Swift]
 ---
 
+Thanks [**janhendry**](https://github.com/janhendry) for helping me improve the content : )
+
 ## What is "Embedded, Bare-metal, Real-time, Microcontroller, Arduino, Raspberry Pi"
 
-Sorry to put so many technical terms at this beginning. I met so many people who felt confused about these terms. Of course, you will because it's hard to find any precise definitions if you google them. First, I'll give a brief explanation about them.
+Sorry to put so many technical terms at this beginning. I met so many people who felt confused about these terms. Of course you will, because it's hard to find any precise definitions if you google them. First, I'll give a brief explanation about them.
 
 * **Embedded**: At the very beginning, the meaning of embedded application is pretty intuitive. It refers to a kind of software built into any machine other than a general-purpose computer. But its meaning is becoming vague and confused nowadays. You could find so many different explanations with google. I prefer the one on [wikipedia](https://en.wikipedia.org/wiki/Embedded_software): **If the main software functions are not initiated/controlled via a human interface, but through machine-interfaces, you could call it embedded application**, from simple firmware that controls the microwave oven to complicated Android-based automotive HMIs. Many people might think it is relevant to the complexity and performance of applications, or if an OS is used, and that’s not the case. 
 
@@ -20,7 +22,7 @@ Sorry to put so many technical terms at this beginning. I met so many people who
 
 * [**Arduino**](https://www.arduino.cc/): A very famous brand/company that produces a series of microcontroller boards. The boards can be programmed using C or C++. The greatest advantage of Arduino is the massive amount of C/C++ libraries and the huge community. When programming an Arduino board, you are actually doing **bare-metal** programming. However, you don't need to deal with the low-level hardware details because Arduino provides a series C/C++ API, which is very easy for software engineers to get started.
 
-* [**Raspberry Pi**](https://www.raspberrypi.org/): RPi looks like Arduino, but it's totally different. RPi is a general-purpose computer but small in size (also very cheap). The hardware architecture is similar to a cellphone or tablet. It can run the standard Linux. **It's the same to develop an RPi application as any other Linux applications.** RPi does provide some peripherals, so you can use it to communicate (through Linux driver API) with external sensors. I think thie is the only similarity with Arduino.
+* [**Raspberry Pi**](https://www.raspberrypi.org/): RPi looks like Arduino, but it's totally different. RPi is a general-purpose computer but small in size (also very cheap). The hardware architecture is similar to a cellphone or tablet. It can run the standard Linux. **It's the same to develop an RPi application as any other Linux applications.** RPi does provide some peripherals, so you can use it to communicate (through Linux driver API) with external sensors. I think this is the only similarity with Arduino.
 
 
 
@@ -42,7 +44,7 @@ By contrast, the microcontroller is used under a more stable circumstance. It do
 
 The single address space greatly simplifies the compute architectures, and it brings another characteristic of the microcontroller: where the application is stored.
 
-We know **a normal application is stored at the external storage**, such as hard driver, SSD, EMMC, SD card etc. File system allows the OS to find and load the exact application. The OS needs to copy the application into RAM before running. Then the CPU and MMU can work together to translate the memory addresses and run the app.
+We know **a normal application is stored at the external storage**, such as hard driver, SSD, EMMC, SD card etc. File system allows the OS to find and load the exact application. The OS needs to copy the application into RAM before running. Then the CPU and MMU can work together to translate the memory addresses and execute the app.
 
 When you develop an application for the microcontroller, **all addresses are fixed after linking**. Then you could put the application in the ROM, which has its own address. So it takes only a few milliseconds to run your code after the device power-up. It's called **execute in place (XIP)**. 
 
