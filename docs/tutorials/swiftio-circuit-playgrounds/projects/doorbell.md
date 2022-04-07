@@ -5,6 +5,8 @@ description: Make a doorbell with a button and buzzer.
 
 # Doorbell
 
+So far, you've learned enough about how to interact with all modules on the kit. Let's create more interesting projects.
+
 In the project, you will make a simple doorbell. When you press the doorbell button, the buzzer starts to beep. After three beeps, all return to the original state and wait for another press.
 
 <img

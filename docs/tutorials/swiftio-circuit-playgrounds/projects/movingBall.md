@@ -6,9 +6,12 @@ description: You'll explore more with some advanced projects.
 # Interactive moving ball
 
 
-In this project, you will move your board to move the ball displayed on the LCD. If you tilt your board to the left, the ball moves left.
+In this project, you will move your board to move the ball displayed on the LCD. When you tilt your board to any direction, the ball moves with it. 
 
-
+<img
+  src={require('./img/movingBall.png').default}
+  alt="Moving ball project" width="480"
+/>
 
 ## Circuit
 
@@ -16,7 +19,7 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
 
 <img
   src={require('./img/movingBallCircuit.png').default}
-  alt="Morse Code project" width="960"
+  alt="Moving ball circuit" width="960"
 />
 
 ## Program overview
@@ -25,7 +28,8 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
 2. Read the accelerations to know how the board moves.
 3. If it moves to the left, the ball's coordinate on the x-axis will decrease. If it's right, the x-coordinate increases.
 4. If it moves forward, the y-coordinate decreases, so the ball moves forward. And if it's downward, the y-coordinate increases.
-
+5. Update the ball's position on the LCD.
+6. Read the accelerations again and repeat the process.
 
 ## Example code
 
@@ -36,8 +40,10 @@ import MadBoard
 // Import the driver for the screen and graphical library for display.
 import ST7789
 import MadDisplay
+// Import the accelerometer driver to sense the movement.
 import LIS3DH
 
+// Initialize the i2c interface and use it to intialize the sensor.
 let i2c = I2C(Id.I2C0)
 let accelerometer = LIS3DH(i2c)
 
@@ -51,15 +57,14 @@ let bl = DigitalOut(Id.D2)
 // Initialize the screen with the pins above.
 let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-// Create an instance using the screen used to display graphics.
+// Create an instance using the screen to display graphics.
 let display = MadDisplay(screen: screen)
-let group = Group()
 
 // The size of the screen.
 var height = 240
 var width = 240
 
-// The original coordinate of the ball.
+// The original coordinate of the ball. It's at the center.
 var x = width / 2 - 1
 var y = height / 2 - 1
 
@@ -67,15 +72,17 @@ var y = height / 2 - 1
 let radius = 15 
 let ball = Circle(x: x, y: y, radius: radius, fill: Color.yellow)
 
+// Add the ball to a group for display.
+let group = Group()
 group.append(ball)
 
-// The count of pixels the ball will move.
+// The count of pixels the ball will move each time.
 var change = 5
 // The threshold for the accelerations to move the ball.
-let threshold: Float = 0.3
+let threshold: Float = 0.2
 
 // The anchor of the ball when you move it is at the upper left corner of this tile. 
-// And it's at the center when creating the ball.
+// But it's at the center when creating the ball.
 x -= radius
 y -= radius
 
