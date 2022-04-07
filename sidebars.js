@@ -146,10 +146,21 @@ module.exports = {
             'tutorials/swiftio-circuit-playgrounds/display/shapes',
             'tutorials/swiftio-circuit-playgrounds/display/text',
             'tutorials/swiftio-circuit-playgrounds/display/bmp',
-            //'tutorials/swiftio-circuit-playgrounds/display/go-further',
           ],
         },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'More projects',
+          items: [
+            'tutorials/swiftio-circuit-playgrounds/projects/doorbell',
+            'tutorials/swiftio-circuit-playgrounds/projects/movingBall',
+            'tutorials/swiftio-circuit-playgrounds/projects/etchASketch',
+            'tutorials/swiftio-circuit-playgrounds/projects/metronome',
+            'tutorials/swiftio-circuit-playgrounds/projects/morseCode',
 
+          ],
+        },
 
       ],
     },
