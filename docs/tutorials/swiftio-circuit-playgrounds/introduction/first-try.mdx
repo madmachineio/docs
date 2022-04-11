@@ -1,0 +1,146 @@
+---
+title: First try
+description: Learn how to
+---
+
+# First try
+
+Before getting into any detailed knowledge, it's a good idea to try your first project. You'll have a first impression of what your board can do. Let's blink an LED. 
+
+## Set up software 
+
+At first, you will set up the software for your board.
+
+1. **Open the Visual Studio Code**. I believe most of you guys have installed it. We have created an extension for it. It is reall handy and easy to use.
+
+2. **Install the extension MadMachine** as shown below. 
+    1. click the Extensions button on the left bar.
+    2. enter the extension name MadMachine in the serch box.
+    3. click the Install button.
+
+<img
+  src={require('./img/install.png').default}
+  alt="Install the extension" width="960"
+/>
+
+3. **Open the windows Settings** by clicking **Code** / **Preferences** / **Settings** to set the extension.
+
+<img
+  src={require('./img/settings.png').default}
+  alt="Open the settings window" width="960"
+/>
+
+4. **Download the latest [mm sdk](https://github.com/madmachineio/mm-sdk/releases)**. Choose the version marked with label Latest. The versions marked with Pre-release are still for internal testing.
+
+
+5. Click **Extensions** to expand it and find **MadMachine**. **Indicate the sdk location** in the box that matches your operating system. If you change the location of sdk later, you will need to update it again.
+
+<img
+  src={require('./img/sdkPath.png').default}
+  alt="Set the path of sdk" width="960"
+/>
+
+Now, the software gets prepared👏.
+
+## Create a project
+
+
+1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three functionalities. Click **New Project**.
+
+<img
+  src={require('./img/create.png').default}
+  alt="Create a new project" width="960"
+/>
+
+2. Choose the project as an executable.
+
+<img
+  src={require('./img/projectType.png').default}
+  alt="Choose project type" width="960"
+/>
+
+
+3. Choose the board for this project - SwiftIOFeather.
+
+<img
+  src={require('./img/boardType.png').default}
+  alt="Chosse board type" width="960"
+/>
+
+4. **Name** the project. You could choose any descriptive name you like for the project. Then press the **Enter** key.
+
+<img
+  src={require('./img/projectName.png').default}
+  alt="Set project name" width="960"
+/>
+
+5. Choose a **location** to store the project and press **Open**.
+
+<img
+  src={require('./img/location.png').default}
+  alt="Set project location and name" width="960"
+/>
+
+After it's done, the project will open in a new window.
+
+## Write code
+
+Then you will need to edit the code for the project. 
+
+1. Click on the **Sources** / **Blink** / **main.swift** to open the file. This file stores the main code for your project. So you will always edit this file for all your project.
+
+2. Copy the code below into the file. In the next sections, you will learn more about the code.
+
+```swift
+import SwiftIO
+import MadBoard
+
+let led = DigitalOut(Id.BLUE)
+​
+while true {
+    led.write(true)
+    sleep(ms: 1000)
+
+    led.write(false)
+    sleep(ms: 1000)
+}
+```
+
+<img
+  src={require('./img/code.png').default}
+  alt="Code" width="960"
+/>
+
+## Download code to board
+
+Now you come to the last steps - download your project to the board.
+
+1. **Connect** your SwiftIO Feather board to your computer.
+
+<img
+  src={require('./img/connect.png').default}
+  alt="Connect your board to computer" width="480"
+/>
+
+2. Press the download button.
+
+<img
+  src={require('./img/press.png').default}
+  alt="Press the download button" width="240"
+/>
+
+3. Wait until the onboard LED turns to steady green.
+
+<img
+  src={require('./img/steadyGreen.png').default}
+  alt="Onboard LED turns to steady green" width="240"
+/>
+
+4. Click the Download button. It will take a few seconds.
+
+<img
+  src={require('./img/download.png').default}
+  alt="click download button" width="960"
+/>
+
+After it's done, the onboard blue LED starts to blink💡.

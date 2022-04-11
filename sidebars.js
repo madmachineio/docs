@@ -122,6 +122,20 @@ module.exports = {
         {
           type: 'category',
           collapsed: false,
+          label: 'Introduction',
+          items: [
+            'tutorials/swiftio-circuit-playgrounds/introduction/overview',
+            'tutorials/swiftio-circuit-playgrounds/introduction/first-try',
+            'tutorials/swiftio-circuit-playgrounds/introduction/background',
+            'tutorials/swiftio-circuit-playgrounds/introduction/hardware',
+            'tutorials/swiftio-circuit-playgrounds/introduction/basic-library',
+            'tutorials/swiftio-circuit-playgrounds/introduction/guide',
+          ],
+        },
+
+        {
+          type: 'category',
+          collapsed: false,
           label: 'Get familiar with modules',
           items: [
             'tutorials/swiftio-circuit-playgrounds/modules/led',
