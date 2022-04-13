@@ -119,17 +119,18 @@ module.exports = {
       label: 'SwiftIO Circuit Playgrounds',
       items: [
 
+        'tutorials/swiftio-circuit-playgrounds/introduction',
+        
         {
           type: 'category',
           collapsed: false,
-          label: 'Introduction',
+          label: 'Preparation',
           items: [
-            'tutorials/swiftio-circuit-playgrounds/introduction/overview',
-            'tutorials/swiftio-circuit-playgrounds/introduction/first-try',
-            'tutorials/swiftio-circuit-playgrounds/introduction/background',
-            'tutorials/swiftio-circuit-playgrounds/introduction/hardware',
-            'tutorials/swiftio-circuit-playgrounds/introduction/basic-library',
-            'tutorials/swiftio-circuit-playgrounds/introduction/guide',
+            'tutorials/swiftio-circuit-playgrounds/preparation/overview',
+            'tutorials/swiftio-circuit-playgrounds/preparation/first-try',
+            'tutorials/swiftio-circuit-playgrounds/preparation/background',
+            'tutorials/swiftio-circuit-playgrounds/preparation/hardware',
+            'tutorials/swiftio-circuit-playgrounds/preparation/basic-library',
           ],
         },
 
@@ -138,6 +139,7 @@ module.exports = {
           collapsed: false,
           label: 'Get familiar with modules',
           items: [
+            'tutorials/swiftio-circuit-playgrounds/modules/overview',
             'tutorials/swiftio-circuit-playgrounds/modules/led',
             'tutorials/swiftio-circuit-playgrounds/modules/button',
             'tutorials/swiftio-circuit-playgrounds/modules/led-timer',
@@ -167,6 +169,7 @@ module.exports = {
           collapsed: false,
           label: 'More projects',
           items: [
+            'tutorials/swiftio-circuit-playgrounds/projects/overview',
             'tutorials/swiftio-circuit-playgrounds/projects/doorbell',
             'tutorials/swiftio-circuit-playgrounds/projects/movingBall',
             'tutorials/swiftio-circuit-playgrounds/projects/etchASketch',
