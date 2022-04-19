@@ -60,7 +60,7 @@ module.exports = {
     {
       type: 'category',
       collapsed: false,
-      label: 'General',
+      label: '🟠 General',
       items: [
 
         {
@@ -97,7 +97,7 @@ module.exports = {
     {
       type: 'category',
       collapsed: false,
-      label: 'SwiftIO Maker Kit',
+      label: '🟠 SwiftIO Maker Kit',
       items: [
         'tutorials/swiftio-maker-kit/mission1',
         'tutorials/swiftio-maker-kit/mission2',
@@ -116,14 +116,30 @@ module.exports = {
     {
       type: 'category',
       collapsed: false,
-      label: 'SwiftIO Circuit Playgrounds',
+      label: '🟠 SwiftIO Circuit Playgrounds',
       items: [
+
+        'tutorials/swiftio-circuit-playgrounds/introduction',
+        
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Preparation',
+          items: [
+            'tutorials/swiftio-circuit-playgrounds/preparation/overview',
+            'tutorials/swiftio-circuit-playgrounds/preparation/first-try',
+            'tutorials/swiftio-circuit-playgrounds/preparation/background',
+            'tutorials/swiftio-circuit-playgrounds/preparation/hardware',
+            'tutorials/swiftio-circuit-playgrounds/preparation/swiftio-madboard',
+          ],
+        },
 
         {
           type: 'category',
           collapsed: false,
-          label: 'Get familiar with modules',
+          label: 'Learn with modules',
           items: [
+            'tutorials/swiftio-circuit-playgrounds/modules/overview',
             'tutorials/swiftio-circuit-playgrounds/modules/led',
             'tutorials/swiftio-circuit-playgrounds/modules/button',
             'tutorials/swiftio-circuit-playgrounds/modules/led-timer',
@@ -153,6 +169,7 @@ module.exports = {
           collapsed: false,
           label: 'More projects',
           items: [
+            'tutorials/swiftio-circuit-playgrounds/projects/overview',
             'tutorials/swiftio-circuit-playgrounds/projects/doorbell',
             'tutorials/swiftio-circuit-playgrounds/projects/movingBall',
             'tutorials/swiftio-circuit-playgrounds/projects/etchASketch',
