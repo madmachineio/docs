@@ -34,6 +34,8 @@ A normal application runs on general-purpose computers in our daily life: PC, Ma
 
 By contrast, the application in an embedded device mainly focuses on machines. All demands are fixed. Therefore, **only one dedicated application is running normally.**
 
+![Embedded categories](img/embedded_category.png)
+
 ### Hardware difference: MMU
 
 It's not hard to tell many differences between a general-purpose computer and an embedded device/microcontroller. But don't be confused by those intricate details. IMHO, there's only one key difference: if there is a [**memory management unit**](https://en.wikipedia.org/wiki/Memory_management_unit) (MMU).
