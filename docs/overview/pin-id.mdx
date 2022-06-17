@@ -1,55 +1,84 @@
 ---
-title: Pin and id
+title: Pin and Id
 description: You'll learn what are pins on your microcontroller board and what's their usage. You will also know how to set the pins on your Swift code.
 ---
 
-# Pin and id
+# Pin and Id
 
-If you are new to electronics, you may get confused about all pins and ids when programming for your board. In this guide, you'll know more about the pins and learn how to set them. 
+If you are new to electronics, you may get confused about pins and Ids when programming for your board. So in this guide, let's know more about the pins and learn how to set them. 
 
 ## Pin
 
-All boards have **pin**s that stick out of the MCU to connect other components easily. When a component is connected to a pin, it is actually connected to the internal circuitry of the MCU. 
+All boards have **pins** that stick out of the MCU to connect other components easily. 
 
 <img
   src={require('./img/pinsOfFeather.png').default}
   alt="The pins on the two sides of SwiftIO Feather board" width="960"
 />
 
-There are so many pins on an MCU, so they are numbered for identification. The numbers of pins and their properties are all up to the MCU. The pins on boards, usually on two sides, may not adopt the same pin numbering as the MCU. When you call a pin on your board using its name, or **id** in our case, you actually call the corresponding pin on the MCU to do its task.
+When an external device communicates with your board through a pin, it is actually connected to the corresponding peripheral on the MCU. A **peripheral** refers to a part of device on MCU for a specific usage. An MCU may contain many common peripherals with different usages, like GPIO, I2C, SPI, UART, and so on.
 
-Briefly speaking, MCUs provide registers, that is, a block of storage spaces that allow you to read and write data. Some are dedicated to the functionalities of pins. When you configure a pin (input or output, status, etc), you set the related registers. When reading input values, you read values from those registers.
+<img
+  src={require('./img/peripherals.png').default}
+  alt="Peripherals on MCU" width="320"
+/>
 
+However, normally, the number of pins are limited for many reasons. Therefore, most pins are multiplexed to provide more functionalities. In other words, a pin may connect to several peripherals' interfaces using a **multiplexer (or mux)**. You can consider a mux as a switch between a pin and the peripherals it connectes to. The pin can select one of them as needed. 
+
+This pin multiplexing technique allows the same set of pins to achieve many different functions. For example, in the image below, the pin are muxed to GPIO, UART, PWM peripherals on the MCU, so it can be configured to any of these usages. BTW, some peripherals require a group of pins, like UART which needs a pin for transmission (TX) and one for reception (RX). Say you need a PWM signal, you can designate that pin as a PWM pin in your code, so the mux will automatically select the desired peripheral for it.
+
+<img
+  src={require('./img/mux.png').default}
+  alt="Pin multiplexing" width="480"
+/>
+
+As for pin configuration, briefly speaking, MCU provides registers, that is, a block of storage spaces that allow you to read and write data. Some are dedicated to the pins. When you configure a pin (property, status, etc), the related registers are set. When you read pin status, you are reading values from those registers.
+
+## Id
+
+And there are so many pins on an MCU... So they are numbered for identification. The numbers of pins and their properties are all up to the MCU. The pins on boards, usually on two sides, may not adopt the same pin name as the MCU. When you call a pin on your board using its name, **Id** in our case, you actually call the corresponding pin with the specified task on MCU.
+
+All Ids of your board are stored in the library [MadBoard](https://github.com/madmachineio/MadBoards). The Ids are formed with a letter (or word) which indicates its functions and a number: D0, D1, A0, PWM0A, I2C0, SPI0... 
+* By convention, the numbers of Ids start from 0🤣.
+* As mentioned before, some pins are multiplexed, so D0 and A0 may refer to the same physical pin on your board. And it's not surprising that three or four Ids relate to a single physical pin.
+* Besides, some usages require more than one pin, such as I2C - it needs the pins SCL and SDA, so the Id I2C0 refers to both pins (SCL0 and SDA0). And similarly, Id SPI0 refers to all three pins (SCK0, SDO0, SDI0).
+* What's more, some Ids don’t match any physical pins on board, such as `RED`, `BLUE`. They allow you to access the onboard hardware, like the onboard LED💡.
+* Different boards have a specific hardware layout with a different pin arrangement. So you can find Id files for each type of board in this library. For example, the available Ids for SwiftIO Feather board are in [`SwiftIOFeather.swift`](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOFeather.swift).
 
 ## Pinout
 
-If you take a closer look at the pins on the two sides of your board, you will find silkscreens beside them to indicate part of the usages of all pins. Of course, not all functionalities are marked as there’s not enough available space for silkscreens. And for detailed info, you need the **pinout** that comes with the board. Here is a diagram for the SwiftIO Feather board for example:
+Till now, you still cannot match the Ids with the pins on your hardware🤔.
+
+👀Well, if you take a closer look at the pin connectors on the two sides of your board, you will find silkscreens beside them which indicate part of the usages. Of course, not all usages are marked as there’s not enough available space for silkscreens. And for detailed info, you need the **pinout** that comes with the board. It shows all the possible usages for each pin. Here is a pinout diagram for the SwiftIO Feather board for example:
 
 <img
   src={require('./img/FeatherPinout.png').default}
   alt="SwiftIO Feather board pinout" width="960"
 />
 
-In the digram above, you may notice some of the pins are dedicated for a particular usage, like power pins, reset pins... The pins P0 to P35 are called [general-purpose input and output (GPIO)](https://en.wikipedia.org/wiki/General-purpose_input/output) pins and don’t have a predefined purpose. You can configure them for specific purpose through code.
+In the diagram above, you may notice the pins P0 to P35 are all multiplexed pins and have several usages. They don’t have a predefined purpose, hence you need to configure them for specific purpose through code.
 
-Let’s look at pin P6 for example. It’s labeled with D6, A6, and SCK0. That means the microcontroller can configure it to act as digital input or output, analog input, and SPI. What's more, the labels also tell the pin id. So it would be useful when you build circuits or code for your board.
+Let’s look at pin P6 for example. It’s labeled with D6, A6, and SCK0. That means the pin is muxed to GPIO, AnalogIn, SPI peripherals. So MCU can configure it to act as digital input/output, analog input, or clock line for SPI. 
 
 <img
   src={require('./img/p6.png').default}
   alt="Pin P6 on the board" width="480"
 />
 
+Furthermore, the pinout maps the pins on board with their Ids, so it would be useful when you build circuits or code for your board.
+
+
 :::info
 BTW, there is no strict rule on naming the pins, so the pin name may be different for boards from other brands.
 :::
 
-## Usage
+## Usage example
 
-After you know about the pins, let's learn how you set them through code.
+After you clarify these concepts, let's dive into pin usages.
 
 ❖ **Step 1**
 
-At first, you need to import the [**`SwiftIO`**](https://github.com/madmachineio/SwiftIO) library. This library gives you access to the different functionalities that the MCU provides. 
+At first, you need to import the [**`SwiftIO`**](https://github.com/madmachineio/SwiftIO) library. It gives you access to the different peripherals on the MCU. 
 
 ```swift
 import SwiftIO
@@ -57,14 +86,12 @@ import SwiftIO
 
 ❖ **Step 2**
 
-As for the available pins, you need another library called [**`MadBoard`**](https://github.com/madmachineio/MadBoards). 
+As for the Ids, you need another library called [**`MadBoard`**](https://github.com/madmachineio/MadBoards). 
 
 ```swift
 import MadBoard
 ```
-MadBoard uses **ids** to differentiate pins. The ids are formed with a letter (or word) which indicates the functionalities and a number, for example, D0, A1, I2C0, just as the pinout shows. Different boards have a specific hardware layout, but they may have the same pins called A0, D0… So the code for different boards may be the same sometimes.
-
-You may notice some ids don’t match any pins, such as `RED`. They allow you to use the onboard hardware. For example, you can change the digital output to turn on or off the red LED.
+You don't need to distinguish the board type here. And different boards may all have Ids called A0, D0… so the code for a board may also work for another type of board.
 
 
 ❖ **Step 3**
@@ -72,20 +99,20 @@ You may notice some ids don’t match any pins, such as `RED`. They allow you to
 Suppose that you need a digital output pin. First of all, you tell the specific **usage**:
 
 ```swift
-let pin = DigitalOut()
+let pin = DigitalOut(...)
 ```
 
-`DigitalOut` is one of the classes in the SwiftIO library. It configures the pin as you expect. 
+`DigitalOut` is one of the classes in the `SwiftIO` library. It activates the pin to serve as a digital pin.
 
 ❖ **Step 4**
 
-Wait… It’s not finished yet! After all, the pins P0 to P36 can all be used to output digital signals. The MCU cannot know which one you are going to use. So, you tell the MCU which pin is needed: D0, D1, or any other pin. And **id**s are stored in an enum called `Id`, so the complete statement is:
+Wait… It’s not finished yet! After all, the pins P0 to P35 are all marked with D prefix on the pinout and can all be used to output digital signals. MCU cannot know which one you are going to use. So, you specify a pin using its Id: D0, D1, or any other pin. And Ids are stored in an enum called `Id` in `MadBoard`, so the complete statement should be:
 
 ```swift
 let pin = DigitalOut(Id.D0)
 ```
 
-It tells the MCU that you want the pin P0 to serve as digital output pin. Then the pin gets prepared and ready for the following task. 
+Only then does the MCU know that you want the pin P0 to serve as digital output pin. And the pin will get prepared and ready for the following task. 
 
-At last, if one digital pin is not enough, you can create more instances using other pins in the same way. And if you need a pin for analog input, you can use any pin labeled with A except A0, since it already serves as a digital pin.
+At last, if one digital pin is not enough, you can create more instances using other pins in the same way. If you need a pin for analog input, you can use any pin labeled with A except A0, since DO and A0 map to the same physical pin which already serves as a digital pin.
 
