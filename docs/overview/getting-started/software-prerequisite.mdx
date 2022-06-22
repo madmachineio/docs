@@ -1,0 +1,65 @@
+---
+title: 1. Software prerequisite
+description: Install and set up the MadMachine VS Code extension.
+---
+
+# 1. Software prerequisite
+
+At first, you need a tool to deal with your code. You could install the MadMachine extension for Visual Studio Code. It allows you to create a new project, compile and download it to your board. 
+
+## Install the extension
+
+1. In the Visual Studio Code, click the **Extension** icon on the left activity bar.
+2. Enter **MadMachine** in the search box to find the extension in its marketplace.
+3. Click the **Install** button.
+
+<img
+  src={require('./img/install.png').default}
+  alt="Install the MadMachine extension" width="960"
+/>
+
+When you install the MadMachine extension, the extension Serial Port Helper will be installed as well. It allows you to view values or debug. Of course, you could use other similar tools instead.
+
+<img
+  src={require('./img/extensions.png').default}
+  alt="The MadMachine extension and serial port has been installed" width="960"
+/>
+
+:::info
+For advanced users, you could edit your code wherever you like and use the [mm-sdk](../advanced/mm-sdk) to compile your code.
+:::
+
+## Set the extension
+
+The extension relies on the mm sdk to do all its work. So you need to indicate its path before using the extension. You only set it the first time you use this extension.
+
+1. [**Download** the latest sdk release](https://github.com/madmachineio/mm-sdk/releases) according to your operating system and unzip it. The versions marked as pre-relase are for internal test and may be unavailable. 
+
+2. Then come back to the VS code. In the menu bar, select **Code** / **Preferences** / **Settings**.
+
+<img
+  src={require('./img/settings.png').default}
+  alt="Set the MadMachine extension" width="960"
+/>
+
+3. In the Settings, select **Extensions** / **MadMachine**. Enter the **path** of the sdk in the box that matches your operating system. Windows is not supported since we are waiting for the Window support of Swift language...
+
+<img
+  src={require('./img/sdkPath.png').default}
+  alt="Indicate the path of sdk." width="960"
+/>
+
+Now, the extension gets ready👏.
+
+## Quick look
+
+The extension is at the bottom of the Explore panel. All you need for your project is these three buttons:
+
+- **Build**: build your project after you finish the code. If there are any errors, you can modify your code according to the message in the terminal.
+- **Download**: download the bin file generated after building your project.
+- **New Project**: create a new MadMachine project. You will decide the project type and the board type.
+
+<img
+  src={require('./img/extension.png').default}
+  alt="MadMachine extension" width="960"
+/>

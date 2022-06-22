@@ -1,11 +1,11 @@
 ---
-title: Write a library
-description: As you try more projects, you may use some new components or realize some complicated functions. You can write a new library to simplify and organize your project.
+title: Creating a library
+description: Creating a custom library for LED.
 ---
 
-# Write a library
+# Creating a library
 
-A library usually contains a block of codes that provides specific functionalities. You can use it in any of your projects to realize those functionalities and don't need to copy all of its code. Let's see how to deal with it.
+Let's see how to write a custome library. You will create a simple library to control an LED.
 
 
 ## How to write a library
@@ -20,16 +20,16 @@ It depends on how the LED is connected to your circuit. There are two ways to co
 
 - In the second circuit, the LED is connected to the digital pin and ground. If the pin outputs a high voltage, the current flows from the pin to the ground, and the LED will be on. If it outputs a low voltage, the LED is off.
 
-![](img/LEDcircuit.png)
+![](./img/LEDcircuit.png)
 
 ### Create a new project
 Let's start to write the library. Create a new project.
 
-![](img/create.png)
+![](./img/create.png)
 
 Choose **Library** as the project type. You can notice two options: an executable is a program that could run on your board; a library provides some functionalities and can be used in other projects. Then complete the project info as you do for other projects.
 
-![](img/library.png)
+![](./img/library.png)
 
 Well, the project is ready. Let's look at the file `Package.swift`. It defines your project name and the dependencies. It is created automatically once you create your project. Usually, you'll not make any changes to this file. Here are some quick overviews of this file:
 - One project is a **package**. You can see its name `MadLed` in line 4. 

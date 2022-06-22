@@ -1,6 +1,6 @@
 ---
 title: MM SDK
-description: For advanced users, you don't need to install the MadMachine extension. You can edit your code wherever you like and use mm sdk to build it into the bin file.
+description: Learn to use mm sdk to build and download your project.
 ---
 
 # MM SDK

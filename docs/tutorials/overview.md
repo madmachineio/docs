@@ -1,9 +1,9 @@
 ---
-title: Overview
+title: Introduction
 description: Run some built-in examples and learn to program your board.
 ---
 
-# Tutorials
+# Projects
 
 Welcome! After you run the first project on your board, you must want to try more projects. Now let's dive into the projects.
 
@@ -16,4 +16,4 @@ There are three parts in total:
 
 - [**SwiftIO Maker kit**](./swiftio-maker-kit/mission1.mdx) - use the modules in the maker kit to finish a dozen missions. You will use these components to build simple circuits and program to make them work together. 
 
-- [**SwiftIO Feather Playgrounds**](./swiftio-circuit-playgrounds/introduction) - learn basic knowledge about electronics and Swift language using an all-in-one kit. During learning, you don't need to build the circuits as all modules have been connected to the board. BTW, we're still waiting for the chips for it. 
+- [**SwiftIO Circuit Playgrounds**](./swiftio-circuit-playgrounds) - learn basic knowledge about electronics and Swift language using an all-in-one kit. During learning, you don't need to build the circuits as all modules have been connected to the board. BTW, we're still waiting for the chips for it. 

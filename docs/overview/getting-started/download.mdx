@@ -1,0 +1,56 @@
+---
+title: 4. Downloading your project
+description: Download Swift code to your board.
+---
+
+# 4. Download your project
+
+Well, it's time to download the code to your board.
+
+1. Press the **Download button**. Once pressed, your board will appear as a USB Drive on your computer. There are two buttons on your board. The one labeled "**Download**" or "**DL**" is the correct one.
+
+<img
+  src={require('./img/downloadButton.png').default}
+  alt="Press download button" width="960"
+/>
+
+:::note
+Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](../faq.mdx#usb-driver-cant-be-mounted).
+:::
+
+
+2. The onboard RGB LEDs will show the current status of the USB connection. Wait for several seconds until the LED turns to **steady green**.
+
+| LED State | RED | GREEN | BLUE |
+| :--- | :--- | :--- | :--- |
+| On | USB communication failed | USB connection established | - |
+| Slow flashing | Fail to verify bin file | - | - |
+| Fast flashing | Fail to open bin file | Detecting USB connection | Detecting SD card |
+
+<img
+  src={require('./img/greenLED.png').default}
+  alt="Green LED is on" width="960"
+/>
+
+
+
+3. Click **MadMachine** / **Build** to build the project. It will generate a file that could run on your board.
+
+<img
+  src={require('./img/build.png').default}
+  alt="Build the code" width="960"
+/>
+
+4. Click **Download** on the MadMachine extension to download the file to your board. 
+
+<img
+  src={require('./img/download.png').default}
+  alt="Download the code" width="960"
+/>
+
+If it says it cannot find the board, you could wait a little longer. Maybe your board is building the connection with your computer. And make sure you have followed step 3 above.
+
+
+After the code is downloaded to your board successfully, the USB drive will be removed automatically.
+
+Congratulations! The onboard green LED begins to blink per second✨.
