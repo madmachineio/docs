@@ -6,7 +6,7 @@ description: SwiftIO Maker kit is a beginner kit to learn about simple circuits.
 # SwiftIO Maker kit
 
 
-The [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio) is a great tool to get started with our SwiftIO board. You can learn the basic electronic concepts and make basic circuits. After you finish the built-in missions, you can create more based on what you have learned. 
+The SwiftIO Maker kit is a great tool to get started with our SwiftIO board. You can learn the basic electronic concepts and make basic circuits. After you finish the built-in missions, you can create more interesting projects based on what you have learned. 
 
 Most parts adopt grove connectors, which allow you to connect a module using a 4-pin cable instead of 4 separate wires. So don't worry about the wiring.
 
@@ -32,4 +32,4 @@ In our maker kit, you can find different parts for their specific usage. Let's f
 - **Jumper wire**: connect the components to the board.
 - **1kΩ Resistor**: connect with the LED to prevent the current from being too strong.
 
-There is a quick guidebook inside the kit. You can also follow the [project tutorials](../../tutorials/swiftio-maker-kit/mission1.mdx) to learn more about electronics and programming.
+There is a quick guidebook inside the kit. You can also follow the [project tutorials](../../../projects/swiftio-maker-kit/mission1) to learn more about electronics and programming.

@@ -80,15 +80,6 @@ module.exports = {
     'overview/faq', 
   ],
 
-  // howToSidebar: [
-  //   'how-to/create-new-project',
-  //   'how-to/open-project',
-  //   'how-to/select-board',
-  //   'how-to/debug',
-  //   'how-to/add-library',
-  //   'how-to/write-library',
-  // ],
-
   learnSidebar: [
     'learn/introduction',
         
@@ -163,38 +154,50 @@ module.exports = {
         },
   ],
 
-  tutorialSidebar: [
-    'tutorials/overview',
+  projectsSidebar: [
+    'projects/overview',
     {
       type: 'category',
       collapsed: false,
       label: '🔸General',
+      link: {
+        type: 'doc',
+        id: 'projects/general/overview',
+      },
       items: [
 
         {
           type: 'category',
           collapsed: false,
           label: '✧GettingStarted',
+          link: {
+            type: 'doc',
+            id: 'projects/general/getting-started/overview',
+          },
           items: [
-            'tutorials/general/getting-started/blink',
-            'tutorials/general/getting-started/read-digital-input',
-            'tutorials/general/getting-started/read-analog-input',
-            'tutorials/general/getting-started/pwm-brightness-control',
+            'projects/general/getting-started/blink',
+            'projects/general/getting-started/read-digital-input',
+            'projects/general/getting-started/read-analog-input',
+            'projects/general/getting-started/pwm-brightness-control',
           ],
         },
         {
           type: 'category',
           collapsed: false,
           label: '✧SimpleIO',
+          link: {
+            type: 'doc',
+            id: 'projects/general/simpleio/overview',
+          },
           items: [
-            'tutorials/general/simpleio/button-control-led',
-            'tutorials/general/simpleio/blink-analogin',
-            'tutorials/general/simpleio/blink-timer',
-            'tutorials/general/simpleio/brightness-analogin',
-            'tutorials/general/simpleio/leds-brightness-control',
-            'tutorials/general/simpleio/debounce',
-            'tutorials/general/simpleio/pwm-sound-output',
-            'tutorials/general/simpleio/pwm-melody',
+            'projects/general/simpleio/button-control-led',
+            'projects/general/simpleio/blink-analogin',
+            'projects/general/simpleio/blink-timer',
+            'projects/general/simpleio/brightness-analogin',
+            'projects/general/simpleio/leds-brightness-control',
+            'projects/general/simpleio/debounce',
+            'projects/general/simpleio/pwm-sound-output',
+            'projects/general/simpleio/pwm-melody',
            
           ],
         },
@@ -204,22 +207,26 @@ module.exports = {
       type: 'category',
       collapsed: false,
       label: '🔸SwiftIO Maker Kit',
+      link: {
+        type: 'doc',
+        id: 'projects/swiftio-maker-kit/overview',
+      },
       items: [
-        'tutorials/swiftio-maker-kit/mission1',
-        'tutorials/swiftio-maker-kit/mission2',
-        'tutorials/swiftio-maker-kit/mission3',
-        'tutorials/swiftio-maker-kit/mission4',
-        'tutorials/swiftio-maker-kit/mission5',
-        'tutorials/swiftio-maker-kit/mission6',
-        'tutorials/swiftio-maker-kit/mission7',
-        'tutorials/swiftio-maker-kit/mission8',
-        'tutorials/swiftio-maker-kit/mission9',
-        'tutorials/swiftio-maker-kit/mission10',
-        'tutorials/swiftio-maker-kit/mission11',
-        'tutorials/swiftio-maker-kit/mission12',
+        'projects/swiftio-maker-kit/mission1',
+        'projects/swiftio-maker-kit/mission2',
+        'projects/swiftio-maker-kit/mission3',
+        'projects/swiftio-maker-kit/mission4',
+        'projects/swiftio-maker-kit/mission5',
+        'projects/swiftio-maker-kit/mission6',
+        'projects/swiftio-maker-kit/mission7',
+        'projects/swiftio-maker-kit/mission8',
+        'projects/swiftio-maker-kit/mission9',
+        'projects/swiftio-maker-kit/mission10',
+        'projects/swiftio-maker-kit/mission11',
+        'projects/swiftio-maker-kit/mission12',
       ],
     },
-    'tutorials/swiftio-circuit-playgrounds',
+    'projects/swiftio-circuit-playgrounds',
   ],
 
   referenceSidebar: [

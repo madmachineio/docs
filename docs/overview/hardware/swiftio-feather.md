@@ -1,9 +1,9 @@
 ---
-title: SwiftIO Feather
+title: SwiftIO Feather board
 description: SwiftIO Feather is a simplified board and is suitable to be embedded in all your designs. You can use it to build prototypes and program your projects in a modern way.
 ---
 
-# SwiftIO Feather
+# SwiftIO Feather board
 
 SwiftIO Feather is a simplified version of the SwiftIO board. Though small in size, it is powerful enough for all projects. One of its advantages is that it is suitable to be embedded in any of your projects.
 

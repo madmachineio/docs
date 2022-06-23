@@ -30,12 +30,6 @@ module.exports = {
           position: 'left',
           label: 'Overview',
         },
-        // {
-        //   type: 'doc',
-        //   docId: 'how-to/create-new-project',
-        //   position: 'left',
-        //   label: 'How-to',
-        // },
         {
           type: 'doc',
           docId: 'learn/introduction',
@@ -44,9 +38,9 @@ module.exports = {
         },
         {
           type: 'doc',
-          docId: 'tutorials/overview',
+          docId: 'projects/overview',
           position: 'left',
-          label: 'Project',
+          label: 'Projects',
         },
         {
           type: 'doc',

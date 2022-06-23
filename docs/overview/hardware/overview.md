@@ -14,5 +14,9 @@ So far, we have published different hardware: boards, kits, other modules.
 * **Kits**: If you are a newcomer, it's a great way to get started. The kits include a specific board and several modules with their own use. You could start your learning with some interesting projects.
 * **Modules**: You could also use some separate modules to create your own projects. There are many online stores for all kinds of modules, like Adafruit and Sparkfun.
 
+:::info
+There are no hardware in stock so far. You could subscribe to our mailing list on our website, we'll send a newsletter as soon as our boards and kits are ready for you 😆.
+:::
+
 
 <DocCardList items={useCurrentSidebarCategory().items}/>

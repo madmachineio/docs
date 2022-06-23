@@ -6,14 +6,14 @@ Welcome to MadMachine!
 
 If you have no idea how to start your project, you're in the right place. Here you can find all the necessary knowledge and tutorials to start programming and electronics. There are 5 sections in total, which allow you to get familiar with the usage, explore some simple projects and learn how everything works.
 
-- [Overview](#introduction) - get familiar with the MadMachine project and basic operations.
+- **Overview** - get familiar with the MadMachine project, learn basic operations and useful guides for your projects.
 
-- [How-to](../how-to/create-new-project.md) - learn some useful guides for your projects.
+- **Learning A-Z** - learn from zero electronics and language and understand how everything works.
 
-- [Learn](../learn/overview.md) - then learn A to Z of electronics to understand better how everything works.
+- **Projects** - learn with some built-in projects and get inspiration for your own projects. 
 
-- [Tutorials](../tutorials/overview.md) - try some built-in projects and get inspirations. 
+- **API Reference** - consult the documentation of APIs as you program your board.
 
-- [Reference](../reference/reference.md) - consult the documentation of APIs as you program your board.
+- **Blog** - get updates about how the whole system works and dive deeper into some technical details.
 
-Last but not least, if you find something confusing or you have any suggestions, welcome to open a pull request. 
+Last but not least, if you find something confusing, or you have any suggestions, welcome to create an issue or open a pull request. 
