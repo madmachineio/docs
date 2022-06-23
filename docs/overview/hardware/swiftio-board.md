@@ -104,4 +104,4 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 
 All these details may sound quite confusing at first. Don't worry, most of them are not commonly used. 
 
-If you have not idea how to start, you can work with [this Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio) to learn with some simple projects. 
+If you have not idea how to start, you can work with [SwiftIO Maker kit](./maker-kit) to learn with some simple projects. 

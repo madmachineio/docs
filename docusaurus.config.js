@@ -32,27 +32,21 @@ module.exports = {
         },
         {
           type: 'doc',
-          docId: 'how-to/create-new-project',
+          docId: 'learn/introduction',
           position: 'left',
-          label: 'How-to',
+          label: 'Learning A-Z',
         },
-        // {
-        //   type: 'doc',
-        //   docId: 'learn/overview',
-        //   position: 'left',
-        //   label: 'Learn',
-        // },
         {
           type: 'doc',
-          docId: 'tutorials/overview',
+          docId: 'projects/overview',
           position: 'left',
-          label: 'Tutorials',
+          label: 'Projects',
         },
         {
           type: 'doc',
           docId: 'reference/reference',
           position: 'left',
-          label: 'References',
+          label: 'API Reference',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {

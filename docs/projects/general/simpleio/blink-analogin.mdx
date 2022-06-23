@@ -1,0 +1,84 @@
+---
+title: Blink analog
+description: You will program your board in Swift to change the blink rate of the LED using a potentiometer.
+---
+
+# Blink analog
+
+In this example, you will use a potentiometer to control the flashing speed of an LED light. It will change as you turn it.
+
+## What you need
+
+- SwiftIO Feather (or SwiftIO board)
+- Breadboard
+- Potentiometer
+- LED
+- 330ohm resistor
+- Jumper wires
+
+
+## Circuit
+
+
+1. Place the potentiometer onto the breadboard. Connect the legs on the left to pin **3V3**, connect the second leg to pin **A0**, and the third leg to pin **GND**.
+2. Place the LED onto the breadboard. The long leg of LED goes to **D19** through a resistor. The short leg connects to **GND**.
+
+
+<img
+  src={require('./img/blinkRate.png').default}
+  alt="circuit diagram" width="480"
+/>
+
+
+## Example code
+
+```swift
+// Read the analog input and use it to set the rate of LED blink.
+// Import the library to enable the relevant classes and functions.
+import SwiftIO
+
+// Import the board library to use the Id of the specific board.
+import MadBoard
+
+// Initialize an analog input and a digital output pin the components are connected to,
+let sensor = AnalogIn(Id.A0)
+let led = DigitalOut(Id.D19)
+
+// Enable the LED to blink over and over again.
+while true {
+    // Read the input voltage in percentage.
+    let value = sensor.readRawValue()
+    // Change the current LED state.
+    led.toggle()
+    // Keep the led on or off for a certain period determined by the value you get.
+    sleep(ms: value)
+}
+```
+
+## Code analysis
+
+```swift
+let value = sensor.readRawValue()
+```
+
+The method `.readRawValue()` reads the current raw value from the specified analog pin. Since the analog-to-digital converter on the SwiftIO Board has a resolution of 12-bit, therefore, the corresponding value would be 0-4095.
+
+```swift
+led.toggle()
+```
+
+The method `.toggle()`, as the name suggests, changes the output level. If it's high level now, it will be changed to low, and vice versa. And you even don't need to know the current state.
+
+```swift
+sleep(ms: value)
+```
+The function `sleep()` keeps the current state of LED for a specified time. And the time is decided by the value. It makes sure that the time between each toggle is under control and changes with the potentiometer.
+
+## Reference
+
+[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+
+[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.
+

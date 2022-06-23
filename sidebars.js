@@ -17,20 +17,58 @@ module.exports = {
   
   docsSidebar: [
     'overview/introduction', 
-    'overview/run-your-first-project',
+    'overview/roadmap',
     {
       type: 'category',
-      collapsible: false,
-      label: 'Software',
+      collapsed: false,
+      label: '🎬Getting started',
+      link: {
+        type: 'doc',
+        id: 'overview/getting-started/overview',
+      },
       items: [
-        'overview/software/madmachine-ide',
-        'overview/software/mm-sdk',
+        'overview/getting-started/software-prerequisite',
+        'overview/getting-started/create-project',
+        'overview/getting-started/hardware-preparation',
+        'overview/getting-started/download',
       ],
     },
     {
       type: 'category',
-      collapsible: false,
-      label: 'Hardware',
+      collapsed: false,
+      label: '⚙️Advanced setup',
+      link: {
+        type: 'doc',
+        id: 'overview/advanced/overview',
+      },
+      items: [
+        'overview/advanced/run-example',
+        'overview/advanced/change-board',
+        'overview/advanced/serial-debug',
+        'overview/advanced/mm-sdk',
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Library usage',
+          link: {
+            type: 'doc',
+            id: 'overview/advanced/library-overview',
+          },
+          items: [
+            'overview/advanced/use-library',
+            'overview/advanced/create-library',
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: '🔧Meet your hardware',
+      link: {
+        type: 'doc',
+        id: 'overview/hardware/overview',
+      },
       items: [
         'overview/hardware/swiftio-board',
         'overview/hardware/swiftio-feather',
@@ -42,146 +80,153 @@ module.exports = {
     'overview/faq', 
   ],
 
-  howToSidebar: [
-    'how-to/create-new-project',
-    'how-to/open-project',
-    'how-to/select-board',
-    'how-to/debug',
-    'how-to/add-library',
-    'how-to/write-library',
-  ],
-
-  // learnSidebar: [
-  //   'learn/overview',
-  // ],
-
-  tutorialSidebar: [
-    'tutorials/overview',
-    {
-      type: 'category',
-      collapsed: false,
-      label: '🟠 General',
-      items: [
-
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'GettingStarted',
-          items: [
-            'tutorials/general/getting-started/blink',
-            'tutorials/general/getting-started/read-digital-input',
-            'tutorials/general/getting-started/read-analog-input',
-            'tutorials/general/getting-started/pwm-brightness-control',
-          ],
-        },
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'SimpleIO',
-          items: [
-            'tutorials/general/simpleio/button-control-led',
-            'tutorials/general/simpleio/blink-analogin',
-            'tutorials/general/simpleio/blink-timer',
-            'tutorials/general/simpleio/brightness-analogin',
-            'tutorials/general/simpleio/leds-brightness-control',
-            'tutorials/general/simpleio/debounce',
-            'tutorials/general/simpleio/pwm-sound-output',
-            'tutorials/general/simpleio/pwm-melody',
-           
-          ],
-        },
-
-
-      ],
-    },
-    {
-      type: 'category',
-      collapsed: false,
-      label: '🟠 SwiftIO Maker Kit',
-      items: [
-        'tutorials/swiftio-maker-kit/mission1',
-        'tutorials/swiftio-maker-kit/mission2',
-        'tutorials/swiftio-maker-kit/mission3',
-        'tutorials/swiftio-maker-kit/mission4',
-        'tutorials/swiftio-maker-kit/mission5',
-        'tutorials/swiftio-maker-kit/mission6',
-        'tutorials/swiftio-maker-kit/mission7',
-        'tutorials/swiftio-maker-kit/mission8',
-        'tutorials/swiftio-maker-kit/mission9',
-        'tutorials/swiftio-maker-kit/mission10',
-        'tutorials/swiftio-maker-kit/mission11',
-        'tutorials/swiftio-maker-kit/mission12',
-      ],
-    },
-    {
-      type: 'category',
-      collapsed: false,
-      label: '🟠 SwiftIO Circuit Playgrounds',
-      items: [
-
-        'tutorials/swiftio-circuit-playgrounds/introduction',
+  learnSidebar: [
+    'learn/introduction',
         
         {
           type: 'category',
           collapsed: false,
-          label: 'Preparation',
+          label: '🌟Preparation',
+          link: {
+            type: 'doc',
+            id: 'learn/preparation/overview',
+          },
           items: [
-            'tutorials/swiftio-circuit-playgrounds/preparation/overview',
-            'tutorials/swiftio-circuit-playgrounds/preparation/first-try',
-            'tutorials/swiftio-circuit-playgrounds/preparation/background',
-            'tutorials/swiftio-circuit-playgrounds/preparation/hardware',
-            'tutorials/swiftio-circuit-playgrounds/preparation/swiftio-madboard',
+            'learn/preparation/first-try',
+            'learn/preparation/background',
+            'learn/preparation/hardware',
+            'learn/preparation/swiftio-madboard',
           ],
         },
 
         {
           type: 'category',
           collapsed: false,
-          label: 'Learn with modules',
+          label: '🌟Learn with modules',
+          link: {
+            type: 'doc',
+            id: 'learn/modules/overview',
+          },
           items: [
-            'tutorials/swiftio-circuit-playgrounds/modules/overview',
-            'tutorials/swiftio-circuit-playgrounds/modules/led',
-            'tutorials/swiftio-circuit-playgrounds/modules/button',
-            'tutorials/swiftio-circuit-playgrounds/modules/led-timer',
-            'tutorials/swiftio-circuit-playgrounds/modules/buzzer',
-            'tutorials/swiftio-circuit-playgrounds/modules/potentiometer',
-            'tutorials/swiftio-circuit-playgrounds/modules/humiture',
-            'tutorials/swiftio-circuit-playgrounds/modules/accelerometer',
-            'tutorials/swiftio-circuit-playgrounds/modules/lcd',
-            'tutorials/swiftio-circuit-playgrounds/modules/speaker',
+            'learn/modules/led',
+            'learn/modules/button',
+            'learn/modules/led-timer',
+            'learn/modules/buzzer',
+            'learn/modules/potentiometer',
+            'learn/modules/humiture',
+            'learn/modules/accelerometer',
+            'learn/modules/lcd',
+            'learn/modules/speaker',
           ],
         },
 
         {
           type: 'category',
           collapsed: false,
-          label: 'Graphical display',
+          label: '🌟Graphical display',
+          link: {
+            type: 'doc',
+            id: 'learn/display/before-start',
+          },
           items: [
-            'tutorials/swiftio-circuit-playgrounds/display/before-start',
-            'tutorials/swiftio-circuit-playgrounds/display/maddisplay',
-            'tutorials/swiftio-circuit-playgrounds/display/shapes',
-            'tutorials/swiftio-circuit-playgrounds/display/text',
-            'tutorials/swiftio-circuit-playgrounds/display/bmp',
+            'learn/display/maddisplay',
+            'learn/display/shapes',
+            'learn/display/text',
+            'learn/display/bmp',
           ],
         },
         {
           type: 'category',
           collapsed: false,
-          label: 'More projects',
+          label: '🌟More projects',
+          link: {
+            type: 'doc',
+            id: 'learn/projects/overview',
+          },
           items: [
-            'tutorials/swiftio-circuit-playgrounds/projects/overview',
-            'tutorials/swiftio-circuit-playgrounds/projects/doorbell',
-            'tutorials/swiftio-circuit-playgrounds/projects/movingBall',
-            'tutorials/swiftio-circuit-playgrounds/projects/etchASketch',
-            'tutorials/swiftio-circuit-playgrounds/projects/metronome',
-            'tutorials/swiftio-circuit-playgrounds/projects/morseCode',
+            'learn/projects/doorbell',
+            'learn/projects/movingBall',
+            'learn/projects/etchASketch',
+            'learn/projects/metronome',
+            'learn/projects/morseCode',
 
           ],
         },
+  ],
 
+  projectsSidebar: [
+    'projects/overview',
+    {
+      type: 'category',
+      collapsed: false,
+      label: '🔸General',
+      link: {
+        type: 'doc',
+        id: 'projects/general/overview',
+      },
+      items: [
+
+        {
+          type: 'category',
+          collapsed: false,
+          label: '✧GettingStarted',
+          link: {
+            type: 'doc',
+            id: 'projects/general/getting-started/overview',
+          },
+          items: [
+            'projects/general/getting-started/blink',
+            'projects/general/getting-started/read-digital-input',
+            'projects/general/getting-started/read-analog-input',
+            'projects/general/getting-started/pwm-brightness-control',
+          ],
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: '✧SimpleIO',
+          link: {
+            type: 'doc',
+            id: 'projects/general/simpleio/overview',
+          },
+          items: [
+            'projects/general/simpleio/button-control-led',
+            'projects/general/simpleio/blink-analogin',
+            'projects/general/simpleio/blink-timer',
+            'projects/general/simpleio/brightness-analogin',
+            'projects/general/simpleio/leds-brightness-control',
+            'projects/general/simpleio/debounce',
+            'projects/general/simpleio/pwm-sound-output',
+            'projects/general/simpleio/pwm-melody',
+           
+          ],
+        },
       ],
     },
-
+    {
+      type: 'category',
+      collapsed: false,
+      label: '🔸SwiftIO Maker Kit',
+      link: {
+        type: 'doc',
+        id: 'projects/swiftio-maker-kit/overview',
+      },
+      items: [
+        'projects/swiftio-maker-kit/mission1',
+        'projects/swiftio-maker-kit/mission2',
+        'projects/swiftio-maker-kit/mission3',
+        'projects/swiftio-maker-kit/mission4',
+        'projects/swiftio-maker-kit/mission5',
+        'projects/swiftio-maker-kit/mission6',
+        'projects/swiftio-maker-kit/mission7',
+        'projects/swiftio-maker-kit/mission8',
+        'projects/swiftio-maker-kit/mission9',
+        'projects/swiftio-maker-kit/mission10',
+        'projects/swiftio-maker-kit/mission11',
+        'projects/swiftio-maker-kit/mission12',
+      ],
+    },
+    'projects/swiftio-circuit-playgrounds',
   ],
 
   referenceSidebar: [

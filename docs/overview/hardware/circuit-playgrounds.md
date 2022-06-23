@@ -5,14 +5,14 @@ description: SwiftIO Circuit Playgrounds is an all-in-one kit to get started wit
 
 # SwiftIO Circuit Playgrounds
 
-SwiftIO Circuit Playgrounds is a super easy-to-use starter kit for you. All modules connect to the shield on the middle through stamps holes. You don't need to build the circuit. Just download the code and you can see the results immediately.
+SwiftIO Circuit Playgrounds is a super easy-to-use starter kit for you. It is an all-in-one board with all modules connected to the shield in the middle. You don't even need to build any circuit. Just download the code and the devices will work immediately if there's no error.
 
 Let's look at these modules in detail:
 
 ![SwiftIO Circuit Playgrounds](img/Playgrounds.png)
 
-- **SwiftIO Feather**: control all other modules.
-- **Shield**: allow the SwiftIO Feather to connect to the whole board.
+- **SwiftIO Feather board**: control all other modules.
+- **Shield**: allow the SwiftIO Feather board to connect to the whole board.
 - **LED**: can be toggled on and off, or set to any brightness.
 - **Button**: control the circuit as you press or release it. 
 - **Potentiometer**: vary resistance connected in the circuit.
@@ -25,8 +25,4 @@ Let's look at these modules in detail:
 - **LCD**: display graphics or images.
 
 
-
-This kit contains the most commonly used modules. You can create plenties of projects with it. The document that comes with it is in preparation and will guide you from the most basic concept. Here is a [draft](https://docs.google.com/document/d/1loehCrsVMBz9qZpDv9ZDO9f9_gvPuu7pK2wZF51jGBY/edit?usp=sharing), and feel free to comment in the doc.
-
-The kit still needs more tests. What's more, there is a great chip shortage worldwide. So please stay tuned:)
- 
+This kit contains several commonly used modules. You can create plenty of projects with it. The material [Learning A-Z](../../learn/introduction) is based on it and guides you from the most basic concept.

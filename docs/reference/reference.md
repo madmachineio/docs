@@ -1,10 +1,10 @@
 ---
-title: Library References
+title: API Reference
 description: When you program your board, you can consult the references to use all functionalities.
 slug: /reference
 ---
 
-# Library References
+# API Reference
 
 
 

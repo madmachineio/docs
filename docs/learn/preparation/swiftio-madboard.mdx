@@ -1,0 +1,38 @@
+---
+title: SwiftIO and MadBoard (id)
+description: Learn two required libraries SwiftIO and MadBoard.
+---
+
+# SwiftIO and MadBoard (id)
+
+In the [tutorial](./first-try) before, you try your first project. Maybe you noticed that the code begins with the two following statements. Actually, they are necessary for all of your projects later. Why? Let's find it out.
+
+```swift
+import SwiftIO
+import MadBoard
+```
+
+As mentioned before, a pin can be used for different functionalities. And multiple pins can all support the same functionality. So at the beginning of your code, you need to tell the usage of the specified pin. 
+
+```swift
+let led = DigitalOut(Id.D0)
+```
+
+## SwiftIO
+
+**`SwiftIO`** is in charge of all the basic hardware **functionalities**. With it, you don’t need to handle complicated low-level stuff. You will invoke related APIs that allow you to deal with different signals and communication protocols. You will learn more details in [next section](../modules/led).
+
+## MadBoard (id)
+
+After choosing the functionality provided by the `SwiftIO`, you need to specify the pin. Or else the board doesn't know which pin you want🤔. The pins are distinguished by their **ids**. Each id consists of a prefix for its functionality (D for digital, A for analog...) and a number (from 0). They are all stored in **`MadBoard`**.
+
+The pinout below tells you the functionalities each pin supports. For example, P0 (pin 0) to P35 can all be served as digital pins, so the ids are D0 to D35. Besides, some of them can be analog pins (A0 to A13). 
+* The ids with the same prefix share the same functionality. So whether the pin D0 or D21 is used, their usage is the same. 
+* The ids with the same numbers refer to the same pin. So you cannot use A0 and D0 at the same time.
+
+<img
+  src={require('./img/featherPinout.png').default}
+  alt="Pinout of feather board" width="720"
+/>
+
+

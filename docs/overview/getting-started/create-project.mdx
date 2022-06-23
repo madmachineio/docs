@@ -1,0 +1,65 @@
+---
+title: 2. Creating a new project
+description: Create a project using MadMachine extension and write code.
+---
+
+# 2. Create a new project
+
+Now, you're ready to code. 
+
+1. Click the **Explore** icon on the left bar. Then click the **MadMachine** extension on the bottom to show three buttons. Click **New Project**.
+
+<img
+  src={require('./img/create.png').default}
+  alt="Create a new project." width="960"
+/>
+
+2. Choose the project as an **executable**. 
+
+<img
+  src={require('./img/projectType.png').default}
+  alt="Choose project type." width="960"
+/>
+
+3. Choose the **board** you are going to use.
+
+<img
+  src={require('./img/boardType.png').default}
+  alt="Choose the board." width="960"
+/>
+
+4. **Name** the project. You could choose any descriptive name you like for the project. Then press the **Enter** key.
+
+<img
+  src={require('./img/projectName.png').default}
+  alt="Enter project name." width="960"
+/>
+
+5. Choose a **location** to store the project and press **Open**. 
+
+<img
+  src={require('./img/location.png').default}
+  alt="Choose a file location." width="960"
+/>
+
+6. The project will open in a new window. Click on the Explorer `Sources` / `Blink` / `main.swift` to open the file. You will always edit the code in the file `main.swift` for your future projects. Copy and paste the following sample code into the file.
+
+```swift
+import SwiftIO
+import MadBoard
+
+let led = DigitalOut(Id.BLUE)
+​
+while true {
+    led.write(true)
+    sleep(ms: 1000)
+
+    led.write(false)
+    sleep(ms: 1000)
+}
+```
+
+<img
+  src={require('./img/code.png').default}
+  alt="code" width="960"
+/>
