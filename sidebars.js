@@ -77,6 +77,7 @@ module.exports = {
       ],
     },
     'overview/background', 
+    'overview/pin-id', 
     'overview/faq', 
   ],
 
