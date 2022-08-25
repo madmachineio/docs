@@ -1,8 +1,7 @@
 ---
 slug: A brief introduction about Swift in embedded development
 title: Introduce embedded development using Swift
-author: Andy Liu
-author_url: https://twitter.com/madmachineio
+authors: [Andy Liu]
 tags: [embedded, Swift]
 ---
 

@@ -12,6 +12,13 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'MadMachine', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
+  // Even if you don't use internalization, you can use this field to set useful
+  // metadata like html lang. For example, if your site is Chinese, you may want
+  // to replace "en" with "zh-Hans".
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
+  },
   themeConfig: {
     navbar: {
       //title: 'Machine',
@@ -60,8 +67,10 @@ module.exports = {
       style: 'dark',
       logo: {
         alt: 'MadMachine',
-        src: 'img/logo_dark.svg',
-        href: 'https://madmachine.io'
+        src: 'img/logo_dark.png',
+        href: 'https://madmachine.io',
+        width: 100,
+        height: 100,
       },
       links: [
         {
@@ -74,27 +83,15 @@ module.exports = {
             {
               label: 'Blog',
               href: 'https://madmachine.io/blog',
-            },
-            {
-              label: 'Products',
-              href: 'https://madmachine.io/products',
-            },
+            }
           ],
         },
         {
           title: 'About',
           items: [
             {
-              label: 'Boards',
+              label: 'Community',
               href: 'https://madmachine.io/discord',
-            },
-            {
-              label: 'Kits',
-              href: 'https://twitter.com/madmachineio',
-            },
-            {
-              label: 'Modules',
-              href: 'https://twitter.com/madmachineio',
             },
           ],
         },
@@ -123,12 +120,6 @@ module.exports = {
       // Optional: Algolia search parameters
       // searchParameters: {},
     },
-    gtag: {
-      // You can also use your "G-" Measurement ID here.
-      trackingID: 'G-8H7H6DLEJ5',
-      // Optional fields.
-      anonymizeIP: true, // Should IPs be anonymized?
-    },
   },
   stylesheets: [
     'https://fonts.googleapis.com/css?family=Roboto:400,400i,700',
@@ -152,6 +143,12 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        gtag: {
+          // You can also use your "G-" Measurement ID here.
+          trackingID: 'G-8H7H6DLEJ5',
+          // Optional fields.
+          anonymizeIP: true, // Should IPs be anonymized?
         },
       },
     ],
