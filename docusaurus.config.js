@@ -63,6 +63,11 @@ module.exports = {
         },
       ],
     },
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
     footer: {
       style: 'dark',
       logo: {
