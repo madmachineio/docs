@@ -88,7 +88,7 @@ function Footer() {
         <div className="row footer__links">
 
           <div className="col footer__col">
-            <ul className="footer__items">
+            <ul className="footer__items clean-list">
               <li className="footer__item">
                 {logo.href ? (
                     <Link href={logo.href} className={styles.footerLogoLink}>
@@ -118,7 +118,7 @@ function Footer() {
                 {linkItem.items != null &&
                 Array.isArray(linkItem.items) &&
                 linkItem.items.length > 0 ? (
-                  <ul className="footer__items">
+                  <ul className="footer__items clean-list">
                     {linkItem.items.map((item, key) =>
                       item.html ? (
                         <li
@@ -142,7 +142,7 @@ function Footer() {
           )}
 
           <div className="col footer__col">
-            <ul className="footer__items">
+            <ul className="footer__items clean-list">
               <li className="footer__item">
                   <h2>Join us</h2>
               </li>
