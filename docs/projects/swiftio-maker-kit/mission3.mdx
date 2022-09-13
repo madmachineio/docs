@@ -10,7 +10,7 @@ In the two previous projects, the LEDs turn on and off automatically. Now, you w
 
 ## What you need
 
-The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will need are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -20,11 +20,10 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Circuit
 
-The shield is a modular circuit board to make it easier to connect circuits. The pins on the two sides are the same as those on the SwiftIO board. Besides, it has many grove connectors, and you can use a 4-pin cable to connect the pin instead of four jumper wires.
+The shield is a modular circuit board for easier circuit connection. The pins on the two sides match those on the SwiftIO board. Besides, it has many grove connectors They need a 4-pin cable instead of four jumper wires, so you would build the circuits more easily.
 
-1. Place the shield on top of your SwiftIO board. Make sure you connect them in the right direction.
-
-2. Connect the button module to pin D10 using a 4-pin cable. You can notice each cable has four colors of wires: the black is usually for ground, the red one is for power.
+1. **Plug the shield on top of your SwiftIO board.** Make sure you connect them in the right direction.
+2. **Connect the button module to pin D10** using a 4-pin cable. Each cable has four colors of wires: the black is usually for ground, and the red one is for power.
 
 Ok, the circuit is complete. It is so convenient, isn't it?
 
@@ -38,15 +37,17 @@ Ok, the circuit is complete. It is so convenient, isn't it?
 
 ## Example code
 
+Open the project `Mission3_Push_Button` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
 // Initialize the red onboard led.
 let led = DigitalOut(Id.RED) 
+
 // Initialize the input pin D10 on the board.
 let button = DigitalIn(Id.D10) 
 
@@ -57,7 +58,7 @@ while true {
     } else {
         led.write(true)
     }
-    // Wait for 10ms and then continue to read values.
+    // Slow the reading process a bit without affecting the result.
     sleep(ms: 10)
 }
 ```
@@ -84,9 +85,7 @@ A button, or pushbutton, is always used to control other devices. You can see it
   alt="button" width="960"
 />
 
-This kind of button usually has four legs. Every two legs are shorted, like 1 and 3, 2 and 4. If you connect both 1 and 3 to your circuit, the current can flow through it all the time. So the button cannot control other components.
-
-So it's a good idea to connect the two legs on a diagonal line in the circuit, like 1 and 4.
+This kind of button usually has four legs. Every two legs are shorted, like 1 and 3, 2 and 4. If you connect both 1 and 3 to your circuit, the current can flow through it all the time, thus the button plays no role. It's a good idea to connect the two legs on a diagonal line in the circuit, like 1 and 4, 2 and 3.
 
 While the button module in your kit uses the grove connector, you can directly build the circuit without worrying about the wrong connection.
 
@@ -100,14 +99,14 @@ Also, there is a known issue with the button: the [bounce](../general/simpleio/d
 import SwiftIO
 import MadBoard
 ```
-First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) to use everything in it. **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+First, import the two libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) to use everything in it. **SwiftIO** is used to control the input and output of the board. **MadBoard** defines the pin name of the board.
 
 ```swift
 let led = DigitalOut(Id.RED)
 let button = DigitalIn(Id.D10)
 ```
 
-Initialize the red onboard LED and the digital pin (D10) the button connects to.
+Initialize the red onboard LED and the digital pin (D10) that the button connects. Only their ids are required during initialization.
 
 In the loop, you will use the **if-else** statement to check the button states. It has the following form:
 
@@ -129,15 +128,17 @@ if button.read() {
     led.write(true)
 }
 ```
-The method `read()` allows you to get the input value. The return value is either `true` or `false`. So you can know the states of the button according to the values. If the button is pressed, the value will be `true`, so the pin output a low voltage to turn on the onboard LED. Once you release the button, the input value is `false`, the LED will turn off.
+The method `read()` allows you to get the input value, either `true` or `false`. It's related to the state of the button. 
+* If the button is pressed, the returned value will be `true`. Then the pin output a low voltage to turn on the onboard LED. 
+* Once you release the button, the input value becomes `false`. Consequently, the LED will turn off.
 
 
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether a digital pin outputs a high or low voltage.
 
-[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - read the input value from a digital pin.
+[DigitalIn](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalin) - read the input value from a digital pin.
 
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.
 

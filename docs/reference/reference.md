@@ -10,7 +10,7 @@ slug: /reference
 
 ## SwiftIO
 
-The [SwiftIO](https://swiftioapi.madmachine.io/) library provides you with easy access to communicate with the external circuits. It is the most basic one for all of your projects. Simply by invoking the related classes/methods in your code, download it to your board, you can see the result at once. It allows you to read or write the digital and analog signals, as well as using the communication protocol to interact with all devices.
+The [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) library provides you with easy access to communicate with the external circuits. It is the most basic one for all of your projects. Simply by invoking the related classes/methods in your code, download it to your board, you can see the result at once. It allows you to read or write the digital and analog signals, as well as using the communication protocol to interact with all devices.
 
 ## MadBoards
 

@@ -1,17 +1,19 @@
 ---
 title: Mission4_Potentiometer_RGB
-description: Learn about analog signal and the potentiometer. You will program your board in Swift to control LED blink rate using a potentiometer.
+description: Learn about analog signals and the potentiometer. You will program your board in Swift to control the LED blink rate using a potentiometer.
 ---
 
 # Mission4_Potentiometer_RGB
 
-In this project, you'll turn a potentiometer to control the LED blink rate, to make it blink faster or slower. The potentiometer is widely used to control other devices. And you will often use it in the following projects.
+In this project, you'll turn a potentiometer to control the LED blink rate, to make it blink faster or slower. 
+
+A potentiometer is widely used to control other devices. Unlike a button, the potentiometer provides a series of values. So it would be useful to change values within a given range, like adjusting volume, changing brightness, etc. And you will often use it in the following missions.
 
 
 
 ## What you need
 
-The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will need are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -23,8 +25,7 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Circuit
 
-1. Place the shield on top of your SwiftIO board.
-
+1. Plug the shield on top of your SwiftIO board.
 2. Connect the potentiometer module to pin **A0** using a 4-pin cable.
 
 <img
@@ -34,26 +35,28 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Example code
 
+Open the project `Mission4_Potentiometer_RGB` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Import the SwiftIO library to use everything in it.
+// Initialize the analog pin that the pot connects.
 let a0 = AnalogIn(Id.A0) 
-// Initialize the red onboard led.
+
+// Initialize the red onboard LED.
 let led = DigitalOut(Id.RED) 
 
 while true {
-    // Alternate state of the LED.
+    // Alternate states of the output signal.
     led.toggle()
 
-    // Return the percentage of the voltage in the range of 0.0 to 1.0.
+    // Return the percentage of the input voltage in the range of 0.0 to 1.0.
     let analogValue = a0.readPercent()
     
-    // Stop the program for a certain period based on the value to keep current led state.
+    // Stop the program for a certain period based on the value to change the blink speed.
     let delayTime = Int(analogValue * 500)
     sleep(ms: delayTime)
 }
@@ -71,7 +74,7 @@ import ReactPlayer from 'react-player/youtube';
 ## Background
 
 ### Analog signal
-You have known that a digital signal has determined values. An analog signal is quite different. Its voltage changes smoothly with time. And its value ranges between 0V and 3.3V. So you can get 1.5V, 2V, 2.75V... There can be infinite possible values.
+You have known that a digital signal has determined values. An analog signal is quite different. Its voltage changes smoothly with time. And its value ranges between 0V and 3.3V in our case. So you can get 1.5V, 2V, 2.75V... There can be infinite possible values.
 
 
 <img
@@ -82,23 +85,25 @@ You have known that a digital signal has determined values. An analog signal is 
 
 So how does the board read the values? Here comes the **analog to digital converter**. In brief, it converts the analog voltage to a digital value that the microcontroller can read. 
 
-The converters have different precisions, so the **resolution** describes the possible values they can measure. Our boards have a 12-bit resolution, which means there can be 4096 (0-4095) values in total. The values from 0 to 4095 are known as **raw values**.
+The converters have different precisions, called **resolution**, which describes the possible values they can measure. Our boards have a 12-bit resolution, which means there can be 4096 (0-4095) values in total. The values from 0 to 4095 are known as **raw values**.
 
-Then let's see the working process in detail. When the board reads from the analog pin, it will first get a raw value, which will be mapped to voltage value proportionally. Here is the formula:
+When the board reads from the analog pin, it will first get a raw value, which will then be mapped to a voltage value proportionally. Here is the formula:
 
 **resolution / reference voltage = raw value / actual voltage**
 
-_where_
+_where:_
 
-_resolution: 4096; reference voltage: 3.3V_
+_resolution = 4096_
 
-For example, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 2047 corresponds 1.65V.
+_reference voltage = 3.3V_
 
-And you can know from the formula that the resolution will influence the precision of the final result. A higher resolution gives a result with higher accuracy.
+For example, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; 2047 corresponds to 1.65V.
+
+According to the formula, you can know that the resolution will influence the precision of the final results. A higher resolution gives a result with higher accuracy. 
 
 ### Potentiometer
 
-The potentiometer is one kind of variable resistor. You can adjust its resistance by rotating its shaft clockwise or anticlockwise. The wiper inside it will change its position accordingly.
+The potentiometer is one kind of variable resistor. You can adjust its resistance by rotating its shaft clockwise or anticlockwise. The internal wiper will change its position accordingly.
 
 
 <img
@@ -106,7 +111,7 @@ The potentiometer is one kind of variable resistor. You can adjust its resistanc
   alt="potentiometer" width="240"
 />
 
-As shown above, the resistance between ① and ③ is its maximum value. The wiper divides it into two parts. As the wiper moves, the resistances of the two parts will change.
+As shown above, the resistance between ① and ③ is its maximum value. The wiper divides it into two parts. As the wiper moves, the resistances of the two parts will change, which leads to voltage changes in your circuit.
 
 
 
@@ -118,36 +123,36 @@ import SwiftIO
 import MadBoard
 ```
 
-First, import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+First, import the two libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) to use everything in it. **SwiftIO** is used to control the input and output of the board. **MadBoard** defines the pin name of the board.
 
 ```swift
 let a0 = AnalogIn(Id.A0)
 let led = DigitalOut(Id.RED)
 ```
 
-Initialize the red onboard LED and the analog pin (A0) the potentiometer connects.
+Initialize the red onboard LED and the analog pin (A0) that the potentiometer connects.
 
 ```swift
 led.toggle()
 ```
-`toggle()` is used to reverse the digital output voltage. If the voltage is high, it will be changed to low then, and vice versa. `led.toggle()` will change the state of the onboard LED automatically. You don't need to know if the LED is on or off.
+`toggle()` is used to reverse the digital output voltage. If the voltage is high, it will be changed to low then, and vice versa. This statement will switch the state of the onboard LED automatically.
 
 ```swift
 let analogValue = a0.readPercent()
 ```
-`a0.readPercent()` allows you to get the input voltage in percentage. It represents the ratio between the raw value and the resolution (4096).
+It allows you to get the input voltage in percentage. It represents the ratio between the raw value and the resolution (4096), so its value ranges from 0.0 to 1.0.
 
 ```swift
 let delayTime = Int(analogValue * 500)
 sleep(ms: delayTime)
 ```
 
-The blink rate is decided by sleep time. Then this time is related to the input value. In this way, the potentiometer can control the LED.
+The blink rate is decided by sleep time which is related to the input value. In this way, the potentiometer can control the LED.
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether a digital pin outputs a high or low voltage.
 
-[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the value from an analog pin.
+[AnalogIn](https://madmachineio.github.io/SwiftIO/documentation/swiftio/analogin) - read the value from an analog pin.
 
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.

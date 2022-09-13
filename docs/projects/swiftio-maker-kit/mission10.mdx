@@ -5,13 +5,13 @@ description: Learn how to measure the temperature and humidity. You will program
 
 # Mission10_Humiture_Sensor
 
-In the previous mission, you learn about the LCD. Now you're going to know more about it. The LCD will be used to show the temperature in your room.
+In the previous mission, you learn about the LCD. Now you're going to use it to show the current temperature in your room. So you will need a temperature sensor to measure the value.
 
 
 
 ## What you need
 
-The parts you will use are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will use are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -22,9 +22,8 @@ The parts you will use are all included in the [Maker kit](https://www.madmachin
 
 ## Circuit
 
-1. Place the shield on top of the SwiftIO board.
-
-2. Connect the humiture sensor and the LCD to the I2C0. There are three available pins, you could choose any two.
+1. Plug the shield on top of the SwiftIO board.
+2. Connect the **humiture sensor and the LCD to I2C0**. There are three available pins, you could choose any two.
 
 <img
   src={require('./img/humitureSchematic.png').default}
@@ -34,20 +33,20 @@ The parts you will use are all included in the [Maker kit](https://www.madmachin
 
 ## Example code
 
+Open the project `Mission10_Humiture_Sensor` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
-
 
 // Initialize the LCD and sensor to use the I2C communication.
 let i2c = I2C(Id.I2C0)
 let lcd = LCD1602(i2c)
 let sht = SHT3x(i2c)
 
-while true{
+while true {
     // Read and display the temperature on the LCD and update the value every second.
     let temp = sht.readCelsius()
 
@@ -72,11 +71,11 @@ import ReactPlayer from 'react-player/youtube';
 ## Background
 
 ### Humiture sensor
-The humiture sensor can sense the temperature and humidity at the same time. This one uses the I2C protocol to communicate with the SwiftIO board. You can find a file `SHT3x.swift` in this mission that you can use to read the values.
+The humiture sensor can sense the temperature and humidity at the same time. This one uses the I2C protocol to communicate with the SwiftIO board. You can find a file [`SHT3x.swift`](https://github.com/madmachineio/MadExamples/blob/main/Examples/MakerKit/Mission10_Humiture_Sensor/Sources/Mission10_Humiture_Sensor/SHT3x.swift) in example code to read the values.
 
 ## Code analysis
 
-In this project, there is the file `LCD1602.swift` for the LCD and the file `SHT3x.swift` for the sensor. You can directly use them to simplify your code and don't need to configure them according to their datasheet. 
+In this project, there is the file [`LCD1602.swift`](https://github.com/madmachineio/MadExamples/blob/main/Examples/MakerKit/Mission9_LCD/Sources/Mission9_LCD/LCD1602.swift) for the LCD and the file [`SHT3x.swift`](https://github.com/madmachineio/MadExamples/blob/main/Examples/MakerKit/Mission10_Humiture_Sensor/Sources/Mission10_Humiture_Sensor/SHT3x.swift) for the sensor. You can directly use them to simplify your code and don't need to configure them according to their datasheet. 
 
 So let's come to the file `main.swift`.
 
@@ -84,7 +83,7 @@ So let's come to the file `main.swift`.
 import SwiftIO
 import MadBoard
 ```
-Import the necessary libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+Import the two libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of all boards. **MadBoard** defines the pin name of the board.
 
 ```swift
 let i2c = I2C(Id.I2C0)
@@ -123,7 +122,6 @@ The sensor will read value every 1s, so the value on the LCD will refresh per se
 
 ## Reference
 
-[I2C](https://swiftioapi.madmachine.io/Classes/I2C.html) - use I2C protocol to communicate with other devices.
+[I2C](https://madmachineio.github.io/SwiftIO/documentation/swiftio/i2c) - use the I2C protocol to communicate with other devices.
 
-
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.

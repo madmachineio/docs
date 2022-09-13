@@ -1,11 +1,11 @@
 ---
 title: Brightness AnalogIn
-description: You will program in Swift to control the brightness of an LED using a potentiometer.
+description: Program in Swift to control the brightness of an LED using a potentiometer.
 ---
 
 # Brightness AnalogIn
 
-In this example, we use PWM to adjust the brightness of an LED according to the position of the potentiometer.
+In this example, you will use a potentiometer as a LED brightness control. As you rotate the potentiometer, the brightness changes.
 
 ## What you need
 
@@ -20,7 +20,7 @@ In this example, we use PWM to adjust the brightness of an LED according to the 
 ## Circuit
 
 1. Place the potentiometer onto the breadboard. Connect the legs on the left to pin **3V3**, connect the second leg to pin **A0**, and the third leg to pin **GND**.
-2. Place the LED onto the breadboard. The long leg of LED goes to **D19** through a resistor. The short leg connects to **GND**.
+2. Place the LED onto the breadboard. The long leg (anode) of the LED goes to **PWM0A** through a resistor. The short leg (cathode) connects to **GND**.
 
 
 <img
@@ -30,16 +30,17 @@ In this example, we use PWM to adjust the brightness of an LED according to the 
 
 ## Example code
 
+Open the project `BrightnessAnalogIn` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
 ```swift
 // Read the analog input value and use it to set the PWM output to change the LED brightness.
+
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize an analog input and a digital output pin the components are connected to.
+// Initialize an analog input and a digital output pin that the components are connected to.
 let sensor = AnalogIn(Id.A0)
 let led = PWMOut(Id.PWM0A)
 
@@ -49,7 +50,7 @@ while true {
     let value = sensor.readPercent()
     // Light the LED by setting the duty cycle.
     led.setDutycycle(value)
-    // Keep the current LED state for 200 millisecond.
+    // Keep the current LED state for 200 milliseconds.
     sleep(ms: 200)
 }
 ```
@@ -65,9 +66,9 @@ There are three available methods to get analog values in different forms. In th
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether the pin outputs a high or low voltage.
 
-[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+[AnalogIn](https://madmachineio.github.io/SwiftIO/documentation/swiftio/analogin) - read the voltage from an analog pin.
 
 [MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.
 

@@ -9,7 +9,7 @@ This mission is similar to Mission10. You will display the temperature on the LC
 
 
 ## What you need
-The parts you will use are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will use are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -20,9 +20,8 @@ The parts you will use are all included in the [Maker kit](https://www.madmachin
 
 ## Circuit
 
-1. Place the shield on top of the SwiftIO board.
-
-2. Connect the humiture sensor and the LCD to the I2C0. There are three available pins, you could choose any two.
+1. Plug the shield on top of the SwiftIO board.
+2. Connect the **humiture sensor and the LCD to I2C0**. There are three available pins, you could choose any two.
 
 <img
   src={require('./img/humitureSchematic.png').default}
@@ -31,10 +30,24 @@ The parts you will use are all included in the [Maker kit](https://www.madmachin
 
 ## Example code
 
+Open the project `Mission11_Reproduce_Mission10` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'main.swift', value: 'main', },
+    { label: 'Package.swift', value: 'Package', },
+  ]
+}>
+
+<TabItem value="main">
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
@@ -60,22 +73,58 @@ while true{
 }
 ```
 
+</TabItem>
+<TabItem value="Package">
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "Mission11_Reproduce_Mission10",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", .branch("main")),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(
+            name: "Mission11_Reproduce_Mission10",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // highlight-next-line
+                "MadDrivers"]),
+        .testTarget(
+            name: "Mission11_Reproduce_Mission10Tests",
+            dependencies: ["Mission11_Reproduce_Mission10"]),
+    ]
+)
+```
+
+</TabItem>
+</Tabs>
+
+
 ## Code analysis
 
-In previous mission, the code includes the two files to configure the LCD and humiture sensor. However, there is a more convenient way - using libraries and you don't need to add hardware drivers to your projects.
+In the previous mission, the code includes the two files to configure the LCD and humiture sensor. However, there is a more convenient way - using libraries and you don't need to add hardware drivers to your projects.
 
-Simply put, a library contains a block of code that is for specific functionality. Then you can use it in any of your projects to realize those functionalities.
+Simply put, a library contains a block of code for specific functionality. You can import it to any of your projects to realize those functionalities.
 
-In the previous code, the two files are included, so you can directly use them. Now, you will use the online libraries - LCD1602 and SHT3x in your code. They are in the [MadDriver](https://github.com/madmachineio/MadDrivers/tree/main/Sources) that contains all the related hardware libraries and its location has been indicated in the project. Thus you don't need to add these files to your project and just import them to your code. The IDE will download them automatically when building your project.
+Now, you will use the online libraries - LCD1602 and SHT3x in your code. They are in the [MadDriver](https://github.com/madmachineio/MadDrivers/tree/main/Sources) that contains all hardware libraries. You need to indicate its location in the file `Package.swift` as above. Thus you don't need to add these files to your project and just import them to your code. They will be downloaded automatically when building your project.
 
-Then the rest of the code is the same as the previous one.
+The code in the file `main.swift` is the same.
 
 ## Reference
 
-[I2C](https://swiftioapi.madmachine.io/Classes/I2C.html) - use I2C protocol to communicate with other devices.
+[I2C](https://madmachineio.github.io/SwiftIO/documentation/swiftio/i2c) - use the I2C protocol to communicate with other devices.
 
 [LCD1602](https://github.com/madmachineio/MadDrivers/blob/main/Sources/LCD1602/LCD1602.swift) - display some characters on a 16x2 LCD.
 
 [SHT3x](https://github.com/madmachineio/MadDrivers/blob/main/Sources/SHT3x/SHT3x.swift) - measure temperature and humidity and communicate using I2C protocol.
 
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.

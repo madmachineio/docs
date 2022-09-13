@@ -1,11 +1,11 @@
 ---
 title: Blink timer
-description: You will use a timer to blink the built-in LED on your microcontroller board using several lines of Swift code.
+description: Use a timer to blink the built-in LED on your microcontroller board using several lines of Swift code.
 ---
 
 # Blink timer
 
-In the previous demo, you change the output constantly and using the function `sleep` to blink LEDs. Besides, you can use a timer to realize the same effect. So this example shows how to use the timer and interrupt mechanism on your board to make the red LED blink per second.
+In the previous demo, you change the output constantly and use the function `sleep` to blink LEDs. Besides, you can use a timer to realize the same effect. So this example shows how to use the timer and interrupt mechanism on your board to make the red LED blink per second.
 
 ## What you need
 
@@ -25,20 +25,23 @@ All you need is a compatible board. Connect it to your computer to download the 
 
 ## Example code
 
+Open the project `BlinkTimer` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
+
 ```swift
-// Change the LED state every second by setting the interrupt.
+// Change the LED state every second by setting the timer.
+
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the red onboard LED and a timer to set interrupt.
+// Initialize the red onboard LED.
 let red = DigitalOut(Id.RED)
-let timer = Timer()
+// Initialize a timer with 1s period.
+let timer = Timer(period: 1000)
 
-// Raise the interrupt to turn on or off the LED every second.
-timer.setInterrupt(ms: 1000) {
+// Raise the interrupt to toggle the LED when the time is up.
+timer.setInterrupt() {
     red.toggle()
 }
 
@@ -58,11 +61,11 @@ The interrupt can happen under several different conditions. You will use a time
 
 <img
   src={require('./img/interrupt.png').default}
-  alt="interrupt" width="480"
+  alt="interrupt" width="320"
 />
 
 :::note
-The function you choose for interrupt should be able to execute **extremely quickly**. Usually, we tend to change the state of pins or some values. 
+The task you choose for interrupt should be able to execute **extremely quickly**. Usually, we tend to change the state of digital pins or update some values. 
 :::
 
 ###  Timer
@@ -78,35 +81,28 @@ The timer is a part of the hardware on the board. It works just like an alarm cl
 ## Code analysis
 
 ```swift
-let timer = Timer()
+let timer = Timer(period: 1000)
 ```
-Initialize a timer. It requires no parameters.
+Initialize a timer. The default mode is `.periode` which means the timer will work continuously. And the period time is 1s.
 
 ```swift
-timer.setInterrupt(ms: 1000) {
+timer.setInterrupt() {
     red.toggle()
 }
 ```
 
-The method `setInterrupt()` is used to set the interval and the ISR. It has 4 parameters in all:
+The method `setInterrupt()` is used to set the interval and the ISR. It has 2 parameters in all:
+1. `start`: decide if the timer works as soon as you set it. If not, you can start it manually later.
+2. `callback`: it is the task your board will do. It needs a void function. Since it is the last parameter, you can move this into a pair of curly brackets as `red.toggle()` above.
 
-`setInterrupt(ms period: Int, mode: Mode = .period, start: Bool = true, _ callback: @escaping ()->Void)`
+In this way, the red LED light will be switched on or off every second.
 
-1. ms: it is the specific period in milliseconds.
-2. mode: it decides whether the ISR will be done once or repeatedly.
-3. start: it decides if the timer works as soon as you set it. If not, you can start it manually later.
-4. callback: it is the task your board will do. It is a void function and is the last parameter, so you can move this into a pair of curly brackets as `red.toggle()` above.
-
-The method `.toggle()` can change the digital signal from one level to the other. 
-
-In this way, the red LED light will be switch on or off every second.
-
-In the loop, you can make the board do something else when the interrupt has not worked.
+In the loop, you can make the board do something else when the interrupt has not happened.
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether the pin outputs a high or low voltage.
 
-[Timer](https://swiftioapi.madmachine.io/Classes/Timer.html) - set the timer to make your board do some certain tasks at a fixed time.
+[Timer](https://madmachineio.github.io/SwiftIO/documentation/swiftio/timer) - set the timer to make your board do some certain tasks at a fixed time.
 
 [MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

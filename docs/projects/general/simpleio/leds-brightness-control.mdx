@@ -1,6 +1,6 @@
 ---
 title: LEDs brightness control
-description: You will make three LEDs to brighten and dim one by one. So you will use the array to realize it using Swift.
+description: Make three LEDs to brighten and dim one by one. So you will use the array to realize it using Swift.
 ---
 
 # LEDs brightness control
@@ -30,16 +30,17 @@ This demo is similar to the previous PWM brightness control, but you will make 3
 
 ## Example code
 
+Open the project `LEDsBrightnessControl` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
 ```swift
-// Change the LED state every second by setting the interrupt.
+// Make 3 LEDs to brighten and dim one by one.
+
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the pins the LEDs are connected to and put them in a array.
+// Initialize the pins the LEDs are connected to and put them in an array.
 let red = PWMOut(Id.PWM0A)
 let green = PWMOut(Id.PWM1A)
 let blue = PWMOut(Id.PWM2B)
@@ -61,7 +62,8 @@ while true {
         }
         // Keep the value of duty cycle between 0.0 and 1.0.
         value = 1.0
-        // Dimming the LED in two seconds.
+
+        // Dim the LED in two seconds.
         while value >= 0 {
             print(value)
             led.setDutycycle(value)
@@ -79,9 +81,9 @@ while true {
 ```swift
 let leds = [red, green, blue]
 ```
-There are 3 LEDs in total. They all repeat the same operations. So you can put them in an array. 
+3 LEDs all repeat the same operations, so you can put them in an array to iterate them. 
 
-An **array** is a collection of ordered values of the same type. To access its item, you can use its index. The index starts from 0. So if you want to access red led, it's `leds[0]`.
+An **array** is a collection of ordered values of the same type. To access its item, you can use its index. The index starts from 0. So if you want to access red LED, it's `leds[0]`.
 
 ```swift
 for led in leds {
@@ -89,13 +91,12 @@ for led in leds {
 }
 ```
 
-Then you can use `for-in` loop to iterate over the array. That's why you create it. You can avoid repeating the same code many times and thus simplify the code.
+Then you can use `for-in` loop to iterate over the array. In this way, you can avoid repeating similar code 3 times and thus simplify the code.
 
 `led` represents each item in the array `leds`, and you can name it as you like. In the loop, the first item will execute the code in the brackets. After that, the second one repeats the task. The task will repeat several times until all items finish it.
 
 ## Reference
 
-[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
-
+[PWMOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/pwmout) - set the PWM signal.
 
 [MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

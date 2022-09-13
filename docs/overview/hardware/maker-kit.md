@@ -32,4 +32,4 @@ In our maker kit, you can find different parts for their specific usage. Let's f
 - **Jumper wire**: connect the components to the board.
 - **1kΩ Resistor**: connect with the LED to prevent the current from being too strong.
 
-There is a quick guidebook inside the kit. You can also follow the [project tutorials](../../../projects/swiftio-maker-kit/mission1) to learn more about electronics and programming.
+There is a quick guidebook inside the kit. You can also follow the [project tutorials](../../../projects/swiftio-maker-kit/overview) to learn more about electronics and programming.

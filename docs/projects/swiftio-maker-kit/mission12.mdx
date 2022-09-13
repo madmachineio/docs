@@ -10,7 +10,7 @@ In this project, let's play a known song "Twinkle twinkle little star" using a b
 
 ## What you need
 
-The parts you will use are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will use are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -20,11 +20,8 @@ The parts you will use are all included in the [Maker kit](https://www.madmachin
 
 ## Circuit
 
-
-
-1. Place the shield on top of your SwiftIO board.
-
-2. Connect the buzzer module to pin PWM2B (D10).
+1. Plug the shield on top of your SwiftIO board.
+2. Connect the **buzzer** module to pin **PWM2B** (D10).
 
 <img
   src={require('./img/buzzerSchematic.png').default}
@@ -34,6 +31,8 @@ The parts you will use are all included in the [Maker kit](https://www.madmachin
 
 ## Example code
 
+Open the project `Mission12_Buzzer_Music` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -42,6 +41,7 @@ import TabItem from '@theme/TabItem';
   values={[
     { label: 'main.swift', value: 'main', },
     { label: 'Twinkle.swift', value: 'Twinkle', },
+    { label: 'Package.swift', value: 'Package', },
   ]
 }>
 
@@ -50,7 +50,6 @@ import TabItem from '@theme/TabItem';
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
@@ -82,7 +81,7 @@ while true {
 </TabItem>
 <TabItem value="Twinkle">
 
-```swift"
+```swift
 import PWMTone
 
 struct Music {
@@ -147,6 +146,40 @@ struct Music {
 ```
 
 </TabItem>
+<TabItem value="Package">
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "Mission12_Buzzer_Music",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/PWMTone.git", .branch("main")),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(
+            name: "Mission12_Buzzer_Music",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // highlight-next-line
+                "PWMTone"
+            ]),
+        .testTarget(
+            name: "Mission12_Buzzer_MusicTests",
+            dependencies: ["Mission12_Buzzer_Music"]),
+    ]
+)
+```
+
+</TabItem>
+
 </Tabs>
 
 
@@ -163,7 +196,7 @@ import ReactPlayer from 'react-player/youtube';
 
 ### Musical notes
 
-Before coming to the code, you will know something about the notes.
+At first, let's learn something about notes.
 
 There are 88 keys in total on a piano keyboard, from A0 to C8. These notes correspond to different frequencies from low to high. And the note do, re, mi, fa, sol, la, ti correspond respectively to C, D, E, F, G, A, B.
 
@@ -186,8 +219,7 @@ A **quarter note** is the common note length in music and has one beat. Then oth
 You can find two files in the project:
 
 - The file `Twinkle.swift` records the notes of the melody and the duration of each note. 
-
-- In the file `main.swift`, you will set the PWM signal to play the music. 
+- The file `main.swift` sets the PWM signal to play the music. 
 
 Let's take a look at the file `main.swift`. 
 
@@ -196,45 +228,15 @@ import SwiftIO
 import MadBoard
 import PWMTone 
 ```
-[SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) are the basic libraries used in all these projects.
+[SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) are the basic libraries used in all these projects.
 
-And you will use another library [PWMTone](https://github.com/madmachineio/PWMTone). It allows you to set the PWM in accordance with the musical score. But before you use it, you need to add it to your project. In the file `Package.swift`, add the library and indicate its location as the two highlighted lines.
+Besides, you will use another library [PWMTone](https://github.com/madmachineio/PWMTone) to set the PWM in accordance with the musical score. But before you use it, you need to add it to your project. In the file `Package.swift`, add the library and indicate its location as the two highlighted lines.
 
-```swift {10,21} title="Package.swift"
-import PackageDescription
-
-let package = Package(
-    name: "Mission12_Buzzer_Music",
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", from: "0.0.1"),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", from: "0.0.1"),
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", from: "0.0.1"),
-        .package(url: "https://github.com/madmachineio/PWMTone.git", from: "0.0.1"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "Mission12_Buzzer_Music",
-            dependencies: [
-                "SwiftIO",
-                "MadBoards",
-                "MadDrivers",
-                "PWMTone"
-            ]),
-        .testTarget(
-            name: "Mission12_Buzzer_MusicTests",
-            dependencies: ["Mission12_Buzzer_Music"]),
-    ]
-)
-```
-Then let's continue the analysis. 
 
 ```swift
 var halfStep = 0 
 ```
-The value `halfStep` is used to change the pitch. It equals 0, so the pitch remains unchanged.
+The value `halfStep` is used to change the pitch. It equals 0 now, so the pitch remains unchanged.
 
 ```swift
 var bpm = 60 
@@ -244,25 +246,25 @@ Set the bpm to 60, so each beat will last one second.
 ```swift
 let player = PWMTone(PWMOut(Id.PWM2B), bpm: bpm) 
 ```
-Initialize the player. It has three parameters:
+Initialize the player. `init(_:bpm:noteGap:)` has three parameters:
 
-- The first one is the PWM pin,
-- The second is the bpm.
-- The third one sets the interval between each note. It equals 0.1 by default.
+- the first one is the PWM pin,
+- the second is the bpm,
+- the third one sets the interval between each note. It equals 0.1 by default.
 
 ```swift
 player.play(track: Music.twinkle) 
 ```
-This statement is to play the music. The method `play(track:halfstep)` has two parameters.
+This statement is to play the music. The method `play(track:halfstep)` has two parameters:
 
-- The `track` is an array of tuples that indicates notes and note length. `Music.twinkle` refers to the score written in the file `Twinkle.swift`. In the struct `Music`, there is a constant `twinkle` that stores the notes and the note length. So the track is written as `Music.twinkle`.
-- The `halfStep` has a default value of 0. You will set it later. So you can ignore it here.
+- `track` is an array of tuples that indicates notes and note length. `Music.twinkle` refers to the score written in the file `Twinkle.swift`. In the struct `Music`, there is a constant `twinkle` that stores the notes and the note length. So the track is written as `Music.twinkle`.
+- `halfStep` has a default value of 0. You will set it later.
 
 ```swift
 bpm += 40 
 player.setBPM(bpm) 
 ```
-Then increase the bpm to make the tempo a little faster. This increment is a random number you prefer.
+Then increase the bpm to make the tempo a little faster.
 
 ```swift
 halfStep += 12
@@ -272,8 +274,8 @@ These two statements aim to raise an octave, so the pitch of the music sounds hi
 
 ## Reference
 
-[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+[PWMOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/pwmout) - set the PWM signal.
 
 [PWMTone](https://github.com/madmachineio/PWMTone) - play notes and change how it sounds by setting PWM signals. 
 
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of your board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.
