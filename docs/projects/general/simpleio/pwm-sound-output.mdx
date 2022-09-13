@@ -1,6 +1,6 @@
 ---
 title: PWM sound output
-description: You will program your microcontroller board in Swift to drive a buzzer. It will generate PWM signals to make the buzzer play a scale.
+description: Program your microcontroller board in Swift to drive a buzzer. It will generate PWM signals to make the buzzer play a scale.
 ---
 
 # PWM sound output
@@ -19,7 +19,7 @@ This example shows how to use the `PWMOut` to generate notes. It plays musical n
 ## Circuit
 
 1. Plug the buzzer onto the breadboard.
-2. Connect any one leg to the pin GND and the other to the pin PWM5A. 
+2. Connect any one leg to the pin GND and the other to the pin **PWM0A**. 
 
 <img
   src={require('./img/buzzer.png').default}
@@ -28,19 +28,20 @@ This example shows how to use the `PWMOut` to generate notes. It plays musical n
 
 ## Example code
 
+Open the project `PWMSoundOutput` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
 ```swift
 // Produce different notes by changing the frequency of PWM signals.
+
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize a PWM output pin the speaker connects.
-let speaker = PWMOut(Id.PWM5A)
+// Initialize a PWM output pin that the speaker connects.
+let speaker = PWMOut(Id.PWM0A)
 
-// Specify several frequencies to produce different sound.
+// Specify several frequencies to produce different sounds.
 let fre = [262, 294, 330, 349, 392, 440, 494]
 
 // Play recurrently these notes.
@@ -64,7 +65,9 @@ The PWM signal outputs high and low voltage alternatively. There is a diaphragm 
   alt="How buzzer works" width="480"
 />
 
-There are two kinds of buzzers. An **active** buzzer has an internal circuit to create alternating voltage. So you can connect it to power. A **passive** buzzer needs a PWM signal to vibrate the diaphragm. The frequency will influence the pitch. A higher frequency will produce a higher pitch.
+There are two kinds of buzzers. 
+* An **active** buzzer has an internal circuit to create alternating voltage. So you can connect it to power. 
+* A **passive** buzzer needs a PWM signal to vibrate the diaphragm. The frequency will influence the pitch. A higher frequency will produce a higher pitch.
 
 
 
@@ -89,6 +92,6 @@ sleep(ms: 1000)
 
 ## Reference
 
-[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+[PWMOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/pwmout) - set the PWM signal.
 
 [MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

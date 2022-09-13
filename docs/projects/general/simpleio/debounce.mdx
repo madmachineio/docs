@@ -1,6 +1,6 @@
 ---
 title: Debounce
-description: Learn how to blink an LED using your board and know about digital signal.
+description: Blink an LED using your board and know about digital signal.
 ---
 
 # Debounce
@@ -17,7 +17,7 @@ In the previous example, you create a light switch using a button. However, you 
 ## Circuit
 
 1. Plug the button on the breadboard.
-2. Connect one leg on the left to the pin GND. Connect the other on the right to the pin **D1**.
+2. Connect one leg on the left to the pin GND. Connect the other on the right to the pin **D0**.
 
 <img
   src={require('./img/debounce.png').default}
@@ -27,21 +27,23 @@ In the previous example, you create a light switch using a button. However, you 
 
 ## Example code
 
+Open the project `Debounce` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
+
 ```swift
-// Check if the button is pressed.
+// Check if the button is pressed using debounce method.
+
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
 // Initialize the red onboard LED.
 let red = DigitalOut(Id.RED)
 
-// Initialize a digital input pin D1 the button is connected to.
-let button = DigitalIn(Id.D1, mode: .pullUp)
+// Initialize a digital input pin D0 that the button is connected to.
+let button = DigitalIn(Id.D0, mode: .pullUp)
 
-// Declare the values in order to record and judge the button state.
+// Declare the values to record and judge the button state.
 var count = 0
 var triggered = false
 
@@ -58,15 +60,14 @@ while true {
         triggered = false
     }
     
-    // Wait a certain period to check if the button is definitely pressed. 
-    // Toggle the LED and then reset the value for next press.
+    // Wait a certain period to check if the button is pressed. 
+    // Toggle the LED and then reset the value for the next press.
     if count > 50 && !triggered {
         red.toggle()
         triggered = true
         count = 0
     }
     
-    // Wait a millisecond and then read to ensure the current state last for enough time. 
     sleep(ms: 1)
 
 }
@@ -127,7 +128,7 @@ You usually need them when you use a button. On this board, there are already in
 ## Code analysis
 
 ```swift
-let button = DigitalIn(Id.D1, mode: .pullUp)
+let button = DigitalIn(Id.D0, mode: .pullUp)
 ```
 Initialize the digital input pin. The default mode is `pullDown`. And you will use the pull-up resistor here, so the mode is set to `pullUp`. In this mode, the pin reads low when you press the button, and the onboard LEDs need low voltage to turn on, so it's more straightforward.
 
@@ -167,8 +168,8 @@ The variable `count` is used to store the time. Your board does calculations ext
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether the pin outputs a high or low voltage.
 
-[DigitalIn](https://swiftioapi.madmachine.io/Classes/DigitalIn.html) - read the input value from a digital pin.
+[DigitalIn](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalin) - read the input value from a digital pin.
 
 [MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin id of your board.

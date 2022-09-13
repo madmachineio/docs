@@ -5,12 +5,12 @@ description: Learn how the seven-segment display works. You will program your bo
 
 # Mission6_Seven_Segment_Display
 
-You can always see 7-segment displays around you used to display digits, like in a timer, clock, etc. In this mission, you are going to learn how it works and show a number on it. Let's start.
+You can see 7-segment displays everywhere used to display digits, like in a timer, clock, etc. In this mission, you are going to learn how it works and show a number on it. Let's start!
 
 
 ## What you need
 
-The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will need are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -20,9 +20,8 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Circuit
 
-1. Place the shield on top of your SwiftIO board.
-
-2. Connect the 7-segment display to pins reserved for it on the shield. Make sure the decimal point is at the bottom.
+1. Plug the shield on top of your SwiftIO board.
+2. Connect the 7-segment display to the pins reserved for it on the shield, as shown below. Make sure the decimal point is at the bottom.
 
 <img
   src={require('./img/7segmentSchematic.png').default}
@@ -31,7 +30,7 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Example code
 
-
+Open the project `Mission6_Seven_Segment_Display` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -49,7 +48,6 @@ import TabItem from '@theme/TabItem';
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
@@ -82,10 +80,9 @@ final class SevenSegment {
     static let e = DigitalOut(Id.D4)
     static let f = DigitalOut(Id.D2)
     static let g = DigitalOut(Id.D3)
-    
-    
     let leds = [a, b, c, d, e, f, g]
-    // Use a binary data to store the status of each segment for the number from 0 to 9.
+
+    // Use binary data to store the status of each segment for the numbers 0 - 9.
     // For each data, the last bit represents A and the second bit represents G.
 	let ledState: [UInt8] = [
             0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 
@@ -136,9 +133,9 @@ Why is it called a 7-segment display? Yeah, that's because it contains seven seg
   alt="7-segment display" width="960"
 />
 
-The anodes of 7 LEDs are connected together. You can see a pin for the power connection. If you want A to be illuminated, you need to set the pin to low voltage.
+The anodes of 7 LEDs are connected together. You can see a pin for the power connection. If you want A to be illuminated, that pin needs a low voltage.
 
-The way you set these LEDs decides how the display looks. For example, to display the number 3, you will turn on A, B, C, D, G, and turn off E, F. Besides these numbers, you can also display characters.
+The image above shows how you can show numbers 0-9 on a seven-segment. For example, to display the number 3, you will turn on A, B, C, D, G, and turn off E, F.
 
 
 ## Code analysis
@@ -146,7 +143,7 @@ The way you set these LEDs decides how the display looks. For example, to displa
 In this mission, you will separate the code into two files. It makes your code more clear and organized.
 
 - The file `SevenSegment.swift` sets the 7-segment display and provides some easy-to-use functionalities.
-- The file `main.swift` is to show the digit on the 7-segment display.
+- The file `main.swift` shows a digit on the 7-segment display.
 
 ### SevenSegment.swift
 
@@ -156,16 +153,16 @@ Let's look at this file in detail.
 import SwiftIO 
 import MadBoard 
 ```
-As always, import the necessary libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+As always, import the necessary libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of your board. **MadBoard** defines the pin ids.
 
 ```swift
 final class SevenSegment {
     ...
 }
 ```
-Then you will write the code in a class named `SevenSegment`. Briefly speaking, the **class** contains a block of code that allows you to create many instances with similar characteristics. It usually has methods (function in a class) and properties (constant or variable in a class).
+Then you will group the code in a class named `SevenSegment`. Briefly speaking, the **class** is like a template to create many instances with similar characteristics. It usually has methods (function in a class) and properties (constant or variable in a class).
 
-The class can be inherited usually, but with the keyword **final**, it cannot be inherited any longer.
+A class can be inherited, but with the keyword **final**, it cannot be inherited any longer.
 
 :::note
 The class is a reference type. So if you create an instance and assign it to different constants, they all point to the same one. If you change any of the instances, all will change with it. That is why the class is used in your projects. Since the corresponding hardware is unique, any setting will cause changes in the hardware.
@@ -189,9 +186,9 @@ The keyword **static** makes these properties belong to the class, rather than t
 ```swift
 let leds = [a, b, c, d, e, f, g]
 ```
-To simplify the code, you put them into an array. In this way, you can iterate them instead of dealing with them one by one manually.
+To simplify the code, put them into an array. In this way, you can iterate them instead of dealing with them one by one manually.
 
-An **array** is a collection of ordered values of the same type. To access its element, you can use its index. The index starts from 0. So if you want to access `a`, the code is written as `led[0]`.
+An **array** is a collection of ordered values of the same type. To access its element, you can use its index. The index starts from 0. `led[0]` matches `a` in the array.
 
 ```swift
 let ledState: [UInt8] = [
@@ -201,7 +198,7 @@ let ledState: [UInt8] = [
 ```
 This array stores the LED states of numbers from 0 to 9.
 
-How does it work? There are 7 LEDs in total, so you can use a byte to represent its states. The bit corresponds to an LED. 1 means the LED is on, 0 means off. The image below shows the digit 0:
+How does it work? There are 7 LEDs in total, so you can use a byte to represent its states. Each bit corresponds to an LED. 1 means the LED is on, 0 means off. The image below shows the digit 0:
 
 - You will start from the least significant bit and reserve that bit for a. 
 - For digit 0, all segments need to light on except g. So the last seven bits are all 1.
@@ -223,7 +220,7 @@ public func print(_ number: Int) {
 ```
 After the preparation above, you are ready to set the 7-segment display.
 
-You will create a method to show the number you pass to it. The keyword **public** allows you to use this method in other files.
+You will create a method to show the number you pass to it. So it needs only a number as its parameter. The keyword **public** is used for access control.
 
 ```swift
 let num = number % 10
@@ -236,7 +233,7 @@ let value = ledState[num]
 The `num` is then used as an index to access the elements in the array `ledState`. In this way, you get the exact value that stores the states of each LED. If `num` is 5, the `value` will be 0b01101101.
 
 ```swift
-for i in 0..<7{
+for i in 0..<7 {
     ...
 }
 ```
@@ -257,7 +254,7 @@ This statement is to get the value of each bit. Let's look at the operators here
   alt="Bit calculation" width="480"
 />
 
-Suppose the `value` is 0b01011011. At first, i=0, the value remains unchanged and is calculated with 0x01, so the state will be 1, which represents LED a; when i=1, the state equals the last second bit of value, 1, which represents LED b; and so on.
+Suppose the `value` is 0b01011011. At first, i=0, the value doesn't shift and is calculated with 0x01, so the `state` will be 1, which represents LED a; when i=1, the `state` equals the last second bit of value, 1, which represents LED b; and so on.
 
 <img
   src={require('./img/state.png').default}
@@ -279,19 +276,18 @@ The if-else statement is to decide the output voltage. If the value of state equ
 
 This file is quite simple since all work related to the 7-segment has been done in the other file. Let's take a quick look.
 
-Import the libraries. Then, of course, set the number you want to display.
-
-Create an instance of the class `SevenSegment`, so you can use its method to display the number. 
-
-At last, use dot syntax to access the method and pass the number to it.
+1. Import the libraries. 
+2. Then, of course, set the number you want to display.
+3. Create an instance of the class `SevenSegment`, so you can use its method to display the number. 
+4. Use dot syntax to access the method and pass the number to it.
 
 Well, it's done 🥳.
 
-This project uses one way to organize your code. There are still other ways, and you'll look into it later.
+This project uses one way to organize your code. There are still other ways, and you'll look into them later.
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether a digital pin outputs a high or low voltage.
 
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.
 

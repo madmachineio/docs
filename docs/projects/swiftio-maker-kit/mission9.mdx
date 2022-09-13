@@ -5,12 +5,12 @@ description: Learn about 16x2 LCD. You will program your board using Swift to di
 
 # Mission9_LCD
 
-If you want to show the messages or display data, the LCD is a great choice. You can find various LCDs. In this mission, you will look at a 16x2 character LCD and display the phrase "Hello World" on it.
+If you want to show some messages or display data, an LCD is a great choice. You can find various LCDs. In this mission, you will look at a 16x2 character LCD and display the phrase "Hello World" on it.
 
 
 ## What you need
 
-The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will need are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -20,9 +20,8 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Circuit
 
-1. Place the shield on top of the SwiftIO board.
-
-2. Connect the LCD to the pins I2C0. You can see there are three available I2C0. You could choose any of them.
+1. Plug the shield on top of the SwiftIO board.
+2. Connect the **LCD** to the pins **I2C0**. You can see there are three available I2C0. You could choose any of them.
 
 <img
   src={require('./img/lcdSchematic.png').default}
@@ -32,14 +31,15 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Example code
 
+Open the project `Mission9_LCD` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the I2C0 and the lcd.
+// Initialize the I2C0 and the LCD.
 let i2c = I2C(Id.I2C0)
 let lcd = LCD1602(i2c)
 
@@ -74,15 +74,15 @@ This kind of LCD has 16 columns and 2 rows. So it can display 32 characters. Eac
 
 The upper left corner is the origin (0,0). Its coordinate system is as above.
 
-This LCD supports I2C communication. All the commands to control it are in its datasheet. But you don't need to worry about it. The file `LCD1602.swift` in your project has done the work for you. You can directly use the methods to control your LCD.
+This LCD supports I2C communication. All the commands to control it are in its datasheet. But you don't need to worry about it. The file [`LCD1602.swift`](https://github.com/madmachineio/MadExamples/blob/main/Examples/MakerKit/Mission9_LCD/Sources/Mission9_LCD/LCD1602.swift) in your project has done the work for you. You can directly use the methods to control your LCD.
 
 ### I2C
 
 Inter-integrated circuit, I2C (I two C or I squared C) for short, is a protocol suitable for short-distance communication. It allows multiple slave devices to communicate with one master device using merely two wires, which constitutes its advantage compared to other protocols.
 
-For the communication protocols, there are always master and slave devices. Master device controls the communication process. Slave devices would respond to the master device when it’s called. In our projects, the SwiftIO board is always the master, and the other devices serve as slaves.
+For the communication protocols, there are always **master and slave devices**. Master device controls the communication process. Slave devices would respond to the master device when it’s called. In our projects, the SwiftIO board is always the master, and the other devices serve as slaves.
 
-The two wires contain an SCL and an SDA line:
+The two wires contain an **SCL and an SDA** line:
 
 <img
   src={require('./img/i2c.png').default}
@@ -93,7 +93,7 @@ The two wires contain an SCL and an SDA line:
 
 - SDA (serial data) is the data line. All the data is transferred on this line by master or slave devices. And the data is usually in bytes. Each communication protocol specifies its own system about how the data is sent. That's a little complicated, and you don't have to understand it when using it.
 
-Why can only two wires support multiple devices without confusion? That is because each I2C device has its unique address. You can always find it in its datasheet. At the beginning of the communication, the master will send the address of the device that is wanted. Only the corresponding device would respond and prepare for the following process. Thus there won’t be confusion among different devices.
+Why can only two wires support multiple devices without confusion? That is because each I2C device has its unique **address**. You can always find it in its datasheet. At the beginning of the communication, the master will send the address of the device that is wanted. Only the corresponding device would respond and prepare for the following process. Thus there won’t be confusion among different devices.
 
 In brief, if you want to communicate with some devices, you need to find the corresponding data of the command in the datasheet, then send the data according to the rules of communication protocol.
 
@@ -101,7 +101,7 @@ In brief, if you want to communicate with some devices, you need to find the cor
 
 ## Code analysis
 
-The file `LCD1602.swift` has configured the LCD according to its datasheet. It is included in the project, so you can directly use these methods to control your LCD.
+The file [`LCD1602.swift`](https://github.com/madmachineio/MadExamples/blob/main/Examples/MakerKit/Mission9_LCD/Sources/Mission9_LCD/LCD1602.swift) has configured the LCD according to its datasheet. It is included in the project, so you can directly use these methods to control your LCD.
 
 Let's look at the file `main.swift`.
 
@@ -109,7 +109,7 @@ Let's look at the file `main.swift`.
 import SwiftIO
 import MadBoard
 ```
-Import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+Import the two libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of all boards. **MadBoard** defines the pin name of the board.
 
 
 ```swift
@@ -123,11 +123,10 @@ lcd.write(x: 0, y: 0, "Hello World!")
 ```
 Then you will use the method `write(x:y:_:)` to display the string. It has three parameters. At first, you need to set the coordinate of the start point. Here you start from the origin (0,0). The third parameter is the content you would like to display. It is a string. So you add the content within the double quotation marks.
 
-Since the text would always display on the LCD, you can write it above the loop. Even there is nothing in the loop, you'd better add it to your code.
+Since the text would always display on the LCD, you can write it above the loop. Even if there is nothing in the loop, you need to add it to your code.
 
 ## Reference
 
-[I2C](https://swiftioapi.madmachine.io/Classes/I2C.html) - use I2C protocol to communicate with other devices.
+[I2C](https://madmachineio.github.io/SwiftIO/documentation/swiftio/i2c) - use the I2C protocol to communicate with other devices.
 
-
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.

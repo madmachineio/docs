@@ -6,7 +6,9 @@ description: Learn how to blink the onboard LED and learn to program your board 
 
 # Mission1_Blink
 
-As you get a new board, if you don't have some previous knowledge, you might not be able to get it to work out of the box. It is so discouraging. So this first project would like to get everyone started with electronic stuff and the Swift language. You will start with the hello world project - blink the LED. You will make the LED on and off alternatively to get it to blink. Let's break all stuff down to see how it works.
+After you get a new board, if you don't have some previous knowledge, you might not be able to get it to work out of the box. It is so discouraging. 
+
+So this first project would like to get everyone started with basic electronic stuff and Swift language. You will try the hello world project - blink the LED. The LED will be on and off alternatively. Let's break all stuff down to see how it works.
 
 ## What you need
 
@@ -18,11 +20,11 @@ As you get a new board, if you don't have some previous knowledge, you might not
 />
 
 
-You can notice there is an onboard LED (marked with a red box above). You will only deal with it in this project, and there is no need for other components.
+You can notice there is an onboard LED (marked with a red box above). You will only deal with it in this project, and no need for other components.
 
 
 ## Circuit
-Just connect the SwiftIO board to your computer through the download port using a USB cable. There are two ports on the board. The one beside the golden ring is the download port.
+Connect the SwiftIO board to your computer through the download port using a USB cable. There are two ports on the board. The one beside the golden ring is the download port.
 
 <img
   src={require('./img/connect.png').default}
@@ -31,24 +33,26 @@ Just connect the SwiftIO board to your computer through the download port using 
 
 ## Example code
 
+
+Open the project `Mission1_Blink` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board. 
 import MadBoard
 
-// Initialize the blue LED 
+// Initialize the blue LED.
 let led = DigitalOut(Id.BLUE)
 
-// The code here will run all the time. 
+// The code within it will run all the time. 
 while true { 
-    // Set Blue LED off. 
+    // Set blue LED off. 
     led.write(true) 
     // Interval of LED blink (milliseconds).
     sleep(ms: 1000) 
      
-    // Set Blue LED on. 
+    // Set blue LED on. 
     led.write(false) 
     sleep(ms: 1000)
 }
@@ -69,7 +73,7 @@ import ReactPlayer from 'react-player/youtube';
 
 ### Digital signal
 
-The digital signal usually has two states. Its value is either **1** or **0**. For the SwiftIO board, 1 represents 3.3V, and 0 represents 0V. There are also other ways to express the same meaning: high or low, true or false. In this project, you will control the output voltage to turn on or off the LED.
+The digital signal usually has two states, represented as either **1 or 0**. For the SwiftIO board, 1 represents 3.3V, and 0 represents 0V. Besides, you can also describe the states using **high or low**, **true or false**. In this project, you will set the digital output to turn on or off an LED.
 
 <img
   src={require('./img/digitalSignal.png').default}
@@ -78,33 +82,40 @@ The digital signal usually has two states. Its value is either **1** or **0**. F
 
 ### LED
 
-The LED, or light-emitting diode, is one kind of diode. It has a **positive** leg (anode) and a **negative** leg (cathode). The long leg is positive, and the short leg is negative. The current can only flow in one direction, from positive to negative. You need to connect the positive leg to the current source. Only when you connect it in the right direction, the current can flow.
+The LED, or light-emitting diode, is one kind of diode. It has a **positive** leg (anode) and a **negative** leg (cathode). The long leg is positive, and the short leg is negative. The current can only flow in one direction, from positive to negative. Therefore, only when you connect it in the right direction, the current can flow. Or, the LED won't be lighted.
 
 <img
   src={require('./img/LED.png').default}
   alt="LED" width="120"
 />
 
-There are two ways to connect the LED:
+There are two ways to connect an LED to your circuit:
 
 <img
   src={require('./img/LEDcircuit.png').default}
   alt="Connect LED" width="960"
 />
 
-1. Connect the LED to the **power** and a **digital pin**. Since the current always flows from high to low voltage, if the pin outputs a high voltage, there is no voltage difference between the two ends of the LED, so the LED is off. When the pin outputs a low voltage, the current can flow from the power to that pin, and the LED will be on. This is how the onboard LED works.
-2. Connect the LED to the **digital pin** and **ground**. If the pin outputs a high voltage, the current flows from that pin to the ground, and the LED will be on. If it outputs a low voltage, the LED is off.
+1. Connect the LED to a **digital pin** and **ground** (GND), as shown in the upper left corner. The current always flows from high to low voltage.
+    * If the pin outputs a high voltage, the current flows from that pin to GND, hence the LED will be on. 
+    * On the contrary, if it outputs a low voltage, there's no current and the LED turns off.
 
-You can find an RGB LED on your board. It is a different type from the images above for easier soldering. It has three colors: red, green and blue. As you download the code, it serves as a [status indicator](../../overview/hardware/swiftio-board#built-in-rgb-led). Besides, you can also control its color and state by setting the output voltage.
+2. Connect the LED to the **power** (Vcc) and a **digital pin**, as shown in the lower left corner. This is how the onboard LED works. The diagram on the right shows its circuit connection.
 
-You can light any, so it will appear red, green, or blue. You can also turn on two of them. If you turn on red and blue, you can notice it appears magenta. If all three are on, the LED seems to be white.
+    * If the pin outputs a high voltage, there is no voltage difference between the two ends of the LED, so the LED is off. 
+    * When the pin outputs a low voltage, the current can flow from the power to that pin, and the LED will be on. 
+  
+
+You can find an LED beside the download button on your board. It is a different type for easier soldering. This RGB LED has three colors: red, green and blue. As you download the code, it serves as a [status indicator](../../overview/hardware/swiftio-board#built-in-rgb-led). Besides, you can also control its color and state by setting the output voltage.
+
+* You can light any one of them, which means the red, green, or blue LED will be turned on. 
+* You can also turn on two of them. For example, if you choose red and blue, you can notice the light appears magenta. 
+* If all three LEDs are on, the light becomes white.
 
 <img
   src={require('./img/RGB.png').default}
   alt="RGB colors" width="240"
 />
-
-The onboard LED is connected to 3.3V internally. If you set it to high voltage, there will be no current. So it will be lighted when you apply low voltage.
 
 
 
@@ -116,9 +127,9 @@ Let's look into the code in detail:
 import SwiftIO
 import MadBoard
 ```
-[SwiftIO](https://swiftioapi.madmachine.io/) consists of all the functionalities to control your board. All programs must first reference it so you can use everything in it, like classes and functions.
+[SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) consists of all the functionalities to control your board. All programs must first reference it so you can use everything in it, like classes and functions.
 
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) defines the corresponding pin id of the SwiftIO board. The pins of different boards are different. So this library tells the IDE you are dealing with the SwiftIO board, not any others. Then you can use the id in it.
+[MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) defines the corresponding pin ids of all boards, including the SwiftIO board. Go to [this guide](../../overview/pin-id) if you are confused about all these ids.
 
 ```swift
 let led = DigitalOut(Id.BLUE)
@@ -127,32 +138,36 @@ let led = DigitalOut(Id.BLUE)
 Before you set a specific pin, you need to initialize it. 
 
 1. First, declare a constant: use the keyword `let` followed by a constant name `led`.
-2. Then make it an instance of `DigitalOut` class and initialize that pin.
+2. Then make it an instance of `DigitalOut` class to initialize that pin.
 3. To initialize the pin, you need to indicate its `id`. All ids are in an enumeration, and the built-in RGB LEDs use the id RED, GREEN, or BLUE. Thus the id of blue LED here is written as `Id.BLUE` using dot syntax.
 
 ```swift
 while true { 
-    led.write(true) 
-    sleep(ms: 1000) 
-    led.write(false) 
-    sleep(ms: 1000)
+
 }
 ```
 
-In the dead loop **while true**, all code in the brackets will run over and over again unless you power off the board.
+Within the dead loop `while true`, the code will run over and over again unless you power off the board.
 
-The method `write(_:)` is used to set the pin to output high or low voltage. Its parameter is a boolean type: `true` corresponds to a high level, and `false` corresponds to a low level. And as mentioned above, you need to set a low voltage to turn on the LED.
+```swift
+led.write(true)
+```
 
-The function `sleep(ms:)` will stop the microcontroller's work for a specified period. It needs a period in milliseconds as its parameter. It is a global function in the library, so you can directly use it in your code.
+The method `write(_:)` sets the pin to output high or low voltage. Its parameter is a boolean type: `true` corresponds to a high level, and `false` corresponds to a low level. As mentioned above, The onboard LED is connected to 3.3V internally. If you set it to high voltage, there will be no current. If you apply low voltage, it will be on.
+
+```swift
+sleep(ms: 1000)
+```
+
+The function `sleep(ms:)` will stop the microcontroller's work for a specified period. The period is specified in milliseconds. It is a global function in the library, so you can directly use it in your code.
 
 So the code above makes LED  alternate between off and on every second.
 
 ## Reference
 
-[DigitalOut](https://swiftioapi.madmachine.io/Classes/DigitalOut.html) - set whether the pin output a high or low voltage.
+[DigitalOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout) - set whether a digital pin outputs a high or low voltage.
 
+[sleep(ms:)](https://madmachineio.github.io/SwiftIO/documentation/swiftio/sleep(ms:)) - suspend the microcontroller's work for a specified time, measured in milliseconds.
 
-[`sleep(ms:)`](https://swiftioapi.madmachine.io/Functions.html#/s:7SwiftIO5sleep2msySi_tF) - suspend the microcontroller's work and thus make the current state last for a specified time, measured in milliseconds.
-
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.
 

@@ -11,7 +11,7 @@ In this mission, you will use another kind of motor, the servo motor. The angle 
 
 ## What you need
 
-The parts you will need are all included in the [Maker kit](https://www.madmachine.io/product-page/maker-kit-for-swiftio).
+The parts you will need are all included in the [Maker kit](../../overview/hardware/maker-kit).
 
 - SwiftIO board
 - Shield
@@ -22,11 +22,9 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Circuit
 
-1. Place the shield on top of your SwiftIO board.
-
-2. Connect the potentiometer module to pin A0 using a 4-pin cable.
-
-3. Connect the servo to the pin PWM4A. The servo has three wires: the ground wire is brown, the power wire is red, and the signal wire is orange.
+1. Plug the shield on top of your SwiftIO board.
+2. Connect the **potentiometer** module to pin **A0** using a 4-pin cable.
+3. Connect the **servo** to the pin PWM4A as below. The servo has three wires: the ground wire is brown, the power wire is red, and the signal wire is orange.
 
 <img
   src={require('./img/servoSchematic.png').default}
@@ -36,10 +34,11 @@ The parts you will need are all included in the [Maker kit](https://www.madmachi
 
 ## Example code
 
+Open the project `Mission8_Servo_Motors` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
 ```swift
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
-
 // Import the board library to use the Id of the specific board.
 import MadBoard
 
@@ -48,7 +47,7 @@ let a0 = AnalogIn(Id.A0)
 let servo = PWMOut(Id.PWM4A)
 
 while true {
-    // Read the analog value and return a value between 0.0 and 1.0.
+    // Read the analog value in percentage.
     let value = a0.readPercent() 
     // Calculate the value to get the pulse duration.
     let pulse = Int(500 + 2000 * value) 
@@ -91,14 +90,14 @@ This servo needs the pulse to be in the range of 0.5 to 2.5ms. You may also meet
 import SwiftIO
 import MadBoard
 ```
-Import the two libraries: [SwiftIO](https://swiftioapi.madmachine.io/) and [SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of the SwiftIO board. **SwiftIOBoard** defines the pin name of the board.
+First, import the two libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of all boards. **MadBoard** defines the pin name of the board.
 
 
 ```swift
 let a0 = AnalogIn(Id.A0)
 let servo = PWMOut(Id.PWM4A)
 ```
-Initialize the analog pin A0 for the potentiometer and the PWM pin PWM4A for the motor.
+Initialize the analog pin A0 for the potentiometer and the PWM pin PWM4A for the servo.
 
 ```swift
 let value = a0.readPercent() 
@@ -108,13 +107,14 @@ sleep(ms: 20)
 ```
 In the dead loop, read the input value in percentage, so you get a value between 0 and 1.
 
-You will use this method `set(period:pulse:)` to set the PWM. The period is in microseconds, so it is 20000us. The pulse should be the number between 0.5ms to 2.5ms. So the value will be matched into this range by doing some calculations.
+You will use this method `set(period:pulse:)` to set the PWM. 
+* The period is in microseconds, so it is 20000us. 
+* The pulse should be the number between 0.5ms to 2.5ms. So the value will be matched into this range by doing some calculations.
 
 ## Reference
 
-[PWMOut](https://swiftioapi.madmachine.io/Classes/PWMOut.html) - set the PWM signal.
+[PWMOut](https://madmachineio.github.io/SwiftIO/documentation/swiftio/pwmout) - set the PWM signal.
 
-[AnalogIn](https://swiftioapi.madmachine.io/Classes/AnalogIn.html) - read the voltage from an analog pin.
+[AnalogIn](https://madmachineio.github.io/SwiftIO/documentation/swiftio/analogin) - read the voltage from an analog pin.
 
-
-[SwiftIOBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) - find the corresponding pin id of SwiftIO board.
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.
