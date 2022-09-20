@@ -185,41 +185,44 @@ It is a useful tool to debug your code if there is something unexpected in your 
 
 A serial monitor is like a link between your board and the computer. You could view the value transmitted between them by using the function `print(_:)`. 
 
-When you download the code, you connect the download port on the board to the computer. Now you need to connect the serial port on the shield.
+If you don't have a preferred serial tool, you could download and install the [Serial Studio](https://serial-studio.github.io/).
 
-When you install the MadMachine extension for VS Code, a serial tool **Serial Port Helper** will installed automatically. Of course you cound use any other tool that you're familiar with.
+1. Open Serial Studio.
 
-1. Click the icon as shown below to open the tool. 
+2. Choose the correct port for your board. The port name may be different. If you are not sure which port, you could disconnect your board and see which one disappears. 
 
-  It will show all available ports. In this case, the second port is the one needed. The port name may be different for your board. If you are not sure which is the right one, you can disconnect your board and then connect again to see which port disappears and reappears.
+<img
+  src={require('./img/port.png').default}
+  alt="cannot open " width="960"
+/>
 
-  <img
-    src={require('./img/serial.png').default}
-    alt="Serial tool" width="960"
-  />
+<img
+  src={require('./img/selectPort.png').default}
+  alt="cannot open " width="960"
+/>
 
-2. Click the port to connect it. As you see, the red dot next to the port name changes to green. The port is successfully connected.
+3. Make sure the baud rate is **115200**. Choose **NL + CR** for newline and carriage return. And choose **Plain text** instead of Hexadecimal for better understanding.
 
-  <img
-    src={require('./img/connectPort.png').default}
-    alt="Connect the serial port" width="960"
-  />
+<img
+  src={require('./img/serialSettings.png').default}
+  alt="cannot open " width="960"
+/>
 
-3. Check the serial setting. Click the right caret to show the settings. Set the **Baud Rate to 115200**. 
 
-  BTW, if View Mode is in Hex Mode, you can click on it again to change to String Mode, since hex values are not easy to understand.
+4. Click **Connect**.
 
-  <img
-    src={require('./img/baudrate.png').default}
-    alt="Set the serial" width="960"
-  />
+<img
+  src={require('./img/connect.png').default}
+  alt="cannot open " width="960"
+/>
 
-4. The serial communication is now set up. If there is data transmission, you should see the messages on OUTPUT window.
+Once connected, the Connect button will change to Disconnect.
 
-  <img
-    src={require('./img/printReading.png').default}
-    alt="Print values on serial monitor" width="960"
-  />
+<img
+  src={require('./img/connected.png').default}
+  alt="cannot open " width="960"
+/>
+
 
 ### 2. Control buzzer sound output
 You will use a potentiometer to change the sound of the buzzer. The pitch becomes higher when you turn it clockwise and lower when you turn it anticlockwise. 

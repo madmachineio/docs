@@ -30,35 +30,3 @@ This problem may be due to these reasons:
 4. There is a known issue with USB compatibility on Mac. There are already a lot of discussions about it on [Reddit](https://www.reddit.com/r/mac/comments/gp5b1z/usb_20_issues_on_new_macbook_pro_13_2020/), [apple](https://discussions.apple.com/thread/251356598).
 
 To solve problems 1 and 2, we offer a high-quality USB cable and a Kingston microSD card along with our board. But we still got feedback that the USB drive did not appear. In this situation, there is a temporary solution: use a USB card reader to copy the `.bin` file. At the same time, we’ll continue to improve the compatibility of the firmware.
-
-## Cannot open and build your project
-
-**Phenomenon**
-
-If you use MadMachine IDE and see the message as below: 
-
-<img
-  src={require('./img/errorMessage.png').default}
-  alt="IDE error message" width="960"
-/>
-
-or use the MadMachine for VS Code and see similar messages as below when building your project:
-
-```
-......
-/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/System/Library/Frameworks/Combine.framework/Modules/Combine.swiftmodule/x86_64-apple-macos.swiftinterface:1:1: error: failed to build module 'Combine' from its module interface; the compiler that produced it, 'Apple Swift version 5.5.2 (swiftlang-1300.0.46.202 clang-1300.0.29.30)', may have used features that aren't supported by this compiler, 'Swift version 5.4.2 (swift-5.4.2-RELEASE)'
-// swift-interface-format-version: 1.0
-......
-```
-
-It is due to version incompatibility. Our SDK now supports Swift 5.4, but the latest version of Xcode doesn't support it.
-
-**Solution**
-
-We now find two temporary solutions:
-
-1. The Xcode 13.0 supports Swift 5.4. You could **[download](https://developer.apple.com/download/more/) and reinstall the Xcode 13.0** if it's convenient for you.
-
-2. If you're familiar with git, you could **[fork this project](https://github.com/madmachineio/Template) and then edit your own project**. The project would be compiled automatically into an executable file after you push it to Github. It will take several minutes. You could then download the generated bin file to your computer and copy it to the SD card in your SwiftIO board.
-
-We're trying to solve this problem. Really sorry for such great inconvenience😫

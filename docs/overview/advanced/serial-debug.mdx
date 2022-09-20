@@ -1,43 +1,114 @@
 ---
 title: Serial and debugging
-description: Learn to use serial monitor and debug your project.
+description: Learn to use the serial tool and debug your project.
 ---
 
 # Serial and debugging
 
-You must have met similar situations: your code is downloaded to the board but doesn't work as you have predicted. Even if you press the reset button, the board is still unresponsive. You are unable to see what is happening inside your device. At that time, you need to debug your code.
+You must have met similar situations: your code is downloaded to the board but doesn't work as you have predicted; even if you press the reset button, the board is still unresponsive. You are unable to see what is happening inside your device, so at that time, you need to debug your code.
 
-There are two common ways. One is to step through it, which is not supported yet. So the best way by now is to print the information out to find the problem.
+There are two common ways. One is to step through it, which is not supported yet. So the best way now is to print the information out to find the problem.
+
+## Step 1: Install and open your serial tool
+
+If you don't have a serial tool on your computer, you could download the [Serial Studio](https://serial-studio.github.io/) according to your operating system. Then unzip and install it.
+
+![Serial Studio](./img/serialStudio.png)
 
 
-## Step 1: Add `print()` in your code
-Add the function `print()` to print all values out in case of any unexpected mistakes. There are so many possibilities. Only in this way you know which step goes wrong.
+<details>
+    <summary> Solution: A popup says that Serial Studio cannot be opened because the developer cannot be verified. </summary>
+
+1. Click **Cancel**.
+
+<img
+  src={require('./img/cannotOpen.png').default}
+  alt="cannot open " width="240"
+/>
+
+2. Click  / **System Preferences**.
+
+<img
+  src={require('./img/systemPreferences.png').default}
+  alt="cannot open " width="360"
+/>
+
+3. Click **Security & Privacy**.
+
+<img
+  src={require('./img/securityPrivacy.png').default}
+  alt="cannot open " width="480"
+/>
+
+
+4. Click **Open Anyway**.
+
+<img
+  src={require('./img/openAnyway.png').default}
+  alt="cannot open " width="480"
+/>
+
+5. Click **Open**.
+
+<img
+  src={require('./img/openSerialStudio.png').default}
+  alt="cannot open " width="240"
+/>
+
+And that's it.
+
+</details>
+
+
+## Step 2: Add `print()` in your code
+
+Add the function `print()` to print all values out in case of any unexpected mistakes. There are so many possibilities. Only in this way do you know which step goes wrong.
 
 After finishing the code, download the code to your board.
 
-## Step 2: Connect the board to the computer through the serial port
-Now change the USB connection from the download port to the serial port. The Serial port is for serial communication between your board and computer. 
+## Step 3: Connect the board to your computer
 
-The microcontrollers use serial communication, but your computer hardly uses it, so a serial to USB converter is added to the board to allow the data transmission between them. 
+Now connect the board to your computer through the serial port. If you are not sure which is the correct one, check the [introduction of your board here](../hardware/overview).
 
-SwiftIO Feather is a simplified version and doesn't have a serial port, but you can find a compatible shield with the port. SwiftIO board has two ports, so make sure you connect the serial port.
-
+It's for serial communication between your board and computer. The microcontrollers use serial communication, but your computer hardly uses it, so a serial to USB converter is added to the board to allow data transmission. 
 
 
-## Step 3: Open serial monitor
+## Step 4: Set your software
 
-1. The serial extension is on the left bar. Click on the icon, and you will see the available ports. There is a small red dot before each port, which means the ports are not connected.
+1. Choose the correct port for your board. The port name may be different. If you are not sure which port, you could disconnect your board and see which one disappears. 
 
-![Serial port](./img/serial.png)
+<img
+  src={require('./img/port.png').default}
+  alt="cannot open " width="960"
+/>
 
-2. Click the port for your board. You would notice the red dot turns green, and the port is connected successfully. If you are not sure which port, you can disconnect your board and see which one disappears.
+<img
+  src={require('./img/selectPort.png').default}
+  alt="cannot open " width="960"
+/>
 
-![Connect serial port](./img/connectPort.png)
+2. Make sure the baud rate is **115200**. Choose **NL + CR** for newline and carriage return. And choose **Plain text** instead of Hexadecimal for better understanding.
 
-3. Unfold the port menu. Click the **Baud Rate** and set it to 115200. Click the **View Mode** to change it to String Mode.
+<img
+  src={require('./img/serialSettings.png').default}
+  alt="cannot open " width="960"
+/>
 
-![Set baud rate](./img/baudrate.png)
 
-## Step 4: Find the problem
+3. Click **Connect**.
 
-Press the reset button on your board to restart the code. When the code runs again, you can see the values on the output window. According to the printed values, you can see which line of code is not executed or has an error by mistake. 
+<img
+  src={require('./img/connect.png').default}
+  alt="cannot open " width="960"
+/>
+
+Once connected, the Connect button will change to Disconnect.
+
+<img
+  src={require('./img/connected.png').default}
+  alt="cannot open " width="960"
+/>
+
+## Step 5: View values
+
+Press the reset button on your board to restart the code. When the code runs again, you can check the values on the output window. According to the printed values, you can infer which line of code is not executed or has an error by mistake. 
