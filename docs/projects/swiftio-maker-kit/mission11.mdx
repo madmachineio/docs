@@ -97,8 +97,9 @@ let package = Package(
                 "SwiftIO",
                 "MadBoards",
                 // highlight-next-line
-                "MadDrivers"]),
-        .testTarget(
+                .product(name: "SHT3x", package: "MadDrivers"),
+                // highlight-next-line
+                .product(name: "LCD1602", package: "MadDrivers")]),
             name: "Mission11_Reproduce_Mission10Tests",
             dependencies: ["Mission11_Reproduce_Mission10"]),
     ]
