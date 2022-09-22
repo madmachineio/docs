@@ -9,106 +9,77 @@ You must have met similar situations: your code is downloaded to the board but d
 
 There are two common ways. One is to step through it, which is not supported yet. So the best way now is to print the information out to find the problem.
 
-## Step 1: Install and open your serial tool
-
-If you don't have a serial tool on your computer, you could download the [Serial Studio](https://serial-studio.github.io/) according to your operating system. Then unzip and install it.
-
-![Serial Studio](./img/serialStudio.png)
+Let's see how you use the **Serial Monitor** to view the output. It is installed when you install the [MadMachine for VS code](../getting-started/software-prerequisite). And if you want another serial software, we find [Serial Studio](https://serial-studio.github.io/) works well.
 
 
-<details>
-    <summary> Solution: A popup says that Serial Studio cannot be opened because the developer cannot be verified. </summary>
-
-1. Click **Cancel**.
-
-<img
-  src={require('./img/cannotOpen.png').default}
-  alt="cannot open " width="240"
-/>
-
-2. Click  / **System Preferences**.
-
-<img
-  src={require('./img/systemPreferences.png').default}
-  alt="cannot open " width="360"
-/>
-
-3. Click **Security & Privacy**.
-
-<img
-  src={require('./img/securityPrivacy.png').default}
-  alt="cannot open " width="480"
-/>
-
-
-4. Click **Open Anyway**.
-
-<img
-  src={require('./img/openAnyway.png').default}
-  alt="cannot open " width="480"
-/>
-
-5. Click **Open**.
-
-<img
-  src={require('./img/openSerialStudio.png').default}
-  alt="cannot open " width="240"
-/>
-
-And that's it.
-
-</details>
-
-
-## Step 2: Add `print()` in your code
+## Step 1: Add `print()` in your code
 
 Add the function `print()` to print all values out in case of any unexpected mistakes. There are so many possibilities. Only in this way do you know which step goes wrong.
 
 After finishing the code, download the code to your board.
 
-## Step 3: Connect the board to your computer
+## Step 2: Connect the board to your computer
 
 Now connect the board to your computer through the serial port. If you are not sure which is the correct one, check the [introduction of your board here](../hardware/overview).
 
 It's for serial communication between your board and computer. The microcontrollers use serial communication, but your computer hardly uses it, so a serial to USB converter is added to the board to allow data transmission. 
 
 
-## Step 4: Set your software
+## Step 3: Connect the serial port
 
-1. Choose the correct port for your board. The port name may be different. If you are not sure which port, you could disconnect your board and see which one disappears. 
+1. If the terminal window doesn't show in VS code, open it by clicking **Terminal** / **New Terminal**.
 
 <img
-  src={require('./img/port.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/openTerminal.png').default}
+  alt="Open a new terminal" width="960"
 />
+
+2. Click **SERIAL MONITOR** tab. You will see all settings for the serial port.
+
+<img
+  src={require('./img/clickSerialMonitor.png').default}
+  alt="Open serial monitor window" width="960"
+/>
+
+<img
+  src={require('./img/serialMonitor.png').default}
+  alt="Serial monitor window" width="960"
+/>
+
+3. Click on the **Port** dropdown to choose the port of your board.
 
 <img
   src={require('./img/selectPort.png').default}
-  alt="cannot open " width="960"
+  alt="Select port" width="960"
 />
 
-2. Make sure the baud rate is **115200**. Choose **NL + CR** for newline and carriage return. And choose **Plain text** instead of Hexadecimal for better understanding.
+4. Click on the **Baud rate** dropdown and select **115200**.
 
 <img
-  src={require('./img/serialSettings.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/baudrate.png').default}
+  alt="Select baud rate" width="960"
 />
 
-
-3. Click **Connect**.
+5. For other detailed settings, click **Additional Settings** button. Then click the button again to hide the settings.
 
 <img
-  src={require('./img/connect.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/additionalSettings.png').default}
+  alt="Open Additional Settings" width="960"
 />
 
-Once connected, the Connect button will change to Disconnect.
+6. Click the button **Start Monitoring**. The values will then be printed on the window.
 
 <img
-  src={require('./img/connected.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/startMonitoring.png').default}
+  alt="Click Start Monitoring" width="960"
 />
 
-## Step 5: View values
+<img
+  src={require('./img/print.png').default}
+  alt="Values printed on the window" width="960"
+/>
+
+
+## Step 4: View values
 
 Press the reset button on your board to restart the code. When the code runs again, you can check the values on the output window. According to the printed values, you can infer which line of code is not executed or has an error by mistake. 

@@ -24,7 +24,7 @@ The parts you will use are all included in the [Maker kit](../../overview/hardwa
 2. Connect the **buzzer** module to pin **PWM2B** (D10).
 
 <img
-  src={require('./img/buzzerSchematic.png').default}
+  src={require('./img/buzzerMusicSchematic.png').default}
   alt="Circuit diagram" width="480"
 />
 
@@ -62,7 +62,7 @@ var bpm = 60
 // Initialize a player to get ready for the music.
 let player = PWMTone(PWMOut(Id.PWM2B), bpm: bpm)
 
-while true {
+for _ in 0..<3 {
     // Play the music.
     player.play(track: Music.twinkle)
 
@@ -74,6 +74,10 @@ while true {
     halfStep += 12
     player.setFixedHalfStep(halfStep)
 
+    sleep(ms: 1000)
+}
+
+while true {
     sleep(ms: 1000)
 }
 ```
