@@ -69,37 +69,41 @@ You will blink the LED module and onboard blue LED with different speed.
 
 **Example code**
 
-```swift
+```swift title="C01S02TimerLEDToggle.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-// Initialize a digital pin for LED module.
-let led = DigitalOut(Id.D19)
+@main
+public struct C01S02TimerLEDToggle {
+    public static func main() {
+        // Initialize a digital pin for LED module.
+        let led = DigitalOut(Id.D19)
 
-// Initialize the onboard blue LED.
-let blueLed = DigitalOut(Id.BLUE)
+        // Initialize the onboard blue LED.
+        let blueLed = DigitalOut(Id.BLUE)
 
-// Initialize a timer for 1500ms.
-let timer = Timer(period: 1500)
+        // Initialize a timer for 1500ms.
+        let timer = Timer(period: 1500)
 
-// Define a new function used to toggle the LED.
-func toggleLed() {
-    led.toggle()
+        // Define a new function used to toggle the LED.
+        func toggleLed() {
+            led.toggle()
+        }
+
+        // Set an interrupt to reverse the LED state every time the interrupt occurs.
+        timer.setInterrupt(toggleLed)
+
+        // Blink onboard blue LED.
+        while true {
+            blueLed.high()
+            sleep(ms: 500)
+
+            blueLed.low()
+            sleep(ms: 500)
+        }
+    }
 }
-
-// Set an interrupt to reverse the LED state every time the interrupt occurs.
-timer.setInterrupt(toggleLed)
-
-// Blink onboard blue LED.
-while true {
-    blueLed.high()
-    sleep(ms: 500)
-
-    blueLed.low()
-    sleep(ms: 500)
-}
-
 ```
 **Code analysis**
 

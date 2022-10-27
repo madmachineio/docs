@@ -343,24 +343,29 @@ In your first try, let’s make the LED blink - on for one second, then off for 
 
 **Example code**
 
-```swift
+```swift title="C01S01LEDBlink.swift" showLineNumbers
 // First import the SwiftIO and MadBoard libraries into the project to use related functionalities.
 import SwiftIO
 import MadBoard
 
-// Initialize the specified pin used for digital output.
-let led = DigitalOut(Id.D19)
+@main
+public struct C01S01LEDBlink {
+    public static func main() {
+        // Initialize the specified pin used for digital output.
+        let led = DigitalOut(Id.D19)
 
-// The code in the loop will run over and over again. 
-while true {
-    //Output high voltage to turn on the LED.   
-    led.write(true)
-    // Keep the LED on for 1 second.
-    sleep(ms: 1000)
+        // The code in the loop will run over and over again. 
+        while true {
+            //Output high voltage to turn on the LED.   
+            led.write(true)
+            // Keep the LED on for 1 second.
+            sleep(ms: 1000)
 
-    // Turn off the LED and then keep that state for 1s.
-    led.write(false)
-    sleep(ms: 1000)
+            // Turn off the LED and then keep that state for 1s.
+            led.write(false)
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -454,47 +459,52 @@ In this case, `ms` serves as the argument label by default, so it's necessary: `
 
 Have you heard of Morse code? It encodes characters into a sequence of dashes and dots to send messages. To reproduce it, you could use long flash and short flash respectively. In morse code, s is represented by three dots, o is represented by three dashes. So the SOS signal needs three short flashes, three long flashes, and then three short flashes again. 
 
-```swift
+```swift title="C01S01LEDMorseCode.swift" showLineNumbers
 // Import the libraries to use all their functionalities.
 import SwiftIO
 import MadBoard
 
-// Initialize the digital output pin.
-let led = DigitalOut(Id.D19)
+@main
+public struct C01S01LEDMorseCode {
+    public static func main() {
+        // Initialize the digital output pin.
+        let led = DigitalOut(Id.D19)
 
-// Define the LED states to represent the letter s and o.
-let sSignal = [false, false, false]
-let oSignal = [true, true ,true]
+        // Define the LED states to represent the letter s and o.
+        let sSignal = [false, false, false]
+        let oSignal = [true, true ,true]
 
-// Set the LED blink rate according to the values in the array.
-func send(_ values: [Bool], to light: DigitalOut) {
-    // The duration of slow flash and quick flash.
-    let long = 1000
-    let short = 500
+        // Set the LED blink rate according to the values in the array.
+        func send(_ values: [Bool], to light: DigitalOut) {
+            // The duration of slow flash and quick flash.
+            let long = 1000
+            let short = 500
 
-    // Iterate all the values in the array. 
-    // If the value is true, the LED will be on for 1s, which is a slow flash.
-    // And if it’s false, the LED will be on for 0.5s, which is a quick flash.
-    for value in values {
-        light.high()
-        if value {
-            sleep(ms: long)
-        } else {
-            sleep(ms: short)
+            // Iterate all the values in the array. 
+            // If the value is true, the LED will be on for 1s, which is a slow flash.
+            // And if it’s false, the LED will be on for 0.5s, which is a quick flash.
+            for value in values {
+                light.high()
+                if value {
+                    sleep(ms: long)
+                } else {
+                    sleep(ms: short)
+                }
+                light.low()
+                sleep(ms: short)
+            }
         }
-        light.low()
-        sleep(ms: short)
-    }
-}
 
-// Blink the LED.
-// At first, the LED starts 3 fast blink to represent s, then 3 slow blink to represent o, and 3 fast blink again.
-// Wait 1s before repeating again.
-while true {
-    send(sSignal, to: led)
-    send(oSignal, to: led)
-    send(sSignal, to: led)
-    sleep(ms: 1000)
+        // Blink the LED.
+        // At first, the LED starts 3 fast blink to represent s, then 3 slow blink to represent o, and 3 fast blink again.
+        // Wait 1s before repeating.
+        while true {
+            send(sSignal, to: led)
+            send(oSignal, to: led)
+            send(sSignal, to: led)
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 

@@ -5,9 +5,9 @@ description: Learn about PWM signal. You will use it to make a buzzer produce so
 
 # Simple melody with buzzer 
 
-Now it’s time to make some noise🎶. 
+Now it's time to make some noise🎶. 
 
-In this tutorial, you’ll work with a new component - buzzer. You'll make it play a scale. Besides, you will adjust LED brightness with PWM signal. Let’s figure it out together. 
+In this tutorial, you'll work with a new component - buzzer. You'll make it play a scale. Besides, you will adjust LED brightness with PWM signal. Let's figure it out together. 
 
 **Learning goals**
 * Clarify the working principle of the PWM signal.
@@ -149,30 +149,35 @@ In this project, the buzzer will play the musical scale.
 
 **Example code**
 
-```swift
+```swift title="C01S03Buzzer.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
-// Initialize a PWM pin for the buzzer.
-let buzzer = PWMOut(Id.PWM5A)
+@main
+public struct C01S03Buzzer {
+    public static func main() {
+        // Initialize a PWM pin for the buzzer.
+        let buzzer = PWMOut(Id.PWM5A)
 
-// Declare a constant to store an array of frequencies. 
-// Consult the pitch-frequency chart above and list all the necessary frequencies in order in the array.
-let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
+        // Declare a constant to store an array of frequencies. 
+        // Consult the pitch-frequency chart above and list all the necessary frequencies in order in the array.
+        let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
 
-// Use the for-in loop to iterate through each frequency.
-// Set the frequency of the PWM signal to generate sounds. Each note will last 1s.
-for frequency in frequencies {
-    buzzer.set(frequency: frequency, dutycycle: 0.5)
-    sleep(ms: 1000)
-}
+        // Use the for-in loop to iterate through each frequency.
+        // Set the frequency of the PWM signal to generate sounds. Each note will last 1s.
+        for frequency in frequencies {
+            buzzer.set(frequency: frequency, dutycycle: 0.5)
+            sleep(ms: 1000)
+        }
 
-// Stop the buzzer sound.
-buzzer.suspend()
+        // Stop the buzzer sound.
+        buzzer.suspend()
 
-while true {
-    sleep(ms: 9999)
+        while true {
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -232,48 +237,53 @@ So let’s try a breathing LED! You may notice it when a new message comes on yo
 
 **Example code**
 
-```swift
+```swift title="C01S03PWMLed.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
-// Initialize a PWM output pin for the LED.
-let led = PWMOut(Id.PWM4A)
+@main
+public struct C01S03PWMLed {
+    public static func main() {
+        // Initialize a PWM output pin for the LED.
+        let led = PWMOut(Id.PWM4A)
 
-// Set the PWM output to control the LED. 
-// The frequency is set to 1000Hz or can be other value. 
-// The duty cycle is 0 in the beginning so LED keeps turning off.
-led.set(frequency: 1000, dutycycle: 0)
+        // Set the PWM output to control the LED. 
+        // The frequency is set to 1000Hz or can be other value. 
+        // The duty cycle is 0 in the beginning so LED keeps turning off.
+        led.set(frequency: 1000, dutycycle: 0)
 
-// Store the maximum and minimum values of the duty cycle to two constants. 
-let maxDutycycle: Float = 1.0
-let minDutycycle: Float = 0.0
+        // Store the maximum and minimum values of the duty cycle to two constants. 
+        let maxDutycycle: Float = 1.0
+        let minDutycycle: Float = 0.0
 
-// Set the change of duty cycle for each action.
-let stepDutycycle: Float = 0.01
+        // Set the change of duty cycle for each action.
+        let stepDutycycle: Float = 0.01
 
-// Create a variable to store the varying duty cycle.
-var dutycycle: Float = 0.0
+        // Create a variable to store the varying duty cycle.
+        var dutycycle: Float = 0.0
 
-// A condition used to decide whether to increase or decrease the duty cycle. 
-var upDirection = true
+        // A condition used to decide whether to increase or decrease the duty cycle. 
+        var upDirection = true
 
-while true {
-    // Output a PWM signal with the specified duty cycle to control LED brightness.
-    led.setDutycycle(dutycycle)
-    // Keep each brightness last for 10ms, or you may not see the changes.
-    sleep(ms: 10)
+        while true {
+            // Output a PWM signal with the specified duty cycle to control LED brightness.
+            led.setDutycycle(dutycycle)
+            // Keep each brightness last for 10ms, or you may not see the changes.
+            sleep(ms: 10)
 
-    // Increase or decrease the duty cycle within its range according to the value of upDirection.
-    if upDirection {
-        dutycycle += stepDutycycle
-        if dutycycle >= maxDutycycle {
-            upDirection = false
-        }
-    } else {
-        dutycycle -= stepDutycycle
-        if dutycycle <= minDutycycle {
-            upDirection = true
+            // Increase or decrease the duty cycle within its range according to the value of upDirection.
+            if upDirection {
+                dutycycle += stepDutycycle
+                if dutycycle >= maxDutycycle {
+                    upDirection = false
+                }
+            } else {
+                dutycycle -= stepDutycycle
+                if dutycycle <= minDutycycle {
+                    upDirection = true
+                }
+            }
         }
     }
 }
@@ -365,50 +375,55 @@ You'll adjust the brightness of the LED using two buttons: one is reserved to in
 **Example code**
 
 
-```swift
+```swift title="C01S03ButtonPWM.swift" showLineNumbers
 // Import two necessary libraries.
 import SwiftIO
 import MadBoard
 
-// Initialize the PWM pin.
-let led = PWMOut(Id.PWM4A)
+@main
+public struct C01S03ButtonPWM {
+    public static func main() {
+        // Initialize the PWM pin.
+        let led = PWMOut(Id.PWM4A)
 
-// Set the frequency of the PWM signal and set the duty cycle to 0 to keep the LED off.
-led.set(frequency: 1000, dutycycle: 0)
+        // Set the frequency of the PWM signal and set the duty cycle to 0 to keep the LED off.
+        led.set(frequency: 1000, dutycycle: 0)
 
-// Store the max and min values of duty cycle to two constants. 
-let maxDutycycle: Float = 1.0
-let minDutycycle: Float = 0.0
+        // Store the max and min values of duty cycle to two constants. 
+        let maxDutycycle: Float = 1.0
+        let minDutycycle: Float = 0.0
 
-// The variation of duty cycle per button press.
-let stepDutycycle: Float = 0.1
+        // The variation of duty cycle per button press.
+        let stepDutycycle: Float = 0.1
 
-// Create a variable to store the value of duty cycle.
-var dutycycle: Float = 0.0
+        // Create a variable to store the value of duty cycle.
+        var dutycycle: Float = 0.0
 
-// Initialize the digital pins. downButton is to dim the LED and the upButton is to brighten the LED.
-let downButton = DigitalIn(Id.D1)
-let upButton = DigitalIn(Id.D21)
+        // Initialize the digital pins. downButton is to dim the LED and the upButton is to brighten the LED.
+        let downButton = DigitalIn(Id.D1)
+        let upButton = DigitalIn(Id.D21)
 
-// Each time this button is pressed, the LED will dim a little until it reaches the minimum brightness.
-downButton.setInterrupt(.rising) {
-    dutycycle -= stepDutycycle
-    dutycycle = max(dutycycle, minDutycycle)
+        // Each time this button is pressed, the LED will dim a little until it reaches the minimum brightness.
+        downButton.setInterrupt(.rising) {
+            dutycycle -= stepDutycycle
+            dutycycle = max(dutycycle, minDutycycle)
 
-    led.setDutycycle(dutycycle)
-}
+            led.setDutycycle(dutycycle)
+        }
 
-// Once this button is pressed, the LED becomes brighter until it reaches the maximum brightness.
-upButton.setInterrupt(.rising) {
-    dutycycle += stepDutycycle
-    dutycycle = min(dutycycle, maxDutycycle)
+        // Once this button is pressed, the LED becomes brighter until it reaches the maximum brightness.
+        upButton.setInterrupt(.rising) {
+            dutycycle += stepDutycycle
+            dutycycle = min(dutycycle, maxDutycycle)
 
-    led.setDutycycle(dutycycle)
-}
+            led.setDutycycle(dutycycle)
+        }
 
-// Keep the board sleeping when the button is not pressed.
-while true {
-    sleep(ms: 1000)
+        // Keep the board sleeping when the button is not pressed.
+        while true {
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 

@@ -39,27 +39,28 @@ Ok, the circuit is complete. It is so convenient, isn't it?
 
 Open the project `Mission3_Push_Button` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift title="Mission3_Push_Button.swift" showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the red onboard led.
-let led = DigitalOut(Id.RED) 
+@main
+public struct Mission3_Push_Button {
 
-// Initialize the input pin D10 on the board.
-let button = DigitalIn(Id.D10) 
+    public static func main() {
+        let led = DigitalOut(Id.RED) // Initialize the red onboard led.
+        let button = DigitalIn(Id.D10) // Initialize an input pin D10 on board.
 
-while true {
-    // Read the button value. If it is pressed, turn on the led.
-    if button.read() {
-        led.write(false)
-    } else {
-        led.write(true)
+        while true {
+            // Read the button value. If it is pressed, turn on the led.
+            if button.read() {
+                led.write(false)
+            } else {
+                led.write(true)
+            }
+
+            sleep(ms: 10)
+        }
     }
-    // Slow the reading process a bit without affecting the result.
-    sleep(ms: 10)
 }
 ```
 

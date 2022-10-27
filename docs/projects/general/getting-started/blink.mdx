@@ -8,11 +8,11 @@ description: Blink onboard LED and learn about digital signals.
 Let's first come to an easy beginner project - blink the onboard LED. The LED will be on and off per second. It is always the first try when you begin to program the microcontrollers, like a hello world project. 
 
 ## What you need
-- SwiftIO Feather (or SwiftIO board) 
+- SwiftIO Feather board (or SwiftIO board)
 
 
-:::note
-All projects in the section **General** will use SwiftIO Feather as an example. You can also use the SwiftIO board instead. If so, you need to [change the board type](../../../overview/advanced/change-board) and code (if necessary) accordingly.
+:::info
+All projects in the section **General** will use the SwiftIO Feather board as an example. You can also use the SwiftIO board instead. If so, you need to [change the board type](../../../overview/advanced/change-board) and code (if necessary) accordingly.
 :::
 
 
@@ -32,29 +32,34 @@ Just plug the board into your computer with a USB cable to download your code.
 ## Example code
 It's time for the code. Let's see how it works.
 
-Open the project `Blink` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`GettingStarted` if you downloaded the folder.
+Open the project `Blink` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`GettingStarted` if you downloaded the all examples.
 
-``` swift
+```swift title="Blink.swift" showLineNumbers
 // Turn on and off the onboard LED continuously.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the onboard green LED with other parameters set to default.
-let green = DigitalOut(Id.GREEN)
+@main
+public struct Blink {
+    public static func main() {
+        // Initialize the onboard green LED with other parameters set to default.
+        let green = DigitalOut(Id.GREEN)
 
-// Blink the LED over and over again.
-while true {
-    // Apply a high voltage and turn off the LED.
-    green.write(true)
-    // Keep the light off for a minute.
-    sleep(ms: 1000)
-    // Apply a low voltage and turn on the LED.
-    green.write(false)
-    // Keep the light on for a minute.
-    sleep(ms: 1000)
+        // Blink the LED over and over again.
+        while true {
+            // Apply a high voltage and turn off the LED.
+            green.write(true)
+            // Keep the light off for a minute.
+            sleep(ms: 1000)
+
+            // Apply a low voltage and turn on the LED.
+            green.write(false)
+            // Keep the light on for a minute.
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -111,7 +116,7 @@ You can find an LED beside the download button on your board. It is a different 
 
 ## Code analysis
 
-``` swift
+```swift
 import SwiftIO
 import MadBoard
 ```
@@ -120,7 +125,18 @@ import MadBoard
 
 [MadBoard](https://github.com/madmachineio/MadBoards) defines the corresponding pin id of the different boards. Go to [this guide](../../../overview/pin-id) if you are confused about the ids.
 
-``` swift
+```swift
+@main
+public struct Blink {
+    public static func main() {
+    
+    }
+}
+```
+
+`@main` signifies the top-level entry point of your program. It comes with a static method `main()`. The program will execute the code there. For convenience, you could put your code within `main()` as the example code.
+
+```swift
 let green = DigitalOut(Id.GREEN)
 ```
 
@@ -128,7 +144,7 @@ Before you set a specific pin, you need to initialize it. `let` is a keyword for
 
 This statement is to create an instance for `DigitalOut` class and initialize that pin. So you need to indicate its id. All ids are in an enumeration, and the built-in RGB LEDs use the id `RED`, `GREEN`, or `BLUE`, thus the id of blue LED here is written as `Id.GREEN` using dot syntax. 
 
-``` swift
+```swift
 while true {
 
 }
@@ -136,13 +152,13 @@ while true {
 
 In the dead loop `while true`, all code in the brackets will run over and over again unless you power off the board. 
 
-``` swift
+```swift
 green.write(true)
 ```
 
 The method `write(_:)` is used to set the pin to output high or low voltage. Its parameter is a boolean type: `true` or `false`: true corresponds to a high level (3.3V) and false corresponds to a low level (0V). And as mentioned above, you need to set a low voltage to turn on the LED.
 
-``` swift
+```swift
 sleep(ms: 1000)
 ```
 

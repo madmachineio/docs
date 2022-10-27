@@ -100,6 +100,6 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 
 SwiftIO Feather board is designed to be easily fitted into any of your projects. So you can choose whether the headers on the board are pre-soldered or not.
 
-Of course, it comes with a learning kit to get started. It's called SwiftIO Circuit Playgrounds. However, it still needs more test and also lack of necessary chips.
+Of course, it comes with a learning kit to get started. It's called [SwiftIO Circuit Playgrounds](./circuit-playgrounds). Now we are redesigning it and guess it will be
 
 Besides, there will be other compatible shields for more usages in the future.

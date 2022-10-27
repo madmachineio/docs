@@ -127,24 +127,29 @@ Let’s start to build a simple LED switch. When you press the button, the LED t
 
 **Example code**
 
-```swift
+```swift title="C01S02ButtonLED.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-// Initialize the input pin for the button and output pin for the LED.
-let led = DigitalOut(Id.D19)
-let button = DigitalIn(Id.D1)
+@main
+public struct C01S02ButtonLED {
+    public static func main() {
+        // Initialize the input pin for the button and output pin for the LED.
+        let led = DigitalOut(Id.D19)
+        let button = DigitalIn(Id.D1)
 
-// Keep repeating the following steps.
-while true {
-    // Read the input pin to check the button state.
-    let value = button.read()
-    // If the value is true which means the button is pressed, turn on the LED. Otherwise, turn off the LED.
-    if value == true {
-        led.write(true)
-    } else {
-        led.write(false)
+        // Keep repeating the following steps.
+        while true {
+            // Read the input pin to check the button state.
+            let value = button.read()
+            // If the value is true which means the button is pressed, turn on the LED. Otherwise, turn off the LED.
+            if value == true {
+                led.write(true)
+            } else {
+                led.write(false)
+            }
+        }
     }
 }
 ```
@@ -231,27 +236,33 @@ With interrupt mechanism, the microcontroller can
 
 **Example code**
 
-```swift
+```swift title="C01S02ButtonInterrupt.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-// Initialize the input pin for the button and output pin for the LED.
-let button = DigitalIn(Id.D1)
-let led = DigitalOut(Id.D19)
+@main
+public struct C01S02ButtonInterrupt {
+    public static func main() {
+        // Initialize the input pin for the button and output pin for the LED.
+        let button = DigitalIn(Id.D1)
+        let led = DigitalOut(Id.D19)
 
-// Define a new function used to toggle the LED.
-func toggleLed() {
-    led.toggle()
+        // Define a new function used to toggle the LED.
+        func toggleLed() {
+            led.toggle()
+        }
+
+        // Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
+        button.setInterrupt(.rising, callback: toggleLed)
+
+        // Keep sleeping if the interrupt hasn't been triggered.
+        while true {
+            sleep(ms: 1000)
+        }
+    }
 }
 
-// Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
-button.setInterrupt(.rising, callback: toggleLed)
-
-// Keep sleeping if the interrupt hasn't been triggered.
-while true {
-    sleep(ms: 9999)
-}
 ```
 
 **Code analysis**
@@ -312,7 +323,7 @@ The function `arithmetic` needs a number and a formula to compute the number. Th
 
 ```swift
 while true {
-    sleep(ms: 9999)
+    sleep(ms: 1000)
 }
 ```
 

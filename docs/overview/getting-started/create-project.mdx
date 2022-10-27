@@ -3,11 +3,11 @@ title: 2. Creating a new project
 description: Create a project using MadMachine extension and write code.
 ---
 
-# 2. Create a new project
+# 2. Creating a new project
 
 Now, you're ready to code. 
 
-1. Click the **Explore** icon on the left bar. Then click the **MadMachine** extension on the bottom to show three buttons. Click **New Project**.
+1. Click the **Explorer** icon on the left bar. Then click the **MadMachine** extension on the bottom to show three buttons. Click **New Project**.
 
 <img
   src={require('./img/create.png').default}
@@ -21,7 +21,11 @@ Now, you're ready to code.
   alt="Choose project type." width="960"
 />
 
-3. Choose the **board** you are going to use.
+3. Choose the corresponding **board** you are going to use. Suppose you're using SwiftIO Feather board. 
+
+  :::info
+  If the board type of your project and the board you're using doesn't match, your board cannot recognize the file after downloading. If you want to change the board type, check [this tutorial](../advanced/change-board).
+  :::
 
 <img
   src={require('./img/boardType.png').default}
@@ -35,27 +39,48 @@ Now, you're ready to code.
   alt="Enter project name." width="960"
 />
 
-5. Choose a **location** to store the project and press **Open**. 
+5. Choose a **location** to save the project and click **Open**. 
 
 <img
   src={require('./img/location.png').default}
   alt="Choose a file location." width="960"
 />
 
-6. The project will open in a new window. Click on the Explorer `Sources` / `Blink` / `main.swift` to open the file. You will always edit the code in the file `main.swift` for your future projects. Copy and paste the following sample code into the file.
+6. The project will open in a new window. 
 
-```swift
+<img
+  src={require('./img/projectOpened.png').default}
+  alt="Project opened in a new window." width="960"
+/>
+
+7. Click on the Explorer **`Sources` / `Blink` / `Blink.swift`** to open the file. You will always edit your code in the file `xxx.swift` (xxx corresponds to the project name) for all your future projects. 
+
+<img
+  src={require('./img/openFile.png').default}
+  alt="Open the .swift file." width="960"
+/>
+
+8. Copy and paste the following sample code into the file.
+
+```swift title="Blink.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
-let led = DigitalOut(Id.BLUE)
+@main
+public struct Blink {
+    public private(set) var text = "Hello, World!"
 
-while true {
-    led.write(true)
-    sleep(ms: 1000)
+    public static func main() {
+        let led = DigitalOut(Id.BLUE)
 
-    led.write(false)
-    sleep(ms: 1000)
+        while true {
+            led.write(true)
+            sleep(ms: 1000)
+
+            led.write(false)
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -63,3 +88,9 @@ while true {
   src={require('./img/code.png').default}
   alt="code" width="960"
 />
+
+The file contains the default code template. 
+1. `@main` signifies the top-level entry point of your program. 
+2. The static `main()` method contains the code to be executed.
+
+Simply put, write the statements to import libraries at the beginning and the program logic within the `main()` method.

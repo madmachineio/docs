@@ -9,46 +9,86 @@ Let's see how you could use the libraries. You will use the library `MadLed` for
 
 ## Add the dependencies
 
-At first, you need to [create a new executable project](../getting-started/create-project).
+1. At first, you need to [create a new executable project](../getting-started/create-project).
 
-All our libraries are on Github. You can find the library `MadLed` [here](https://github.com/madmachineio/MadLed). Click the button **Code**. In the drop-down menu, click the button to **copy** the URL.
+2. All our libraries are on Github. Open to the repository [`MadLed`](https://github.com/madmachineio/MadLed). Click the button **Code**. In the drop-down menu, click the button to **copy the URL**.
 
 ![Get the location of the library](./img/github.png)
 
-In the file `package.swift`, you indicate the **location** of the library and its **name** in `dependencies` as below. Paste the URL of the package and add its version. Usually, you can keep the version as 0.0.1 to search for tags from it to the next major version since there will not be great changes.
+In the file `package.swift`, you indicate the **location** of the library and its **name** in `dependencies` as below. Paste the URL of the package and add its version. You will use the version on the `main` branch.
 
-:::note
-If you use a library on your computer, you can indicate its path as: `.package(path: "..."),`
+:::info
+To use a local library on your computer, the dependency is: `.package(path: "..."),` (... is the directory of the library on the computer).
 :::
+
+```swift title="Package.swift" showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+import PackageDescription
+let package = Package(
+    name: "Blink",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadLed.git", branch: "main")
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .executableTarget(
+            name: "Blink",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // use specific library would speed up the compile procedure
+                .product(name: "MadDrivers", package: "MadDrivers"),
+                // highlight-next-line
+                "MadLed"
+            ]),
+        .testTarget(
+            name: "BlinkTests",
+            dependencies: ["Blink"]),
+    ]
+)
+```
+
 
 ![](./img/dependency.png)
 
 ## Import the target and write code
 
-In the file `main.swift`, import the `MadLed` just as you import `SwiftIO`. Then you can control LEDs more easily.
+In the file `Blink.swift`, import the `MadLed` just as you import `SwiftIO`. Then you can control LEDs more easily using the functions provided in the library.
 
-``` swift
+```swift title="Blink.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 import MadLed
 
-let redPin = DigitalOut(Id.RED)
-let bluePin = DigitalOut(Id.BLUE)
+@main
+public struct Blink {
+    public static func main() {
+        let redPin = DigitalOut(Id.RED)
+        let bluePin = DigitalOut(Id.BLUE)
 
-let redLed = MadLed(redPin, ledOnValue: false)
-let blueLed = MadLed(bluePin, ledOnValue: false)
+        let redLed = MadLed(redPin, ledOnValue: false)
+        let blueLed = MadLed(bluePin, ledOnValue: false)
 
-blueLed.off()
-redLed.on()
-sleep(ms: 1000)
-redLed.off()
+        blueLed.off()
+        redLed.on()
+        sleep(ms: 1000)
+        redLed.off()
 
-while true {
-    blueLed.toggle()
-    sleep(ms: 1000)
+        while true {
+            blueLed.toggle()
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
-With Swift Package Manager, you don't need to install the libraries manually. It's so convenient.
+With Swift Package Manager, you can use online repositories and don't need to install the libraries manually.
 
 As you build your project, the file `Package.swift` will be built first and will automatically get the libraries from the specified location. So it will cost a while when you build your project for the first time.

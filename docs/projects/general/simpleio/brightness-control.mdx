@@ -1,15 +1,15 @@
 ---
-title: Brightness AnalogIn
+title: Brightness control
 description: Program in Swift to control the brightness of an LED using a potentiometer.
 ---
 
-# Brightness AnalogIn
+# Brightness control
 
 In this example, you will use a potentiometer as a LED brightness control. As you rotate the potentiometer, the brightness changes.
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - Potentiometer
 - LED
@@ -30,28 +30,32 @@ In this example, you will use a potentiometer as a LED brightness control. As yo
 
 ## Example code
 
-Open the project `BrightnessAnalogIn` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
+Open the project `BrightnessControl` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
-```swift
-// Read the analog input value and use it to set the PWM output to change the LED brightness.
+```swift title="BrightnessControl.swift" showLineNumbers
+// Read the analog input value and use it to set the PWM output in order to change the LED brightness.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize an analog input and a digital output pin that the components are connected to.
-let sensor = AnalogIn(Id.A0)
-let led = PWMOut(Id.PWM0A)
+@main
+public struct BrightnessControl {
+    public static func main() {
+        // Initialize an analog input and a digital output pin that the components are connected to.
+        let sensor = AnalogIn(Id.A0)
+        let led = PWMOut(Id.PWM0A)
 
-// Allow the LED brightness control all the time.
-while true {
-    // Read the input voltage in percentage.
-    let value = sensor.readPercent()
-    // Light the LED by setting the duty cycle.
-    led.setDutycycle(value)
-    // Keep the current LED state for 200 milliseconds.
-    sleep(ms: 200)
+        // Allow the LED brightness control all the time.
+        while true {
+            // Read the input voltage in percentage.
+            let value = sensor.readPercent()
+            // Light the LED by setting the duty cycle.
+            led.setDutycycle(value)
+            // Keep the current LED state for 200 milliseconds.
+            sleep(ms: 200)
+        }
+    }
 }
 ```
 

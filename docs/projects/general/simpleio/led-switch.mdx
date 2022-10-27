@@ -1,15 +1,15 @@
 ---
-title: Button control LED
+title: LED switch
 description: Program your board to build a LED switch. When you press the button, the LED turns on. When you release it, the LED turns off.
 ---
 
-# Button control LED
+# LED switch
 
 In this example, you will use a pushbutton to control the LED. When you press the button, the LED turns on. When you release it, the LED turns off. The input signal will change as you press the button. Thus, you can set LED states according to input states. 
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - Button
 - Jumper wires
@@ -30,32 +30,35 @@ In this example, you will use a pushbutton to control the LED. When you press th
 
 ## Example code
 
-Open the project `ButtoncontrolLED` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
+Open the project `LEDSwitch` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
-```swift
+```swift title="LEDSwitch.swift" showLineNumbers
 // Read the input signal controlled by a button to turn on and off the LED.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the red onboard LED.
-let red = DigitalOut(Id.RED)
+@main
+public struct LEDSwitch {
+    public static func main() {
+        // Initialize the red onboard LED.
+        let red = DigitalOut(Id.RED)
 
-// Initialize a digital input pin D0 that the button is connected to.
-let button = DigitalIn(Id.D0)
+        // Initialize a digital input pin D0 that the button is connected to.
+        let button = DigitalIn(Id.D0)
 
-// Allow the button to control the LED all the time.
-while true {
-    // Check the state of the button. If it is pressed, the value will be true and then turn off the LED.
-    // Modify the code according to your button if necessary.
-    if button.read() {
-        red.write(false)
-    } else {
-        red.write(true)
+        // Allow the button to control the LED all the time.
+        while true {
+            // Check the state of button. If it is pressed, the value will be true and then turn off the LED.
+            // Modify the code according to your button if necessary.
+            if button.read() {
+                red.write(false)
+            } else {
+                red.write(true)
+            }
+        }
     }
-
 }
 ```
 

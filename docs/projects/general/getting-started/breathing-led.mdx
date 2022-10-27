@@ -1,15 +1,15 @@
 ---
-title: PWM Brightness Control
+title: Breathing LED
 description: DIY breathing LED. The microcontroller will output PWM signals to make the LED brighter or dimmer.
 ---
 
-# PWM Brightness Control
+# Breathing LED
 
 You may notice the breathing light on your phone when a new message comes. It smoothly changes from dark to bright and back to dark. In this project, let's try to realize it using an LED. 
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - LED
 - 330ohm resistor
@@ -32,41 +32,46 @@ Let's build the circuit as below.
 
 ## Example code
 
-Open the project `PWMBrightnessControl` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`GettingStarted` if you downloaded the examples.
+Open the project `BreathingLED` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`GettingStarted` if you downloaded the examples.
 
-```swift
-// Brighten or dim the LED by changing the duty cycle of a PWM signal.
+```swift title="BreathingLED.swift" showLineNumbers
+// Brighten or dim the LED by changing the duty cycle of PWM signal.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the PWM pin the LED connects, with other parameters set to default.
-let led = PWMOut(Id.PWM0A)
+@main
+public struct BreathingLED {
 
-// Initialize a variable to store the value of the duty cycle.
-var value: Float = 0.0
+    public static func main() {
+        // Initialize the PWM pin the LED is connected to, with other parameters set to default.
+        let led = PWMOut(Id.PWM0A)
 
-// Change the brightness from on to off and off to on over and over again.
-while true {
-    // Brighten the LED in two seconds.
-    while value <= 1.0 {
-        led.setDutycycle(value)
-        sleep(ms: 20)
-        value += 0.01
+        // Initialize a variable to store the value of duty cycle.
+        var value: Float = 0.0
+
+        // Change the brightness from on to off and off to on over and over again.
+        while true {
+            // Brighten the LED in two seconds.
+            while value <= 1.0 {
+                led.setDutycycle(value)
+                sleep(ms: 20)
+                value += 0.01
+            }
+            // Keep the duty cycle between 0.0 and 1.0.
+            value = 1.0
+
+            // Dimming the LED in two seconds.
+            while value >= 0 {
+                led.setDutycycle(value)
+                sleep(ms: 20)
+                value -= 0.01
+            }
+            // Keep the duty cycle between 0.0 and 1.0.
+            value = 0.0
+        }
     }
-    // Keep the duty cycle between 0.0 and 1.0.
-    value = 1.0
-
-    // Dim the LED in two seconds.
-    while value >= 0 {
-        led.setDutycycle(value)
-        sleep(ms: 20)
-        value -= 0.01
-    }
-    // Keep the duty cycle between 0.0 and 1.0.
-    value = 0.0
 }
 ```
 

@@ -5,11 +5,11 @@ description: Install and set up the MadMachine VS Code extension.
 
 # 1. Software prerequisite
 
-At first, you need a tool to deal with your code. You could install the MadMachine extension for Visual Studio Code. It allows you to create a new project, compile and download it to your board. 
+At first, you could install the MadMachine extension for Visual Studio Code. It allows you to create a new project, compile and download it to your board. 
 
 ## Install the extension
 
-1. In the Visual Studio Code, click the **Extension** icon on the left activity bar.
+1. Open the Visual Studio Code. Click the **Extension** icon on the left activity bar.
 2. Enter **MadMachine** in the search box to find the extension in its marketplace.
 3. Click the **Install** button. 
 
@@ -27,9 +27,9 @@ For advanced users, you could edit your code wherever you like and use the [mm-s
 
 ## Set the extension
 
-The extension relies on the mm sdk to do all its work. So you need to indicate its path before using the extension. You only set it the first time you use this extension.
+The extension relies on the mm-sdk to do all its work. You need to indicate its path before using the extension. And it's only done once.
 
-1. [**Download** the latest sdk release](https://github.com/madmachineio/mm-sdk/releases) according to your operating system and unzip it. The versions marked as pre-relase are for internal test and may be unavailable. 
+1. [**Download the latest sdk version**](https://github.com/madmachineio/mm-sdk/releases) according to your operating system and **unzip** it.
 
 2. Then come back to the VS code. In the menu bar, select **Code** / **Preferences** / **Settings**.
 
@@ -38,22 +38,52 @@ The extension relies on the mm sdk to do all its work. So you need to indicate i
   alt="Set the MadMachine extension" width="960"
 />
 
-3. In the Settings, select **Extensions** / **MadMachine**. Enter the **path** of the sdk in the box that matches your operating system. Windows is not supported since we are waiting for the Window support of Swift language...
+3. In the Settings, select **Extensions** / **MadMachine**. Enter the **path of the sdk** in the box that matches your operating system. Windows is not supported since we are waiting for the full Window support of Swift language...
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Mac"
+  values={[
+    { label: 'Mac', value: 'Mac', },
+    { label: 'Linux', value: 'Linux', },
+  ]
+}>
+
+<TabItem value="Mac">
 
 <img
-  src={require('./img/sdkPath.png').default}
-  alt="Indicate the path of sdk." width="960"
+  src={require('./img/sdkPathMac.png').default}
+  alt="Indicate the path of sdk on Mac." width="960"
 />
+
+</TabItem>
+<TabItem value="Linux">
+
+<img
+  src={require('./img/sdkPathLinux.png').default}
+  alt="Indicate the path of sdk on Linux." width="960"
+/>
+
+</TabItem>
+</Tabs>
+
+
+:::info
+Make sure the sdk path is correct, or the extension won't work.
+:::
 
 Now, the extension gets ready👏.
 
 ## Quick look
 
-The extension is at the bottom of the Explore panel. All you need for your project is these three buttons:
+The extension is at the bottom of the Explorer panel. All you need for your project is these three buttons:
 
 - **Build**: build your project after you finish the code. If there are any errors, you can modify your code according to the message in the terminal.
-- **Download**: download the bin file generated after building your project.
-- **New Project**: create a new MadMachine project. You will decide the project type and the board type.
+- **Download**: download the generated file after building your project.
+- **New Project**: create a new MadMachine project. You will choose the project type and the board type.
 
 <img
   src={require('./img/extension.png').default}

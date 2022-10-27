@@ -16,10 +16,10 @@ import PackageDescription
 let package = Package(
     name: "Display",
     dependencies: [
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
         // highlight-next-line
-        .package(url: "https://github.com/madmachineio/MadDisplay.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/MadDisplay.git", branch: "main"),
     ],
     targets: [
         .target(
