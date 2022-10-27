@@ -10,7 +10,7 @@ So far, you've learned about digital signals. In this example, let's try analog 
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - Potentiometer
 - Jumper wires
@@ -36,26 +36,29 @@ For the code, you will use the `AnalogIn` class.
 
 Open the project `ReadAnalogInput` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`GettingStarted` if you downloaded the examples.
 
-```swift
-// Read the input voltage on a specified analog pin. 
-// The value you get will be a decimal between 0.0 and 3.3.
+```swift title="ReadAnalogInput.swift" showLineNumbers
+// Read the input voltage on a specified analog pin. The value you get will be a decimal between 0.0 and 3.3.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the pin A0 as an analog input pin.
-let pin = AnalogIn(Id.A0)
+@main
+public struct ReadAnalogInput {
+    public static func main() {
+        // Initialize the pin A0 as an analog input pin.
+        let pin = AnalogIn(Id.A0)
 
-// Read the input voltage every second.
-while true {
-    // Declare a constant to store the value you read from the analog pin.
-    let value = pin.readVoltage()
-    // Print the value and you can see it in the serial monitor.
-    print(value)
-    // Wait a second and then continue to read.
-    sleep(ms: 1000)
+        // Read the input voltage every second.
+        while true {
+            // Declare a constant to store the value you read from the analog pin.
+            let value = pin.readVoltage()
+            // Print the value and you can see it in the serial monitor.
+            print(value)
+            // Wait a second and then continue to read.
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -120,7 +123,7 @@ let value = pin.readVoltage()
 ```
 The method `.readVoltage()` returns directly the voltage value. The return value is a floating-point number between 0V-3.3V. 
 
-``` swift
+```swift
 print(value)
 ```
 

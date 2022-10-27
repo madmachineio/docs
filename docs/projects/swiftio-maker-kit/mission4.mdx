@@ -37,28 +37,27 @@ The parts you will need are all included in the [Maker kit](../../overview/hardw
 
 Open the project `Mission4_Potentiometer_RGB` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift title="Mission4_Potentiometer_RGB.swift" showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the analog pin that the pot connects.
-let a0 = AnalogIn(Id.A0) 
+@main
+public struct Mission4_Potentiometer_RGB {
+    public static func main() {
+        let a0 = AnalogIn(Id.A0) // Initialize an AnalogIn pin A0.
+        let led = DigitalOut(Id.RED) // Initialize the red onboard led.
 
-// Initialize the red onboard LED.
-let led = DigitalOut(Id.RED) 
+        while true {
+            led.toggle()
 
-while true {
-    // Alternate states of the output signal.
-    led.toggle()
+            // Return the percentage of the voltage in the range of 0.0 to 1.0.
+            let analogValue = a0.readPercent()
+            let delayTime = Int(analogValue * 500)
 
-    // Return the percentage of the input voltage in the range of 0.0 to 1.0.
-    let analogValue = a0.readPercent()
-    
-    // Stop the program for a certain period based on the value to change the blink speed.
-    let delayTime = Int(analogValue * 500)
-    sleep(ms: delayTime)
+            // Stop the program for a certain period based on the value to keep current led state.
+            sleep(ms: delayTime)
+        }
+    }
 }
 ```
 

@@ -52,32 +52,35 @@ The resistance of the resistor is not absolute, as long as it is bigger than the
 
 Open the project `Mission2_RGB_LED` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift title="Mission2_RGB_LED.swift" showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize three digital pins used for the LEDs.
-let red = DigitalOut(Id.D16)
-let green = DigitalOut(Id.D17)
-let blue = DigitalOut(Id.D18)
+@main
+public struct Mission2_RGB_LED {
+    public static func main() {
+        // Initialize three LEDs.
+        let red = DigitalOut(Id.D16)
+        let green = DigitalOut(Id.D17)
+        let blue = DigitalOut(Id.D18)
 
-while true {
-    // Turn on the red LED for 1 second, then off.
-    red.write(true)
-    sleep(ms: 1000)
-    red.write(false)
+        while true {
+            // Turn on red LED for 1 second, then off.
+            red.write(true)
+            sleep(ms: 1000)
+            red.write(false)
 
-    // Turn on the green LED for 1 second, then off.
-    green.write(true)
-    sleep(ms: 1000)
-    green.write(false)
+            // Turn on green LED for 1 second, then off.
+            green.write(true)
+            sleep(ms: 1000)
+            green.write(false)
 
-    // Turn on the blue LED for 1 second, then off.
-    blue.high()
-    sleep(ms: 1000)
-    blue.low()
+            // Turn on blue LED for 1 second, then off.
+            blue.high()
+            sleep(ms: 1000)
+            blue.low()
+        }
+    }
 }
 ```
 

@@ -34,23 +34,29 @@ Bad quality USB cable or some third-party USB hub may cause connection failure. 
 
 
 
-3. Click **MadMachine** / **Build** to build the project. It will generate a file that could run on your board.
+3. Click **MadMachine** / **Build** to build the project. It will generate a file that could run on your board. 
 
 <img
   src={require('./img/build.png').default}
   alt="Build the code" width="960"
 />
 
-4. Click **Download** on the MadMachine extension to download the file to your board. 
+:::info
+During this process, mm-sdk will fetch all the necessary dependencies from GitHub, as shown in the first several lines of the message. So check the internet connection if it fails.
+:::
+
+4. Once the building process is finished, you will see the message **Done!** in the terminal.
+
+<img
+  src={require('./img/buildDone.png').default}
+  alt="Finish building" width="960"
+/>
+
+5. Click **Download** button to download the file to your board. If it's successfully downloaded, you'll see the message **Done!**.
 
 <img
   src={require('./img/download.png').default}
   alt="Download the code" width="960"
 />
 
-If it says it cannot find the board, you could wait a little longer. Maybe your board is building the connection with your computer. And make sure you have followed step 3 above.
-
-
-After the code is downloaded to your board successfully, the USB drive will be removed automatically.
-
-Congratulations! The onboard green LED begins to blink per second✨.
+Congratulations! The onboard blue LED begins to blink per second✨.

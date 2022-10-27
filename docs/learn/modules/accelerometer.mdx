@@ -93,7 +93,7 @@ The circuits above are simplified versions for your reference.
 2. [Digital dice](./accelerometer#2-digital-dice)
 
 ### 1. Read acceleration
-Let’s use the sensor to sense movements. As you move or tilt your board in different directions, the values printed on the window change accordingly. You can have a better idea of how the accelerations change with movement.
+Let's use the sensor to sense movements. As you move or tilt your board in different directions, the values printed on the window change accordingly. You can have a better idea of how the accelerations change with movement.
 
 **Example code**
 
@@ -103,63 +103,68 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'main.swift', value: 'main', },
+    { label: 'C01S07Accelerometer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
 
 <TabItem value="main">
 
-```swift
+```swift showLineNumbers
 // Import SwiftIO to set the communication and MadBoard to use pin id. 
 import SwiftIO
 import MadBoard
 // Import LIS3DH to read the accelerations from the sensor.
 import LIS3DH
 
-// Initialize the I2C pins and the sensor.
-let i2c = I2C(Id.I2C0)
-let acc = LIS3DH(i2c)
+@main
+public struct C01S07Accelerometer {
+    public static func main() {
+        // Initialize the I2C pins and the sensor.
+        let i2c = I2C(Id.I2C0)
+        let acc = LIS3DH(i2c)
 
-// Read the accelerations and each of them.
-while true {
-    let value = acc.readXYZ()
-    print("x: \(value.x)g")
-    print("y: \(value.y)g")
-    print("z: \(value.z)g")
-    print("\n")
-    sleep(ms: 1000)
+        // Read the accelerations and each of them.
+        while true {
+            let value = acc.readXYZ()
+            print("x: \(value.x)g")
+            print("y: \(value.y)g")
+            print("z: \(value.z)g")
+            print("\n")
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 </TabItem>
 <TabItem value="package">
 
-```swift"
+```swift showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
-
 let package = Package(
-    name: "Humiture",
+    name: "C01S07Accelerometer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
-        // highlight-next-line
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "Humiture",
+        .executableTarget(
+            name: "C01S07Accelerometer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // highlight-next-line
+                // use specific library would speed up the compile procedure
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "HumitureTests",
-            dependencies: ["Humiture"]),
+            name: "C01S07AccelerometerTests",
+            dependencies: ["C01S07Accelerometer"]),
     ]
 )
 ```
@@ -181,14 +186,14 @@ Let's build a dice with the accelerometer. You can shake or tilt the sensor to c
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'main.swift', value: 'main', },
+    { label: 'C01S07AccelerometerDice.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
 
 <TabItem value="main">
 
-```swift
+```swift showLineNumbers
 // Import SwiftIO to set input and output.
 import SwiftIO
 // Import MadBoard to use the id of the pins.
@@ -196,65 +201,69 @@ import MadBoard
 // Import this driver to read accelerations on x, y, z-axis.
 import LIS3DH
 
-// Initialize an I2C interface and use it to set the sensor.
-let i2c = I2C(Id.I2C0)
-let dice = LIS3DH(i2c)
+@main
+public struct C01S07AccelerometerDice {
+    public static func main() {
+        // Initialize an I2C interface and use it to set the sensor.
+        let i2c = I2C(Id.I2C0)
+        let dice = LIS3DH(i2c)
 
-// Initialize an LED used as an indicator when shaking the sensor.
-let indicator = DigitalOut(Id.D19)
+        // Initialize an LED used as an indicator when shaking the sensor.
+        let indicator = DigitalOut(Id.D19)
 
-// Create a variable to store the time after the sensor stops movement.
-var steadyCount = 999
+        // Create a variable to store the time after the sensor stops movement.
+        var steadyCount = 999
 
-// Read accelerations to judge if the sensor is in motion. 
-// Once the movement stops, a random number prints out.
-while true {
-    let diceValue = dice.readXYZ()
-    
-    if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
-        indicator.high()
-        steadyCount = 0
-    } else {
-        steadyCount += 1
-        if steadyCount == 50 {
-            indicator.low()
-            print(Int.random(in: 1...6))
+        // Read accelerations to judge if the sensor is in motion. 
+        // Once the movement stops, a random number prints out.
+        while true {
+            let diceValue = dice.readXYZ()
+            
+            if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
+                indicator.high()
+                steadyCount = 0
+            } else {
+                steadyCount += 1
+                if steadyCount == 50 {
+                    indicator.low()
+                    print(Int.random(in: 1...6))
+                }
+            }
+
+            sleep(ms: 5)
         }
     }
-
-    sleep(ms: 5)
 }
-
 ```
 </TabItem>
 <TabItem value="package">
 
-```swift"
+```swift showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
-
 let package = Package(
-    name: "Humiture",
+    name: "C01S07AccelerometerDice",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
-        // highlight-next-line
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "Humiture",
+        .executableTarget(
+            name: "C01S07AccelerometerDice",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // highlight-next-line
+                // use specific library would speed up the compile procedure
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "HumitureTests",
-            dependencies: ["Humiture"]),
+            name: "C01S07AccelerometerDiceTests",
+            dependencies: ["C01S07AccelerometerDice"]),
     ]
 )
 ```

@@ -39,21 +39,24 @@ The parts you will need are all included in the [Maker kit](../../overview/hardw
 
 Open the project `Mission7_DC_Motors` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift title="Mission7_DC_Motors.swift" showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the analog pin and the PWM pin.
-let a0 = AnalogIn(Id.A0)
-let motor = PWMOut(Id.PWM2B)
+@main
+public struct Mission7_DC_Motors {
+    public static func main() {
+        // Initialize the analog pin and the PWM pin 
+        let a0 = AnalogIn(Id.A0)
+        let motor = PWMOut(Id.PWM2B)
 
-while true {
-    // Read the input value and use it to set the duty cycle of the PWM.
-    let value = a0.readPercent()
-    motor.setDutycycle(value) 
-    sleep(ms: 50)
+        while true {
+            // Read the input value and use it to set the duty cycle of pwm.
+            let value = a0.readPercent()
+            motor.setDutycycle(value) 
+            sleep(ms: 50)
+        }
+    }
 }
 ```
 

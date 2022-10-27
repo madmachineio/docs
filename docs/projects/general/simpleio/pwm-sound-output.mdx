@@ -11,7 +11,7 @@ This example shows how to use the `PWMOut` to generate notes. It plays musical n
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - Buzzer
 - Jumper wires
@@ -30,27 +30,31 @@ This example shows how to use the `PWMOut` to generate notes. It plays musical n
 
 Open the project `PWMSoundOutput` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
-```swift
-// Produce different notes by changing the frequency of PWM signals.
+```swift title="PWMSoundOutput.swift" showLineNumbers
+// Play a scale by changing the frequency of PWM signal.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize a PWM output pin that the speaker connects.
-let speaker = PWMOut(Id.PWM0A)
+@main
+public struct PWMSoundOutput {
+    public static func main() {
+        // Initialize a PWM output pin that the speaker is connected to.
+        let speaker = PWMOut(Id.PWM0A)
 
-// Specify several frequencies to produce different sounds.
-let fre = [262, 294, 330, 349, 392, 440, 494]
+        // Specify several frequencies to produce different notes.
+        let frequencies = [262, 294, 330, 349, 392, 440, 494]
 
-// Play recurrently these notes.
-while true {
-    for f in fre {
-        // Set the frequency and the duty cycle of output to produce each note.
-        speaker.set(frequency: f, dutycycle: 0.5)
-        // Play each note for one second.
-        sleep(ms: 1000)
+        // Play recurrently these notes.
+        while true {
+            for f in frequencies {
+                // Set the frequency and the duty cycle of output to produce each note.
+                speaker.set(frequency: f, dutycycle: 0.5)
+                // Play each note for one second.
+                sleep(ms: 1000)
+            }
+        }
     }
 }
 ```
@@ -74,7 +78,7 @@ There are two kinds of buzzers.
 ## Code analysis
 
 ```swift
-let fre = [262, 294, 330, 349, 392, 440, 494]
+let frequencies = [262, 294, 330, 349, 392, 440, 494]
 ```
 
 This array stores the frequencies of seven notes from 1 to 7. The first frequency corresponds to middle C. 
@@ -83,12 +87,12 @@ This array stores the frequencies of seven notes from 1 to 7. The first frequenc
 speaker.set(frequency: f, dutycycle: 0.5)
 ```
 
-The frequency is an essential factor for sounds. The method `set()` allows you to set both the frequency and duty cycle of the PWM signal.
+The frequency is an essential factor for sound pitch. The method `set(frequency:dutycycle:)` allows you to set both the frequency and duty cycle of a PWM signal. So here you will use the frequencies in the array to set the signal.
 
 ```swift
 sleep(ms: 1000)
 ```
-`sleep` defines the duration of notes. Each note will last one second.
+This statement defines the duration of notes. Each note will last one second.
 
 ## Reference
 

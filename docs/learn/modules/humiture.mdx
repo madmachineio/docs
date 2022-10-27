@@ -487,7 +487,7 @@ For example, the method `readCelsius` calls this method. It uses the `try?` to h
 Since this is a general-purpose library and we don't know the specific situation where the library will be used, it's hard to decide when and how the error needs to be handled. Besides, it's not that frequent for this sensor to get wrong readings. If you want to make your project more secure, you could modify how the error will be handled.
 
 
-Don’t worry if you do not quite understand the code above. This library is provided, and you just need to import it to your project. Here, we want you to know how to use I2C communication and give you a general idea of how to write a driver for a sensor. 
+Don't worry if you do not quite understand the code above. This library is provided, and you just need to import it to your project. Here, we want you to know how to use I2C communication and give you a general idea of how to write a driver for a sensor. 
 
 As you see, it's not easy to configure the sensor and get readings from it. But with existing libraries, coding becomes much easier. Now it's time to use the library `SHT3x`.
 
@@ -497,7 +497,7 @@ As you see, it's not easy to configure the sensor and get readings from it. But 
 
 ### 1. Read temperature and humidity
 
-Let’s use the humiture sensor to get the temperature and humidity. As you download the code, the sensor begins to work and you can see the value printed on the serial monitor. The value slightly changes. If you put your finger next to the sensor, the temperature may increase.
+Let's use the humiture sensor to get the temperature and humidity. As you download the code, the sensor begins to work and you can see the value printed on the serial monitor. The value slightly changes. If you put your finger next to the sensor, the temperature may increase.
 
 **Example code**
 
@@ -507,66 +507,72 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'main.swift', value: 'main', },
+    { label: 'C01S05Humiture.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
 
 <TabItem value="main">
 
-```swift
+```swift showLineNumbers
 // Import SwiftIO to use I2C communication and MadBoard to use pin id. 
 import SwiftIO
 import MadBoard
 // Import SHT3x to use its functionalities to read values. 
 import SHT3x
 
-// Initialize the I2C interface and use it to initialize the sensor.
-let i2c = I2C(Id.I2C0)
-let sht = SHT3x(i2c)
+@main
+public struct C01S05Humiture {
+    public static func main() {
+        // Initialize the I2C interface and use it to initialize the sensor.
+        let i2c = I2C(Id.I2C0)
+        let sht = SHT3x(i2c)
 
-// Read the temperature and humidity and print their values out. 
-// Stop for 1s and repeat it.
-while true {
-    let temp = sht.readCelsius()
-    let humidity = sht.readHumidity()
-    print("Temperature: \(temp)C")
-    print("Humidity: \(humidity)%")
-    sleep(ms: 1000)
+        // Read the temperature and humidity and print their values out. 
+        // Stop for 1s and repeat it.
+        while true {
+            let temp = sht.readCelsius()
+            let humidity = sht.readHumidity()
+            print("Temperature: \(temp)C")
+            print("Humidity: \(humidity)%")
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
 </TabItem>
 <TabItem value="package">
 
-```swift"
+```swift showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
-
 let package = Package(
-    name: "Humiture",
+    name: "C01S05Humiture",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
-        // highlight-next-line
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "Humiture",
+        .executableTarget(
+            name: "C01S05Humiture",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // highlight-next-line
+                // use specific library would speed up the compile procedure
                 .product(name: "SHT3x", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "HumitureTests",
-            dependencies: ["Humiture"]),
+            name: "C01S05HumitureTests",
+            dependencies: ["C01S05Humiture"]),
     ]
 )
+
 ```
 
 </TabItem>
@@ -578,7 +584,7 @@ let package = Package(
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'main.swift', value: 'main', },
+    { label: 'C01S05Humiture.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>

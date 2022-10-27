@@ -88,22 +88,27 @@ Well, the project is created and will open in a new window.
 
 Then you will need to edit the code for the project. 
 
-1. Click on the **Blink** / **Sources** / **Blink** / **main.swift** to open the file. This file stores the main code for your project. So you will always edit this file for all your projects.
+1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. This file stores the main code for your project. So you will always edit this file for all your projects.
 
 2. Copy the code below into the file. In the next section, you will learn more about the code.
 
-```swift
+```swift title="Blink.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
-let led = DigitalOut(Id.BLUE)
-​
-while true {
-    led.write(true)
-    sleep(ms: 1000)
+@main
+public struct Blink {
+    public static func main() {
+        let led = DigitalOut(Id.BLUE)
 
-    led.write(false)
-    sleep(ms: 1000)
+        while true {
+            led.write(true)
+            sleep(ms: 1000)
+
+            led.write(false)
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -114,9 +119,9 @@ while true {
 
 ## Download code to the board
 
-Now you come to the last steps - download your project to the board.
+Now you come to the last step - download your project to the board.
 
-1. **Connect** your SwiftIO Feather board to your computer. In the illustration below, the SwiftIO Feather board is pluged into the SwiftIO Circuit Playgrounds board. You can also disconnect them. 
+1. **Connect** your SwiftIO Feather board to your computer. In the illustration below, the SwiftIO Feather board is plugged into the SwiftIO Circuit Playgrounds board. You can also disconnect them. 
 
 <img
   src={require('./img/connect.png').default}
@@ -137,7 +142,14 @@ Now you come to the last steps - download your project to the board.
   alt="Onboard LED turns to steady green" width="240"
 />
 
-4. **Click** the Download button. It will take a few seconds.
+4. Click the **Build** button to build your project.
+
+<img
+  src={require('./img/build.png').default}
+  alt="click build button" width="960"
+/>
+
+5. Click the **Download** button. It will take a few seconds.
 
 <img
   src={require('./img/download.png').default}

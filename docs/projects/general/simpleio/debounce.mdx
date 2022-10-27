@@ -9,7 +9,7 @@ In the previous example, you create a light switch using a button. However, you 
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - Button
 - Jumper wires
@@ -29,47 +29,50 @@ In the previous example, you create a light switch using a button. However, you 
 
 Open the project `Debounce` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
-```swift
-// Check if the button is pressed using debounce method.
+```swift title="Debounce.swift" showLineNumbers
+// Check if the button is pressed using a debounce method.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the red onboard LED.
-let red = DigitalOut(Id.RED)
+@main
+public struct Debounce {
+    public static func main() {
+        // Initialize the red onboard LED.
+        let red = DigitalOut(Id.RED)
 
-// Initialize a digital input pin D0 that the button is connected to.
-let button = DigitalIn(Id.D0, mode: .pullUp)
+        // Initialize a digital input pin D0 that the button is connected to.
+        let button = DigitalIn(Id.D0, mode: .pullUp)
 
-// Declare the values to record and judge the button state.
-var count = 0
-var triggered = false
+        // Declare the values in order to record and judge the button state.
+        var count = 0
+        var triggered = false
 
-
-while true {
-    // Read from the input pin.
-    let value = button.read()
-    
-    // Ignore the change due to the noise.
-    if value == false {
-        count += 1
-    } else {
-        count = 0
-        triggered = false
+        while true {
+            // Read from the input pin.
+            let value = button.read()
+            
+            // Ignore the change due to the noise.
+            if value == false {
+                count += 1
+            } else {
+                count = 0
+                triggered = false
+            }
+            
+            // Wait a certain period to check if the button is indeed pressed. 
+            // Toggle the LED and then reset the value for next press.
+            if count > 50 && !triggered {
+                red.toggle()
+                triggered = true
+                count = 0
+            }
+            
+            // Wait a millisecond and then read to ensure the current state last for enough time. 
+            sleep(ms: 1)
+        }
     }
-    
-    // Wait a certain period to check if the button is pressed. 
-    // Toggle the LED and then reset the value for the next press.
-    if count > 50 && !triggered {
-        red.toggle()
-        triggered = true
-        count = 0
-    }
-    
-    sleep(ms: 1)
-
 }
 ```
 

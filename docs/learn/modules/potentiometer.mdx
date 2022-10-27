@@ -148,19 +148,24 @@ After you connect the board to the computer through the serial port, the value i
 
 **Example code**
 
-```swift
+```swift title="C01S04Potentiometer.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-// Initialize the analog pin A0 for the potentiometer.
-let knob = AnalogIn(Id.A0)
+@main
+public struct C01S04Potentiometer {
+    public static func main() {
+        // Initialize the analog pin A0 for the potentiometer.
+        let knob = AnalogIn(Id.A0)
 
-// Read the voltage value and print it out every second.
-while true {
-    let value = knob.readVoltage()
-    print(value)
-    sleep(ms: 1000)
+        // Read the voltage value and print it out every second.
+        while true {
+            let value = knob.readVoltage()
+            print(value)
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
@@ -234,23 +239,28 @@ You will use a potentiometer to change the sound of the buzzer. The pitch become
 
 **Example code**
 
-```swift
+```swift title="C01S04PotentiometerBuzzer.swift" showLineNumbers
 // Import the SwiftIO to control input and output and the MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-// Initialize the analog pin for the potentiometer and PWM pin for the LED.
-let knob = AnalogIn(Id.A0)
-let buzzer = PWMOut(Id.PWM5A)
+@main
+public struct C01S04PotentiometerBuzzer {
+    public static func main() {
+        // Initialize the analog pin for the potentiometer and PWM pin for the LED.
+        let knob = AnalogIn(Id.A0)
+        let buzzer = PWMOut(Id.PWM5A)
 
-// Read the input value in percentage. 
-// Then calculate the value into the frequency. 
-// Set the PWM with the frequency and a duty cycle.
-while true {
-    let value = knob.readPercent()
-    let f = 50 + Int(1000 * value)
-    buzzer.set(frequency: f, dutycycle: 0.5)
-    sleep(ms: 20)
+        // Read the input value in percentage. 
+        // Then calculate the value into the frequency. 
+        // Set the PWM with the frequency and a duty cycle.
+        while true {
+            let value = knob.readPercent()
+            let f = 50 + Int(1000 * value)
+            buzzer.set(frequency: f, dutycycle: 0.5)
+            sleep(ms: 20)
+        }
+    }
 }
 ```
 
@@ -286,26 +296,31 @@ The potentiometer can also be used to change the brightness of LEDs. In this pro
 
 **Example code**
 
-```swift
+```swift title="C01S04PotentiometerLED.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-// Initialize the analog pin for the potentiometer and PWM pin for the LED.
-let knob = AnalogIn(Id.A0)
-let led = PWMOut(Id.PWM4A)
+@main
+public struct C01S04PotentiometerLED {
+    public static func main() {
+        // Initialize the analog pin for the potentiometer and PWM pin for the LED.
+        let knob = AnalogIn(Id.A0)
+        let led = PWMOut(Id.PWM4A)
 
-// Set the PWM to control the LED. 
-led.set(frequency: 1000, dutycycle: 0)
+        // Set the PWM to control the LED. 
+        led.set(frequency: 1000, dutycycle: 0)
 
-// Read the input value. 
-// The value is represented in percentage, while the duty cycle is also between 0 and 1, 
-// so you can directly use the reading value to set the PWM.
-while true {
-    let dutycycle = knob.readPercent()
-    led.setDutycycle(dutycycle)
+        // Read the input value. 
+        // The value is represented in percentage, while the duty cycle is also between 0 and 1, 
+        // so you can directly use the reading value to set the PWM.
+        while true {
+            let dutycycle = knob.readPercent()
+            led.setDutycycle(dutycycle)
 
-    sleep(ms: 20)
+            sleep(ms: 20)
+        }
+    }
 }
 ```
 

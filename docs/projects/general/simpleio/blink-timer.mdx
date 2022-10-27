@@ -1,15 +1,15 @@
 ---
-title: Blink timer
+title: Blink with timer
 description: Use a timer to blink the built-in LED on your microcontroller board using several lines of Swift code.
 ---
 
-# Blink timer
+# Blink with timer
 
 In the previous demo, you change the output constantly and use the function `sleep` to blink LEDs. Besides, you can use a timer to realize the same effect. So this example shows how to use the timer and interrupt mechanism on your board to make the red LED blink per second.
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board) 
+- SwiftIO Feather board (or SwiftIO board) 
 
 
 ## Circuit
@@ -27,26 +27,29 @@ All you need is a compatible board. Connect it to your computer to download the 
 
 Open the project `BlinkTimer` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
-```swift
-// Change the LED state every second by setting the timer.
+```swift title="BlinkTimer.swift" showLineNumbers
+// Change the LED state every second by setting the interrupt.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize the red onboard LED.
-let red = DigitalOut(Id.RED)
-// Initialize a timer with 1s period.
-let timer = Timer(period: 1000)
+@main
+public struct BlinkTimer {
+    public static func main() {
+        // Initialize the red onboard LED and a timer to set interrupt.
+        let red = DigitalOut(Id.RED)
+        let timer = Timer(period: 1000)
 
-// Raise the interrupt to toggle the LED when the time is up.
-timer.setInterrupt() {
-    red.toggle()
-}
+        // Raise the interrupt to turn on or off the LED every second.
+        timer.setInterrupt() {
+            red.toggle()
+        }
 
-while true {
+        while true {
 
+        }
+    }
 }
 ```
 

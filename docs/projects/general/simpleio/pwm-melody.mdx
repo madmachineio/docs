@@ -9,7 +9,7 @@ This example is similar to the previous one. You will make the buzzer to play a 
 
 ## What you need
 
-- SwiftIO Feather (or SwiftIO board)
+- SwiftIO Feather board (or SwiftIO board)
 - Breadboard
 - Buzzer
 - Jumper wires
@@ -28,31 +28,35 @@ This example is similar to the previous one. You will make the buzzer to play a 
 
 Open the project `PWMMelody` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`SimpleIO` if you downloaded the examples.
 
-```swift
+```swift title="PWMMelody.swift" showLineNumbers
 // Enable the speaker to play a simple melody by changing the frequency of PWM output.
 
 // Import the library to enable the relevant classes and functions.
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Initialize a PWM output pin that the speaker connects.
-let speaker = PWMOut(Id.PWM0A)
+@main
+public struct PWMMelody {
+    public static func main() {
+        // Initialize a PWM output pin that the speaker is connected to.
+        let speaker = PWMOut(Id.PWM0A)
 
-// Specify several frequencies corresponding to each note of the melody. 
-let fre = [
-    330, 330, 349, 392,
-    392, 349, 330, 294,
-    262, 262, 294, 330,
-    330, 294, 294
-]
+        // Specify several frequencies corresponding to each note of the melody. 
+        let frequencies = [
+            330, 330, 349, 392,
+            392, 349, 330, 294,
+            262, 262, 294, 330,
+            330, 294, 294
+        ]
 
-// Allow the speaker to repeat the melody again and again.
-while true {
-    for f in fre {
-        // Change the frequency and the duty cycle of output to produce each note.
-        speaker.set(frequency: f, dutycycle: 0.5)
-        sleep(ms: 250)
+        // Allow the speaker to repeat the melody again and again.
+        while true {
+            for f in frequencies {
+                // Change the frequency and the duty cycle of output to produce each note.
+                speaker.set(frequency: f, dutycycle: 0.5)
+                sleep(ms: 250)
+            }
+        }
     }
 }
 ```
@@ -60,7 +64,7 @@ while true {
 ## Code analysis
 
 ```swift
-let fre = [
+let frequencies = [
     330, 330, 349, 392,
     392, 349, 330, 294,
     262, 262, 294, 330,
@@ -68,7 +72,7 @@ let fre = [
 ]
 ```
 
-The frequencies on the array correspond to the notes of the music. If you want to play other music, you can write down the frequencies according to the music score.
+The frequencies on the array correspond to the notes of the music. If you want to play other music, you can replace the frequencies according to the music score.
 
 ## Reference
 

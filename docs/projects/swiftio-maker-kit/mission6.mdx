@@ -38,34 +38,34 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'main.swift', value: 'main', },
+    { label: 'Mission6_Seven_Segment_Display.swift', value: 'main', },
     { label: 'SevenSegment.swift', value: 'SevenSegment', },
   ]
 }>
 
 <TabItem value="main">
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
 
-// Set the number to be displayed.
-let number = 6
-// Initialize an instance of SevenSegment. 
-let sevenSeg = SevenSegment()
+@main
+public struct Mission6_Seven_Segment_Display {
+    public static func main() {
+        let number = 6
+        let sevenSeg = SevenSegment()
 
-while true {
-    // Display the number.
-    sevenSeg.print(number)
+        while true {
+            sevenSeg.print(number)
+        }
+    }
 }
 ```
 
 </TabItem>
 <TabItem value="SevenSegment">
 
-```swift
+```swift showLineNumbers
 // Import the SwiftIO library to use everything in it.
 import SwiftIO
 // Import the board library to use the Id of the specific board.
@@ -143,7 +143,7 @@ The image above shows how you can show numbers 0-9 on a seven-segment. For examp
 In this mission, you will separate the code into two files. It makes your code more clear and organized.
 
 - The file `SevenSegment.swift` sets the 7-segment display and provides some easy-to-use functionalities.
-- The file `main.swift` shows a digit on the 7-segment display.
+- The file `Mission6_Seven_Segment_Display.swift` shows a digit on the 7-segment display.
 
 ### SevenSegment.swift
 
@@ -157,7 +157,7 @@ As always, import the necessary libraries: [SwiftIO](https://madmachineio.github
 
 ```swift
 final class SevenSegment {
-    ...
+    
 }
 ```
 Then you will group the code in a class named `SevenSegment`. Briefly speaking, the **class** is like a template to create many instances with similar characteristics. It usually has methods (function in a class) and properties (constant or variable in a class).
@@ -215,7 +215,7 @@ How does it work? There are 7 LEDs in total, so you can use a byte to represent 
 
 ```swift
 public func print(_ number: Int) {
-    ...
+    
 }
 ```
 After the preparation above, you are ready to set the 7-segment display.
@@ -234,7 +234,7 @@ The `num` is then used as an index to access the elements in the array `ledState
 
 ```swift
 for i in 0..<7 {
-    ...
+    
 }
 ```
 There are 7 LEDs in total, so you will iterate 7 times using a for-in loop. Here you will use the loop with a numeric range. `..<` is the half-open range operator, which means `i` starts from 0 to 7 but doesn't include 7.
@@ -272,7 +272,7 @@ After you get the value of the state, that is, you know the state of the LED, it
 
 The if-else statement is to decide the output voltage. If the value of state equals 0, write `true` to turn off the LED. Or, the pin outputs a low voltage to illuminate the LED. As iterating over each bit, the states of all LEDs will be set.
 
-### main.swift
+### Mission6_Seven_Segment_Display.swift
 
 This file is quite simple since all work related to the 7-segment has been done in the other file. Let's take a quick look.
 

@@ -36,25 +36,28 @@ Connect the SwiftIO board to your computer through the download port using a USB
 
 Open the project `Mission1_Blink` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift title="Mission1_Blink.swift" showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board. 
 import MadBoard
 
-// Initialize the blue LED.
-let led = DigitalOut(Id.BLUE)
+@main
+public struct Mission1_Blink {
+    public static func main() {
+        // initialize the blue LED
+        let led = DigitalOut(Id.BLUE)
 
-// The code within it will run all the time. 
-while true { 
-    // Set blue LED off. 
-    led.write(true) 
-    // Interval of LED blink (milliseconds).
-    sleep(ms: 1000) 
-     
-    // Set blue LED on. 
-    led.write(false) 
-    sleep(ms: 1000)
+        while true {
+            // The code here will run all the time.
+
+            // Set Blue LED off
+            led.write(true)
+            sleep(ms: 1000)	// Interval of LED blink (milliseconds)
+
+            // Set Blue LED on
+            led.write(false)
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 

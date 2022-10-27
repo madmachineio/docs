@@ -37,55 +37,51 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
-  defaultValue="main"
+  defaultValue="Mission12_Buzzer_Music"
   values={[
-    { label: 'main.swift', value: 'main', },
+    { label: 'Mission12_Buzzer_Music.swift', value: 'Mission12_Buzzer_Music', },
     { label: 'Twinkle.swift', value: 'Twinkle', },
     { label: 'Package.swift', value: 'Package', },
   ]
 }>
 
-<TabItem value="main">
+<TabItem value="Mission12_Buzzer_Music">
 
-```swift
-// Import the SwiftIO library to use everything in it.
+```swift showLineNumbers
 import SwiftIO
-// Import the board library to use the Id of the specific board.
 import MadBoard
-
-// Import it to set how the music will be played with PWM signals.
 import PWMTone
 
-// Set the parameters of the music.
-var halfStep = 0
-var bpm = 60
-// Initialize a player to get ready for the music.
-let player = PWMTone(PWMOut(Id.PWM2B), bpm: bpm)
+@main
+public struct Mission12_Buzzer_Music {
+    public static func main() {
+        var halfStep = 0
+        var bpm = 60
+        let player = PWMTone(PWMOut(Id.PWM2B), bpm: bpm)
 
-for _ in 0..<3 {
-    // Play the music.
-    player.play(track: Music.twinkle)
+        for _ in 0..<3 {
+            player.play(track: Music.twinkle)
 
-    // Make the tempo faster.
-    bpm += 40
-    player.setBPM(bpm)
+            bpm += 40
+            player.setBPM(bpm)
 
-    // Make the pitch higher
-    halfStep += 12
-    player.setFixedHalfStep(halfStep)
+            halfStep += 12
+            player.setFixedHalfStep(halfStep)
 
-    sleep(ms: 1000)
-}
+            sleep(ms: 1000)
+        }
 
-while true {
-    sleep(ms: 1000)
+        while true {
+            sleep(ms: 1000)
+        }
+    }
 }
 ```
 
 </TabItem>
 <TabItem value="Twinkle">
 
-```swift
+```swift showLineNumbers
 import PWMTone
 
 struct Music {
@@ -152,22 +148,23 @@ struct Music {
 </TabItem>
 <TabItem value="Package">
 
-```swift
+```swift showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
-
 let package = Package(
     name: "Mission12_Buzzer_Music",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .branch("main")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
         // highlight-next-line
-        .package(url: "https://github.com/madmachineio/PWMTone.git", .branch("main")),
+        .package(url: "https://github.com/madmachineio/PWMTone.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
+        .executableTarget(
             name: "Mission12_Buzzer_Music",
             dependencies: [
                 "SwiftIO",
@@ -223,9 +220,9 @@ A **quarter note** is the common note length in music and has one beat. Then oth
 You can find two files in the project:
 
 - The file `Twinkle.swift` records the notes of the melody and the duration of each note. 
-- The file `main.swift` sets the PWM signal to play the music. 
+- The file `Mission12_Buzzer_Music.swift` sets the PWM signal to play the music. 
 
-Let's take a look at the file `main.swift`. 
+Let's take a look at the file `Mission12_Buzzer_Music.swift`. 
 
 ```swift
 import SwiftIO
