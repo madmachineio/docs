@@ -79,6 +79,28 @@ It's for serial communication between your board and computer. The microcontroll
   alt="Values printed on the window" width="960"
 />
 
+<details>
+    <summary> Failed to open the serial port on Linux.</summary>
+
+That may be due to your user not being a member of the dialout group.
+
+1. Print the groups for your user:
+
+```bash
+group username
+```
+
+2. If dialout isn't in it, add the user to the group with sudo permission:
+
+```bash
+sudo adduser username dialout
+```
+
+Now the serial monitor should be opened successfully.
+
+</details>
+
+
 
 ## Step 4: View values
 
