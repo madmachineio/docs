@@ -5,30 +5,42 @@ description: Learn how a button works and use it to control an LED.
 
 # Button-controlled LED
 
-The button is a commonly used input component and widely used in a light switch, remote control, keyboard, etc, to control the current flow in the circuit. Now it’s your turn to build a LED light control using a button.  
+The button is a commonly used input component and is widely used in a light switch, remote control, keyboard, etc, to control the current flow in the circuit. Now it's your turn to build a LED light control using a button. In this tutorial, you'll try different ways to control an LED.
 
 **Learning goals**
+
 * Know about digital input. 
 * Understand how to use a button in your circuit. 
-* Learn about the pull-up and pull-down resistor.
+* Learn about the pull-up and pull-down resistors.
 * Get a rough idea of interrupt and debounce. 
+* Try to control the LED in different ways.
 
 ## 🔸Background
 
 ### What is digital input?
-The microcontroller could not only send output voltage but also receive signals. You learned about digital output in the previous tutorial, and now you will discover how digital input works.
+The microcontroller can not only send output voltage but also receive signals. You've learned about digital output in the previous tutorial, and now you will discover how digital input works.
 
-Like digital output, digital input has two states: high and low. When an input signal comes in, its voltage will be compared with specific thresholds. If the voltage higher than the threshold, it’s high, and if it’s lower, it’s low. You can regard it as a multimeter used to measure voltage, but only has two results.
+Like digital output, digital input has two states: high and low. When an input signal comes in, its voltage will be compared with specific thresholds. If the voltage higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage, but only has two results.
 
-According to the input value, you could easily know the exact state of the external devices, for example, check if the button is pressed or not.
+<img
+  src={require('./img/digitalSignal.png').default}
+  alt="Digital signal wave" width="480"
+/>
 
-As mentioned before, the digital pins on the board act as both input and output, you need to initialize the pin as input in your code.
+According to the input value, you easily know the exact state of the external devices, for example, check if the button is pressed or not.
+
+The digital pins on the board act as both input and output, you need to initialize the pin as input in your code.
 
 
 ## 🔸New component
 
 ### Pushbutton 
-Pushbutton is known as a momentary switch. In the simplified circuit below, by default, the circuit inside the button is disconnected, therefore block the current flow. As you press it, the internal metals comes into contact, so the current can flow successfully through the circuit. Once you release it, the button will go back to its original state and the current is blocked again. 
+
+The button module is a **momentary switch**. This kind of switch is only activated when holding/pressing it and goes back to its original state once releasing it, i.e. keyboard buttons... A **maintained switch** changes its position when actuated and remains in its state until the next action, such as light switches.
+
+Let's look into the push button in detail. By default, the circuit inside the button is disconnected, therefore blocking the current flow. As you press it, the internal metals come into contact, so the current can flow successfully through the circuit. Once you release it, the button will go back to its original state and the current is blocked again. 
+
+This kind of button usually has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button is of no use since the current flows all the time. 
 
 <img
   src={require('./img/button.png').default}
@@ -40,11 +52,7 @@ Symbol: <img
   alt="Button symbol" width="80" align="center"
 />
 
-
-This kind of button usually has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button is of no use since the current flows all the time. 
-
 To make things easier, it is a good idea to **connect the two legs on a diagonal**, like 1 and 4, 2 and 3.
-
 
 
 
@@ -100,7 +108,7 @@ The circuits above are simplified for your reference.
 :::
 
 ## 🔸Preparation
-Let’s see the new class you are going to use in this project.
+Let's see the new class you are going to use in this project.
 
 **Class**
 
@@ -118,7 +126,7 @@ Let’s see the new class you are going to use in this project.
 2. [LED switch using interrupt](./button.mdx#2-led-switch-using-interrupt)
 
 ### 1. LED switch
-Let’s start to build a simple LED switch. When you press the button, the LED turns on. When you release the button, the LED turns off.
+Let's start to build a simple LED switch. When you press the button, the LED turns on. When you release the button, the LED turns off.
 
 <img
   src={require('./img/buttonLED.png').default}
@@ -160,7 +168,7 @@ public struct C01S02ButtonLED {
 let button = DigitalIn(Id.D1)
 ```
 
-The button is an instance created for the `DigitalIn` class. As usual, the id of the pin is necessary. It’s the pin the button connects: D1.
+The button is an instance created for the `DigitalIn` class. As usual, the id of the pin is necessary. It's the pin the button connects: D1.
 
 And there is an optional parameter `mode` with a default value `pullDown`, which means a pull-down resistor connects to the pin. There are two more options: `pullUp` (pull-up resistor), `pullNone` (no pull resistors).
 
@@ -191,7 +199,7 @@ Well, = is to assign value to a constant or variable, while == compares if value
 
 ### 2. LED switch using interrupt
 
-In the previous project, the microcontroller is doing nothing but checking the input value over and over again to wait button press. But what if you want to do something else in the loop? When should the microcontroller check the pin state? It’s hard to decide.
+In the previous project, the microcontroller is doing nothing but checking the input value over and over again to wait button press. But what if you want to do something else in the loop? When should the microcontroller check the pin state? It's hard to decide.
 
 So there comes another important mechanism - interrupt for the digital input.
 
@@ -332,7 +340,7 @@ It makes the board sleep while interrupt hasn't occurred. The sleep time can be 
 
 
 ## 🔸Go further 
-Congratulations! Now let’s dive deeper into something more complicated. Don’t be upset if you are confused. This part talks about the signal noise produced by buttons. You could skip this part and go back later as you get more familiar with all knowledge.
+Congratulations! Now let's dive deeper into something more complicated. Don't be upset if you are confused. This part talks about the signal noise produced by buttons. You could skip this part and go back later as you get more familiar with all knowledge.
 
 ### Debounce 
 When you press or release a button, you might think the button would immediately come to a stable state, closed or open. So the LED should always be on when pressing the button and turn off once the button is released. However, there may be some unexpected situations sometimes. 

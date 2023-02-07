@@ -374,7 +374,7 @@ This LCD supports I2C communication. All the commands to control it are in its d
 
 Inter-integrated circuit, I2C (I two C or I squared C) for short, is a protocol suitable for short-distance communication. It allows multiple slave devices to communicate with one master device using merely two wires, which constitutes its advantage compared to other protocols.
 
-For the communication protocols, there are always **master and slave devices**. Master device controls the communication process. Slave devices would respond to the master device when it’s called. In our projects, the SwiftIO board is always the master, and the other devices serve as slaves.
+For the communication protocols, there are always **master and slave devices**. Master device controls the communication process. Slave devices would respond to the master device when it's called. In our projects, the SwiftIO board is always the master, and the other devices serve as slaves.
 
 The two wires contain an **SCL and an SDA** line:
 
@@ -387,7 +387,7 @@ The two wires contain an **SCL and an SDA** line:
 
 - SDA (serial data) is the data line. All the data is transferred on this line by master or slave devices. And the data is usually in bytes. Each communication protocol specifies its own system about how the data is sent. That's a little complicated, and you don't have to understand it when using it.
 
-Why can only two wires support multiple devices without confusion? That is because each I2C device has its unique **address**. You can always find it in its datasheet. At the beginning of the communication, the master will send the address of the device that is wanted. Only the corresponding device would respond and prepare for the following process. Thus there won’t be confusion among different devices.
+Why can only two wires support multiple devices without confusion? That is because each I2C device has its unique **address**. You can always find it in its datasheet. At the beginning of the communication, the master will send the address of the device that is wanted. Only the corresponding device would respond and prepare for the following process. Thus there won't be confusion among different devices.
 
 In brief, if you want to communicate with some devices, you need to find the corresponding data of the command in the datasheet, then send the data according to the rules of communication protocol.
 

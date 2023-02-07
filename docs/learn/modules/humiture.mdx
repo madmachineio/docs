@@ -5,7 +5,7 @@ description: Learn how I2C works, how to create a driver for SHT3x using Swift, 
 
 # Temperature and humidity measurement
 
-What’s the temperature in your place at present? In this tutorial, you will get the readings using your board and a humiture sensor.
+What's the temperature in your place at present? In this tutorial, you will get the readings using your board and a humiture sensor.
  
 **Learning goals**
 
@@ -32,7 +32,7 @@ Imagine you meet with a person who speaks a different language from you. It's al
   alt="Communication protocol" width="480"
 />
 
-So let’s dive into some commonly used communication protocols in the microcontroller world. In this tutorial, you are going to learn about I2C.
+So let's dive into some commonly used communication protocols in the microcontroller world. In this tutorial, you are going to learn about I2C.
 
 ### What is I2C?
 
@@ -76,21 +76,6 @@ The SwiftIO library has already abstracted all stuff. Therefore, you can use I2C
 
 
 ## 🔸New component
-
-### Sensor
-
-First, let’s take a quick look at sensors. 
-
-Sensors are devices sensitive to natural properties or environmental changes, like temperature, sound, pressure, light, movement, etc. They can convert these physical inputs into electrical signals. 
-
-Depending on the output value, sensors can be divided into analog and digital sensors.
-
-* Analog sensors will give analog values, like potentiometers. There are also many common analog sensors, such as light sensors, temperature sensors, sound sensors, etc. This kind of sensor needs ADC to get readings but would be easier to use.
-
-* Digital sensors will produce digital readings of ones and zeros, like buttons (on or off). For many more advanced digital sensors, they actually read analog values in the beginning and then convert them to digital values using built-in ADC. So you can also find many digital temperature sensors. Nowadays, more and more digital sensors are used. They contain all stuff on a single chip and may support one or more communication protocols. They ensure more accuracy and provide more functionalities.
-
-In short, almost all sensors represent the measured data in the form of voltage. Finally, the voltage values will be decoded to corresponding physical values, like temperature, distance, light intensity, etc.
-
 
 ### Humiture sensor
 
@@ -149,7 +134,7 @@ Before start, you could find its [datasheet](https://sensirion.com/media/documen
 
 When dealing with all kinds of sensors, you will spend most of your time setting different commands for sensors. And if the sensor returns data, then read the values. In fact, the commands for sensors are usually determined and rarely change. So a library, aka driver, would be written to cover all common usages of sensors and provide you with simple APIs. In this way, you could directly use the functionalities in the library instead of referring to the long datasheet.
 
-Well, take the library [`SHT3x`](https://github.com/madmachineio/MadDrivers/blob/main/Sources/SHT3x/SHT3x.swift) for example, let’s see how I2C works. 
+Well, take the library [`SHT3x`](https://github.com/madmachineio/MadDrivers/blob/main/Sources/SHT3x/SHT3x.swift) for example, let's see how I2C works. 
 
 **Class**
 
@@ -260,7 +245,7 @@ extension SHT3x {
 ```
 </details>
 
-Let’s look at each part of the library in detail.
+Let's look at each part of the library in detail.
 
 ```swift
 import SwiftIO
@@ -285,7 +270,7 @@ private let i2c: I2C
 private let address: UInt8
 ```
 
-The variable or constant inside a class is called **property**. It must be initialized with a value. The two properties above don’t have an initial value and thus need an initializer.
+The variable or constant inside a class is called **property**. It must be initialized with a value. The two properties above don't have an initial value and thus need an initializer.
 
 ```swift
 private var readBuffer = [UInt8](repeating: 0, count: 6)
@@ -312,7 +297,7 @@ The method or property inside a class also needs to be **public** to be accessib
 
 This initializer takes two parameters. 
 * The first one, of course, is the I2C pin that the sensor connects. 
-* The address of this sensor is usually the same (0x44) and thus passed with a default value. In this way, you don’t need to set it when initializing a sensor instance. If the address happens to be different, you can pass the address value then.
+* The address of this sensor is usually the same (0x44) and thus passed with a default value. In this way, you don't need to set it when initializing a sensor instance. If the address happens to be different, you can pass the address value then.
 
 `self` is used to refer to the instance itself， as the parameter names are the same as the property names. Then use dot syntax to access the property and assign the parameter value to the property.
 

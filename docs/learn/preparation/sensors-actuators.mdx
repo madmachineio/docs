@@ -1,0 +1,77 @@
+---
+title: Sensors and actuators
+description: todo
+---
+
+# Sensors and actuators
+
+
+MCUs are designed to be versatile and flexible. Its true power lies in the ability to connect a wide variety of sensors, LEDs, motors, LCDs, buttons, audio devices, and more, which allows it to gather information about the environment and control various devices and systems. These connections can be made through various peripherals, such as GPIO, I2C or SPI, UART... which you'll learn in the next section. In this tutorial, let's look at these different kinds of devices.
+
+
+## Sensors
+
+
+Sensors are devices that measure different types of physical quantities, such as temperature, light, sound, humidity, pressure, movement, etc. They can be used to **detect different types of inputs and convert them into electrical signals**. The signal can then be read and processed by a microcontroller to provide information about the physical quantity being measured.
+
+
+
+Some common types of sensors include: 
+- temperature sensors: measure temperature.
+- pressure sensors: measure pressure
+- light sensors: measure light intensity
+- motion sensors: measure motion or position using accelerometers, gyroscopes, or magnetometers.
+- proximity sensors: measure the distance to an object using infrared or ultrasonic technology.
+- sound sensors: measure sound levels.
+- gas sensors: measure various gases such as CO2, O2...
+
+Different physical quantities require different measurement technologies. The choice of technology may affect such as accuracy, speed, cost, and environmental conditions. The prices of sensors with similar functions can vary widely depending on the choice of technology and the specific features and specifications of the sensor.
+
+### Analog vs digital sensors
+
+Sensors can be classified into two main categories depending on the output value:
+
+* **Analog sensors** are sensors that output a continuous electrical signal that varies in proportion to the physical quantity being measured. For example, an analog temperature sensor might output a voltage that varies linearly with temperature. Microcontrollers are digital devices and typically cannot read analog signals directly. To interface with an analog sensor, they need to use an analog-to-digital converter ([ADC](../modules/potentiometer#what-is-an-analog-signal)), a common peripheral that most MCUs contain to convert analog values into digital readings.
+
+* **Digital sensors**, on the other hand, output a discrete signal, typically in the form of a digital logic level (0 or 1). A push button is a simple example. It has two states: pressed or released and outputs a digital signal that can be interpreted as a binary "on" or "off" state. MCUs can read this digital signal using their input pins. 
+
+<img
+  src={require('./img/sensorDigitalAnalog.png').default}
+  alt="" width="480"
+/>
+
+Most physical quantities are naturally analog, meaning they can take on an infinite range of values, for example, temperature, pressure, light intensity, and sound intensity. These quantities are typically continuous and can change gradually over time.
+
+Many modern digital sensors are designed to include both analog and digital components in a single chip. This type of design allows the sensors to take advantage of the strengths of both analog and digital technologies.
+
+1. They first produce an electrical signal (usually in the form of an analog voltage) proportional to the physical quantity being measured using an analog sensor. 
+2. Then they convert the analog signal into a digital format using an internal ADC. 
+3. The digital output from the ADC is then transmitted using a digital communication protocol, such as I2C or SPI, to microcontrollers. 
+
+The digital signal from sensors can be easily processed by microcontrollers, and the corresponding physical quantity can be calculated using appropriate algorithms provided by sensor manufacturers. In this way, people with limited technical expertise can also measure and monitor a wide range of physical quantities with ease.
+
+
+Overall, digital sensors offer several advantages over analog sensors due to their higher accuracy, lower cost, and resistance to noise and interference, which makes them more appealing to designers, manufacturers, and users. As a result, the trend toward digital sensors has continued to grow, and they have become more widely adopted across many industries.
+
+
+
+
+## Actuators
+
+Actuators are devices that can be used to produce a physical effect based on the control signal received from the microcontroller. For example, an electric motor converts electrical energy into mechanical energy and rotates a shaft. Some examples of actuators are DC motors, servo motors, LCDs...
+
+
+
+## Requirements
+
+The devices that can be connected to the board typically have some specific requirements in terms of power and communication.
+
+- Power: Many devices will require a specific voltage and/or current to function properly. For example, some sensors may run on 3.3V while others may require 5V. Some motors may require a lot of current, while others may only require a small amount. It is important to ensure that the board can provide the necessary power to the connected devices.
+
+- Communication: Different devices may use different communication protocols to send and receive data. For example, some sensors may use I2C or SPI, while others may use UART. It is important to ensure that the board is configured to use the same protocol as the connected device.
+
+## Circuit connection
+
+There are several common methods for connecting sensors and other devices to a microcontroller (MCU). The most straightforward approach is to use jumper wires, where each pin must be manually matched. Essential connections for power (Vcc) and ground (GND) must always be established. In addition, sensors will provide specific pins for signals such as digital input/output, analog, I2C...
+
+Another commonly used method is the [grove connector](https://wiki.seeedstudio.com/Grove_System/), which is used in SwiftIO Circuit Playgrounds. This method simplifies connections using 4-pin cables, making it easier to interface with your MCU.

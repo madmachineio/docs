@@ -6,7 +6,7 @@ description: Learn how to
 # MadDisplay
 
 
-If you have dealt with Adobe photoshop or illustrator, you must be familiar with the operations based on different layers. And that’s the point of this library. You can create and group different elements as you like to form a wonderful display.
+If you have dealt with Adobe photoshop or illustrator, you must be familiar with the operations based on different layers. And that's the point of this library. You can create and group different elements as you like to form a wonderful display.
  
 ## 🔸Introduction
 
@@ -31,7 +31,7 @@ The image below shows how it works in general:
 
 In this way, you can well organize the elements for the display and easily change or move any of the elements without messing up the whole display.
 
-Let’s begin with a simple project to understand them better. Here is the sample code:
+Let's begin with a simple project to understand them better. Here is the sample code:
 
 ```swift
 // Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
@@ -93,7 +93,7 @@ After you download the code, you will see the screen as below:
   alt="Display on the screen" width="240"
 />
 
-Now, let’s break it down to understand how these parts work.
+Now, let's break it down to understand how these parts work.
 
 ###  Palette
 
@@ -110,7 +110,7 @@ Palette is an ordered color table that contains all the color values for a bitma
 | `subscript(index:)` | Access the color by using its index. It can used to change a specified color in palette with another color. |
 
 
-Let’s say you will create a palette with 4 colors: white, balck, red, yellow. 
+Let's say you will create a palette with 4 colors: white, balck, red, yellow. 
 
 <img
   src={require('./img/palette.png').default}
@@ -149,7 +149,7 @@ palette.append(Color.red)
 palette.append(Color.yellow)
 ```
 :::info
-BTW, maybe you remember that the LCD needs 16-bit colors. However, the colors here are UInt32. Well, RGB888 is the most frequently-used format. Red, green, and blue take respectively 8 bits. The library has done the conversion for you. So you don’t need to worry about it.
+BTW, maybe you remember that the LCD needs 16-bit colors. However, the colors here are UInt32. Well, RGB888 is the most frequently-used format. Red, green, and blue take respectively 8 bits. The library has done the conversion for you. So you don't need to worry about it.
 :::
 
 ### Bitmap
@@ -158,7 +158,7 @@ A bitmap is a collection of pixels. Each pixel stores an index of a palette. Hav
 
 The width and height of the bitmap decide its size. The bit count decides the total amount of possible colors. It can be 1, 2, 4, 8, 16, 32. If the bit count is 1, a pixel can have 2 possible colors, and the bitmap can use two colors.
 
-Let’s look at some of the basic API for this class:
+Let's look at some of the basic API for this class:
 
 **Class**
 
@@ -170,7 +170,7 @@ Let’s look at some of the basic API for this class:
 | `setPixel(x:y:_:)` | Set the color index of a pixel. <br />**Parameters:** <br /> - `x` and `y`: coordinates of the pixel. They start from 0, so their maximum values are width-1 and height-1 respectively. <br /> - `value`: a color index in a palette. |
 
 
-Let’s create a bitmap and set pixels using the palette created above.
+Let's create a bitmap and set pixels using the palette created above.
 
 ```swift
 let bitmap = Bitmap(width: 200, height: 200, bitCount: 2)
@@ -205,7 +205,7 @@ Each pixel on a bitmap has an index whose color info is in a palette. Now it's t
 | `setXY(x:y:)` | Set the coordinate of the upper left corner of the tile to move the tile. <br />**Parameters:** <br /> - `x`, `y`: the x, y-coordinate of the destination relative to its group to place the tile. They can be positive or negative. |
 
 
-Let’s create a tile using the bitmap and palette above:
+Let's create a tile using the bitmap and palette above:
 
 ```swift
 let tile = Tile(x: 20, y: 20, bitmap: bitmap, palette: palette)
@@ -220,7 +220,7 @@ As the image below, the middle area of the tile is in yellow, and the rest is in
 
 A bitmap can use different palettes to get different colors. Just like coloring books can be painted with a different combination of colors.
 
-The tile will be added to a group later. A tile’s area is always a rectangle, no matter how it looks. The coordinates of the upper left corner decide the position of a tile and can be positive or negative. It is relative to the group to which it belongs.
+The tile will be added to a group later. A tile's area is always a rectangle, no matter how it looks. The coordinates of the upper left corner decide the position of a tile and can be positive or negative. It is relative to the group to which it belongs.
 
 <img
   src={require('./img/tileOrigin.png').default}
@@ -243,7 +243,7 @@ A tile (or a group) can only belong to one group and cannot be added to several 
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(x:y:scale:)` | Initialize a group. <br />**Parameters:** <br /> - `x` and `y`: the position of the group on the screen. <br /> - `scale`: the scale to resize the group. By default, it’s 1, which means the original size. Its value is always an integer and should not be smaller than 1. |
+| `init(x:y:scale:)` | Initialize a group. <br />**Parameters:** <br /> - `x` and `y`: the position of the group on the screen. <br /> - `scale`: the scale to resize the group. By default, it's 1, which means the original size. Its value is always an integer and should not be smaller than 1. |
 | `append(_ group:)` | Add a subgroup to the group. It will overlap the elements you added before.  <br />**Parameter:** <br /> - group: a group to be added. |
 | `append(_ tile:)` | Add a tile to the group. It will overlap the elements you added before.  <br />**Parameter:** <br /> - tile: a tile to be added. |
 
@@ -263,7 +263,7 @@ The group is the final composition of all graphics. It will ont be displayed on 
 
 ### Display
 
-Finally, it’s time for the display. You will use the class `MadDisplay` to display the group above.
+Finally, it's time for the display. You will use the class `MadDisplay` to display the group above.
 
 **Class**
 

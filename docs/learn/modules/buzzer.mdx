@@ -224,11 +224,11 @@ It will suspend the output, thus stop the sound from the buzzer. If you remove t
 
 ### 2. Breathing LED
 
-After the musical scale with the buzzer, let’s go back to the LED again. 
+After the musical scale with the buzzer, let's go back to the LED again. 
 
 The PWM signal can not only drive a buzzer, but also change LED brightness. By applying PWM output, the LED changes between on and off quickly. You could not notice this change, so it seems the LED becomes brighter and dimmer. BTW, your monitor may also use this method to control the backlight. A bigger duty cycle will make the LED brighter, since the time for high level is much longer.
 
-So let’s try a breathing LED! You may notice it when a new message comes on your phones. The LED changes from the darkest to the brightest, from brightest to darkest smoothly. It looks like it is breathing.
+So let's try a breathing LED! You may notice it when a new message comes on your phones. The LED changes from the darkest to the brightest, from brightest to darkest smoothly. It looks like it is breathing.
 
 <img
   src={require('./img/breathingLED.png').default}
@@ -299,7 +299,7 @@ let stepDutycycle: Float = 0.01
 
 There are some built-in data types in the Swift language, like **Int** (integer), **Float** and **Double** (decimal number), **Bool** (true and false), etc. Each type corresponds to different values type and value range. If the values in your program don't match or exceed the default range, the compilation will fail. 
 
-Besides, if you don’t explicitly declare the data type, Swift will use **type inference** to decide the type. For example, if the `minDutycycle` is written as 0, Swift would judge it as an Int. When dealing with decimal numbers 0.0, it could be either float or double. The default choice of Swift is double. However, the duty cycle used in `PWMOut` class is `Float`. Therefore, the values above need to be declared as `Float`.
+Besides, if you don't explicitly declare the data type, Swift will use **type inference** to decide the type. For example, if the `minDutycycle` is written as 0, Swift would judge it as an Int. When dealing with decimal numbers 0.0, it could be either float or double. The default choice of Swift is double. However, the duty cycle used in `PWMOut` class is `Float`. Therefore, the values above need to be declared as `Float`.
 
 
 The LED brightness depends on the duty cycle of the PWM signal. The duty cycle is always between 0 and 1. So the maximum and minimum values are stored in two constants for later comparison. 
@@ -329,7 +329,7 @@ sleep(ms: 10)
 ```
 It makes each brightness last for 10ms. If you remove this statement, the LED changes so fast that you cannot notice the brightness change.
 
-The duty cycle is 0 - 1, and the change is 0.01 each time. So one loop will last 100 times. Then let’s suppose the LED changes from off to full brightness in 1 second, and you will get the duration for each state - 10ms. 
+The duty cycle is 0 - 1, and the change is 0.01 each time. So one loop will last 100 times. Then let's suppose the LED changes from off to full brightness in 1 second, and you will get the duration for each state - 10ms. 
 
 ```swift
 if upDirection {
@@ -343,7 +343,7 @@ This conditional statement will decide how the duty cycle will change according 
 
 * If it's true, the duty cycle will increase by the value of `stepDutycle`. Once its value exceeds the maximum, `upDirection` will be false.
 
-* If it’s false, the duty cycle will decrease. When it is below its minimum, `upDirection` becomes `true` again.
+* If it's false, the duty cycle will decrease. When it is below its minimum, `upDirection` becomes `true` again.
 
 ```swift
 dutycycle += stepDutycycle

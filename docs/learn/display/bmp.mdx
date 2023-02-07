@@ -36,7 +36,7 @@ The image below shows how indexed images work. The original is a 24-bit RGB imag
 />
 
 :::info
-You may find there are some gray scales in the 1-bit image above. That’s due to a technique called **dither**. It mimics different colors by mixing pixels of given colors. Different densities of two colors create illusions of other colors to our eyes. With this technique, you could create images with limited colors.
+You may find there are some gray scales in the 1-bit image above. That's due to a technique called **dither**. It mimics different colors by mixing pixels of given colors. Different densities of two colors create illusions of other colors to our eyes. With this technique, you could create images with limited colors.
 
 After you enlarge that image, you will see only black and white are used. 
 <img
@@ -72,8 +72,8 @@ Nowadays, indexed images are not widely-used, but you can still create them usin
 | Method | Explanation |
 | ------ | ----------- |
 | `init(path:`<br />`transparentColor:)` | Initialize a bitmap by indicating the path of the image on the SD card. It will open the file and read the data. <br />**Parameters:** <br /> - `path`: the path of image stored on SD card. <br /> - `transparentColor`: a color used as transparent color. |
-| `getBitmap() -> Bitmap` | Get pixel information from the image. <br />**Return value:** <br />If it’s an indexed image, it will get the indexes. If it’s a RGB image, it will read the color values. |
-| `getPalette() -> Palette?` | Read palette from an indexed image. <br />**Return value:** <br />An RGB image doesn’t have a palette, so it returns nil. An indexed image will return a palette. |
+| `getBitmap() -> Bitmap` | Get pixel information from the image. <br />**Return value:** <br />If it's an indexed image, it will get the indexes. If it's a RGB image, it will read the color values. |
+| `getPalette() -> Palette?` | Read palette from an indexed image. <br />**Return value:** <br />An RGB image doesn't have a palette, so it returns nil. An indexed image will return a palette. |
 
 :::tip
 Please make sure to copy the images to the SD card so that your board can read it. And the image should be within 240x240 pixels to fit the screen.
@@ -86,7 +86,7 @@ Please make sure to copy the images to the SD card so that your board can read i
 
 ### 1. Display indexed bitmap
 
-Let’s start with an indexed image.
+Let's start with an indexed image.
 
 ```swift
 // Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
@@ -124,7 +124,7 @@ while true {
 }
 ```
 
-1. First off, you need to tell your board where the image is stored. If it’s in the root directory of the SD card, the path is `/SD:/xxx.bmp`.
+1. First off, you need to tell your board where the image is stored. If it's in the root directory of the SD card, the path is `/SD:/xxx.bmp`.
 2. As it is an indexed image, you need to get its bitmap and palette. Don't forget the palette needs to be unwrapped. Since this image must have a palette, you can force unwrap it. 
 3. Then you create a tile with the bitmap and palette. Add the tile to a group and display it. 
 
@@ -132,7 +132,7 @@ while true {
 
 ### 2. Display RGB bitmap
 
-What about RGB images? Let’s find out how to display them.
+What about RGB images? Let's find out how to display them.
 
 ```swift
 // Import the SwiftIO library to set SPI communication and MadBoard to use pin id.

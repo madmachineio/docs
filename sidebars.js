@@ -94,7 +94,9 @@ module.exports = {
           },
           items: [
             'learn/preparation/first-try',
-            'learn/preparation/background',
+            'learn/preparation/microcontroller',
+            'learn/preparation/sensors-actuators',
+            'learn/preparation/pins',
             'learn/preparation/hardware',
             'learn/preparation/swiftio-madboard',
           ],
@@ -111,7 +113,6 @@ module.exports = {
           items: [
             'learn/modules/led',
             'learn/modules/button',
-            'learn/modules/led-timer',
             'learn/modules/buzzer',
             'learn/modules/potentiometer',
             'learn/modules/humiture',

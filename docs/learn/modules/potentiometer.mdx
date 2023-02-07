@@ -5,7 +5,7 @@ description: Learn how to
 
 # Potentiometer
 
-You have learned a lot about digital signals and tried many projects with digital devices. Now let’s know something about analog signals. The potentiometer is a typical component to give you analog readings. You'll connect a potentiometer to your circuit and read analog values.
+You have learned a lot about digital signals and tried many projects with digital devices. Now let's know something about analog signals. The potentiometer is a typical component to give you analog readings. You'll connect a potentiometer to your circuit and read analog values.
 
 **Learning goals**
 
@@ -71,7 +71,7 @@ Symbols: <img
 
 As shown in the image above, it has three terminals. The resistance between two ends (a and c) represents the maximum resistance. The middle one is connected to a wiper. As you rotate the knob, the position of the wiper changes and the actual resistance in the circuit changes proportionally. 
 
-For example, if you connect the outer pin a to the ground, the other outer pin c to power, and the middle pin b to the input pin, let’s see how it works. When you turn it clockwise, the wiper moves gradually far away from a, the actual resistance between a and b in the circuit increases. And the voltage measured on pin b would increase with it, gradually to 3.3V. If you turn it anticlockwise, the result is the opposite.
+For example, if you connect the outer pin a to the ground, the other outer pin c to power, and the middle pin b to the input pin, let's see how it works. When you turn it clockwise, the wiper moves gradually far away from a, the actual resistance between a and b in the circuit increases. And the voltage measured on pin b would increase with it, gradually to 3.3V. If you turn it anticlockwise, the result is the opposite.
 
 <img
   src={require('./img/rotatePot.png').default}
@@ -88,13 +88,13 @@ A voltage divider circuit is commonly used to get some smaller voltage levels th
   alt="Voltage divider" width="480"
 />
 
-The voltage divider calculation is based on the ohm’s law. Here’s the equation: 
+The voltage divider calculation is based on the ohm's law. Here's the equation: 
 **VR1 = Vin * R1/(R1+R2)**
 
 * _Vin: input voltage_
 * _VR1: voltage drop on R1_
 
-Since the two resistors are in series, the current flows through them are the same. The sum of VR1 and VR2 should equal Vin. So the ratio of R1’s resistance to the total resistance equals the ratio of voltage drop to the incoming voltage supply.
+Since the two resistors are in series, the current flows through them are the same. The sum of VR1 and VR2 should equal Vin. So the ratio of R1's resistance to the total resistance equals the ratio of voltage drop to the incoming voltage supply.
 
 The potentiometer is a typical example of it. The whole resistor is cut into two parts by the wiper. As the wiper goes, the ratio of the resistor changes, thus the voltage drop changes accordingly.
 

@@ -142,7 +142,7 @@ The circuits above are simplified versions for your reference.
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(_:speed:csPin:`<br />`CPOL:CPHA:bitOrder:)` | Initialize an SPI interface. <br />**Parameter:** <br /> - `idName`: spi pin id that the device connects to. <br /> - `speed`: the communication speed, 5MHz by default. The maximum speed is about 30MHz. <br /> - `csPin`: a `DigitalOut` pin as a CS pin. It is nil by default. If you don’t set it, you need to control it manually when communicating with devices. <br />- `CPOL`: the state of clock signal when it's idle, `false` by default. <br />- `CPHA`: the edge of clock signal to sample data, false for first edge and true for second edge. `false` by default. <br />- `bitOrder`: the bit order during data transmission, `.MSB` by default. |
+| `init(_:speed:csPin:`<br />`CPOL:CPHA:bitOrder:)` | Initialize an SPI interface. <br />**Parameter:** <br /> - `idName`: spi pin id that the device connects to. <br /> - `speed`: the communication speed, 5MHz by default. The maximum speed is about 30MHz. <br /> - `csPin`: a `DigitalOut` pin as a CS pin. It is nil by default. If you don't set it, you need to control it manually when communicating with devices. <br />- `CPOL`: the state of clock signal when it's idle, `false` by default. <br />- `CPHA`: the edge of clock signal to sample data, false for first edge and true for second edge. `false` by default. <br />- `bitOrder`: the bit order during data transmission, `.MSB` by default. |
 
 
 **`ST7789`** - it configures the LCD and allows you to draw pixels on it.
@@ -352,7 +352,7 @@ This statement initializes the LCD. It needs several parameters:
 
 * then the size of the screen: width and height. The chip ST7789 supports screens of different sizes. The default size is 240x240, and it is what you are using, so there's no need to change them.
 
-* at last, the rotation of the screen. The screen rotates by 90 degrees when designing the circuit. So if you don’t set it, the origin will be at the lower-left corner. To have a better view, you could set it to `.angle90`, so the origin will be at the upper left corner.
+* at last, the rotation of the screen. The screen rotates by 90 degrees when designing the circuit. So if you don't set it, the origin will be at the lower-left corner. To have a better view, you could set it to `.angle90`, so the origin will be at the upper left corner.
 
 <img
   src={require('./img/LCDRotation.png').default}

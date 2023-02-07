@@ -37,7 +37,7 @@ The SwiftIO Feather board always serves as a master device. It has two I2S inter
 ## 🔸New concept
 ### Audio
 
-You listen to music in everyday life, but do you know how audio is stored on your computer? Besides, there are so many different file formats, what’s their difference? Let’s find out more about it.
+You listen to music in everyday life, but do you know how audio is stored on your computer? Besides, there are so many different file formats, what's their difference? Let's find out more about it.
 
 **Waveform**
 
@@ -48,7 +48,7 @@ The waveforms of sound are various. Sine, square, triangle, and sawtooth waves a
   alt="Wave forms" width="960"
 />
 
-We’ll talk about the sine wave in the following part and only deal with periodic waveforms. The **sine wave** is the fundamental wave. Almost all other period waveforms can be broken down into several different sine waves using Fourier Transforms.
+We'll talk about the sine wave in the following part and only deal with periodic waveforms. The **sine wave** is the fundamental wave. Almost all other period waveforms can be broken down into several different sine waves using Fourier Transforms.
 
 A periodic waveform repeats the wave in a period and produces constant sound. The **frequency** measures how many times the wave repeats in a second, measured in hertz (hz). For example, the wave below repeats the minimum wave 5 times, so the frequency is 5Hz. The higher the frequency, the higher the pitch. And the frequencies of human hearing are about 20Hz to 20kHz. 
 
@@ -59,7 +59,7 @@ A periodic waveform repeats the wave in a period and produces constant sound. Th
 
 **Sampling**
 
-The audio signal is analog and the data always change with time. There are some sampling techniques to store the data digitally. Let’s take a look at the one called **pulse code modulation** (PCM). Briefly speaking, it records the sound amplitudes at a regular time interval. Then the samples will be encoded into digital values. As long as the sample data are as many as possible, you could largely recreate the original audio signal. 
+The audio signal is analog and the data always change with time. There are some sampling techniques to store the data digitally. Let's take a look at the one called **pulse code modulation** (PCM). Briefly speaking, it records the sound amplitudes at a regular time interval. Then the samples will be encoded into digital values. As long as the sample data are as many as possible, you could largely recreate the original audio signal. 
 
 <img
   src={require('./img/sampling.png').default}
@@ -76,9 +76,9 @@ As mentioned before, the maximum frequency for human hearing is about 20KHz, the
 
 **Audio format**
 
-Maybe you have heard of some audio file formats: MP3, WAV, AAC, FLAC, and so on. These formats can be divided into two types: **lossless and lossy file format**. The difference is the way audio data is stored. For example, WAV and FLAC are lossless, while MP3 and AAC are lossy. Let’s have a look at the two frequently-used formats as an example: WAV and MP3.
+Maybe you have heard of some audio file formats: MP3, WAV, AAC, FLAC, and so on. These formats can be divided into two types: **lossless and lossy file format**. The difference is the way audio data is stored. For example, WAV and FLAC are lossless, while MP3 and AAC are lossy. Let's have a look at the two frequently-used formats as an example: WAV and MP3.
 
-* **WAV** (or WAVE) file stores the raw PCM data. Besides, it has a header at the beginning which tells the sampling information. Or else others cannot know how data is sampled. This format stores all original audio data, thus it is large in file size but doesn’t require any decoding method to open the file.
+* **WAV** (or WAVE) file stores the raw PCM data. Besides, it has a header at the beginning which tells the sampling information. Or else others cannot know how data is sampled. This format stores all original audio data, thus it is large in file size but doesn't require any decoding method to open the file.
 
 * **MP3** files use compression algorithms to remove some of the frequencies that human ears are not sensitive to. So this quality loss is not perceptible to most listeners. Compared to the WAV file, MP3 is much smaller in size, thus it is really handy to download from the Internet. Because it uses compression algorithms, the music player needs to decode it to open the file.  
 

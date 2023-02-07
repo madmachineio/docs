@@ -13,7 +13,7 @@ At first, you will set up the software for your board.
 
 1. **Open the Visual Studio Code**. I believe most of you guys have installed it. We have created an extension for it. It is really handy and easy to use.
 
-2. **Install the extension MadMachine** as shown below:
+2. **Install the extension** as shown below:
     1. click the Extensions button on the left bar.
     2. enter the extension name MadMachine in the search box.
     3. click the Install button.
@@ -23,7 +23,7 @@ At first, you will set up the software for your board.
   alt="Install the extension" width="960"
 />
 
-3. **Download the latest [mm sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build your project. Choose the version marked with the label **Latest**. The versions marked with Pre-release are still for internal testing.
+3. **Download the latest [mm-sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build and download your project.
 
 4. **Open the Settings** by clicking **Code** / **Preferences** / **Settings** to set the extension.
 
@@ -33,12 +33,38 @@ At first, you will set up the software for your board.
 />
 
 
-5. Click **Extensions** to expand it and find **MadMachine**. **Indicate the mm sdk location** in the box that matches your operating system. If you change the location of sdk later, you will need to update it again. 
+5. Click **Extensions** to expand it and find **MadMachine**. Indicate the **mm-sdk location** in the box that matches your operating system. If you change the location of sdk later, you will need to update it. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Mac"
+  values={[
+    { label: 'Mac', value: 'Mac', },
+    { label: 'Linux', value: 'Linux', },
+  ]
+}>
+
+<TabItem value="Mac">
 
 <img
-  src={require('./img/sdkPath.png').default}
-  alt="Set the path of sdk" width="960"
+  src={require('./img/sdkPathMac.png').default}
+  alt="Indicate the path of sdk on Mac." width="960"
 />
+
+</TabItem>
+<TabItem value="Linux">
+
+<img
+  src={require('./img/sdkPathLinux.png').default}
+  alt="Indicate the path of sdk on Linux." width="960"
+/>
+
+</TabItem>
+</Tabs>
+
+
 
 OK, the software gets prepared👏.
 
@@ -53,7 +79,7 @@ Now, you will start your first project.
   alt="Create a new project" width="960"
 />
 
-2. Choose the project as an executable. Your project will run on the board after it is downloaded, so you need an executable. And the projects later in the following sections are all executables.
+2. Choose the project as an **executable**. Your project will run on the board after it is downloaded, so you need an executable. And the projects later in the following sections are all executable projects.
 
 <img
   src={require('./img/projectType.png').default}
@@ -88,9 +114,9 @@ Well, the project is created and will open in a new window.
 
 Then you will need to edit the code for the project. 
 
-1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. This file stores the main code for your project. So you will always edit this file for all your projects.
+1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. Your program will start from here. So you will always edit this file for all your projects.
 
-2. Copy the code below into the file. In the next section, you will learn more about the code.
+2. Copy the code below into the file. In the [next section](../modules/led), you will learn how everything works.
 
 ```swift title="Blink.swift" showLineNumbers
 import SwiftIO
@@ -123,33 +149,24 @@ Now you come to the last step - download your project to the board.
 
 1. **Connect** your SwiftIO Feather board to your computer. In the illustration below, the SwiftIO Feather board is plugged into the SwiftIO Circuit Playgrounds board. You can also disconnect them. 
 
+:::info
+If you are using our prototype board, there is one more shield board in between. Make sure to connect its port to your computer for code downloading instead of the other two ports.
+:::
+
 <img
   src={require('./img/connect.png').default}
   alt="Connect your board to computer" width="480"
 />
 
-2. **Press** the download button.
 
-<img
-  src={require('./img/press.png').default}
-  alt="Press the download button" width="240"
-/>
-
-3. Wait until the onboard LED turns to **steady green**.
-
-<img
-  src={require('./img/greenLED.png').default}
-  alt="Onboard LED turns to steady green" width="240"
-/>
-
-4. Click the **Build** button to build your project.
+2. Click the **Build** button to build your project.
 
 <img
   src={require('./img/build.png').default}
   alt="click build button" width="960"
 />
 
-5. Click the **Download** button. It will take a few seconds.
+3. Click the **Download** button. It will take a few seconds.
 
 <img
   src={require('./img/download.png').default}
