@@ -43,23 +43,20 @@ An MCU usually contains a CPU, RAM, ROM (can be understood as RAM that can only 
 />
 
 
-## Comparison between computer and MCU
+## Computer vs MCU
 
 I believe most of you guys are software programmers, so it would be a good practice to compare MCUs to general-purpose computers you use in everyday life for a better understanding.
 
 ### Composition
 
-An **MCU** typically includes: 
-- CPU
-- RAM: is a type of volatile memory, meaning that its contents are lost when the power is turned off. It's used by the program to run, containing variables allocated by your program and data gathered from peripherals.
-- ROM: it is non-volatile, which means whatever is written to it stays when there is no power to the device. It stores the firmware/bootloader responsible for performing basic initialization and configuration tasks, and for loading the main program from another source. It normally cannot be changed or modified.
-- peripherals: additional circuits and components that are built into the MCU to provide specific functions. They expand the capabilities of the MCU and allow it to interact with the outside world. The common peripherals are GPIO, ADC, I2C, SPI, UART, Timer...
+| Component   | MCU | General-purpose computer |
+| ----------- | ----------- | ----------- |
+| CPU | performs a specific set of tasks and is optimized for low power consumption. | executes complex instructions, performs multiple tasks at the same time, and handles large amounts of data. |
+| RAM |  a type of volatile memory used by the program to run, containing variables allocated by your program and data gathered from peripherals. | much larger than that on MCUs. |
+| ROM | non-volatile memory to store the firmware/bootloader responsible for performing basic initialization and configuration tasks, and for loading the main program from another source. It normally cannot be changed or modified. It can be used for XIP. | is installed on the motherboard and may not be familiar to many guys. It typically stores the BIOS, firmware that controls the basic functions of the computer and provides instructions for initializing the hardware components of the computer, including hard disks. |
+| peripherals   | additional circuits and components that are built into the MCU to provide specific functions, such as GPIO, ADC, I2C, SPI, UART, Timer... All these peripherals, as well as CPU, memory (ROM, RAM), are directly connected to the CPU through an internal bus which is decided by the chip manufacturer and integrated into a single chip. | all components, including CPU, RAM, ROM, and peripherals, are connected to the motherboard and communicate through buses. The chipset (Northbridge and southbridge) on the motherboard is responsible for managing communication between the various components. The northbridge chip manages communication between the CPU and high-speed devices, such as memory, and the graphics processing unit (GPU). It had been integrated into the CPU Nowadays. The southbridge, on the other hand, is responsible for managing communication between the CPU and lower-speed devices, such as BIOS, SATA, USB, Ethernet, audio. |
+| external storage   |    SD card (some MCUs may not have), used to store program resources.  | hard disks, etc |
 
-A **general-purpose computer** typically includes: 
-- CPU
-- RAM 
-- ROM: typically stores the BIOS, firmware that controls the basic functions of the computer and provides instructions for initializing the hardware components of the computer. It is installed on the motherboard. A BIOS runs before, or instead of, the operating system. It can control any display device attached to the processor, and any storage attached (such as a disk drive), and any input device attached as well.
-- peripheral interfaces: USB, Ethernet, Wi-Fi, Bluetooth, and more which are much faster compared to those on MCUs. These are used to interface with a wide range of external devices, from keyboards and mice to printers and external hard drives. 
 
 I think the main challenge with working with MCUs is typically the need to work with a wide range of peripherals and understand how they interact with the MCU. 
 

@@ -33,12 +33,14 @@ Sensors can be classified into two main categories depending on the output value
 
 * **Analog sensors** are sensors that output a continuous electrical signal that varies in proportion to the physical quantity being measured. For example, an analog temperature sensor might output a voltage that varies linearly with temperature. Microcontrollers are digital devices and typically cannot read analog signals directly. To interface with an analog sensor, they need to use an analog-to-digital converter ([ADC](../modules/potentiometer#what-is-an-analog-signal)), a common peripheral that most MCUs contain to convert analog values into digital readings.
 
+  <img
+    src={require('./img/analogSensor.png').default}
+    alt="" width="480"
+  />
+
 * **Digital sensors**, on the other hand, output a discrete signal, typically in the form of a digital logic level (0 or 1). A push button is a simple example. It has two states: pressed or released and outputs a digital signal that can be interpreted as a binary "on" or "off" state. MCUs can read this digital signal using their input pins. 
 
-<img
-  src={require('./img/sensorDigitalAnalog.png').default}
-  alt="" width="480"
-/>
+
 
 Most physical quantities are naturally analog, meaning they can take on an infinite range of values, for example, temperature, pressure, light intensity, and sound intensity. These quantities are typically continuous and can change gradually over time.
 
@@ -62,15 +64,14 @@ Actuators are devices that can be used to produce a physical effect based on the
 
 
 
-## Requirements
+
+## Circuit connection
 
 The devices that can be connected to the board typically have some specific requirements in terms of power and communication.
 
 - Power: Many devices will require a specific voltage and/or current to function properly. For example, some sensors may run on 3.3V while others may require 5V. Some motors may require a lot of current, while others may only require a small amount. It is important to ensure that the board can provide the necessary power to the connected devices.
 
 - Communication: Different devices may use different communication protocols to send and receive data. For example, some sensors may use I2C or SPI, while others may use UART. It is important to ensure that the board is configured to use the same protocol as the connected device.
-
-## Circuit connection
 
 There are several common methods for connecting sensors and other devices to a microcontroller (MCU). The most straightforward approach is to use jumper wires, where each pin must be manually matched. Essential connections for power (Vcc) and ground (GND) must always be established. In addition, sensors will provide specific pins for signals such as digital input/output, analog, I2C...
 
