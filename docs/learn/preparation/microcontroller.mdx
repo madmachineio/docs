@@ -19,7 +19,7 @@ What is a so-called **microcontroller (MCU)**? It is usually embedded in all kin
 When you use your computer, you type text with a keyboard. In this case, the keyboard serves as an input device; the screen will display the result and thus is an output device. Now come back to MCU. It can work with various devices. Suppose that you connect it to a switch and a light: the switch serves as an input to detect your action and the LED as an output to generate light. There are tons of devices with different usage, so an MCU can do different tasks after connecting to all kinds of devices. 
 
 
-## How it works
+### How it works
 
 It's quite like how humans sense and react to the environment. 
 
@@ -33,9 +33,9 @@ Humans sense the environment through their five senses: sight, hearing, taste, t
 Similarly, MCU reads input signals from external devices/sensors through its I/O ports and processes the data using its internal processing capabilities. Then MCU controls various types of devices according to its logic, such as LEDs, displays, and motors...
 
 
-## What it consists of
+### What it consists of
 
-An MCU usually contains a CPU, RAM, ROM (can be understood as RAM that can only be read from but cannot be changed), and different kinds of I/O peripherals in a single chip, to interact with external devices. Other devices will be attached to its pins to allow it to sense and react to the physical world. 
+An MCU usually contains a **CPU, RAM, ROM** (can be understood as RAM that can only be read from but cannot be changed), and different kinds of **I/O peripherals in a single chip**, to interact with external devices. Other devices will be attached to its pins to allow it to sense and react to the physical world. 
 
 <img
   src={require('./img/microcontroller.png').default}
@@ -43,58 +43,35 @@ An MCU usually contains a CPU, RAM, ROM (can be understood as RAM that can only 
 />
 
 
-## Computer vs MCU
+## MCU vs General-purpose Computer
 
 I believe most of you guys are software programmers, so it would be a good practice to compare MCUs to general-purpose computers you use in everyday life for a better understanding.
 
-### Composition
-
 | Component   | MCU | General-purpose computer |
 | ----------- | ----------- | ----------- |
-| CPU | performs a specific set of tasks and is optimized for low power consumption. | executes complex instructions, performs multiple tasks at the same time, and handles large amounts of data. |
-| RAM |  a type of volatile memory used by the program to run, containing variables allocated by your program and data gathered from peripherals. | much larger than that on MCUs. |
-| ROM | non-volatile memory to store the firmware/bootloader responsible for performing basic initialization and configuration tasks, and for loading the main program from another source. It normally cannot be changed or modified. It can be used for XIP. | is installed on the motherboard and may not be familiar to many guys. It typically stores the BIOS, firmware that controls the basic functions of the computer and provides instructions for initializing the hardware components of the computer, including hard disks. |
-| peripherals   | additional circuits and components that are built into the MCU to provide specific functions, such as GPIO, ADC, I2C, SPI, UART, Timer... All these peripherals, as well as CPU, memory (ROM, RAM), are directly connected to the CPU through an internal bus which is decided by the chip manufacturer and integrated into a single chip. | all components, including CPU, RAM, ROM, and peripherals, are connected to the motherboard and communicate through buses. The chipset (Northbridge and southbridge) on the motherboard is responsible for managing communication between the various components. The northbridge chip manages communication between the CPU and high-speed devices, such as memory, and the graphics processing unit (GPU). It had been integrated into the CPU Nowadays. The southbridge, on the other hand, is responsible for managing communication between the CPU and lower-speed devices, such as BIOS, SATA, USB, Ethernet, audio. |
-| external storage   |    SD card (some MCUs may not have), used to store program resources.  | hard disks, etc |
+| CPU | executes a specific set of instructions normally optimized for low power consumption. The core speed is around 8Mhz to hundreds of Mhz. | executes more complex instructions. The core speed is around 2 - 4GHz, and multiple cores are common. |
+| RAM | the size is about 128K-2MB.  | has much larger size, 2GB-32GB, fast access time. |
+| ROM | stores the application which is called firmware. | stores the BIOS to initialize all the devices, including hard disks. |
+| Peripherals | GPIO, I2C, SPI, UART...<br />all peripherals, as well as CPU, ROM, RAM, are integrated into a single chip. | USB, Ethernet, SATA... <br /> all peripherals, as well as CPU, ROM, RAM, are connected to the motherboard and communicate through buses on it. |
+| External storage   | SD card | hard disk |
+| Usages| are embedded in devices and run a specific task continuously without interruption | run multiple applications simultaneously. |
+| Programming | involves low-level programming and a deep understanding of the underlying hardware. | focus on writing high-level software applications** without needing to know the details of the underlying hardware. | 
 
 
-I think the main challenge with working with MCUs is typically the need to work with a wide range of peripherals and understand how they interact with the MCU. 
+### Most importantly
 
-### Programming
+MCUs and general-purpose computers have many notable differences, such as clock speed, memory size, cost, usage, power consumption... You can find many articles online that explain these differences in detail. 
 
-Additionally, **computers** are general-purpose devices that can perform a wide variety of tasks and typically run a full-fledged operating system such as Windows, macOS, or Linux. These operating systems abstract away the hardware components and their underlying functions and then provide a range of services and APIs that allow applications to interact with the hardware in a standardized way. Therefore, it allows developers to **focus on writing high-level software applications** without needing to know the details of the underlying hardware. 
+However, the most important difference actually lies in **MMU (memory management unit)** which is discussed in [this blog](../../../blog/A%20brief%20introduction%20about%20Swift%20in%20embedded%20development#the-difference-when-programming-for-a-general-purpose-computer-and-an-embedded-one). 
 
-While **MCUs** are usually designed for a specific purpose and normally run only one app, such as controlling a motor, reading a sensor, or some more complicated usage, and are typically embedded in devices such as home appliances, automobiles, and consumer electronics. Programming MCU requires a different skill set compared to programming general-purpose computers, as it often **involves low-level programming** and a deep understanding of the underlying hardware. This can make it more challenging, but also provides greater control and flexibility.
+MMU is a hardware component in a computer to manage access to memory by mapping virtual memory addresses to physical memory addresses. It helps the operating system to run multiple processes simultaneously by isolating their virtual address spaces. MCUs run a single application and all code use directly the physical memory addresses.
 
-Please go to [this blog](../../../blog/A%20brief%20introduction%20about%20Swift%20in%20embedded%20development#the-difference-when-programming-for-a-general-purpose-computer-and-an-embedded-one) if you want to dive deeper in this topic.
-
-### Use cases
-
-Due to their compact size, low power consumption, and low cost, MCUs are suitable for use in small, self-contained devices where a general-purpose computer would be overkill. They are also used in situations where a system needs to run a specific task continuously without interruption and where the system requirements are simple enough that a general-purpose computer is not necessary.
-
-Computers are well-suited for tasks that require a lot of processing power and memory and can run multiple applications simultaneously.
+MCUs were originally designed for simple, self-contained devices. However, with the latest advancements in technology, MCUs have become more powerful and capable of handling more complex tasks. The increased processing power and memory capacity of modern MCUs, combined with the availability of high-level programming languages, is making it possible to build sophisticated applications that were previously not possible.
 
 
-Nowadays MCUs are becoming more powerful and versatile, and there are now microcontroller-based systems that can run more complex applications, including real-time operating systems. The combination of powerful MCU with modern programming languages and development tools will surely open up new opportunities in the field of embedded programming. The increased processing power and memory capacity of modern MCUs, combined with the availability of high-level programming languages, is making it possible to build sophisticated applications that were previously not possible.
 
-
-### Examples
-
+:::info
 There are many popular microcontroller boards like Arduino, MicroPython... Each one uses a different language and has its advantages. And our boards (SwiftIO Feather board or SwiftIO board) use the Swift language.
 
 On the other hand, Raspberry Pi runs a full Linux operating system and can be regarded as a well-equipped computer. So when you program for the Raspberry Pi, you are essentially programming applications that run on Linux.
-
-
-## What are peripherals on MCU
-
-As mentioned above, peripherals are additional circuits and components that are built into the MCU to perform specific tasks and enhance their capabilities, making them more versatile and efficient.
-
-When you work with an MCU, you typically program the peripherals to do specific tasks. 
-
-MCU provides memory space for the peripherals, used to store data that is generated or processed by the peripherals, or store their configurations. Each peripheral typically has a specific memory-mapped address usually assigned by the manufacturer and is documented in the MCU's datasheet. When the CPU needs to access a peripheral, it simply writes to or reads from the corresponding address, and the peripheral responds accordingly. 
-
-Therefore, to interact with the outside world, you write to the memory space or registers within the MCU to control their behavior.
-
-When an MCU powers up it looks in a defined memory location for the first instruction to run. It runs that first instruction, and then looks at the next memory location for the second instruction, runs it, and so on.
-
-This is a simple introduction to how the MCU works. However, don't get frustrated by all these unfamiliar concepts. The SwiftIO library has configured the peripherals in MCU and abstracts the complicated hardware details. You can access different peripherals with simple APIs to turn on an LED, play a note...
+:::

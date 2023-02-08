@@ -5,3 +5,19 @@ description: Learn
 
 # Pins
 
+
+
+
+## What are peripherals on MCU
+
+Peripherals are additional circuits and components that are built into the MCU to perform specific tasks and enhance their capabilities, making them more versatile and efficient.
+
+When you work with an MCU, you typically program the peripherals to do specific tasks. 
+
+MCU provides memory space for the peripherals, used to store data that is generated or processed by the peripherals, or store their configurations. Each peripheral typically has a specific memory-mapped address usually assigned by the manufacturer and is documented in the MCU's datasheet. When the CPU needs to access a peripheral, it simply writes to or reads from the corresponding address, and the peripheral responds accordingly. 
+
+Therefore, to interact with the outside world, you write to the memory space or registers within the MCU to control their behavior.
+
+When an MCU powers up it looks in a defined memory location for the first instruction to run. It runs that first instruction, and then looks at the next memory location for the second instruction, runs it, and so on.
+
+This is a simple introduction to how the MCU works. However, don't get frustrated by all these unfamiliar concepts. The SwiftIO library has configured the peripherals in MCU and abstracts the complicated hardware details. You can access different peripherals with simple APIs to turn on an LED, play a note...

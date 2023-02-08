@@ -703,7 +703,7 @@ You will learn a new way to blink an LED - blink using a timer.
 
 In your everyday life, you must have used timers. For example, you are cooking meals, and the dish still needs another 30min. You can set a timer for 30min and do other work until the timer reminds you after 30min.
 
-The timer here is quite similar. It is hardware built on the microcontroller. You can set an expected time before executing the task, called ISR. In this way, the microcontroller can do many other works before that. When the set time has elapsed, the interrupt occurs, and it will go to execute the ISR. After finishing, it goes back to continue its previous work. It's one of the interrupt mechanisms. And you will know more about interrupt in the next tutorial.
+The timer here is quite similar. It is a software timer provided by Zephyr. You can set an expected time before executing a specified task. In this way, the microcontroller can do many other works before that. When the set time has elapsed, MCU will stop the current work and it will go to execute the task. After finishing, it goes back to continue its previous work.
 
 <img
   src={require('./img/timer.png').default}
