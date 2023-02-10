@@ -112,21 +112,22 @@ Let's see the new class you are going to use in this project.
 
 **Class**
 
-**`DigitalIn`** - this class allows to get current state of a specified input pin.
+**`DigitalIn`** - this class allows you to get the current state of a specified input pin.
 
 | Method | Explanation |
 | ------ | ----------- |
 | `init(_:mode:)` | Initialize the digital input pin. <br />- **`id`**: the id of the digital pin. <br />- **`mode`**: set the pull resistors, `pullDown` by default. |
 | `read()` | Read voltage level from an input pin. <br />- **Return value** - the voltage represented as `true` or `false`. |
-| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project. <br />- **`mode`**: set the type of edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />- **`enable`**: decide whether to enable the interrupt once you set it. By default, it is `true` (enabled). <br />- **`callback`**: pass in a function as the paramter. The function should needs no parameter and returns nothing: () -> void. |
+| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project. <br />- **`mode`**: set the type of edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />- **`enable`**: decide whether to enable the interrupt once you set it. By default, it is `true` (enabled). <br />- **`callback`**: pass in a function as the paramter. The function should need no parameter and returns nothing: () -> void. |
 
 
 ## 🔸Projects
-1. [LED switch](./button.mdx#1-led-switch)
-2. [LED switch using interrupt](./button.mdx#2-led-switch-using-interrupt)
 
 ### 1. LED switch
-Let's start to build a simple LED switch. When you press the button, the LED turns on. When you release the button, the LED turns off.
+
+Let's start to build a simple LED switch. 
+
+In this project, when you press and hold the button, the LED turns on; once you release the button, the LED turns off.
 
 <img
   src={require('./img/buttonLED.png').default}
@@ -158,6 +159,8 @@ public struct C01S02ButtonLED {
                 led.write(false)
             }
         }
+
+        sleep(ms: 10)
     }
 }
 ```
@@ -188,6 +191,11 @@ if value == true {
 
 The microcontroller will judge the value read from the pin. When the value equals true, it means the button is pressed, so make the board output a high voltage to turn on the LED. 
 
+The statements in while loop can be simplified as: 
+
+```swift
+led.write(button.read())
+```
 
 :::info
 You might notice two similar symbols are so confusing: **=** and **==**. 
@@ -199,47 +207,9 @@ Well, = is to assign value to a constant or variable, while == compares if value
 
 ### 2. LED switch using interrupt
 
-In the previous project, the microcontroller is doing nothing but checking the input value over and over again to wait button press. But what if you want to do something else in the loop? When should the microcontroller check the pin state? It's hard to decide.
+In the previous project, the microcontroller is doing nothing but check the input value over and over again to wait for a button press. But what if you want to do something else in the loop? When should the microcontroller check the pin state? It's hard to decide. So there comes another important mechanism - [interrupt](#interrupt) for the digital input.
 
-So there comes another important mechanism - interrupt for the digital input.
-
-**Interrupt**
-
-The interrupt allows the microcontroller to respond quickly to a specified event. How does it work?
-
-* Normally the microcontroller executes its main program. 
-* Once the interrupt occurs, it will suspend the normal execution and then start the task with higher priority, called interrupt handler or ISR (Interrupt Service Routine). 
-* After finished ISR, the microcontroller goes back to where it stopped and continues the main program until another interrupt.
-
-<img
-  src={require('./img/interrupt.png').default}
-  alt="Interrupt" width="480"
-/>
-
-:::important
-There are two points about the ISR:
-1. Generally, the ISR should be done as fast as possible, usually in nanoseconds. 
-2. The functions don't need any parameters and return anything.
-
-In short, it's better to change a value or toggle digital output for the ISR. And you should not add `print()` which take about several milliseconds. Or your program may go wrong.
-:::
-
-
-An interrupt may come from different sources. Now you are dealing with an interrupt triggered by the state change. There are three **conditions** in total:
-* **Rising edge**: when the signal changes from low to high. 
-* **Falling edge**: when the signal changes from high to low. 
-* **Both** of them.
-
-<img
-  src={require('./img/edges.png').default}
-  alt="Rising edge and falling edge" width="480"
-/>
-
-So when setting the interrupt,  you need to tell the microcontroller the specific condition to trigger it: rising edge, falling edge, or both edges. Then once the specified edge is detected, the interrupt happens.
-
-With interrupt mechanism, the microcontroller can 
-* respond instantly to what it is supposed to do, which is vital for time-critical events. 
-* perform other tasks while the interrupt hasn't been triggered, thus increasing the efficiency.
+In this project, the LED changes state between on and off every time you press the button. 
 
 
 **Example code**
@@ -252,7 +222,7 @@ import MadBoard
 @main
 public struct C01S02ButtonInterrupt {
     public static func main() {
-        // Initialize the input pin for the button and output pin for the LED.
+        // Initialize the input pin for the button and the output pin for the LED.
         let button = DigitalIn(Id.D1)
         let led = DigitalOut(Id.D19)
 
@@ -281,9 +251,9 @@ func toggleLed() {
 }
 ```
 
-This newly declared function would be passed as parameter for the interrupt. It needs no parameter and don't have return values, which meets the requirement for the ISR. 
+This newly declared function would be passed as a parameter for the interrupt. It needs no parameter and doesn't have return values, which meets the requirement for the ISR. 
 
-`toggle()` can reverse the output from the current state to the other,from low to high, or from high to low. 
+`toggle()` can reverse the output from the current state to the other, from low to high, or from high to low. 
 
 Btw, changing the digital output level normally can be finished quickly, so it can be set as ISR.
 
@@ -294,13 +264,13 @@ button.setInterrupt(.rising, callback: toggleLed)
 The interrupt will be triggered when a rising edge is detected. The rising edge here corresponds to the moment the button is pressed.
 
 
-The third parameter `callback` needs a specified type of functions: () -> void. It means the function has no parameters and return values. 
+The third parameter `callback` needs a specified type of function: () -> void. It means the function has no parameters and returns values. 
 
-This parameter calls the function `toggleLed` defined above. Thus, once there is a rising edge, the microcontroller will come to this piece of code,  then go to that function `toggleLed` that `callback` calls and finally know it needs to toggle the output. After finished, the microcontroller return to the previous task, in this case, sleep again.
+This parameter calls the function `toggleLed` defined above. Thus, once there is a rising edge, the microcontroller will come to this piece of code,  then go to that function `toggleLed` that `callback` calls and finally know it needs to toggle the output. After finishing, the microcontroller returns to the previous task, in this case, sleeping again.
 
 :::info
 
-Previously, you invoke them to do some work. Actually, a function can accept another function as its parameters, as long as the passed-in function follows the specified pattern.
+Actually, **a function can accept another function as its parameters**, as long as the passed-in function follows the specified pattern.
 
 Let's see an example!
 
@@ -335,12 +305,205 @@ while true {
 }
 ```
 
-It makes the board sleep while interrupt hasn't occurred. The sleep time can be a random value. Without it, the board will run extremely quickly again and again but do nothing.
+The sleep time can be a random value. It makes the board sleep while interrupt hasn't occurred and decreases power consumption. Without it, the board will run extremely quickly again and again but do nothing.
 
+### 3. LED switch (press + release)
+
+After you press and release the button, the LED is toggled. If you press and hold the button, the LED state keeps the same.
+
+**Example code**
+
+
+```swift title="C01S02ToggleLED.swift" showLineNumbers
+// Import the SwiftIO library to control input and output and 
+// the MadBoard to use the id of the pins.
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S02ToggleLED {
+    public static func main() {
+        // Initialize the input pin for the button and the output pin for the LED.
+        let led = DigitalOut(Id.D19)
+        let button = DigitalIn(Id.D1)
+
+        var lastState = false
+
+        while true {
+            // If currentState is false, the button is released. 
+            // Besides, if lastState is true, it means the button has been pressed.
+            // So it checks if the button has been pressed and released. 
+            // If so, toggle the LED.
+            let currentState = button.read()
+            if !currentState && currentState != lastState {
+                led.toggle()
+            }
+            // Store the latest button state.
+            lastState = currentState
+            sleep(ms: 10)
+        }
+    }
+}
+```
+
+
+### 4. Two LED switches
+
+Pressing any of the two buttons (D1, D21) will toggle the LED state. The state is updated after releasing the button.
+
+**Example code**
+
+```swift title="C01S02TwoButtonsOneLED.swift" showLineNumbers
+// SwiftIO is used to set input and output of the pins.
+import SwiftIO
+// MadBoard is for pin ids.
+import MadBoard
+
+@main
+public struct C01S02TwoButtonsOneLED {
+    public static func main() {
+        // Initialize the pins for two buttons and the LED.
+        let button0 = DigitalIn(Id.D1)
+        let button1 = DigitalIn(Id.D21)
+        let led = DigitalOut(Id.D19)
+
+        // Store if a button has been pressed.
+        var pressed = false
+
+        // Toggle the LED after any of the two buttons are pressed.
+        while true {
+            // If any of the buttons are pressed, update the state.
+            if button0.read() || button1.read() {
+                pressed = true
+            }
+
+            // If a button has been pressed and both buttons are released, toggle the LED.
+            if pressed && !button0.read() && !button1.read() {
+                led.toggle()
+                pressed = false
+            }
+
+            sleep(ms: 10)
+        }
+    }
+}
+```
+
+
+
+### 5. LED On/off switches 
+
+Two buttons are reserved for the on (D1) and the off (D21) buttons respectively. The LED state is updated only after a press and release.
+
+**Example code**
+
+
+```swift title="C01S02OnOffButtons.swift" showLineNumbers
+// Control the LED with two specified buttons.
+// The button D1 is used to turn on it and D21 is to turn off it.
+
+// SwiftIO is used to set all input and output.
+import SwiftIO
+// MadBoard is for pin ids.
+import MadBoard
+
+@main
+public struct C01S02OnOffButtons {
+    public static func main() {
+        // Initialize the pin for the button used to turn on LED.
+        let onButton = DigitalIn(Id.D1)
+        // Initialize the pin for the button used to turn off the LED.
+        let offButton = DigitalIn(Id.D21)
+        let led = DigitalOut(Id.D19)
+
+        // Store the current LED state.
+        var ledState = false
+
+        // Store the last button state used to decide whether the button is released.
+        var lastOnButtonState = false
+        var lastOffButtonState = false
+
+        while true {
+            if !ledState {
+                // If the LED is off, check if the on button (D1) is pressed. 
+                // If so, turn on the LED after the button is released.
+
+                // Update the button state if it is pressed. 
+                if onButton.read() {
+                    lastOnButtonState = true
+                }
+
+                // If the button was pressed and is released now, turn on the LED and update all states.
+                if lastOnButtonState && !onButton.read() {
+                    led.high()
+                    lastOnButtonState = false
+                    ledState = true
+                }
+            } else {
+                // If the LED is on, check if the off button (D21) is pressed. 
+                // If so, turn off the LED after the button is released.
+
+                // Update the button state if it is pressed. 
+                if offButton.read() {
+                    lastOffButtonState = true
+                }
+
+                // If the button was pressed and is released now, turn off the LED and update all states.
+                if lastOffButtonState && !offButton.read() {
+                    led.low()
+                    lastOffButtonState = false
+                    ledState = false
+                }
+            }
+            
+            sleep(ms: 10)
+        }
+    }
+}
+```
 
 
 ## 🔸Go further 
 Congratulations! Now let's dive deeper into something more complicated. Don't be upset if you are confused. This part talks about the signal noise produced by buttons. You could skip this part and go back later as you get more familiar with all knowledge.
+
+
+### Interrupt
+
+The interrupt allows the microcontroller to respond quickly to a specified event. How does it work?
+
+* Normally the microcontroller executes its main program. 
+* Once the interrupt occurs, it will suspend the normal execution and then start the task with higher priority, called interrupt handler or ISR (Interrupt Service Routine). 
+* After finishing ISR, the microcontroller goes back to where it stopped and continues the main program until another interrupt.
+
+<img
+  src={require('./img/interrupt.png').default}
+  alt="Interrupt" width="480"
+/>
+
+:::important
+There are two points about the ISR:
+1. Generally, the ISR should be done as fast as possible, usually in nanoseconds. 
+2. The functions don't need any parameters and return nothing.
+
+In short, it's better to change a value or toggle digital output for the ISR. And you should not add `print()` which takes about several milliseconds. Or your program may go wrong.
+:::
+
+
+An interrupt may come from different sources. Now you are dealing with an interrupt triggered by the state change. There are three **conditions** in total:
+* **Rising edge**: when the signal changes from low to high. 
+* **Falling edge**: when the signal changes from high to low. 
+* **Both** of them.
+
+<img
+  src={require('./img/edges.png').default}
+  alt="Rising edge and falling edge" width="480"
+/>
+
+So when setting the interrupt,  you need to tell the microcontroller the specific condition to trigger it: rising edge, falling edge, or both edges. Then once the specified edge is detected, the interrupt happens.
+
+With interrupt mechanism, the microcontroller can 
+* respond instantly to what it is supposed to do, which is vital for time-critical events. 
+* perform other tasks while the interrupt hasn't been triggered, thus increasing the efficiency.
 
 ### Debounce 
 When you press or release a button, you might think the button would immediately come to a stable state, closed or open. So the LED should always be on when pressing the button and turn off once the button is released. However, there may be some unexpected situations sometimes. 

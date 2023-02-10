@@ -1,13 +1,13 @@
 ---
-title: Simple melody with buzzer
+title: Buzzer and LED with PWM
 description: Learn about PWM signal. You will use it to make a buzzer produce sound and change LED brightness.
 ---
 
-# Simple melody with buzzer 
+# Buzzer and LED with PWM
 
 Now it's time to make some noise🎶. 
 
-In this tutorial, you'll work with a new component - buzzer. You'll make it play a scale. Besides, you will adjust LED brightness with PWM signal. Let's figure it out together. 
+In this tutorial, you'll work with a new component - buzzer. You'll make it play a scale. Besides, you will adjust LED brightness with PWM signals. Let's figure it out together. 
 
 **Learning goals**
 * Clarify the working principle of the PWM signal.
@@ -134,12 +134,9 @@ The circuits above are simplified for your reference.
 
 
 ## 🔸Projects
-1. [Musical scale](./buzzer#1-musical-scale)
-2. [Breathing LED](./buzzer#2-breathing-led)
-3. [LED brightness control](./buzzer#3-led-brightness-control)
-
 
 ### 1. Musical scale
+
 In this project, the buzzer will play the musical scale. 
 
 <img
@@ -445,6 +442,184 @@ You'll use the [interrupt](./button#2-led-switch-using-interrupt) mechanism to d
 There are three statements for the interrupt. Each of them can be executed in a very short time and thus can be used as ISR.
 
 `max()` is used to get the biggest one between the values. In this way, even if the result of the calculation is smaller than its minimum (0.0), the duty cycle is still 0.0 to keep the LED at the minimum brightness. 
+
+
+### 4. Reflex game
+
+Press the button D1 to start the game.
+Once you see the red LED turns on, press the button D21 immediately.
+Then the LED turns off and you can see your reflex time in a serial monitor.
+To restart the game, press button D1 again.
+
+**Example code**
+
+```swift title="C01S03ReflexGame.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S03ReflexGame {
+    public static func main() {
+        let startButton = DigitalIn(Id.D1)
+        let player = DigitalIn(Id.D21)
+        let buzzer = PWMOut(Id.PWM5A)
+        let led = DigitalOut(Id.D19)
+
+        while true {
+            // Press the start button to begin the game.
+            if startButton.read() {
+                // A beep as a notification.
+                buzzer.set(frequency: 500, dutycycle: 0.5)
+                sleep(ms: 500)
+                buzzer.suspend()
+
+                // Wait for several seconds before the game starts.
+                sleep(ms: 1000 * Int.random(in: 1...5))
+
+                // Turn on the red LED as a sign of start.
+                led.high()
+                // Store the current clock cycle.
+                let startTime = getClockCycle()
+
+                // Wait until the button is pressed.
+                while !player.read() {
+
+                }
+
+                // Calculate the time in ns.
+                let finalTime = cyclesToNanoseconds(start: startTime, stop: getClockCycle())
+                // Turn off the indicator.
+                led.low()
+                print("Reflex time: \(Float(finalTime) / 1000_000)ms")
+            }
+
+            sleep(ms: 10)
+        }
+    }
+}
+```
+
+
+
+### 5. LED pattern change
+
+Change LED patterns by pressing a button: off, on, blink and breathing LED.
+
+**Example code**
+
+```swift title="C01S03LEDPatternChange.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S03LEDPatternChange {
+    public static func main() {
+        let led = PWMOut(Id.PWM4A)
+        let button = DigitalIn(Id.D1)
+
+        // Store the maximum and minimum values of the duty cycle to two constants. 
+        let maxDutycycle: Float = 1.0
+        let minDutycycle: Float = 0.0
+
+        var dutycycle: Float = 0.0
+        var stepDutycycle: Float = 0.01
+
+        // The duration in ms of each loop.
+        let duration = 10
+        // Make the LED on for 500ms and off for 500ms.
+        let blinkPeriod = 1000
+        var blinkTime = 0
+
+        var patternIndex = 0
+        var changePattern = false
+
+        // Set the duty cycle depending on the pattern.
+        resetDutycycle()
+
+        var pressed = false
+
+        // If the button is pressed and released, change to the next pattern.
+        button.setInterrupt(.falling) {
+            pressed = true
+        }
+
+        while true { 
+            if changePattern {
+                // Reset the duty cycle after changing the pattern.
+                resetDutycycle()
+                changePattern = false
+            } else {
+                // Update duty cycle depending on the current LED pattern.
+                updateDutycycle()
+            }
+            
+            // Set the PWM with the given duty cycle to change LED brightness.
+            led.setDutycycle(dutycycle)
+            sleep(ms: duration) 
+
+            // Update pattern index after button is pressed and released.
+            if pressed {
+                changePattern = true
+                patternIndex += 1
+                if patternIndex == LEDPattern.allCases.count { 
+                    patternIndex = 0
+                }
+
+                pressed = false
+            }
+        }
+
+        // Reset the duty cycle for a new LED pattern.
+        func resetDutycycle() {
+            switch LEDPattern(rawValue: patternIndex)! {
+            case .off: 
+                dutycycle = minDutycycle
+            case .on: 
+                dutycycle = maxDutycycle
+            case .blink:  
+                dutycycle = maxDutycycle
+                blinkTime = 0
+            case .breathing: 
+                dutycycle = minDutycycle
+                stepDutycycle = abs(stepDutycycle)
+            }  
+        }
+        
+        // Update the duty cycle of the PWM signal according to the current LED pattern.
+        func updateDutycycle() {
+            switch LEDPattern(rawValue: patternIndex)! {
+            case .blink: 
+                // For the first half of blinkPeriod, turn on the LED.
+                // For the second half of blinkPeriod, turn off the LED.
+                // The duty cycle changes between 0.0 and 1.0 to turn on and off the LED in turn.
+                blinkTime += duration
+                dutycycle = blinkTime % blinkPeriod < (blinkPeriod / 2) ? maxDutycycle : minDutycycle
+            case .breathing: 
+                // The duty cycle gradually increases to the maximum, then decrease to the mininum.
+                // Therefore, the LED brightens and dims in turn.
+                dutycycle += stepDutycycle
+            
+                // Check if LED brightness is increaed to the max or decreased to min. 
+                if stepDutycycle > 0 && dutycycle >= maxDutycycle {
+                    stepDutycycle.negate()
+                    dutycycle = maxDutycycle
+                } else if stepDutycycle < 0 && dutycycle <= minDutycycle {
+                    stepDutycycle.negate()
+                    dutycycle = minDutycycle
+                }
+            default: break
+            }
+        }
+
+        enum LEDPattern: Int, CaseIterable {
+            case off
+            case on
+            case blink
+            case breathing
+        }
+    }
+}
+```
 
 ## 🔸More info
 

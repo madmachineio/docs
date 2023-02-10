@@ -143,9 +143,267 @@ Well, take the library [`SHT3x`](https://github.com/madmachineio/MadDrivers/blob
 | Method | Explanation |
 | ------ | ----------- |
 | `init(_:speed:)` | Initialize an I2C interface for the communication. <br />**Parameter:**<br /> - `id`: the id of the I2C pin. <br /> - `speed`: the clock speed for the I2C communication, standard (100kbps) by default. |
-| `write(_:count:to:`) | Send data to the specified slave device. <br /> **Parameter:**<br /> - `data`: an arrary of bytes sent to slave device. <br /> - `count`: the count of bytes. By default, it's nil which means all bytes in `data` will be sent. Be sure the count should be smaller than the array count. <br /> - `to`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
+| `write(_:count:to:`) | Send data to the specified slave device. <br /> **Parameter:**<br /> - `data`: an array of bytes sent to slave device. <br /> - `count`: the count of bytes. By default, it's nil which means all bytes in `data` will be sent. Be sure the count should be smaller than the array count. <br /> - `to`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
 | `read(into:count:from:)` | Read data from the specified slave device.<br />  **Parameter:**<br /> - `into`: the buffer to store the coming data. It needs an UInt8 array which is passed as inout in order to be changed. <br /> - `count`: number of bytes received from device. <br /> - `from`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
 
+
+
+**`SHT3x`** - this is the driver for SHT3x sensor.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:address:)` | Initialize a SHT3x instance.  <br />**Parameter:**<br /> - `i2c`: an I2C pin. <br /> - `address`: the device address, 0x44 by default. |
+| `readCelsius()` | Read temperature in Celcius. |
+| `readHumidity()` | Read relative humidity. |
+
+
+
+## 🔸Projects
+
+
+### 1. Read temperature and humidity
+
+Let's use the humiture sensor to get the temperature and humidity. As you download the code, the sensor begins to work and you can see the value printed on the serial monitor. The value slightly changes. If you put your finger next to the sensor, the temperature may increase.
+
+**Example code**
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'C01S05Humiture.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+// Import SwiftIO to use I2C communication and MadBoard to use pin id. 
+import SwiftIO
+import MadBoard
+// Import SHT3x to use its functionalities to read values. 
+import SHT3x
+
+@main
+public struct C01S05Humiture {
+    public static func main() {
+        // Initialize the I2C interface and use it to initialize the sensor.
+        let i2c = I2C(Id.I2C0)
+        let sht = SHT3x(i2c)
+
+        // Read the temperature and humidity and print their values out. 
+        // Stop for 1s and repeat it.
+        while true {
+            let temp = sht.readCelsius()
+            let humidity = sht.readHumidity()
+            print("Temperature: \(temp)C")
+            print("Humidity: \(humidity)%")
+            sleep(ms: 1000)
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="package">
+
+```swift showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+import PackageDescription
+let package = Package(
+    name: "C01S05Humiture",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .executableTarget(
+            name: "C01S05Humiture",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // use specific library would speed up the compile procedure
+                .product(name: "SHT3x", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "C01S05HumitureTests",
+            dependencies: ["C01S05Humiture"]),
+    ]
+)
+
+```
+
+</TabItem>
+</Tabs>
+
+
+**Code analysis**
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'C01S05Humiture.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift
+import SHT3x
+```
+MadDrivers contains drivers for different devices and has been added to your project by default. SHT3x is one of them. So you need to import it to your project.
+
+
+```swift
+let i2c = I2C(Id.I2C0)
+let sht = SHT3x(i2c)
+```
+At first, you initialize an I2C interface for the communication. Its default speed satisfies the needs of the sensor, so you can ignore it.
+
+The class `SHT3x` needs an I2C pin to create an instance. So you pass the i2c instance created above. The device address is 0x44 by default, and you don't need to change it.
+
+```swift
+let temp = sht.readCelsius()
+let humidity = sht.readHumidity()
+```
+Use the two instance method of `SHT3x` to read temperature and humidity values. As you can see, with a predefined driver, reading from sensors can be so easy.
+
+```swift
+print("Temperature: \(temp)C")
+print("Humidity: \(humidity)%")
+```
+
+Print the value out. 
+* The content is a string, so you add double quotation marks. 
+* Then you need string interpolation to combine the constant and the expression. You add the constant name `temp` as a placeholder after a backslash and between a pair of parentheses. It will be replaced by its exact value later.
+
+
+</TabItem>
+<TabItem value="package">
+
+Let's look at the file `Package.swift`. This file defines the content of this package. You may notice the two highlighted statements. You will only add these two lines when using other libraries. 
+
+* All drivers are included in `MadDrivers`, so you need to specify its url in the dependencies as shown above. 
+
+* As you only need SHT3x in it, you can specify it, so only SHT3x will be compiled when building your project. It will save a lot of time.
+
+</TabItem>
+</Tabs>
+
+
+
+### 2. Temperature data logger
+
+**Example code**
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'C01S05TemperatureMeasurement.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+import SwiftIO
+import MadBoard
+import SHT3x
+
+@main
+public struct C01S05TemperatureMeasurement {
+    public static func main() {
+        // Initialize the I2C interface and use it to initialize the sensor.
+        let i2c = I2C(Id.I2C0)
+        let sht = SHT3x(i2c)
+
+        // Initialize the LED indicator pin.
+        let led = DigitalOut(Id.D19)
+        // Initialize the button pin.
+        let button = DigitalIn(Id.D1)
+
+        // Decide if it's time to read the temperature.
+        var start = false
+
+        while true {
+            // If the button is pressed, update the state.
+            if button.read() {
+                start = true
+            }
+
+            // If the button has been pressed and is released, time to measure the temperature.
+            if start && !button.read() {
+                // Turn on the LED as an indicator.
+                led.high()
+                // Read the value 20 times in a second to calculate the average.
+                var sum: Float = 0
+                for _ in 0..<20 {
+                    sum += sht.readCelsius()
+                    sleep(ms: 50)
+                }
+
+                // Print the average temperature in Celsius.
+                print("Temperature: \(sum / 20.0)°C")
+                start = false
+                // Turn off the indicator.
+                led.low()
+            }
+
+            sleep(ms: 20)
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="package">
+
+```swift showLineNumbers
+// swift-tools-version:5.7
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+import PackageDescription
+let package = Package(
+    name: "C01S05TemperatureMeasurement",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .executableTarget(
+            name: "C01S05Humiture",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // use specific library would speed up the compile procedure
+                .product(name: "SHT3x", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "C01S05HumitureTests",
+            dependencies: ["C01S05Humiture"]),
+    ]
+)
+
+```
+
+</TabItem>
+</Tabs>
+
+
+## 🔸Go further 
 
 ### SHT3x 
 
@@ -474,149 +732,7 @@ Since this is a general-purpose library and we don't know the specific situation
 
 Don't worry if you do not quite understand the code above. This library is provided, and you just need to import it to your project. Here, we want you to know how to use I2C communication and give you a general idea of how to write a driver for a sensor. 
 
-As you see, it's not easy to configure the sensor and get readings from it. But with existing libraries, coding becomes much easier. Now it's time to use the library `SHT3x`.
-
-
-## 🔸Projects
-1. [Read temperature and humidity](./humiture#1-read-temperature-and-humidity)
-
-### 1. Read temperature and humidity
-
-Let's use the humiture sensor to get the temperature and humidity. As you download the code, the sensor begins to work and you can see the value printed on the serial monitor. The value slightly changes. If you put your finger next to the sensor, the temperature may increase.
-
-**Example code**
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs
-  defaultValue="main"
-  values={[
-    { label: 'C01S05Humiture.swift', value: 'main', },
-    { label: 'Package.swift', value: 'package', },
-  ]
-}>
-
-<TabItem value="main">
-
-```swift showLineNumbers
-// Import SwiftIO to use I2C communication and MadBoard to use pin id. 
-import SwiftIO
-import MadBoard
-// Import SHT3x to use its functionalities to read values. 
-import SHT3x
-
-@main
-public struct C01S05Humiture {
-    public static func main() {
-        // Initialize the I2C interface and use it to initialize the sensor.
-        let i2c = I2C(Id.I2C0)
-        let sht = SHT3x(i2c)
-
-        // Read the temperature and humidity and print their values out. 
-        // Stop for 1s and repeat it.
-        while true {
-            let temp = sht.readCelsius()
-            let humidity = sht.readHumidity()
-            print("Temperature: \(temp)C")
-            print("Humidity: \(humidity)%")
-            sleep(ms: 1000)
-        }
-    }
-}
-```
-
-</TabItem>
-<TabItem value="package">
-
-```swift showLineNumbers
-// swift-tools-version:5.7
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-import PackageDescription
-let package = Package(
-    name: "C01S05Humiture",
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .executableTarget(
-            name: "C01S05Humiture",
-            dependencies: [
-                "SwiftIO",
-                "MadBoards",
-                // use specific library would speed up the compile procedure
-                .product(name: "SHT3x", package: "MadDrivers")
-            ]),
-        .testTarget(
-            name: "C01S05HumitureTests",
-            dependencies: ["C01S05Humiture"]),
-    ]
-)
-
-```
-
-</TabItem>
-</Tabs>
-
-
-**Code analysis**
-
-<Tabs
-  defaultValue="main"
-  values={[
-    { label: 'C01S05Humiture.swift', value: 'main', },
-    { label: 'Package.swift', value: 'package', },
-  ]
-}>
-
-<TabItem value="main">
-
-```swift
-import SHT3x
-```
-MadDrivers contains drivers for different devices and has been added to your project by default. SHT3x is one of them. So you need to import it to your project.
-
-
-```swift
-let i2c = I2C(Id.I2C0)
-let sht = SHT3x(i2c)
-```
-At first, you initialize an I2C interface for the communication. Its default speed satisfies the needs of the sensor, so you can ignore it.
-
-The class `SHT3x` needs an I2C pin to create an instance. So you pass the i2c instance created above. The device address is 0x44 by default, and you don't need to change it.
-
-```swift
-let temp = sht.readCelsius()
-let humidity = sht.readHumidity()
-```
-Use the two instance method of `SHT3x` to read temperature and humidity values. As you can see, with a predefined driver, reading from sensors can be so easy.
-
-```swift
-print("Temperature: \(temp)C")
-print("Humidity: \(humidity)%")
-```
-
-Print the value out. 
-* The content is a string, so you add double quotation marks. 
-* Then you need string interpolation to combine the constant and the expression. You add the constant name `temp` as a placeholder after a backslash and between a pair of parentheses. It will be replaced by its exact value later.
-
-
-</TabItem>
-<TabItem value="package">
-
-Let's look at the file `Package.swift`. This file defines the content of this package. You may notice the two highlighted statements. You will only add these two lines when using other libraries. 
-
-* All drivers are included in `MadDrivers`, so you need to specify its url in the dependencies as shown above. 
-
-* As you only need SHT3x in it, you can specify it, so only SHT3x will be compiled when building your project. It will save a lot of time.
-
-</TabItem>
-</Tabs>
+As you see, it's not easy to configure the sensor and get readings from it. But with existing libraries, coding becomes much easier.
 
 
 

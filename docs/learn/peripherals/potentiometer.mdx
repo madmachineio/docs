@@ -132,11 +132,11 @@ The circuits above are simplified for your reference.
 `print(_:)` - print the value out. You can view it on any serial monitor.
 
 ## 🔸Projects
-1. [Read input value](./potentiometer#1-read-input-value)
-2. [Control buzzer sound output](./potentiometer#2-control-buzzer-sound-output)
-3. [Change LED brightness](./potentiometer#3-change-led-brightness)
+
+
 
 ### 1. Read input value
+
 In this project, you will rotate the potentiometer to change the input value. You will view the voltage value on the serial monitor.
 
 After you connect the board to the computer through the serial port, the value is printed on the serial monitor window one by one per second. When you turn the potentiometer, the value changes. It gradually goes to the maximum or minimum value according to the direction you twist.
@@ -319,6 +319,132 @@ public struct C01S04PotentiometerLED {
             led.setDutycycle(dutycycle)
 
             sleep(ms: 20)
+        }
+    }
+}
+```
+
+
+### 4. LED blink with a certain brightness and rate
+
+Blink the LED. The LED brightness is changed by the potentiometer (A0). The blink rate is changed by the potentiometer (A11).
+
+**Example code**
+
+```swift title=".swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04LEDBrightnessBlink {
+    public static func main() {
+        // Initialize the analog pin used to adjust LED brightness.
+        let brightnessPot = AnalogIn(Id.A0)
+        // Initialize the analog pin used to change blink rate. 
+        let blinkPot = AnalogIn(Id.A11)
+        // Initialize the PWM pin for the LED.
+        let led = PWMOut(Id.PWM4A)
+
+        while true {
+            // Read raw value from the analog pin. It sets the LED blink rate.
+            let blinkTime = blinkPot.readRawValue() / 2
+
+            // Read value from the analog pin. 
+            // It serves as duty cycle for PWM to set LED brightness.
+            led.setDutycycle(brightnessPot.readPercent())
+            sleep(ms: blinkTime)
+
+            // After a specified time, suspend the output to turn off the LED.
+            led.suspend()
+            sleep(ms: blinkTime)
+        }
+    }
+}
+```
+
+
+### 5. Dual LED brightness control
+
+In this project, two potentiometers control the LED brightness. One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
+
+**Example code**
+
+```swift title="C01S04TwoPotentiometersLED.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04TwoPotentiometersLED {
+    public static func main() {
+        // Initialize the analog pin used to adjust LED brightness from min and max.
+        let brightnessPot = AnalogIn(Id.A0)
+        // Initialize the analog pin used to set max brightness. 
+        let intensityPot = AnalogIn(Id.A11)
+        // Initialize the PWM pin for the LED.
+        let led = PWMOut(Id.PWM4A)
+
+        // Define the available range of max duty cycle adjusted by A11. 
+        let minIntensity: Float = 0.2
+        let maxIntensity: Float = 1
+
+        while true {
+            // Map the analog value from the range 0-1 to the range minIntensity-maxIntensity. 
+            // It decides the max duty cycle for the PWM signal.
+            // That's to say, it changes the maximum intensity of the LED.
+            let maxDutycycle = intensityPot.readPercent() * (maxIntensity - minIntensity) + minIntensity
+
+            // Read the analog value (0-1) from pin A0.
+            let rawDutycycle = brightnessPot.readPercent()
+
+            // Calculate the final duty cycle value (0-maxDutycycle).
+            // Set the PWM output using the result.
+            led.setDutycycle(rawDutycycle * maxDutycycle)
+            sleep(ms: 20)
+        }
+    }
+}
+```
+
+
+### 6. Play tones manually
+
+Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one by one.
+
+**Example code**
+
+```swift title="C01S04PlayTones.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04PlayTones {
+    public static func main() {
+        // Initialize a PWM pin for the buzzer.
+        let buzzer = PWMOut(Id.PWM5A)
+        // Initialize an analog pin for the potentiometer.
+        let pot = AnalogIn(Id.A0)
+
+        // Declare a constant to store an array of frequencies. 
+        // They matches respectively notes C4, D4, E4, F4, G4, A4, B4, C5.
+        let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
+
+        // Store the last frequency index to avoid playing the same note.
+        var lastIndex = frequencies.count
+
+        while true {
+            // Read the raw analog value from the pin.
+            // Map the value into the index of the array.
+            let index = Int((Float(pot.readRawValue() * (frequencies.count - 1)) / Float(pot.maxRawValue)).rounded(.toNearestOrAwayFromZero))
+
+            // Check if the note hasn't been played.
+            if index != lastIndex {
+                // Play the new note for 500ms.
+                buzzer.set(frequency: frequencies[index], dutycycle: 0.5)
+                sleep(ms: 500)
+                buzzer.suspend()
+                lastIndex = index
+            }
+            sleep(ms: 10)
         }
     }
 }
