@@ -1,0 +1,69 @@
+---
+title: Peripherals in MCU
+description: Learn 
+---
+
+# Peripherals in MCU
+
+
+In the previous tutorial, you were introduced to the concept of microcontrollers. An MCU is comprised of several essential components, including a CPU, RAM, ROM, and various peripherals. In this tutorial, you will dive deeper into the subject of peripherals and explore their important role in MCUs.
+
+
+## What are the peripherals on MCU?
+
+Peripherals are additional circuits and components that are built into the MCU to perform specific tasks and enhance their capabilities, making them more versatile and efficient. They are are typically connected to the CPU through an internal bus.
+    
+These peripherals are common on many MCUs: GPIO, Timer, PWM, ADC, UART, SPI, I2C... You will dive into them and experiment with different devices [in next section](../peripherals/overview).
+
+<img
+  src={require('./img/mcu.png').default}
+  alt="" width="360"
+/>
+
+For example, GPIO allows the MCU to read and write digital signals and I2C, SPI, or UART allow the MCU to communicate with other devices. By using peripherals, the MCU can perform a wide range of work. Therefore, when you work with an MCU, you typically program the peripherals to do specific tasks.
+
+
+## How to use/control the peripherals on MCU
+    
+uses the memory map technique to map all the peripherals in one unified memory space. 
+
+read/write the data from/to the correct address for peripheral control registers
+
+
+The clock and power of each peripheral are required to be configured.
+
+
+## How do peripherals interact with external devices?
+
+route internal peripherals into different outside physical pins to connect electrically to the outside world.
+    
+thus, read or write to a specific register for a peripheral to control the corresponding physical pin
+
+
+## How are pins organized?
+
+multiplexer/pin multiplexing: 
+
+
+* The chip provides a lot of functionality but contains a limited number of pins
+* configured through software
+* a single pin can only be connected to a peripheral at a time
+
+SwiftIO Feather board pinout 
+
+
+## Pin name/id
+
+
+The board pin names are aliases to the MCU pin names.
+
+access a pin by its pin name
+
+several special pins give you access to built-in board hardware, such as an LED and aren't labeled on the board
+
+<img
+  src={require('./img/featherPinout.png').default}
+  alt="" width="960"
+/>
+
+

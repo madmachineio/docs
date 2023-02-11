@@ -95,8 +95,8 @@ module.exports = {
           items: [
             'learn/preparation/first-try',
             'learn/preparation/microcontroller',
+            'learn/preparation/peripherals',
             'learn/preparation/sensors-actuators',
-            'learn/preparation/pins',
             'learn/preparation/hardware',
             'learn/preparation/swiftio-madboard',
           ],
