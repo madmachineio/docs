@@ -50,6 +50,8 @@ GPIO (general-purpose input/output) pins can handle digital output and input sig
 
 You can use a digital output to control the LED both built onto the board or external LEDs (not included). For the LED module on your kit, when you apply a high signal to the LED, it will turn on, and if you apply a low signal, it will be off. 
 
+
+
 ## 🔸New component
 
 ### Diode
@@ -320,7 +322,7 @@ The circuits are all built when designing the board, so **you don't need to conn
 The circuits above are simplified for your reference.
 :::
 
-## 🔸Preparation 
+## 🔸API 
 
 **Class**
 
@@ -701,9 +703,9 @@ You will learn a new way to blink an LED - blink using a timer.
 
 **What is a timer?**
 
-In your everyday life, you must have used timers. For example, you are cooking meals, and the dish still needs another 30min. You can set a timer for 30min and do other work until the timer reminds you after 30min.
+In your everyday life, you must be familiar with timers. For example, you are cooking meals, and the dish still needs another 30min. You can set a timer for 30min and do other work until the timer reminds you after 30min.
 
-The timer here is quite similar. It is a software timer provided by Zephyr. You can set an expected time before executing a specified task. In this way, the microcontroller can do many other works before that. When the set time has elapsed, MCU will stop the current work and it will go to execute the task. After finishing, it goes back to continue its previous work.
+The timer here is quite similar. It is a software timer provided by Zephyr. You can set an expected time before executing a specified task. In this way, the microcontroller can do many other works before that. When the set time has elapsed, the microcontroller will stop the current work and go to execute the task. After finishing, it goes back to continue its previous work.
 
 <img
   src={require('./img/timer.png').default}
@@ -789,3 +791,41 @@ In the loop, the microcontroller will do other work. Here you will make the onbo
 As you can see, you can control two LEDs without worrying about their timing. 
 
 Configuration! You've finished all the projects🥳. 
+
+
+## 🔸Go further 
+
+### Push pull and open drain
+
+There are Typically two pin configurations: push-pull and open-drain.
+
+**Push-pull**
+
+A push-pull output can both source and sink current. This is how it got its name since it pushes the signal high and pulls it low.
+
+In a push-pull circuit, two active devices are used to drive a load. One device is used to "push" current into the load, while the other device is used to "pull" current out of the load. The two devices switch back and forth, following the internal signal, to create the output.
+
+It can drive a signal over a longer distance and have less susceptibility to noise compared to open-drain outputs.
+
+<img
+  src={require('./img/pushPull.png').default}
+  alt="" width="480"
+/>
+
+The GPIO pins are configured to push-pull by default. So you can set them to output high or low voltage.
+
+**Open-drain**
+
+In contrast, an open-drain output can only sink current.
+
+An active device is used to pull the output voltage to a low state, but does not actively drive it to a high state. It acts like a switch that connects the signal line to the ground, pulling the voltage level of the signal line low. This is called "drain" because it is "draining" current away from the signal line. And if it is turned off, the signal line is in an "open" state, not connected to either power or ground. This means that there is no current flowing through the line and it would float.
+
+<img
+  src={require('./img/openDrain.png').default}
+  alt="" width="480"
+/>
+
+To drive the signal high, an external pull-up resistor can be used to connect it to the high voltage level (Vcc), which will pull the output high when no other device is actively driving the signal. This means that the current flowing through the pull-up resistor is sourced by the voltage source, not by the open-drain output.
+
+The use of open-drain outputs is useful in situations where multiple devices need to share a single communication line, such as the I2C bus.
+

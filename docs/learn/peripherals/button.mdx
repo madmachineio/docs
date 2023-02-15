@@ -20,7 +20,7 @@ The button is a commonly used input component and is widely used in a light swit
 ### What is digital input?
 The microcontroller can not only send output voltage but also receive signals. You've learned about digital output in the previous tutorial, and now you will discover how digital input works.
 
-Like digital output, digital input has two states: high and low. When an input signal comes in, its voltage will be compared with specific thresholds. If the voltage higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage, but only has two results.
+Like digital output, digital input has two states: high and low. When an input signal comes in, its voltage will be compared with specific thresholds. If the voltage is higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage, but only has two results.
 
 <img
   src={require('./img/digitalSignal.png').default}
@@ -54,22 +54,21 @@ Symbol: <img
 
 To make things easier, it is a good idea to **connect the two legs on a diagonal**, like 1 and 4, 2 and 3.
 
-
-
 ### Pull resistor
+
 As you have known, the input will always be either high or low. But if the input pin is connected to nothing, what will the input value be? High or low?
 
 That's hard to say. The state of that pin will be uncertain and change randomly between high and low states. This state is called **floating**. To ensure a stable state, a pull-up or pull-down resistor is needed.
 
 **Pull-up resistor**
 
-The **pull-up resistor** connects the input pin to power. In this case, the button should connect to the input pin and ground. 
+The pull-up resistor connects the input pin to **power**. In this case, the button should connect to the input pin and ground. 
 
 By default, when the button is not pressed, the input pin reads actually the power voltage which is high. If the button is pressed, the current flows from power directly to the ground and the pin reads low level.
        
 **Pull-down resistor**
 
-The **pull-down resistor** connects the input pin to ground. If so, the button should connect to the power and input pin. 
+The pull-down resistor connects the input pin to **ground**. If so, the button should connect to the power and input pin. 
 
 By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the pin reads power voltage which is high.
 
@@ -80,14 +79,8 @@ By default, the pin connects directly to the ground, so the pin keeps in a low s
 
 In this way, the input pin is always at a determined state.
 
-You would usually need pull-up or pull-down resistor with a button. The SwiftIO Feather board has internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.
+You would usually need a pull-up or pull-down resistor with a button. The SwiftIO Feather board has internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.
 
-<img
-  src={require('./img/pullUpDownResistor.png').default}
-  alt="Pull up and pull down resistor on board" width="480"
-/>
-
-_This is a simplified version for better understanding._
 
 ## 🔸Circuit - button module
 There are two buttons on your kit. They are connected respectively to **D1** and **D21**. 
@@ -107,7 +100,7 @@ There are two buttons on your kit. They are connected respectively to **D1** and
 The circuits above are simplified for your reference.
 :::
 
-## 🔸Preparation
+## 🔸API
 Let's see the new class you are going to use in this project.
 
 **Class**
@@ -538,10 +531,3 @@ It makes your board ignore the bounce and wait for the real state. Usually, you'
 :::note
 Since the button on the kit uses a hardware debounce method, you will not meet this problem. But it is still an important phenomenon when you DIY some projects using buttons.
 :::
-
-
-## 🔸More info
-Find out more details in the links below if you are interested:
-
-* [Pull resistor](https://eepower.com/resistor-guide/resistor-applications/pull-up-resistor-pull-down-resistor/#)
-* [Button bounce](https://circuitdigest.com/electronic-circuits/what-is-switch-bouncing-and-how-to-prevent-it-using-debounce-circuit)

@@ -35,17 +35,19 @@ The SwiftIO Feather board always serves as a master device. It has two I2S inter
 * the other is **I2SIn**, and the corresponding serial data line (RX) only receives audio data. It can be used with, for example, microphones to collect sound info.
 
 ## 🔸New concept
+
 ### Audio
 
-You listen to music in everyday life, but do you know how audio is stored on your computer? Besides, there are so many different file formats, what's their difference? Let's find out more about it.
+You listen to music in everyday life, but do you know how audio is stored on your computer? Besides, there are so many different file formats, what are their difference? Let's find out more about it.
+
 
 **Waveform**
 
-The waveforms of sound are various. Sine, square, triangle, and sawtooth waves are four commonly-used forms. The [sounds](https://www.perfectcircuit.com/signal/difference-between-waveforms) produced by them are quite different. Random combinations of different waveforms can produce really amazing sounds.  
+The [waveforms of sound](https://pudding.cool/2018/02/waveforms/) are various. Sine, square, triangle, and sawtooth waves are four commonly-used forms. The sounds produced by them are quite different. Random combinations of different waveforms can produce really amazing sounds.  
 
 <img
   src={require('./img/waveforms.png').default}
-  alt="Wave forms" width="960"
+  alt="Waveforms" width="960"
 />
 
 We'll talk about the sine wave in the following part and only deal with periodic waveforms. The **sine wave** is the fundamental wave. Almost all other period waveforms can be broken down into several different sine waves using Fourier Transforms.
@@ -68,7 +70,7 @@ The audio signal is analog and the data always change with time. There are some 
 
 **Sample rate** describes how many times the signal is sampled in one second, measured in hertz (hz). There is a known law about the sample rate: Nyquist rate. It says the sample rate should be **more than twice the frequency of the original signal**, or it may cause distortion.
 
-**Sample depth** corresponds to the number of possible values for each sample. The common choices are 16, 24, 32-bit. The higher the sample depth, the more precise the samples can be, so the reproduce sound will be closer to the original one.
+**Sample depth** corresponds to the number of possible values for each sample. The common choices are 16, 24, 32-bit. The higher the sample depth, the more precise the samples can be, so the reproduced sound will be closer to the original one.
 
 When you wear earphones to listen to music, you can hear sounds in your left and right ear. The L and R are used respectively for the **left and right channels**. If only one channel is sampled, the sound is **mono**. **Stereo** means the audio has multiple channels, usually the right and left channel, and thus needs two speakers.
 
@@ -127,7 +129,7 @@ The speaker connects to the chip MAX98357. And the chip connects to **I2SOut0** 
 The circuits above are simplified versions for your reference.
 :::
 
-## 🔸Preparation
+## 🔸API
 
 **Class**
 
@@ -2860,10 +2862,3 @@ struct Mario {
 </TabItem>
 
 </Tabs>
-
-
-
-## 🔸More info
-* [Waveforms](https://pudding.cool/2018/02/waveforms/)
-* [Digital audio](https://www.joelstrait.com/digital_audio_primer/)
-* [I2S](https://www.allaboutcircuits.com/technical-articles/introduction-to-the-i2s-interface/)

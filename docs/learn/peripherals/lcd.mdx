@@ -44,9 +44,11 @@ SPI has 4 **modes**: 0, 1, 2, 3. They are decided by CPOL and CPHA.
 />
 
 
-As for data transmission, there are two modes which tells how data is sent: most-significant bit (MSB) first, or least-significant bit (LSB) first. In a byte, MSB is the left-most bit and LSB is the right-most bit.
 
-All in all, you could regard SPI communication as a combination of input and output following some established transmission rules. Its main work is to read (receive) and write (send) data, all other details such as mode define how the data is sent and interpreted.
+As for data transmission, there are two modes that tells how data is sent: most-significant bit (MSB) first, or least-significant bit (LSB) first. In a byte, MSB is the left-most bit and LSB is the right-most bit.
+
+All in all, you could regard SPI communication as a combination of input and output following some established transmission rules. Its main work is to read (receive) and write (send) data, all other details such as mode define how the data is sent and interpreted. For more details on SPI, you could look at [this article](https://www.analog.com/en/analog-dialogue/articles/introduction-to-spi-interface.html).
+
 
 ## 🔸New component
 ### LCD
@@ -134,7 +136,7 @@ The LCD is connected to **SPI0** for communication and **D9** for CS signal. The
 The circuits above are simplified versions for your reference.
 :::
 
-## 🔸Preparation
+## 🔸API
 
 **Class**
 
@@ -738,8 +740,3 @@ let package = Package(
 ```
 </TabItem>
 </Tabs>
-
-
-## 🔸More info
-* [SPI](https://www.analog.com/en/analog-dialogue/articles/introduction-to-spi-interface.html)
-* [24-bit to 16-bit converter](http://www.barth-dev.de/online/rgb565-color-picker/) 

@@ -98,7 +98,7 @@ module.exports = {
             'learn/preparation/peripherals',
             'learn/preparation/sensors-actuators',
             'learn/preparation/hardware',
-            'learn/preparation/swiftio-madboard',
+            //'learn/preparation/swiftio-madboard',
           ],
         },
 
@@ -151,7 +151,10 @@ module.exports = {
             'learn/projects/etchASketch',
             'learn/projects/metronome',
             'learn/projects/morseCode',
-
+            'learn/projects/christmas',
+            'learn/projects/ticTacToe',
+            'learn/projects/pong',
+            'learn/projects/breakout',
           ],
         },
   ],
