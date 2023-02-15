@@ -26,7 +26,7 @@ Some common types of sensors include:
 - gas sensors: measure various gases such as CO2, O2...
 
 
-### Analog vs digital
+**Analog vs digital**
 
 Sensors can be classified into two main categories depending on the output value:
 
@@ -40,7 +40,7 @@ Sensors can be classified into two main categories depending on the output value
 * Digital output: these sensors, on the other hand, output a discrete signal, typically in the form of a digital logic level (0 or 1). A push button is a simple example. It has two states: pressed or released and outputs a digital signal that can be interpreted as a binary "on" or "off" state. MCUs can read this digital signal using their input pins. 
 
 
-
+:::info
 Most physical quantities are naturally analog, meaning they can take on an infinite range of values, for example, temperature, pressure, light intensity, and sound intensity. These quantities are typically continuous and can change gradually over time.
 
 Many modern sensors are designed to include both analog and digital components in a single chip. This type of design allows the sensors to take advantage of the strengths of both analog and digital technologies.
@@ -53,7 +53,7 @@ The digital signal from sensors can be easily processed by microcontrollers, and
 
 This technique offers several advantages over analog sensors due to their higher accuracy, lower cost, and resistance to noise and interference, which makes them more appealing to designers, manufacturers, and users. As a result, the trend toward sensors with digital output has continued to grow, and they have become more widely adopted across many industries.
 
-
+:::
 
 
 ## Actuators
@@ -65,10 +65,12 @@ Actuators are devices that can be used to produce a physical effect based on the
 
 The devices that can be connected to the board typically have some specific requirements in terms of power and communication.
 
-- Power: Many devices will require a specific voltage and/or current to function properly. For example, some sensors may run on 3.3V while others may require 5V. Some motors may require a lot of current, while others may only require a small amount. It is important to ensure that the board can provide the necessary power to the connected devices.
+- **Power**: Many devices will require a specific voltage and/or current to function properly. For example, some sensors may run on 3.3V while others may require 5V. Some motors may require a lot of current, while others may only require a small amount. It is important to ensure that the board can provide the necessary power to the connected devices.
 
-- Communication: Different devices may use different communication protocols to send and receive data. For example, some sensors may use I2C or SPI, while others may use UART. It is important to ensure that the board is configured to use the same protocol as the connected device.
+- **Communication**: Different devices may use different communication protocols to send and receive data. For example, some sensors may use I2C or SPI, while others may use UART. It is important to ensure that the board is configured to use the same protocol as the connected device.
 
-There are several common methods for connecting sensors and other devices to an MCU. The most straightforward approach is to use jumper wires, where each pin must be manually matched. Essential connections for power (Vcc) and ground (GND) must always be established. In addition, sensors will provide specific pins for signals such as digital input/output, analog, I2C...
+- **Connector**: There are several common methods for connecting sensors and other devices to an MCU. 
 
-Another commonly used method is the [grove connector](https://wiki.seeedstudio.com/Grove_System/), which is used in SwiftIO Circuit Playgrounds. This method simplifies connections using 4-pin cables, making it easier to interface with your MCU.
+  - The most straightforward approach is to use **jumper wires**, where each pin must be manually matched. Essential connections for power (Vcc) and ground (GND) must always be established. In addition, sensors will provide specific pins for signals such as digital input/output, analog, I2C...
+
+  - Another commonly used method is the [**grove connector**](https://wiki.seeedstudio.com/Grove_System/), which is used in SwiftIO Circuit Playgrounds. This method simplifies connections using 4-pin cables, making it easier to interface with your MCU.
