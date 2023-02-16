@@ -120,12 +120,24 @@ Let's see the new class you are going to use in this project.
 
 Let's start to build a simple LED switch. 
 
-In this project, when you press and hold the button, the LED turns on; once you release the button, the LED turns off.
-
 <img
   src={require('./img/buttonLED.png').default}
   alt="Control LED with button" width="960"
 />
+
+
+**Program overview**
+
+* When the button is **released**/not pressed, the LED stays **off**.
+* After you **press** the button, the LED turns **on**.
+* If you **hold**/keep pressing the button, the LED stays **on**.
+* Once you **release** the button, the LED turns **off**.
+
+
+| Button | released | pressed | hold | released | ... |
+| ------ | -------- | ------- | ---- | -------- | --- |
+| LED    | off      | on      | on   | off      | ... |
+
 
 **Example code**
 
@@ -203,6 +215,20 @@ Well, = is to assign value to a constant or variable, while == compares if value
 In the previous project, the microcontroller is doing nothing but check the input value over and over again to wait for a button press. But what if you want to do something else in the loop? When should the microcontroller check the pin state? It's hard to decide. So there comes another important mechanism - [interrupt](#interrupt) for the digital input.
 
 In this project, the LED changes state between on and off every time you press the button. 
+
+
+**Program overview**
+
+* When the button is **released**/not pressed, the LED stays **off**.
+* If you **press** the button, the LED turns **on** immediately.
+* When you **hold or release** the button, the LED state remains **unchanged**.
+* If you **press** the button again, the LED turns **off** immediately.
+
+
+| Button | released | pressed | hold | released | pressed | hold | released | ... |
+| ------ | -------- | ------- | ---- | -------- | ------- | ---- | -------- | --- |
+| LED    | off      | on      | on   | on       | off     | off  | off      | ... |
+
 
 
 **Example code**
@@ -304,6 +330,21 @@ The sleep time can be a random value. It makes the board sleep while interrupt h
 
 After you press and release the button, the LED is toggled. If you press and hold the button, the LED state keeps the same.
 
+
+
+**Program overview**
+
+* When the button is **released**/not pressed, the LED stays **off**.
+* If you **press** the button, the LED stays **off**.
+* When you **hold** the button, the LED stays **off**.
+* After you **release** the button, the LED turns **on**.
+* After you **press + release** the button again, the LED turns **off**.
+
+| Button | released | pressed | hold | released | pressed | hold | released | ... |
+| ------ | -------- | ------- | ---- | -------- | ------- | ---- | -------- | --- |
+| LED    | off      | off     | off  | on       | on      | on   | off      | ... |
+
+
 **Example code**
 
 
@@ -342,7 +383,58 @@ public struct C01S02ToggleLED {
 
 ### 4. Two LED switches
 
-Pressing any of the two buttons (D1, D21) will toggle the LED state. The state is updated after releasing the button.
+Pressing any of the two buttons (D1, D21) will toggle the LED state. The state is updated after releasing the button. 
+
+
+
+**Program overview**
+
+* When both two buttons are **released**/not pressed, the LED stays off.
+* After any of the two buttons (D1, D21) are **pressed and then released**, the LED turns **on**.
+* After any of the two buttons (D1, D21) are **pressed and then released again**, the LED turns **off**.
+
+It works like light switches in your room. You may press any of the switches in different places to toggle the light. The situation when two buttons are pressed at the same time is not considered.
+
+
+<table>
+  <tr>
+    <th>Button (D1)</th>
+    <td>released</td>
+    <td>pressed</td>
+    <td>hold</td>
+    <td>released</td>
+    <td colspan="3">-</td>
+    <td colspan="3">-</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>Button (D21)</th>
+    <td>released</td>
+    <td colspan="3">-</td>
+    <td>pressed</td>
+    <td>hold</td>
+    <td>released</td>
+    <td>pressed</td>
+    <td>hold</td>
+    <td>released</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>LED</th>
+    <td>off</td>
+    <td>off</td>
+    <td>off</td>
+    <td>on</td>
+    <td>on</td>
+    <td>on</td>
+    <td>off</td>
+    <td>off</td>
+    <td>off</td>
+    <td>on</td>
+    <td>...</td>
+  </tr>
+</table>
+
 
 **Example code**
 
@@ -387,6 +479,52 @@ public struct C01S02TwoButtonsOneLED {
 ### 5. LED On/off switches 
 
 Two buttons are reserved for the on (D1) and the off (D21) buttons respectively. The LED state is updated only after a press and release.
+
+
+
+**Program overview**
+
+* When both two buttons are **released**/not pressed, the LED stays **off**.
+* Only after the on buttons (D1) is **pressed and then released**, the LED turns **on**.
+* Only after the off buttons (D21) is **pressed and then released**, the LED turns **off**.
+
+The situation when two buttons are pressed at the same time is not considered.
+
+
+<table>
+  <tr>
+    <th>On Button (D1)</th>
+    <td>released</td>
+    <td>pressed</td>
+    <td>hold</td>
+    <td>released</td>
+    <td colspan="3">-</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>Off Button (D21)</th>
+    <td>released</td>
+    <td colspan="3">-</td>
+    <td>pressed</td>
+    <td>hold</td>
+    <td>released</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>LED</th>
+    <td>off</td>
+    <td>off</td>
+    <td>off</td>
+    <td>on</td>
+    <td>on</td>
+    <td>on</td>
+    <td>off</td>
+    <td>...</td>
+  </tr>
+</table>
+
+
+
 
 **Example code**
 

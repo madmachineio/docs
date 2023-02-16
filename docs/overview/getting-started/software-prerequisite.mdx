@@ -9,7 +9,7 @@ At first, you could install the MadMachine extension for Visual Studio Code. It 
 
 ## Install the extension
 
-1. Open the Visual Studio Code. Click the **Extension** icon on the left activity bar.
+1. Open the **Visual Studio Code**. Click the **Extension** icon on the left activity bar.
 2. Enter **MadMachine** in the search box to find the extension in its marketplace.
 3. Click the **Install** button. 
 
@@ -17,8 +17,6 @@ At first, you could install the MadMachine extension for Visual Studio Code. It 
   src={require('./img/install.png').default}
   alt="Install the MadMachine extension" width="960"
 />
-
-BTW, **Serial Monitor** provided by Microsoft will be installed automatically. Go [here](../advanced/serial-debug) for a detailed tutorial.
 
 
 :::info
@@ -31,14 +29,14 @@ The extension relies on the mm-sdk to do all its work. You need to indicate its 
 
 1. [**Download the latest sdk version**](https://github.com/madmachineio/mm-sdk/releases) according to your operating system and **unzip** it.
 
-2. Then come back to the VS code. In the menu bar, select **Code** / **Preferences** / **Settings**.
+2. Then come back to the VS code. Click ⚙️ / **Extension Settings** to open the settings.
 
 <img
   src={require('./img/settings.png').default}
   alt="Set the MadMachine extension" width="960"
 />
 
-3. In the Settings, select **Extensions** / **MadMachine**. Enter the **path of the sdk** in the box that matches your operating system. Windows is not supported since we are waiting for the full Window support of Swift language...
+3. Enter the **path of the sdk** in the box that matches your operating system. Windows is not supported since we are waiting for the full Window support of Swift language...
 
 
 import Tabs from '@theme/Tabs';
@@ -71,7 +69,7 @@ import TabItem from '@theme/TabItem';
 </Tabs>
 
 
-:::info
+:::caution important
 Make sure the sdk path is correct, or the extension won't work.
 :::
 

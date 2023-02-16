@@ -7,13 +7,16 @@ description: Install the software and run your hello world project.
 
 Before getting into any detailed knowledge, it's a good idea to try your first project. You'll have a first impression of what your board can do. Let's blink an LED. 
 
-## Set up software 
+## Step 1: Set up software 
 
 At first, you will set up the software for your board.
 
-1. **Open the Visual Studio Code**. I believe most of you guys have installed it. We have created an extension for it. It is really handy and easy to use.
 
-2. **Install the extension** as shown below:
+1. **Download the latest [mm-sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build and download your project.
+
+2. **Open the Visual Studio Code**. I believe most of you guys have installed it. We have created an extension for it. It is really handy and easy to use.
+
+3. **Install the extension** as shown below:
     1. click the Extensions button on the left bar.
     2. enter the extension name MadMachine in the search box.
     3. click the Install button.
@@ -23,9 +26,8 @@ At first, you will set up the software for your board.
   alt="Install the extension" width="960"
 />
 
-3. **Download the latest [mm-sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build and download your project.
 
-4. **Open the Settings** by clicking **Code** / **Preferences** / **Settings** to set the extension.
+4. **Click ⚙️ / Extension Settings** to open the settings.
 
 <img
   src={require('./img/settings.png').default}
@@ -33,7 +35,7 @@ At first, you will set up the software for your board.
 />
 
 
-5. Click **Extensions** to expand it and find **MadMachine**. Indicate the **mm-sdk location** in the box that matches your operating system. If you change the location of sdk later, you will need to update it. 
+5. **Indicate the mm-sdk location** in the box that matches your operating system. If you change the location of sdk later, don't forget to update it. 
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -68,11 +70,11 @@ import TabItem from '@theme/TabItem';
 
 OK, the software gets prepared👏.
 
-## Create a project
+##  Step 2: Create a project
 
 Now, you will start your first project.
 
-1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three functionalities. Click **New Project**.
+1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three buttons. Click **New Project**.
 
 <img
   src={require('./img/create.png').default}
@@ -110,7 +112,7 @@ Now, you will start your first project.
 
 Well, the project is created and will open in a new window.
 
-## Write code
+##  Step 3: Write code
 
 Then you will need to edit the code for the project. 
 
@@ -143,14 +145,14 @@ public struct Blink {
   alt="Code" width="960"
 />
 
-## Download code to the board
+##  Step 4: Download code to the board
 
 Now you come to the last step - download your project to the board.
 
 1. **Connect** your SwiftIO Feather board to your computer. In the illustration below, the SwiftIO Feather board is plugged into the SwiftIO Circuit Playgrounds board. You can also disconnect them. 
 
 :::info
-If you are using our prototype board, there is one more shield board in between. Make sure to connect its port to your computer for code downloading instead of the other two ports.
+If you are using our **prototype board**, there is one more shield board in between. Make sure to connect its port to your computer for code downloading instead of the other two ports.
 :::
 
 <img
@@ -159,7 +161,7 @@ If you are using our prototype board, there is one more shield board in between.
 />
 
 
-2. Click the **Build** button to build your project.
+2. Click the **Build** button to build your project. Wait until the message Done appears on the window.
 
 <img
   src={require('./img/build.png').default}

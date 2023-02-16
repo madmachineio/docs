@@ -1,40 +1,27 @@
 ---
-title: 4. Downloading your project
+title: 4. Download project to board
 description: Download Swift code to your board.
 ---
 
-# 4. Download your project
+# 4. Download project to board
 
-Well, it's time to download the code to your board.
-
-1. Press the **Download button**. Once pressed, your board will appear as a USB Drive on your computer. There are two buttons on your board. The one labeled "**Download**" or "**DL**" is the correct one.
-
-<img
-  src={require('./img/downloadButton.png').default}
-  alt="Press download button" width="960"
-/>
-
-:::note
-Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](../faq.mdx#usb-driver-cant-be-mounted).
-:::
+Well, it's time to download the code to your board. The downloading process is different on different types of boards.
 
 
-2. The onboard RGB LEDs will show the current status of the USB connection. Wait for several seconds until the LED turns to **steady green**.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-| LED State | RED | GREEN | BLUE |
-| :--- | :--- | :--- | :--- |
-| On | USB communication failed | USB connection established | - |
-| Slow flashing | Fail to verify bin file | - | - |
-| Fast flashing | Fail to open bin file | Detecting USB connection | Detecting SD card |
+<Tabs
+  defaultValue="feather"
+  values={[
+    { label: 'SwiftIO Feather board', value: 'feather', },
+    { label: 'SwiftIO board', value: 'swiftio', },
+  ]
+}>
 
-<img
-  src={require('./img/greenLED.png').default}
-  alt="Green LED is on" width="960"
-/>
+<TabItem value="feather">
 
-
-
-3. Click **MadMachine** / **Build** to build the project. It will generate a file that could run on your board. 
+1. **Click the Build button** to build the project. It will generate a file that can run on your board. 
 
 <img
   src={require('./img/build.png').default}
@@ -45,18 +32,79 @@ Bad quality USB cable or some third-party USB hub may cause connection failure. 
 During this process, mm-sdk will fetch all the necessary dependencies from GitHub, as shown in the first several lines of the message. So check the internet connection if it fails.
 :::
 
-4. Once the building process is finished, you will see the message **Done!** in the terminal.
+Once the building process is finished, you will see the message **Done!** in the terminal.
 
 <img
   src={require('./img/buildDone.png').default}
   alt="Finish building" width="960"
 />
 
-5. Click **Download** button to download the file to your board. If it's successfully downloaded, you'll see the message **Done!**.
+2. **Click the Download button** to download the file to your board. If it's successfully downloaded, you'll see the message **Done!**.
 
 <img
   src={require('./img/download.png').default}
   alt="Download the code" width="960"
 />
+
+</TabItem>
+
+<TabItem value="swiftio">
+
+1. **Press the Download button**. Once pressed, your board will appear as a USB Drive on your computer. There are two buttons on your board. The one labeled Download is the correct one.
+
+<img
+  src={require('./img/downloadButton.png').default}
+  alt="Press download button" width="480"
+/>
+
+:::note
+Bad quality USB cable or some third-party USB hub may cause connection failure. If the board still fails to connect to your computer, you can refer to [FAQ](../faq.mdx#usb-driver-cant-be-mounted).
+:::
+
+
+2. The onboard RGB LEDs will show the current status of the USB connection. Wait for several seconds until **the LED turns to steady green**.
+
+  | LED State     | RED                      | GREEN                      | BLUE              |
+  | :------------ | :----------------------- | :------------------------- | :---------------- |
+  | On            | USB communication failed | USB connection established | -                 |
+  | Slow flashing | Fail to verify bin file  | -                          | -                 |
+  | Fast flashing | Fail to open bin file    | Detecting USB connection   | Detecting SD card |
+
+<img
+  src={require('./img/greenLED.png').default}
+  alt="Green LED is on" width="480"
+/>
+
+
+
+3. **Click the Build button** to build the project. It will generate a file that can run on your board. 
+
+<img
+  src={require('./img/build.png').default}
+  alt="Build the code" width="960"
+/>
+
+:::info
+During this process, mm-sdk will fetch all the necessary dependencies from GitHub, as shown in the first several lines of the message. So check the internet connection if it fails.
+:::
+
+Once the building process is finished, you will see the message **Done!** in the terminal.
+
+<img
+  src={require('./img/buildDoneSwiftIO.png').default}
+  alt="Finish building" width="960"
+/>
+
+4. **Click the Download button** to download the file to your board. If it's successfully downloaded, you'll see the message **Done!**.
+
+<img
+  src={require('./img/download.png').default}
+  alt="Download the code" width="960"
+/>
+
+</TabItem>
+</Tabs>
+
+
 
 Congratulations! The onboard blue LED begins to blink per second✨.
