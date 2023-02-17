@@ -18,9 +18,10 @@ The button is a commonly used input component and is widely used in a light swit
 ## 🔸Background
 
 ### What is digital input?
-The microcontroller can not only send output voltage but also receive signals. You've learned about digital output in the previous tutorial, and now you will discover how digital input works.
 
-Like digital output, digital input has two states: high and low. When an input signal comes in, its voltage will be compared with specific thresholds. If the voltage is higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage, but only has two results.
+The peripheral **GPIO** on microcontrollers can not only send digital output but also receive signals. You've learned about output in the previous tutorial, and now you will discover how digital input works.
+
+**Digital input** has two states: high and low. When an input signal comes in, its voltage will **be compared with specific thresholds**. If the voltage is higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage but only has two results.
 
 <img
   src={require('./img/digitalSignal.png').default}
@@ -29,7 +30,10 @@ Like digital output, digital input has two states: high and low. When an input s
 
 According to the input value, you easily know the exact state of the external devices, for example, check if the button is pressed or not.
 
-The digital pins on the board act as both input and output, you need to initialize the pin as input in your code.
+
+### Peripheral - GPIO
+
+As mentioned before, the GPIO pins on MCU act as both input and output. In this tutorial, you need to initialize the pin as input in your code.
 
 
 ## 🔸New component
@@ -64,13 +68,13 @@ That's hard to say. The state of that pin will be uncertain and change randomly 
 
 The pull-up resistor connects the input pin to **power**. In this case, the button should connect to the input pin and ground. 
 
-By default, when the button is not pressed, the input pin reads actually the power voltage which is high. If the button is pressed, the current flows from power directly to the ground and the pin reads low level.
+By default, when the button is not pressed, the input pin reads actually high. If the button is pressed, the current flows from power directly to the ground and the pin reads low level.
        
 **Pull-down resistor**
 
 The pull-down resistor connects the input pin to **ground**. If so, the button should connect to the power and input pin. 
 
-By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the pin reads power voltage which is high.
+By default, the pin connects directly to the ground, so the pin keeps in a low state. And if you press the button, the pin reads high.
 
 <img
   src={require('./img/pullResistor.png').default}
@@ -126,17 +130,34 @@ Let's start to build a simple LED switch.
 />
 
 
-**Program overview**
+**Project overview**
 
-* When the button is **released**/not pressed, the LED stays **off**.
-* After you **press** the button, the LED turns **on**.
-* If you **hold**/keep pressing the button, the LED stays **on**.
+* In the beginnning, the button is **released**/not pressed and the LED stays **off**.
+* After you **press** the button, the LED turns **on**. If you hold the button, the LED stays on.
 * Once you **release** the button, the LED turns **off**.
 
 
-| Button | released | pressed | hold | released | ... |
-| ------ | -------- | ------- | ---- | -------- | --- |
-| LED    | off      | on      | on   | off      | ... |
+<table>
+  <tr>
+    <th>Button</th>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>LED</th>
+    <td>off</td>
+    <td>on</td>
+    <td>off</td>
+    <td>on</td>
+    <td>off</td>
+    <td>...</td>
+  </tr>
+</table>
+
 
 
 **Example code**
@@ -178,13 +199,13 @@ let button = DigitalIn(Id.D1)
 
 The button is an instance created for the `DigitalIn` class. As usual, the id of the pin is necessary. It's the pin the button connects: D1.
 
-And there is an optional parameter `mode` with a default value `pullDown`, which means a pull-down resistor connects to the pin. There are two more options: `pullUp` (pull-up resistor), `pullNone` (no pull resistors).
+And there is another parameter `mode` with a default value `pullDown`, which means a pull-down resistor connected to the pin. There are two more options: `pullUp` (pull-up resistor), `pullNone` (no pull resistors).
 
 ```swift
 button.read() 
 ```
 
-Use the instance method `read()` to get the state from the pin. The return value tells you if it is high or low voltage. The value `true` means the button is being pressed.
+Use the instance method `read()` to get the pin state. The return value tells you if it is high or low voltage. 
 
 ```swift
 if value == true {
@@ -194,20 +215,23 @@ if value == true {
 }
 ```
 
-The microcontroller will judge the value read from the pin. When the value equals true, it means the button is pressed, so make the board output a high voltage to turn on the LED. 
+The microcontroller will judge the value read from the pin. When the value equals `true`, it means the button is pressed, so make the board output a high voltage to turn on the LED. 
 
-The statements in while loop can be simplified as: 
+BTW, the statements in the while loop can be simplified as: 
 
 ```swift
 led.write(button.read())
 ```
 
 :::info
-You might notice two similar symbols are so confusing: **=** and **==**. 
-
-Well, = is to assign value to a constant or variable, while == compares if values are equal. 
+You might notice two similar symbols are so confusing: **=** and **==**. Well, = is to assign value to a constant or variable, while == compares if values are equal. 
 :::
 
+```swift
+sleep(ms: 10)
+```
+
+This short period aims to slow the reading process. As usual, each button press takes at least a few 10ms. So the microcontroller doesn't need to run too quickly. 
 
 
 ### 2. LED switch using interrupt
@@ -217,17 +241,37 @@ In the previous project, the microcontroller is doing nothing but check the inpu
 In this project, the LED changes state between on and off every time you press the button. 
 
 
-**Program overview**
+**Project overview**
 
-* When the button is **released**/not pressed, the LED stays **off**.
+* In the beginnning, the button is **released**/not pressed, the LED stays **off**.
 * If you **press** the button, the LED turns **on** immediately.
-* When you **hold or release** the button, the LED state remains **unchanged**.
+* When you **release** the button, the LED state remains **unchanged**.
 * If you **press** the button again, the LED turns **off** immediately.
 
 
-| Button | released | pressed | hold | released | pressed | hold | released | ... |
-| ------ | -------- | ------- | ---- | -------- | ------- | ---- | -------- | --- |
-| LED    | off      | on      | on   | on       | off     | off  | off      | ... |
+<table>
+  <tr>
+    <th>Button</th>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>pressed</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>LED</th>
+    <td>off</td>
+    <td>on</td>
+    <td>on</td>
+    <td>off</td>
+    <td>off</td>
+    <td>on</td>
+    <td>...</td>
+  </tr>
+</table>
+
 
 
 
@@ -274,7 +318,7 @@ This newly declared function would be passed as a parameter for the interrupt. I
 
 `toggle()` can reverse the output from the current state to the other, from low to high, or from high to low. 
 
-Btw, changing the digital output level normally can be finished quickly, so it can be set as ISR.
+BTW, changing digital output level normally can be finished quickly, so it can be set as ISR. Except that, operations with other IO ports shouldn't be used as ISR.
 
 ```swift
 button.setInterrupt(.rising, callback: toggleLed)
@@ -282,10 +326,15 @@ button.setInterrupt(.rising, callback: toggleLed)
 
 The interrupt will be triggered when a rising edge is detected. The rising edge here corresponds to the moment the button is pressed.
 
+The parameter `callback` needs a specified type of function: `() -> void`. It means the function has no parameters and returns values. This parameter calls the function `toggleLed` defined above. Thus, once there is a rising edge, the microcontroller will go to toggle the output. After finishing, the microcontroller returns to the previous task, in this case, sleeping again.
 
-The third parameter `callback` needs a specified type of function: () -> void. It means the function has no parameters and returns values. 
+These statements (lines 13-18) can be simplified as:
 
-This parameter calls the function `toggleLed` defined above. Thus, once there is a rising edge, the microcontroller will come to this piece of code,  then go to that function `toggleLed` that `callback` calls and finally know it needs to toggle the output. After finishing, the microcontroller returns to the previous task, in this case, sleeping again.
+```swift
+button.setInterrupt(.rising) {
+    led.toggle()
+}
+```
 
 :::info
 
@@ -324,25 +373,45 @@ while true {
 }
 ```
 
-The sleep time can be a random value. It makes the board sleep while interrupt hasn't occurred and decreases power consumption. Without it, the board will run extremely quickly again and again but do nothing.
+The sleep time can be a random value. It makes the board sleep while interrupt doesn't occur and decreases power consumption. Without it, the board will run extremely quickly again and again but do nothing.
+
 
 ### 3. LED switch (press + release)
 
-After you press and release the button, the LED is toggled. If you press and hold the button, the LED state keeps the same.
+In this project, the LED state changes right after you release the button that has been pressed. If you press and hold the button, the LED state keeps the same. After you release the button, the LED is toggled.
 
+**Project overview**
 
+* In the beginnning, the button is **released**/not pressed, the LED stays **off**.
+* If you **press** the button, the LED stays **off**. When you hold the button, the LED stays off.
+* Once you **release** the button, the LED turns **on**.
+* After you **press and release** the button again, the LED turns **off**.
 
-**Program overview**
+<table>
+  <tr>
+    <th>Button</th>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>pressed</td>
+    <td>released</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <th>LED</th>
+    <td>off</td>
+    <td>off</td>
+    <td>on</td>
+    <td>on</td>
+    <td>off</td>
+    <td>off</td>
+    <td>on</td>
+    <td>...</td>
+  </tr>
+</table>
 
-* When the button is **released**/not pressed, the LED stays **off**.
-* If you **press** the button, the LED stays **off**.
-* When you **hold** the button, the LED stays **off**.
-* After you **release** the button, the LED turns **on**.
-* After you **press + release** the button again, the LED turns **off**.
-
-| Button | released | pressed | hold | released | pressed | hold | released | ... |
-| ------ | -------- | ------- | ---- | -------- | ------- | ---- | -------- | --- |
-| LED    | off      | off     | off  | on       | on      | on   | off      | ... |
 
 
 **Example code**
@@ -366,7 +435,7 @@ public struct C01S02ToggleLED {
         while true {
             // If currentState is false, the button is released. 
             // Besides, if lastState is true, it means the button has been pressed.
-            // So it checks if the button has been pressed and released. 
+            // So it checks if the button has been pressed and is now released. 
             // If so, toggle the LED.
             let currentState = button.read()
             if !currentState && currentState != lastState {
@@ -381,17 +450,17 @@ public struct C01S02ToggleLED {
 ```
 
 
-### 4. Two LED switches
+### 4. LED toggle switches
 
-Pressing any of the two buttons (D1, D21) will toggle the LED state. The state is updated after releasing the button. 
+Pressing any of the two buttons (D1, D21) will toggle the LED state. The state is updated immediately after pressing the button. 
 
 
 
-**Program overview**
+**Project overview**
 
-* When both two buttons are **released**/not pressed, the LED stays off.
-* After any of the two buttons (D1, D21) are **pressed and then released**, the LED turns **on**.
-* After any of the two buttons (D1, D21) are **pressed and then released again**, the LED turns **off**.
+* In the beginnning, both two buttons are **released**/not pressed, the LED stays off.
+* After any of the two buttons (D1, D21) are **pressed**, the LED turns **on**.
+* After any of the two buttons (D1, D21) are **pressed**, the LED turns **off**.
 
 It works like light switches in your room. You may press any of the switches in different places to toggle the light. The situation when two buttons are pressed at the same time is not considered.
 
@@ -401,36 +470,35 @@ It works like light switches in your room. You may press any of the switches in 
     <th>Button (D1)</th>
     <td>released</td>
     <td>pressed</td>
-    <td>hold</td>
     <td>released</td>
-    <td colspan="3">-</td>
-    <td colspan="3">-</td>
+    <td colspan="2">-</td>
+    <td colspan="2">-</td>
+    <td>pressed</td>
+    <td>released</td>
     <td>...</td>
   </tr>
   <tr>
     <th>Button (D21)</th>
     <td>released</td>
-    <td colspan="3">-</td>
+    <td colspan="2">-</td>
     <td>pressed</td>
-    <td>hold</td>
     <td>released</td>
     <td>pressed</td>
-    <td>hold</td>
     <td>released</td>
+    <td colspan="2">-</td>
     <td>...</td>
   </tr>
   <tr>
     <th>LED</th>
     <td>off</td>
-    <td>off</td>
-    <td>off</td>
-    <td>on</td>
     <td>on</td>
     <td>on</td>
     <td>off</td>
     <td>off</td>
-    <td>off</td>
     <td>on</td>
+    <td>on</td>
+    <td>off</td>
+    <td>off</td>
     <td>...</td>
   </tr>
 </table>
@@ -457,14 +525,14 @@ public struct C01S02TwoButtonsOneLED {
 
         // Toggle the LED after any of the two buttons are pressed.
         while true {
-            // If any of the buttons are pressed, update the state.
-            if button0.read() || button1.read() {
+            // If any of the buttons are pressed, toggle the LED.
+            if !pressed && (button0.read() || button1.read()) {
+                led.toggle()
                 pressed = true
             }
 
-            // If a button has been pressed and both buttons are released, toggle the LED.
-            if pressed && !button0.read() && !button1.read() {
-                led.toggle()
+            // If the two buttons are released, update the state to wait for the next press.
+            if !button0.read() && !button1.read() {
                 pressed = false
             }
 
@@ -482,13 +550,11 @@ Two buttons are reserved for the on (D1) and the off (D21) buttons respectively.
 
 
 
-**Program overview**
+**Project overview**
 
-* When both two buttons are **released**/not pressed, the LED stays **off**.
+* In the beginnning, both two buttons are **released**/not pressed, the LED stays **off**.
 * Only after the on buttons (D1) is **pressed and then released**, the LED turns **on**.
 * Only after the off buttons (D21) is **pressed and then released**, the LED turns **off**.
-
-The situation when two buttons are pressed at the same time is not considered.
 
 
 <table>
@@ -496,17 +562,15 @@ The situation when two buttons are pressed at the same time is not considered.
     <th>On Button (D1)</th>
     <td>released</td>
     <td>pressed</td>
-    <td>hold</td>
     <td>released</td>
-    <td colspan="3">-</td>
+    <td colspan="2">-</td>
     <td>...</td>
   </tr>
   <tr>
     <th>Off Button (D21)</th>
     <td>released</td>
-    <td colspan="3">-</td>
+    <td colspan="2">-</td>
     <td>pressed</td>
-    <td>hold</td>
     <td>released</td>
     <td>...</td>
   </tr>
@@ -514,8 +578,6 @@ The situation when two buttons are pressed at the same time is not considered.
     <th>LED</th>
     <td>off</td>
     <td>off</td>
-    <td>off</td>
-    <td>on</td>
     <td>on</td>
     <td>on</td>
     <td>off</td>
@@ -600,27 +662,34 @@ Congratulations! Now let's dive deeper into something more complicated. Don't be
 
 ### Interrupt
 
-The interrupt allows the microcontroller to respond quickly to a specified event. How does it work?
+With interrupt mechanism, the microcontroller can 
+
+* respond instantly to what it is supposed to do, which is vital for time-critical events. 
+* perform other tasks while the interrupt hasn't been triggered, thus increasing the efficiency.
+
+**How does it work?**
 
 * Normally the microcontroller executes its main program. 
-* Once the interrupt occurs, it will suspend the normal execution and then start the task with higher priority, called interrupt handler or ISR (Interrupt Service Routine). 
-* After finishing ISR, the microcontroller goes back to where it stopped and continues the main program until another interrupt.
+* Once the interrupt occurs, it will **suspend the normal execution** and then **start** the task with higher priority, called interrupt handler or **ISR** (Interrupt Service Routine). 
+* After finishing ISR, the microcontroller goes back to where it stopped and **continues the main program** until another interrupt.
 
 <img
   src={require('./img/interrupt.png').default}
   alt="Interrupt" width="480"
 />
 
-:::important
-There are two points about the ISR:
-1. Generally, the ISR should be done as fast as possible, usually in nanoseconds. 
+**About ISR**
+
+1. Generally, the ISR should be done **extremely fast**, usually in nanoseconds. 
 2. The functions don't need any parameters and return nothing.
 
-In short, it's better to change a value or toggle digital output for the ISR. And you should not add `print()` which takes about several milliseconds. Or your program may go wrong.
+In summary, it's better to **change a value/flag** for the ISR. **Toggling digital output** also works because it is executed by the MCU instantaneously. And you **should not add `print()`** which takes about several milliseconds, or your program may go wrong somehow.
 :::
 
+**When does interrupt happen?**
 
-An interrupt may come from different sources. Now you are dealing with an interrupt triggered by the state change. There are three **conditions** in total:
+An interrupt may come from different sources. Now you are dealing with an interrupt **triggered by the input state change**. There are three situations in total:
+
 * **Rising edge**: when the signal changes from low to high. 
 * **Falling edge**: when the signal changes from high to low. 
 * **Both** of them.
@@ -632,40 +701,47 @@ An interrupt may come from different sources. Now you are dealing with an interr
 
 So when setting the interrupt,  you need to tell the microcontroller the specific condition to trigger it: rising edge, falling edge, or both edges. Then once the specified edge is detected, the interrupt happens.
 
-With interrupt mechanism, the microcontroller can 
-* respond instantly to what it is supposed to do, which is vital for time-critical events. 
-* perform other tasks while the interrupt hasn't been triggered, thus increasing the efficiency.
+The [project 2](#2-led-switch-using-interrupt) above shows you how to use interrupt mechanism to detect button state.
 
 ### Debounce 
-When you press or release a button, you might think the button would immediately come to a stable state, closed or open. So the LED should always be on when pressing the button and turn off once the button is released. However, there may be some unexpected situations sometimes. 
 
-The button has metals inside it which will move as you press or release it. Due to this mechanical structure, there may be several bounces before the internal metals finally settle down. So once the button is pressed or released, it may change several times between two states: establish the connection and disconnect the circuit before coming to a stable state.
+**Expectation**
+
+When you press or release a button, the button would immediately come to a stable state, closed or open. So the LED should always be on when pressing the button and turn off once the button is released according to project 1.
+
+**Phenomenon**
+
+However, the LED may turn on and off several times with a single button press.
+
+**Cause**
+
+The button has metals inside it which will move as you press or release it. **Due to this mechanical structure**, there may be **several bounces** before the internal metals finally settle down. So once the button is pressed or released, it may change several times between two states: establish the connection and disconnect the circuit before coming to a stable state.
 
 
-The signal would thus change several times during this short period. It is not visible to your eye. You could observe it by viewing the wave in the oscilloscope. But the microcontroller works much faster. It may read the values during this uncertain period and regard these noises as multiple presses.
+**The signal state would thus change several times** during this short period. It is not visible to your eye. You could observe it by viewing the wave in the oscilloscope. But the microcontroller works fast enough to read the values during this uncertain period and thus regards these noises as multiple presses.
 
 <img
   src={require('./img/bounce.png').default}
   alt="Bounce" width="480"
 />
 
-So you need debounce methods to avoid this situation. There are many solutions, including hardware debounce and software debounce.
+**Solution**
 
-**Hardware debounce**
+So you need **debounce methods** to avoid this situation. There are many solutions, including hardware debounce and software debounce.
 
-It lies in eliminating the influence of bounce when designing the circuit. So does the button module on this kit. Let's talk about one method used for the kit. There are also many other ways, of course.
+* **Hardware debounce**: it lies in eliminating the influence of bounce when designing the circuit. 
 
-<img
+  So does the button module on this kit. Let's talk about one method used for the kit. There are also many other ways, of course. A **capacitor (C1) is added to smooth the voltage changes**. After the button is pressed or released, the voltage will gradually change to another level rather than accidentally change several times between the two levels.
+
+  <img
   src={require('./img/debounce.png').default}
   alt="Debounce" width="960"
-/>
+  />
 
-A capacitor (C1 shown in the image below) is added to smooth the voltage changes. After the button is pressed or released, the voltage will gradually change to another level rather than accidentally change several times between the two levels.
+* **Software debounce**: when designing the program, you can make the MCU ignore the bounce and wait for the real state. 
+  
+  Usually, you'll **check many times or wait a few milliseconds to skip this unstable period**. After this period, the value read from the pin should be the one needed. A fast press would typically last at least 50ms. You could have a look at [this example code](../../projects/general/simpleio/debounce.mdx#example-code). 
 
-**Software debounce**
-
-It makes your board ignore the bounce and wait for the real state. Usually, you'll check many times or wait a few milliseconds to skip this unstable period. After this period, the value read from the pin should be the one needed. A fast press would at least last about 20ms. You could have a look at [this reference code](../../projects/general/simpleio/debounce.mdx#example-code). 
-
-:::note
-Since the button on the kit uses a hardware debounce method, you will not meet this problem. But it is still an important phenomenon when you DIY some projects using buttons.
-:::
+  :::info
+  Since the button module on Playgrounds uses a hardware debounce method, you may not meet this problem. But it is still an important phenomenon when you DIY some projects using buttons.
+  :::

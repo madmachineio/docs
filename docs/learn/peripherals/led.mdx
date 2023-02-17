@@ -24,14 +24,16 @@ For those coming from the software programming world, you may be familiar with t
 
 ### What is digital output?
 
-In electronics and telecommunication, electronic signals carry data from one device to another to send and receive all kinds of information. They are always time-varying, which means the voltage changes as time goes on. Different voltages can convey infos and be decoded to a specified message. Depending on the ways the voltage changes, the signals are divided into two types: digital signal and analog signal. You'll take a look at the digital signal in this tutorial.
+In electronics and telecommunication, electronic **signals carry data from one device to another** to send and receive all kinds of information. They are always time-varying, which means the voltage changes as time goes on. Different voltages can convey info and be decoded to a specified message. 
+
+Depending on the ways the voltage changes, the signals are divided into two types: **digital signal and [analog signal](./potentiometer#what-is-an-analog-signal)**. You'll take a look at the digital signal in this tutorial.
+
+In most cases, a **digital signal** has two states: **0 and 1**. It is suitable to work with some components, such as LED (which is either turned on or off), button (which will be only pressed or released) ...
 
 <img
   src={require('./img/digitalSignal.png').default}
   alt="Digital signal wave" width="480"
 />
-
-In most cases, a **digital signal** has two states: on or off. It is suitable to work with some components, such LED (which is either turned on or off), the button (which will be only pressed or released) ...
 
 Here are different expressions to represent two voltage states:
 
@@ -42,13 +44,15 @@ Here are different expressions to represent two voltage states:
 | 3.3V | 0V |
 
 
-:::note
-For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true.
+:::info
+For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true...
 :::
 
-GPIO (general-purpose input/output) pins can handle digital output and input signals. You'll set it as output in your code.
+### Peripheral - GPIO
 
-You can use a digital output to control the LED both built onto the board or external LEDs (not included). For the LED module on your kit, when you apply a high signal to the LED, it will turn on, and if you apply a low signal, it will be off. 
+The peripheral **GPIO** (general-purpose input/output) allows **sending and receiving digital signals between MCUs and various devices**. GPIO pins can be configured as either input or output pins, meaning they can either read or send signals. You'll set the GPIO pins to output digital signals in your code.
+
+The digital output pin can be used to control the LED both built onto the board or external LEDs (not included). For the LED module on your kit, when you apply a high signal to the LED, it will turn on, and if you apply a low signal, it will be off. 
 
 
 
@@ -345,7 +349,14 @@ The circuits above are simplified for your reference.
 
 ### 1. LED blink
 
-On your first try, let's make the LED blink - on for one second, then off for one second, and repeat it over and over again.
+On your first try, let's make the LED blink.
+
+**Project overview**
+
+* The LED stays off by default.
+* For the first second, the LED **turns on** due to **high** digital output.
+* For the next second, the LED **turns off** due to **low** digital output.
+* The LED turns on and off repeatedly.
 
 <img
   src={require('./img/blink.png').default}
@@ -481,6 +492,18 @@ The overall color of the light depends on the LEDs that are on. If only one of t
   alt="RGB colors" width="240"
 />
 
+**Project overview**
+
+* The onboard RGB LEDs are off by default.
+* The **red** LED turns on for 1s.
+* The **green** LED turns on for 1s.
+* The **blue** LED turns on for 1s.
+* The **red and green** LEDs are on for 1s, which results in a **yellow** color.
+* The **red and blue** LEDs are on for 1s, which results in a **magenta** color.
+* The **green and blue** LEDs are on for 1s, which results in a **cyan** color.
+* The **red, green, and blue** LEDs are on for 1s, which results in a **white** color.
+* All LEDs are **off** for 1s. 
+* Then repeat the process above.
 
 
 **Example code**
@@ -564,9 +587,16 @@ In the while loop, turn on the RGB LED using different patterns to get different
 
 Blink the red LED at a different speed to generate the SOS signal.
 
-**Example code**
-
 Have you heard of Morse code? It encodes characters into a sequence of dashes and dots to send messages. To reproduce it, you will use long flash and short flash respectively. In morse code, S is represented by three dots, O is represented by three dashes. So an SOS signal needs three short flashes, three long flashes, and then three short flashes again. 
+
+**Project overview**
+
+* The LED is off by default.
+* The LED blinks fast 3 times to represent the S signal: on for 500ms and off for 500ms.
+* The LED blinks slower 3 times to represent the O signal: on for 1s and off for 500ms.
+* The LED blinks fast 3 times again to represent the S signal.
+
+**Example code**
 
 ```swift title="C01S01LEDMorseCode.swift" showLineNumbers
 // Import the libraries to use all their functionalities.
@@ -606,7 +636,7 @@ public struct C01S01LEDMorseCode {
 
         // Blink the LED.
         // At first, the LED starts 3 fast blinks to represent s, then 3 slow blinks to represent o, and 3 fast blinks again.
-        // Wait 1s before repeating.
+        // Wait 1s before repeating the signal.
         while true {
             send(sSignal, to: led)
             send(oSignal, to: led)
@@ -694,11 +724,17 @@ Set high or low voltage. This is similar to the method `write()`, but it's more 
 
 You will learn a new way to blink an LED - blink using a timer.
 
+**Project overview**
+
+* The onboard blue LED and the red LED module are off by default.
+* The blue LED blinks continuously: on for 500ms and off for 500ms.
+* Every 1.5s, the red LED changes its state, thus blinking slower.
 
 <img
   src={require('./img/timerLED.png').default}
-  alt="LED blink using timer" width="480"
+  alt="" width="480"
 />
+
 
 
 **What is a timer?**
@@ -721,6 +757,7 @@ The timer here is quite similar. It is a software timer provided by Zephyr. You 
 | ------ | ------------|
 | `init(mode:period)` | Initialize a timer. <br />- **`mode`**: decide how many times the interrupt will happen: `.oneShot` or `.period`, `.period` by default to make the interrupt happen continuously. <br />- **`period`**: the time interval, measured in ms.|
 | `setInterrupt(`<br />`start:_:)` | Set the condition to trigger the interrupt.  <br /> - **`start`**: decide whether it will start as you invoke this method, or you will start it manually later by using `start()`. <br />- **`callback`**: set the task for interrupt. It needs functions with no parameter and return value. |
+
 
 **Example code**
 
