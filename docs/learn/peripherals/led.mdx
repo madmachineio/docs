@@ -22,20 +22,18 @@ For those coming from the software programming world, you may be familiar with t
 
 ## 🔸Background
 
-### What is digital output?
+### What is digital signal?
 
-In electronics and telecommunication, electronic **signals carry data from one device to another** to send and receive all kinds of information. They are always time-varying, which means the voltage changes as time goes on. Different voltages can convey info and be decoded to a specified message. 
+In electronics and telecommunication, electronic **signals carry data from one device to another** to send and receive all kinds of information. These signals are time-varying, meaning that the voltage or current changes over time in a specific pattern that carries information. **Digital and [analog](./potentiometer#what-is-an-analog-signal)** signals are two different types of electronic signals used to transmit and process information. 
 
-Depending on the ways the voltage changes, the signals are divided into two types: **digital signal and [analog signal](./potentiometer#what-is-an-analog-signal)**. You'll take a look at the digital signal in this tutorial.
-
-In most cases, a **digital signal** has two states: **0 and 1**. It is suitable to work with some components, such as LED (which is either turned on or off), button (which will be only pressed or released) ...
+In this tutorial, you'll focus on digital signals. **Digital signals** typically take on two distinct voltage levels, which can represent binary **1 or 0** values. These values can be combined in various ways to represent more complex information, such as text, images, or sound.
 
 <img
   src={require('./img/digitalSignal.png').default}
   alt="Digital signal wave" width="480"
 />
 
-Here are different expressions to represent two voltage states:
+Here are different expressions to represent two states:
 
 | Logic 1 | Logic 0 |
 |---------|------|
@@ -48,11 +46,19 @@ Here are different expressions to represent two voltage states:
 For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true...
 :::
 
+Digital signals are ideal for working with components that have discrete states, such as LEDs (on/off) and buttons (pressed or released).
+
 ### Peripheral - GPIO
 
-The peripheral **GPIO** (general-purpose input/output) allows **sending and receiving digital signals between MCUs and various devices**. GPIO pins can be configured as either input or output pins, meaning they can either read or send signals. You'll set the GPIO pins to output digital signals in your code.
+The peripheral **GPIO** (general-purpose input/output) allows **sending and receiving digital signals** between MCUs and various devices. 
 
-The digital output pin can be used to control the LED both built onto the board or external LEDs (not included). For the LED module on your kit, when you apply a high signal to the LED, it will turn on, and if you apply a low signal, it will be off. 
+**GPIO pins** can be configured as either **input or output pins using software**, meaning they can either read or send signals to control the state of an external device or to read data from an external sensor. 
+
+- When a GPIO pin is configured as an **output**, it can be set to either a high or low voltage level to control the state of an external device, such as turning an LED on or off. 
+- When a GPIO pin is configured as an [**input**](./button), it can read the voltage level of an external signal, such as the state of a button or the output of a sensor.
+
+
+In this tutorial, you'll make a GPIO pin **output digital signal to control the LED**. For the LED module on your kit, when you apply a high signal, it will turn on, and if you apply a low signal, it will be off. 
 
 
 
@@ -60,7 +66,7 @@ The digital output pin can be used to control the LED both built onto the board 
 
 ### Diode
 
-The diode is a **polarized** component. It has a **positive** side (anode) and a **negative** side (cathode). After conntected in the circuit, the current can only flow in a single direction, from anode to cathode. If you connect it in an opposite direction, the current will not be allowed to pass through.
+The diode is a **polarized** component. It has a positive side (anode) and a negative side (cathode). After being connected in the circuit, **the current can only flow** in a single direction, **from anode to cathode**. If you connect it in an opposite direction, the current will not be allowed to pass through.
 
 <img
   src={require('./img/diode.png').default}
@@ -69,7 +75,7 @@ The diode is a **polarized** component. It has a **positive** side (anode) and a
 
 ### LED
 
-LED (Light-emitting diode) is a type of diode that convert electrical energy into light. Only when you connect it in the right direction - connect the anode to power and the cathode to ground - is the current allowed to flow, lighting up the LED.
+LED (Light-emitting diode) is a type of diode that convert electrical energy into light. Only when you connect it in the right direction - **connect the anode to power and the cathode to ground** - is the current allowed to flow, lighting up the LED.
 
 <img
   src={require('./img/LED.png').default}
@@ -84,13 +90,13 @@ How to identify the two legs of LED?
 2. Alternatively, sometimes you will find a notch on the negative side.
 :::
 
-The LED allows a **limited range of current**, normally no more than 20mA. So you should add a [resistor](#resistor) when connecting it to your circuit. Or the LED might burn out when driving too much current.
+The LED allows a **limited range of current**, usually no more than 20mA. So you should add a [resistor](#resistor) when connecting it to your circuit. Or the LED might burn out when driving too much current.
 
 **Circuit connection**
 
 When you connect the LED in the circuit, there are two cases to control the LED:
 
-* Connect the **anode to a digital output pin and cathode to ground**. When connected this way, the LED turns on when the pin outputs a high signal. The LED module works in this way.
+* Connect the **anode to a digital output pin and cathode to ground**. When connected this way, the LED turns on when the pin outputs a high signal.
 
 <img
   src={require('./img/LEDConnectGND.png').default}
@@ -102,7 +108,7 @@ _Pin is a digital output pin, R is a resistor, <img
   alt="LED symbol" width="40" align="center"
 /> is an LED, and GND is ground_
 
-* Another method is to connect the **anode to a power source and connect the cathode to a digital output pin**. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on. This is how the built-in LED is connected on the SwiftIO Feather board.
+* Another method is to connect the **anode to a power source and connect the cathode to a digital output pin**. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on. This is how the built-in LED works on the SwiftIO Feather board.
 
 <img
   src={require('./img/LEDConnect3V3.png').default}
@@ -115,14 +121,11 @@ _Vcc is a power source, R is a resistor, <img
 /> is an LED, and pin is a digital output pin_
 
 
-There are many types of LEDs with different colors and sizes. The LED on your SwiftIO Circuit Playgrounds is a small variant designed to be convenient for mass production.
-
-You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
+There are many types of LEDs with different colors and sizes. The LED on your SwiftIO Circuit Playgrounds is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
 
 ### Resistor
 
-The resistor functions as a current-limiting component that, just as its name suggests, can resist the current in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current, called resistance, is measured in **ohm (Ω)**.
-
+The resistor functions as a current-limiting component that, just as its name suggests, can **resist the current** in the circuit. It has two legs. You can connect it in either direction as it is not polarized. 
 <img
   src={require('./img/10kResistor.png').default}
   alt="resistor" width="240"
@@ -135,6 +138,8 @@ Symbol: <img
   src={require('./img/resistorSymbol2.png').default}
   alt="American resistor symbol" width="80" align="center"
 /> (US)
+
+Its ability to resist the current, called **resistance**, is measured in **ohm (Ω)**.
 
 :::info
 How can you tell how much resistance a resistor provides?
@@ -208,7 +213,7 @@ and
 **I = V / R**
 
 
-As stated previously, all digital pins on the SwiftIO Feather board output a high signal of 3.3V. If the resistance in the circuit is 330Ω, the current would be 3.3 / 330 = 0.01A. 
+As stated previously, all digital pins on the SwiftIO Feather board output a high signal of 3.3V. For example, if the resistance in the circuit is 330Ω, the current would be 3.3 / 330 = 0.01A. 
 
 :::info Exercise
 
@@ -246,29 +251,41 @@ Series and parallel circuits are the ways to connect more than two devices in th
 
 * In a **series circuit**, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same.
 
-  Suppose R1 is 100Ω and R2 is 200Ω, the voltage supply is 3V, 
+
+<details>
+    <summary>Suppose R1 is 100Ω and R2 is 200Ω, the voltage supply is 3V.</summary>
+
   * R = R<sub>R1</sub> + R<sub>R2</sub> = 300Ω
   * I<sub>R1</sub> = I<sub>R2</sub> = 3V / 300Ω = 0.01A
   * V<sub>R1</sub> = 0.01A x 100Ω = 1V
   * V<sub>R2</sub> = 0.01A x 200Ω = 2V
 
-* In a **parallel circuit**, devices share two common nodes, like R3 and R4. Node a connects both two devices, so the current flows through both of them. The voltage between two nodes (a and b) is the same.
+</details>
 
-  Suppose R3 is 100Ω and R4 is 200Ω, the voltage supply is 3V, 
+
+* In a **parallel circuit**, devices share two common nodes, like R3 and R4. Node a connects both two devices, so the current flows through both of them. The voltages between two devices are the same.
+
+<details>
+    <summary>Suppose R3 is 100Ω and R4 is 200Ω, the voltage supply is 3V.</summary>
+
   * V<sub>R3</sub> = V<sub>R4</sub> = 3V
   * I<sub>R3</sub> = 3V / 100Ω = 0.03A
   * I<sub>R4</sub> = 3V / 200Ω = 0.015A
   * I = I<sub>R3</sub> + I<sub>R4</sub> = 0.045A
   * R = (R3 x R4) / (R3 + R4) ≈ 66.67Ω
+
+</details>
+
   
 <img
   src={require('./img/seriesParallel.png').default}
   alt="Series and parallel circuit" width="960"
 />                  
 
+
 In your real situation, the circuit would not be that easy. The series and parallel circuits would both be used when building the circuit.
 
-Let's look at an example. You will know better about two circuits.
+Let's look at an example.
 
 * In the first circuit, the two lamps are connected in series, so the switch can control both of them. If any of the lamps breaks down, even if the switch is closed, the other lamp will not be lit. 
 * In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the switch connected in series: switch1 controls the lamp1, switch2 controls the lamp2. And the two lamps work separately.
@@ -292,12 +309,14 @@ In addition to the previously mentioned types of circuits, there are three more 
 />  
 
 
-### Current safety
+:::caution Current safety
 In a complete circuit, the current will always flow from the point of higher voltage (usually power) to the one of lower voltage (usually ground or GND). Consumed energy is turned into light, heat, sound and many other forms. 
 
 If you were to connect the power directly to the ground using a wire, this would cause a short circuit. It can (and usually do) cause damage to your circuit and board, and is also very possible to start a fire.  
 
 Another warning: if you're not careful about selecting an appropriately strong resistor to resist the level of current flowing through the circuit, the devices can be burnt and damaged (and additionally cause a fire hazard). 
+
+:::
 
 
 ## 🔸Circuit - LED module
