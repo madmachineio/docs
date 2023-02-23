@@ -125,18 +125,32 @@ module.exports = {
         {
           type: 'category',
           collapsed: false,
-          label: '🌟Graphical display',
+          label: '🌟More advanced usages',
           link: {
             type: 'doc',
-            id: 'learn/display/before-start',
+            id: 'learn/advanced/overview',
           },
           items: [
-            'learn/display/maddisplay',
-            'learn/display/shapes',
-            'learn/display/text',
-            'learn/display/bmp',
+            'learn/advanced/uart',
+            
           ],
         },
+
+        // {
+        //   type: 'category',
+        //   collapsed: false,
+        //   label: '🌟Graphical display',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'learn/display/before-start',
+        //   },
+        //   items: [
+        //     'learn/display/maddisplay',
+        //     'learn/display/shapes',
+        //     'learn/display/text',
+        //     'learn/display/bmp',
+        //   ],
+        // },
         {
           type: 'category',
           collapsed: false,
