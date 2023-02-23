@@ -24,26 +24,29 @@ As mentioned before, the signals can be divided into two types: digital signal a
   alt="Analog signal" width="480"
 />
 
+### Peripheral - ADC
+
 But the microcontrollers are digital components, how do they read the analog voltage at a specific time?
 
-Indeed, the microcontrollers cannot directly read analog values. It needs an analog to digital converter (ADC). The ADC converts analog voltages on a pin to corresponding digital values. In this way, the microcontrollers can finally read analog voltages.
+Indeed, the microcontrollers cannot directly read analog values. It needs an **analog-to-digital converter (ADC)**. The ADC works by sampling the analog signal at discrete intervals and then converting the measured voltage to a corresponding digital value that can be processed by the microcontroller. The digital value represents the amplitude of the analog signal at the time it was sampled.
 
-The ability to measure analog values depends on the ADC resolution. The **resolution** tells the count of possible values. For example, if the resolution is 2-bit, there can be 4 possible values: 0, 1, 2, 3. These values are called **raw values**. And if it's is 3-bit, there are 8 values (0-7).
+The ability to measure analog values depends on the ADC resolution. The **resolution** tells the number of possible values. For example, if the resolution is 2-bit, there can be 2<sup>2</sup> = 4 possible values: 0, 1, 2, 3. These values are called **raw values**. And if it's 3-bit, there are 2<sup>3</sup> = 8 values (0-7).
 
 <img
   src={require('./img/resolution.png').default}
   alt="ADC resolution" width="960"
 />
 
-You will not look into the details on how ADC works. That's too complex. What you need is the raw values it gives you after reading from an analog signal. These values may be not easy to understand. Then they can be mapped to voltage values between the minimum and maximum voltage. 
 
-The SwiftIO Feather board has a built-in 12-bit ADC. So there are 4096 (2^12) analog levels, from 0 to 4095. For example, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 1365 corresponds to (3.3 / 4095) * 1365 = 1.1V. 
+The digital values output by an ADC are often referred to as **"raw" values**, and they may not be easy to understand or use. To make sense of these values, they need to **be mapped back to their corresponding voltage values**.
+
+To do this mapping, you need to know the voltage range that the ADC is measuring, 0 to 3.3V in this case. The SwiftIO Feather board has a built-in 12-bit ADC, so there are 4096 (2<sup>12</sup>) levels, from 0 to 4095. Therefore, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 1365 corresponds to (3.3 / 4095) * 1365 = 1.1V. 
 
 Here is the equation for the conversion:
 
-**voltage = 3.3 / 4095 * raw value**
+> **voltage = (3.3 / 4095) * raw value**
 
-As you can see, higher resolution means more possible values, so the voltage obtained will be more accurate. Fo instance, as shown in the image above, if you get a raw value of 6 with a 3-bit ADC, the voltage should be around 3.3 / 7 * 6 ≈ 2.8V. But the same voltage might be considered as 3.3V with a 2-bit ADC.
+According to the formula, you can infer, higher resolution means more possible values, so the voltage obtained will be more accurate. For instance, if you get a raw value of 6 with a 3-bit ADC, the voltage should be around 3.3 / 7 * 6 ≈ 2.8V. But the same voltage might be considered as 3.3V with a 2-bit ADC.
 
 
 
@@ -52,9 +55,9 @@ As you can see, higher resolution means more possible values, so the voltage obt
 
 ### Potentiometer
 
-**Potentiometer** (pot for short, also called knob) is a kind of variable resistor. You can rotate it to change its resistance and thus change the voltage in a circuit. It is commonly used to control the volume on audio devices, as a menu selector knob on home appliances, etc. 
+**Potentiometer** (pot for short, also called knob) is a kind of **variable resistor**. You can rotate it to change its resistance and thus change the voltage in a circuit. It is commonly used to control the volume on audio devices, as a menu selector knob on home appliances, etc. 
 
-The potentiometer has a movable wiper inside it. As you rotate it clockwise or anticlockwise, the wiper moves with it to change the available resistance in the circuit. 
+The potentiometer has a **movable wiper** inside it. As you rotate it clockwise or anticlockwise, the wiper moves with it to **change the available resistance in the circuit**. 
 
 <img
   src={require('./img/potentiometer.png').default}
@@ -69,9 +72,11 @@ Symbols: <img
   alt="American potentiometer symbol" width="80" align="center"
 />(US)
 
-As shown in the image above, it has three terminals. The resistance between two ends (a and c) represents the maximum resistance. The middle one is connected to a wiper. As you rotate the knob, the position of the wiper changes and the actual resistance in the circuit changes proportionally. 
+As shown in the image above, it has three terminals. The resistance between two ends (a and c) represents the maximum resistance. The middle one is connected to a wiper. As you **rotate the knob**, the position of the wiper changes and the **resistances on two side of the wiper changes proportionally**. 
 
-For example, if you connect the outer pin a to the ground, the other outer pin c to power, and the middle pin b to the input pin, let's see how it works. When you turn it clockwise, the wiper moves gradually far away from a, the actual resistance between a and b in the circuit increases. And the voltage measured on pin b would increase with it, gradually to 3.3V. If you turn it anticlockwise, the result is the opposite.
+For example, if you connect the outer pin a to the ground, the other outer pin c to power, and the middle pin b to the input pin, let's see how it works. 
+* When you turn it to make the wiper move gradually far away from a, the actual resistance between a and b in the circuit increases. And the voltage measured on pin b would increase with it, gradually to 3.3V. 
+* If you turn it in the opposite direction, the voltage on pin b would decrease to 0.
 
 <img
   src={require('./img/rotatePot.png').default}
@@ -81,20 +86,21 @@ For example, if you connect the outer pin a to the ground, the other outer pin c
 ## 🔸New concept
 
 ### Voltage divider
-A voltage divider circuit is commonly used to get some smaller voltage levels that are a fraction of the input voltage. Usually, there are resistors connected in series. As the current flows through the resistors, the voltage drops.
+A voltage divider circuit is commonly used to **get a voltage that is a fraction of the input voltage**. Usually, there are **resistors connected in series**. As the current flows through the resistors, the voltage drops.
 
 <img
   src={require('./img/voltageDivider.png').default}
-  alt="Voltage divider" width="480"
+  alt="Voltage divider" width="240"
 />
 
-The voltage divider calculation is based on the ohm's law. Here's the equation: 
-**VR1 = Vin * R1/(R1+R2)**
+The voltage divider calculation is based on ohm's law. Here's the equation: 
 
-* _Vin: input voltage_
-* _VR1: voltage drop on R1_
+> **V<sub>R1</sub> = V<sub>in</sub> * R1 / (R1 + R2)**
 
-Since the two resistors are in series, the current flows through them are the same. The sum of VR1 and VR2 should equal Vin. So the ratio of R1's resistance to the total resistance equals the ratio of voltage drop to the incoming voltage supply.
+_V<sub>in</sub>: input voltage_, _V<sub>R1</sub>: voltage drop on R1_
+
+The two resistors are in series, which means the current flows through them are the same, so V<sub>R1</sub> / R<sub>R1</sub> = V<sub>in</sub> / (R<sub>R1</sub> + R<sub>R2</sub>). Then you can get the formula above.
+
 
 The potentiometer is a typical example of it. The whole resistor is cut into two parts by the wiper. As the wiper goes, the ratio of the resistor changes, thus the voltage drop changes accordingly.
 
@@ -135,11 +141,14 @@ The circuits above are simplified for your reference.
 
 
 
-### 1. Read input value
+### 1. Reading input value
 
 In this project, you will rotate the potentiometer to change the input value. You will view the voltage value on the serial monitor.
 
-After you connect the board to the computer through the serial port, the value is printed on the serial monitor window one by one per second. When you turn the potentiometer, the value changes. It gradually goes to the maximum or minimum value according to the direction you twist.
+**Project overview**
+
+* After you download the code and connect the port to the serial monitor, the value is printed on the window one by one per second. 
+* When you turn the potentiometer, the value changes. It gradually goes to the maximum or minimum value according to the direction you twist.
 
 <img
   src={require('./img/readPot.png').default}
@@ -186,51 +195,59 @@ It allows you to see the value on a serial monitor.
 
 It is a useful tool to debug your code if there is something unexpected in your program. You could add it after each statement that changes a value. Then you could infer which step goes wrong according to the printed results.
 
-**Serial monitor**
+<details>
+    <summary>How to use the serial monitor?</summary>
 
-A serial monitor is like a link between your board and the computer. You could view the value transmitted between them by using the function `print(_:)`. 
-
-If you don't have a preferred serial tool, you could download and install the [Serial Studio](https://serial-studio.github.io/).
-
-1. Open Serial Studio.
-
-2. Choose the correct port for your board. The port name may be different. If you are not sure which port, you could disconnect your board and see which one disappears. 
+1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-to-SERIAL device on your board.
+2. After finishing downloading the project, click **SERIAL MONITOR** tab.
 
 <img
-  src={require('./img/port.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/serialMonitor.png').default}
+  alt="" width="960"
 />
 
-<img
-  src={require('./img/selectPort.png').default}
-  alt="cannot open " width="960"
-/>
-
-3. Make sure the baud rate is **115200**. Choose **NL + CR** for newline and carriage return. And choose **Plain text** instead of Hexadecimal for better understanding.
+3. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
 
 <img
-  src={require('./img/serialSettings.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/choosePort.png').default}
+  alt="" width="960"
 />
 
 
-4. Click **Connect**.
+4. Select the **baudrate 115200**.
 
 <img
-  src={require('./img/connect.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/chooseBaudrate.png').default}
+  alt="" width="960"
 />
 
-Once connected, the Connect button will change to Disconnect.
+5. Click the button **Start Monitoring**.
 
 <img
-  src={require('./img/connected.png').default}
-  alt="cannot open " width="960"
+  src={require('./img/startMonitoring.png').default}
+  alt="" width="960"
 />
 
+And now you should see the values printed on after another.
 
-### 2. Control buzzer sound output
-You will use a potentiometer to change the sound of the buzzer. The pitch becomes higher when you turn it clockwise and lower when you turn it anticlockwise. 
+<img
+  src={require('./img/printValues.png').default}
+  alt="" width="960"
+/>
+
+</details>
+
+
+
+### 2. Controlling buzzer sound
+
+You will use a potentiometer to control the sound from the buzzer. 
+
+**Project overview**
+
+* Read the analog value from the potentiometer in percentage.
+* Set the PWM frequency based on the value.
+* Therefore, the pitch becomes higher when you turn it clockwise and lower when you turn it anticlockwise. 
 
 <img
   src={require('./img/potBuzzer.png').default}
@@ -276,18 +293,24 @@ Here you use another method `readPercent()` to get the input value represented a
 let f = 50 + Int(1000 * value)
 ```
 
-The reading values are too small to serve as frequencies. You then map it to bigger values to get frequencies from 50 to 1050. 
+The reading value is too small to serve as frequencies. You then map it to a bigger value to get a frequency from 50 to 1050. 
 
 ```swift
 buzzer.set(frequency: f, dutycycle: 0.5)
 ```
-The PWM pins will output signals with the specified frequencies to drive the buzzer. So when you turn the potentiometer clockwise, the buzzer pitch will increase gradually.
+The PWM pins will output signals with the specified frequency to drive the buzzer. In this way, when you turn the potentiometer, the buzzer pitch will change gradually.
 
 
 
-### 3. Change LED brightness
+### 3. Controlling LED brightness
 
-The potentiometer can also be used to change the brightness of LEDs. In this project, you'll turn the potentiometer to brighten and dim an LED.
+The potentiometer can also be used to change LED brightness. In this project, you'll turn the potentiometer to brighten and dim an LED.
+
+**Project overview**
+
+* Read the analog value from the potentiometer in percentage.
+* Set the PWM duty cycle using this value.
+* Therefore, the LED becomes brighter when you turn it clockwise and dimmer when you turn it anticlockwise. 
 
 <img
   src={require('./img/potLED.png').default}
@@ -308,9 +331,6 @@ public struct C01S04PotentiometerLED {
         let knob = AnalogIn(Id.A0)
         let led = PWMOut(Id.PWM4A)
 
-        // Set the PWM to control the LED. 
-        led.set(frequency: 1000, dutycycle: 0)
-
         // Read the input value. 
         // The value is represented in percentage, while the duty cycle is also between 0 and 1, 
         // so you can directly use the reading value to set the PWM.
@@ -325,13 +345,19 @@ public struct C01S04PotentiometerLED {
 ```
 
 
-### 4. LED blink with a certain brightness and rate
+### 4. Controlling LED blink rate and brightness
 
 Blink the LED. The LED brightness is changed by the potentiometer (A0). The blink rate is changed by the potentiometer (A11).
 
+**Project overview**
+
+* Read analog value from the potentiometer (A0) in percentage. This value is used to set the duty cycle of the PWM signal, hence it adjusts LED brightness.
+* Read raw analog value from the potentiometer (A11). This value sets how long the PWM signal will last, and thus change the LED blink rate.
+
+
 **Example code**
 
-```swift title=".swift" showLineNumbers
+```swift title="C01S04LEDBrightnessBlink.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
@@ -365,7 +391,15 @@ public struct C01S04LEDBrightnessBlink {
 
 ### 5. Dual LED brightness control
 
-In this project, two potentiometers control the LED brightness. One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
+In this project, two potentiometers work together to control the LED brightness. One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
+
+
+**Project overview**
+
+* Read the analog value for potentiometer A11 in percentage. Map it into a specified maximum duty cycle range, which determines the maximum LED brightness.
+* Read the analog value for potentiometer A0 in percentage. It is used to adjust LED brightness between the darkest and the maximum.
+* Multiply the two values above to get a final duty cycle.
+* Set the PWM signal with the given duty cycle to adjust LED brightness.
 
 **Example code**
 
@@ -409,6 +443,12 @@ public struct C01S04TwoPotentiometersLED {
 ### 6. Play tones manually
 
 Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one by one.
+
+
+**Project overview**
+* Store the frequencies of musical notes in an array.
+* Read raw analog value from the potentiometer and map it into the index of the array.
+* If the new index is different from the last one, set the PWM signal using the corresponding frequency to play the note.
 
 **Example code**
 
