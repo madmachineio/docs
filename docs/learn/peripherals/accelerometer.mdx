@@ -5,7 +5,7 @@ description: Learn how to
 
 # Movement sensing using accelerometer 
 
-You may not have heard of accelerometers, but you must experience them in everyday life. For example, when you rotate your mobile phone, you may find the screen display rotate from portrait to landscape. And it's due to the accelerometer inside the phone. It senses the movement and then responds to it accordingly. Now let's take a closer look at it.
+You may not have heard of accelerometers, but you must experience them in everyday life. For example, when you rotate your mobile phone, you may find the screen display rotating from portrait to landscape. That's due to the accelerometer inside the phone. It senses the movement and then responds to it accordingly. Now let's take a closer look at it.
 
 **Learning goals**
 
@@ -16,14 +16,23 @@ You may not have heard of accelerometers, but you must experience them in everyd
 
 ### Accelerometer
 
-The accelerometer, aka 3-axis accelerometer, measures motion and gives the accelerations on x, y, z-axis. You could infer the movement according to the values. 
+
+**Overview**
+
+The accelerometer, aka 3-axis accelerometer, **measures accelerations**, changes of velocity with time, and the direction of movement of an object **on x, y, and z-axis**. It can detect **changes in motion**, including vibration, rotation, and changes in linear acceleration. They can also detect the direction and magnitude of **gravitational forces** acting on the object.
 
 <img
   src={require('./img/accelerometer.png').default}
   alt="Accelerometer" width="320"
 />
 
-It can sense gravity and measure motion, like vibration, rotation. The sensor contains a structure whose part moves when an acceleration is applied. It will change the internal capacitance of the sensor, and thus voltage in circuits also changes. 
+**Acceleration** is measured in meters per second squared (m/s<sup>2</sup>). It **has both magnitude and direction** and can be either positive or negative depending on the direction of the force causing the acceleration. 
+
+On Earth, the acceleration due to gravity is approximately **9.8 m/s<sup>2</sup>**, which is often referred to as **1g**. When an accelerometer measures acceleration, it typically expresses the results in units of g.
+
+**How does an accelerometer work**
+
+The basic principle behind an accelerometer is the measurement of changes in force and motion. It contains a mass suspended by a set of springs or beams. When the object that contains the accelerometer experiences acceleration, **the mass inside the sensor moves in response to the force**, causing a change in the capacitance or voltage output of the sensor. This change is then measured and used to calculate the acceleration.
 
 <img
   src={require('./img/mems.png').default}
@@ -32,8 +41,8 @@ It can sense gravity and measure motion, like vibration, rotation. The sensor co
 
 To better understand how the accelerometer works, let's imagine a small ball inside a vacuum box. There are several situations: 
 
-* There is no gravity in a vacuum box, so the ball floats in the middle. 
-* If you suddenly move the box to the left, the ball will move towards the opposite direction and hit the box. This is similar to the experience when you take a bus. If the bus suddenly speeds up, your body feels a force backward and then moves backward. This force is known as inertial force. 
+* There is no gravity in a vacuum box, so the ball remains stationary in the center of the box.
+* When the box is suddenly moved to the left, the ball inside the box would experience a force due to its inertia, which would cause it to move in the opposite direction. This is similar to what happens when you are in a car or on a bus that suddenly accelerates or stops - your body experiences a force in the opposite direction of the motion.
 * If air comes into the box, the ball will fall due to gravity. 
 
 <img
@@ -43,24 +52,23 @@ To better understand how the accelerometer works, let's imagine a small ball ins
               
 Now let's go back to the sensor.
 
-* If the sensor is still, it only feels the gravity. When the sensor faces up on the table, it gets a force downwards on the z-axis. When the sensor is perpendicular to the table, there will be a force on the x or y-axis.
+* When the accelerometer sensor is at rest and not moving, it will primarily detect the force of gravity. When the sensor faces up on the table, it gets a force downwards on the z-axis. When the sensor is perpendicular to the table, there will be a force on the x or y-axis.
 
 <img
   src={require('./img/accelerometerDirection.png').default}
   alt="Accelerometer in three directions" width="960"
 />
 
-* If the sensor moves toward some directions, the sensor should sense corresponding inertial force and gravity force.
+* When the accelerometer is in motion, it will also detect inertial forces in addition to the force of gravity.
+
+**LIS3DH**
 
 
+The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit only connects to the I2C interface. The raw values provided by the sensor range from -32768 to 32767 (16-bit). Then they will be converted to the acceleration value according to the measurement range. The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. 
 
-The acceleration describes the change of velocity with time, in meters per second squared (m/s2). It has directions and can be either positive or negative. The gravitational acceleration on earth equals 1g (9.8m/s2). The accelerations measured by the sensor are in g.
-
-The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit can only connects to I2C interface. The data it sends over the bus is raw values ranging from -32768 to 32767 (16-bit). Then the values will be converted to the acceleration value proportionally according to the measurement range. 
-
-The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. If you choose ±2g (which is the default range), -32768 equals -2g and 32768 equals 2g, which gives more precise readings within the limited range.
 
 ## 🔸Circuit - accelerometer module
+
 The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
 
 <img
@@ -89,11 +97,17 @@ The circuits above are simplified versions for your reference.
 | `readXYZ()` | Read the acceleration on 3-axis. <br /> **Return value:** <br /> Accelerations on x, y, z-axis on float. |
 
 ## 🔸Projects
-1. [Read acceleration](./accelerometer#1-read-acceleration)
-2. [Digital dice](./accelerometer#2-digital-dice)
+
 
 ### 1. Read acceleration
-Let's use the sensor to sense movements. As you move or tilt your board in different directions, the values printed on the window change accordingly. You can have a better idea of how the accelerations change with movement.
+
+Let's start with the simplest project - read the accelerations and print the values.
+
+**Project overview**
+
+* The accelerometer reads the accelerations on the x, y, and z axis per second. You can view the values on a serial monitor.
+* As you move or tilt your board in different directions, the accelerations change accordingly. 
+
 
 **Example code**
 
@@ -149,6 +163,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
@@ -160,6 +175,7 @@ let package = Package(
                 "SwiftIO",
                 "MadBoards",
                 // use specific library would speed up the compile procedure
+                // highlight-next-line
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
@@ -174,7 +190,14 @@ let package = Package(
 
 ### 2. Digital dice
 
-Let's build a dice with the accelerometer. You can shake or tilt the sensor to change the accelerations. It simulates the process of rolling a dice. After that, you put it back on your table or keep it in a horizontal position, you should get a random number from 1 to 6.
+Let's build a dice with the accelerometer. You can shake or tilt the sensor to simulate the process of rolling a dice. After that, you put it back on your table or keep it in a horizontal position, you should get a random number from 1 to 6.
+
+
+**Project overview**
+
+* Read the current accelerations and compare the readings with predefined thresholds. 
+* If the readings are bigger, that means you start/are still moving the accelerometer.
+* If the readings become smaller than thresholds and it last for a specified period, the accelerometer is kept horizontally. In this case, print a random number from 1 to 6.
 
 <img
   src={require('./img/dice.png').default}
@@ -219,11 +242,19 @@ public struct C01S07AccelerometerDice {
         while true {
             let diceValue = dice.readXYZ()
             
+            // By default, its x and y accelerations should be about 0.
+            // If any of them are bigger than the thresholds, 
+            // the accelerometer is no longer in its default state.
             if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
                 indicator.high()
                 steadyCount = 0
             } else {
                 steadyCount += 1
+                // Only when the accelerometer moves and then comes back to its default state, 
+                // this count will restart to add from 0. 
+                // When the count equals its threshold, which means the accelerometer is indeed
+                // back to a horizontal position, generate a random number.
+                // After it, the count will continue to increase, and thus is always bigger than the threshold.
                 if steadyCount == 50 {
                     indicator.low()
                     print(Int.random(in: 1...6))
@@ -248,6 +279,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
@@ -259,6 +291,7 @@ let package = Package(
                 "SwiftIO",
                 "MadBoards",
                 // use specific library would speed up the compile procedure
+                // highlight-next-line
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
@@ -283,7 +316,7 @@ This LED is served as an indicator when shaking the sensor.
 var steadyCount = 999
 ```
 
-This statement declares a new variable used to store the time. While you shake the sensor, the accelerations change in undetermined states. This count can infer if the sensor comes to a horizontal position after a shake.
+This statement declares a new variable used to store the time. While you shake the sensor, the accelerations change. This count is used to determine if the sensor comes to a horizontal position after a movement.
 
 ```swift
 if abs(diceValue.x) > 0.3 || abs(diceValue.y) > 0.3 {
@@ -301,14 +334,32 @@ An if-else statement is used to judge the sensor's state.
 
 * The accelerations should increase in magnitude when you shake the sensor. Since the accelerations have directions, you need to use `abs` to get absolute values. During that time, you turn on the LED as an indicator. Besides, the variable `steadyCount` is set to 0 and always be 0 when the sensor is still in motion.
 
-* Once you stop shaking the sensor, the accelerations on the x and y-axis decrease and should be lower than the threshold. Then the count starts to increase until it exceeds the set value. If so, it means the sensor is kept in a horizontal position. This is similar to the period after a dice is thrown. At last, you should see a number printed on your serial window.
+* Once you stop shaking the sensor, the accelerations on the x and y-axis decrease and should be lower than the threshold. Then the count starts to increase until it exceeds the predefined value. 
+    * If so, it means the sensor is indeed kept in a horizontal position. This is similar to the period after a dice is thrown. At last, you should see a number printed on your serial window.
+    * After it, `steadyCount` continues to increase and is always bigger than 50. So it won't generate a new number.
 
 In this exercise, the key point is to decide when the sensor is no longer in motion. Here you store the time to make sure the state lasts for a certain period. 
 
 
 ### 3. Accelerometer lock
 
-There is a random password that consists of several movement directions. You will need to move/tilt the board in the corresponding directions (left/right/forward/backward) to match the password within a given time. If you succeed, the red LED will turn on. You can view the message on a serial monitor as a notification.
+Let's try a password-guessing game!
+
+There is a random password that consists of several movement directions. You will need to move/tilt the board in specified directions (left/right/forward/backward) to match the password within a given time. If you succeed, the red LED will turn on. 
+
+
+**Project overview**
+
+* A password that consists of 3 movement directions (left/right/forward/backward) is generated automatically in the beginning.
+* Hold your board. **Tilt/move it in a certain direction**. Meanwhile, the board starts timing. After each movement, keep it horizontal.
+    * If the direction doesn't match the first in the password, try a new movement.
+    * If the direction is correct, the LED blinks once and you continue with the second one.
+* If all directions are correct, the LED turns on.
+* If there are any wrong directions, restart from the first one.
+* If the time is out and you fail to guess the password, reset the password. You will hear a beep as a notification.
+
+You can also view the messages on a serial monitor for reference.
+
 
 **Example code**
 
@@ -360,6 +411,8 @@ public struct C01S07AccelerometerLock {
             reset = true
         }
 
+        print("Tilt/move your board to start.")
+
         while true {
             if currentIndex < password.count {
                 if let direction = getDirection(acc.readXYZ()) {
@@ -377,7 +430,7 @@ public struct C01S07AccelerometerLock {
                     } else {
                         // If not, restart from the first direction.
                         currentIndex = 0
-                        print("Wrong! Restart...")
+                        print("Wrong! Restart from the first one...")
                     }
                 }
             } else if currentIndex == password.count {
@@ -407,7 +460,7 @@ public struct C01S07AccelerometerLock {
                 led.low()
                 beep()
 
-                print("Timeout or reset button is pressed. Password is reset.")
+                print("Timeout or reset button is pressed. Password is reset. Tilt/move your board to restart.")
             }
 
             sleep(ms: 20)
@@ -429,7 +482,7 @@ public struct C01S07AccelerometerLock {
 
         // Replace the previous password with a new one. 
         func updatePassword() {
-            for i in 0..<3 {
+            for i in 0..<password.count {
                 password[i] = Direction(rawValue: Int.random(in: 0..<4))!
             }
         }
@@ -471,6 +524,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
@@ -482,6 +536,7 @@ let package = Package(
                 "SwiftIO",
                 "MadBoards",
                 // use specific library would speed up the compile procedure
+                // highlight-next-line
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(

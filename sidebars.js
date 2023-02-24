@@ -117,6 +117,7 @@ module.exports = {
             'learn/peripherals/potentiometer',
             'learn/peripherals/humiture',
             'learn/peripherals/accelerometer',
+            'learn/peripherals/rtc',
             'learn/peripherals/lcd',
             'learn/peripherals/speaker',
           ],

@@ -1,0 +1,176 @@
+---
+title: RTC
+description: Learn how to 
+---
+
+# RTC
+
+
+
+**Learning goals**
+
+* Read current time using RTC.
+
+
+## 🔸New component
+
+### RTC
+
+
+RTC (real-time clock) is a hardware component that is used to keep track of the current time and date. 
+
+RTC keeps time by counting the cycles of its crystal oscillator, a small, precise electronic component that generates stable pulses. By counting the number of pulses that occur in a given time period, the RTC can accurately determine the current time and date. 
+
+
+RTC typically requires a small battery for backup power, which allows it to continue keeping track of time even when the main power source is turned off. The battery is usually a small, long-lasting lithium coin cell that can provide backup power for several years.
+
+If the battery is removed or runs out of power, the RTC will lose power and stop keeping time. In this case, the RTC will reset to a default time value when power is restored. This can result in inaccurate time.
+
+Normally, you can set the current time and date of the RTC by updating its internal registers through software. This allows you to synchronize the RTC with the current time and date when the system is first booted up, or at any time when the time needs to be corrected.
+
+:::info
+The initial design of the RTC assumed that the year value would be represented using two digits, and that the century value would be fixed at either 19 (for the 1900s) or 20 (for the 2000s). This is because when the RTC was first developed, it was assumed that its useful lifespan would not extend beyond the year 1999, and that it would not need to support dates beyond that point. (Maybe you heard of the so-called "Y2K bug".)
+
+As a result, many older RTCs are designed to interpret the year value as an offset from either 1900 or 2000, depending on the specific chip and manufacturer. For example, a year value of 21 would be interpreted as the year 2021 in an RTC that uses a fixed century value of 20, or the year 1921 in an RTC that uses a fixed century value of 19.
+:::
+
+While RTCs are designed to keep accurate time over long periods of time, they are not perfect and may still have some level of error or drift. Therefore, there are also other methods used to achieve accurate timekeeping, such as the use of Network Time Protocol (NTP) or Global Positioning System (GPS) signals.
+
+
+PCF8563 is one of the commonly-used RTCs and is optimized for low power consumption. It provides year, month, day, weekday, hours, minutes, and seconds.
+
+
+## 🔸Circuit - RTC module
+
+The RTC module is connected to **I2C0** (SCL0 and SDA0).
+
+
+
+:::note
+The circuits above are simplified versions for your reference.
+:::
+
+## 🔸API
+
+**Class**
+
+**`PCF8563`** - 
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:address:)` |   <br /> **Parameters:** <br /> - `id`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. |
+
+
+## 🔸Projects
+
+
+### 1. 
+
+
+
+**Example code**
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: '.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+
+
+```
+</TabItem>
+<TabItem value="package">
+
+```swift showLineNumbers
+
+
+
+```
+</TabItem>
+</Tabs>
+
+
+### 2. 
+
+
+
+**Project overview**
+
+
+
+**Example code**
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: '.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+
+
+```
+</TabItem>
+<TabItem value="package">
+
+```swift showLineNumbers
+
+
+```
+</TabItem>
+</Tabs>
+
+
+
+
+
+### 3. 
+
+
+
+
+**Project overview**
+
+
+
+
+
+**Example code**
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: '.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+
+
+```
+</TabItem>
+
+<TabItem value="package">
+
+
+```swift showLineNumbers
+
+```
+</TabItem>
+</Tabs>
