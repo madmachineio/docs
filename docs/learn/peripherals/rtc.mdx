@@ -5,24 +5,35 @@ description: Learn how to
 
 # RTC
 
-
+Have you wanted to interact with time in your microcontroller projects? With the help of Real-Time Clocks (RTC), you can create all sorts of time-based projects, from scheduling tasks and creating alarms to building automatic systems. In this tutorial, you'll explore the basics of RTCs and dive into some exciting projects that use RTCs.
 
 **Learning goals**
 
-* Read current time using RTC.
+* Understand how RTCs work.
+* Write code to read and set the time and date.
 
 
 ## 🔸New component
 
 ### RTC
 
+RTC (real-time clock) is a hardware component that is used to **keep track of the current time and date**. 
 
-RTC (real-time clock) is a hardware component that is used to keep track of the current time and date. 
+<img
+  src={require('./img/rtc.png').default}
+  alt="" width="120"
+/>
 
-RTC keeps time by counting the cycles of its crystal oscillator, a small, precise electronic component that generates stable pulses. By counting the number of pulses that occur in a given time period, the RTC can accurately determine the current time and date. 
+RTC keeps time by **counting the cycles of its crystal oscillator**, a small, precise electronic component that generates stable pulses. By counting the number of pulses that occur in a given time period, the RTC can accurately determine the current time and date. 
 
 
-RTC typically requires a small battery for backup power, which allows it to continue keeping track of time even when the main power source is turned off. The battery is usually a small, long-lasting lithium coin cell that can provide backup power for several years.
+RTC typically **requires a small battery for backup power**, which allows it to continue keeping track of time even when the main power source is turned off. The battery is usually a small, long-lasting lithium coin cell that can provide backup power for several years.
+
+
+<img
+  src={require('./img/battery.png').default}
+  alt="" width="120"
+/>
 
 If the battery is removed or runs out of power, the RTC will lose power and stop keeping time. In this case, the RTC will reset to a default time value when power is restored. This can result in inaccurate time.
 
@@ -37,7 +48,9 @@ As a result, many older RTCs are designed to interpret the year value as an offs
 While RTCs are designed to keep accurate time over long periods of time, they are not perfect and may still have some level of error or drift. Therefore, there are also other methods used to achieve accurate timekeeping, such as the use of Network Time Protocol (NTP) or Global Positioning System (GPS) signals.
 
 
-PCF8563 is one of the commonly-used RTCs and is optimized for low power consumption. It provides year, month, day, weekday, hours, minutes, and seconds.
+PCF8563 is one of the commonly-used RTCs and is optimized for low power consumption. It provides the following time and date information: year, month, day, weekday, hours, minutes, and seconds. It can be easily interfaced with microcontrollers using the I2C communication protocol.
+
+BTW, the RTC module on your kit doesn't come with a battery, so it needs to be calibrated after inserting the battery.
 
 
 ## 🔸Circuit - RTC module
@@ -54,18 +67,29 @@ The circuits above are simplified versions for your reference.
 
 **Class**
 
-**`PCF8563`** - 
+**`PCF8563`** - it allows you to set and read RTC time more easily.
 
-| Method | Explanation |
-| ------ | ----------- |
-| `init(_:address:)` |   <br /> **Parameters:** <br /> - `id`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. |
+| Method             | Explanation                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| `init(_:address:)` | Initialize the sensor using I2C communication.<br /> **Parameters:** <br /> - `id`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. |
+| `setTime(_:update:)` | Update the RTC time if it has lost power. <br />If not, the time has been previously set and thus won't be updated, unless you set `update` to `true` to recalibrate the RTC. <br /> **Parameters:** <br /> - `time`: current time: year, month, day, hour, minute, and second. <br /> - `update`: whether to update the RTC even if it hasn't lost power. |
+| `readTime()` |  Read the current time from the RTC. <br /> **Return value:** <br /> Date and time including year, month, day, day of week, hour, minute, and second. |
+
 
 
 ## 🔸Projects
 
 
-### 1. 
+### 1. Read time
 
+As usual, your first project is to read values, in this case, the current time from the sensor and view it in serial monitor. 
+
+
+**Project overview**
+
+1. Update RTC time. 
+2. Read the current time.
+3. Format the time from the RTC and print it.
 
 
 **Example code**
@@ -76,7 +100,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: '.swift', value: 'main', },
+    { label: 'C01S06ReadTime.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -84,27 +108,195 @@ import TabItem from '@theme/TabItem';
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Read current time from the RTC and print it every second.
 
+import SwiftIO
+import MadBoard
+import PCF8563
 
+@main
+public struct C01S06ReadTime {
+    public static func main() {
+        let i2c = I2C(Id.I2C0)
+        let rtc = PCF8563(i2c)
+
+        let daysOfWeek = [
+            "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday",
+            "Sunday"
+        ]
+
+        // Please use current time to adjust the RTC time if it has been lost power.
+        // The day of week is from 0 to 6. In this case, 0 refers to Monday.
+        let currentTime = PCF8563.Time(
+            year: 2023, month: 3, day: 1, hour: 16,
+            minute: 20, second: 0, dayOfWeek: 2
+        )
+        // If the RTC has lost power, its time will be updated.
+        // If not, its time should be accurate and thus won't be changed.
+        // If you indeed need to adjust it, set the parameter `update` to `true`.
+        // rtc.setTime(currentTime, update: true)
+        rtc.setTime(currentTime)
+
+        while true {
+            let time = rtc.readTime()
+            print(formatDateTime(time))
+            sleep(ms: 1000)
+        }
+
+        // Add leading zero if number is one-digit.
+        // For example, number 1 will be 01.
+        func format(_ number: UInt8) -> String {
+            return number < 10 ? "0\(number)" : "\(number)"
+        }
+
+        // Format the date and time, i.e. 2023/03/01 Wednesday 16:20:00.
+        func formatDateTime(_ time: PCF8563.Time) -> String {
+            var string = ""
+            string += "\(time.year)" + "/" + format(time.month) + "/" + format(time.day)
+            string += " " + daysOfWeek[Int(time.dayOfWeek)] + " "
+            string += format(time.hour) + ":" + format(time.minute) + ":" + format(time.second)
+            return string
+        }
+    }
+}
 ```
 </TabItem>
 <TabItem value="package">
 
 ```swift showLineNumbers
-
-
-
+import PackageDescription
+let package = Package(
+    name: "C01S06ReadTime",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .executableTarget(
+            name: "C01S06ReadTime",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // use specific library would speed up the compile procedure
+                // highlight-next-line
+                .product(name: "PCF8563", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "C01S06ReadTimeTests",
+            dependencies: ["C01S06ReadTime"]),
+    ]
+)
 ```
 </TabItem>
 </Tabs>
 
 
-### 2. 
+### 2. Blink using RTC
 
-
+In this project, let's blink an LED based on the time from RTC.
 
 **Project overview**
 
+1. Read the current time from RTC.
+2. Set digital output according to the second: 0s high level, 1s low level, 2s high level... The LED thus blinks every second.
+
+**Example code**
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'C01S06BlinkUsingRTC.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+// Blink LED every second.
+
+import SwiftIO
+import MadBoard
+import PCF8563
+
+@main
+public struct C01S06BlinkUsingRTC {
+    public static func main() {
+        let i2c = I2C(Id.I2C0)
+        let rtc = PCF8563(i2c)
+        let led = DigitalOut(Id.D19)
+
+        while true {
+            let time = rtc.readTime()
+            led.write(time.second % 2 == 0)
+            sleep(ms: 10)
+        }
+    }
+}
+```
+</TabItem>
+<TabItem value="package">
+
+```swift showLineNumbers
+import PackageDescription
+let package = Package(
+    name: "C01S06BlinkUsingRTC",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .executableTarget(
+            name: "C01S06BlinkUsingRTC",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // use specific library would speed up the compile procedure
+                // highlight-next-line
+                .product(name: "PCF8563", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "C01S06BlinkUsingRTCTests",
+            dependencies: ["C01S06BlinkUsingRTC"]),
+    ]
+)
+```
+</TabItem>
+</Tabs>
+
+
+
+
+
+### 3. Alarm clock
+
+In this project, you'll set an alarm on the RTC.
+
+PCF8563 provides built-in alarm and timer functions that can be set to trigger at a specific time, but the driver doesn't provide the related functions. Despite this, you can also implement alarms on your own in your code. You can use the current time provided by the RTC and compare it to the time at which you want the alarm to trigger.
+
+**Project overview**
+
+1. Set a desired alarm time.
+2. Get the current time from RTC.
+3. Compare the current time to the desired alarm time.
+4. If the current time matches the alarm time, the buzzer starts buzzing and the LED turns on.
+5. After a specified time or if you press the stop button, the sound stops and the LED turns off.
+
+<img
+  src={require('./img/alarm.png').default}
+  alt="Alarm clock" width="120"
+/>
 
 
 **Example code**
@@ -112,7 +304,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: '.swift', value: 'main', },
+    { label: 'C01S06Alarm.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -120,57 +312,112 @@ import TabItem from '@theme/TabItem';
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Set an alarm. It will go off at the specified time.
+// You can press the button to stop the sound.
 
+import SwiftIO
+import MadBoard
+import PCF8563
 
+@main
+public struct C01S06Alarm {
+    public static func main() {
+        let i2c = I2C(Id.I2C0)
+        let rtc = PCF8563(i2c)
+
+        let led = DigitalOut(Id.19)
+        let stopButton = DigitalIn(Id.D1)
+        let buzzer = PWMOut(Id.PWM5A)
+
+        // Set the alarm time.
+        let alarm = AlarmTime(hour: 10, minute: 40)
+        // Calculate the time when the alarm will stop sounding.
+        let stopAlarm = getStopAlarm(alarm, after: 1)
+        var isAlarmed = false
+
+        while true {
+            let time = rtc.readTime()
+
+            if !isAlarmed {
+                // If the time comes, start the sound and turn on the LED.
+                if alarm.isTimeUp(time) {
+                    print("Current time: \(time)")
+                    led.high()
+                    buzzer.set(frequency: 500, dutycycle: 0.5)
+                    isAlarmed = true
+                }
+            } else {
+                // If it's time to stop sounding or you press the stop button,
+                // stop the sound and turn off the LED.
+                if stopAlarm.isTimeUp(time) || stopButton.read() {
+                    print("Current time: \(time)")
+                    led.low()
+                    buzzer.suspend()
+                    isAlarmed = false
+                }
+            }
+
+            sleep(ms: 10)
+        }
+
+        // Calculate the time for alarm to stop sounding after specified minutes.
+        func getStopAlarm(_ alarm: AlarmTime, after min: Int) -> AlarmTime {
+            var stopMinute = alarm.minute + min
+            var stopHour = alarm.hour
+
+            if stopMinute >= 60 {
+                stopMinute -= 60
+                stopHour = stopHour == 23 ? 0 : stopHour + 1
+            }
+
+            return AlarmTime(hour: stopHour, minute: stopMinute)
+        }
+
+        struct AlarmTime {
+            let hour: Int
+            let minute: Int
+
+            // Check if the set time comes.
+            func isTimeUp(_ time: PCF8563.Time) -> Bool {
+                return time.hour == hour && time.minute == minute && time.second == 0
+            }
+        }
+    }
+}
 ```
 </TabItem>
+
 <TabItem value="package">
 
-```swift showLineNumbers
-
-
-```
-</TabItem>
-</Tabs>
-
-
-
-
-
-### 3. 
-
-
-
-
-**Project overview**
-
-
-
-
-
-**Example code**
-
-<Tabs
-  defaultValue="main"
-  values={[
-    { label: '.swift', value: 'main', },
-    { label: 'Package.swift', value: 'package', },
-  ]
-}>
-
-<TabItem value="main">
 
 ```swift showLineNumbers
-
-
-```
-</TabItem>
-
-<TabItem value="package">
-
-
-```swift showLineNumbers
-
+import PackageDescription
+let package = Package(
+    name: "C01S06Alarm",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        // highlight-next-line
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .executableTarget(
+            name: "C01S06Alarm",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // use specific library would speed up the compile procedure
+                // highlight-next-line
+                .product(name: "PCF8563", package: "MadDrivers")
+            ]),
+        .testTarget(
+            name: "C01S06AlarmTests",
+            dependencies: ["C01S06Alarm"]),
+    ]
+)
 ```
 </TabItem>
 </Tabs>
