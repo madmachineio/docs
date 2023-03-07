@@ -126,7 +126,7 @@ module.exports = {
         {
           type: 'category',
           collapsed: false,
-          label: '🌟More advanced usages',
+          label: '🌟Advanced peripherals',
           link: {
             type: 'doc',
             id: 'learn/advanced/overview',

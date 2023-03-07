@@ -1,6 +1,6 @@
 ---
 title: Temperature and humidity measurement
-description: Learn how I2C works, how to create a driver for SHT3x using Swift, and how to use the library to measure temperature and humidity.
+description: Learn about I2C and read temperature and humidity from sensor using I2C.
 ---
 
 # Temperature and humidity measurement
@@ -11,13 +11,13 @@ What's the temperature in your place at present? In this tutorial, you will get 
 
 * Roughly understand the I2C communication.
 * Learn about the data systems: hexadecimal, binary, and decimal.
-* Know how to use I2C to communicate with sensors.
-* Learn to use libraries to simplify your coding process.
+* Read temperature and humidity from the sensor using I2C communication.
+* Learn to import libraries to simplify your coding process.
+* Learn how to create a sensor driver.
 
 ## 🔸Background
 
 ### What is communication protocol?
-
 
 So far, you have learned simple input and output. It allows you to read or set the voltage on specified pins to communicate with some components. For example, LEDs need true (1) to be on and false (0) to be off, buttons read true if pressed and false if released. 
 
@@ -159,6 +159,17 @@ The circuits above are simplified versions for your reference.
 
 **Class**
 
+
+<Tabs
+  defaultValue="i2c"
+  values={[
+    { label: 'I2C', value: 'i2c', },
+    { label: 'SHT3x', value: 'sht3x', },
+  ]
+}>
+
+<TabItem value="i2c">
+
 **`I2C`** - this class controls the I2C communication between your board and sensorss. The data is sent or read in bytes.
 
 | Method | Explanation |
@@ -167,7 +178,9 @@ The circuits above are simplified versions for your reference.
 | `write(_:count:to:`) | Send data to the specified slave device. <br /> **Parameter:**<br /> - `data`: an array of bytes sent to slave device. <br /> - `count`: the count of bytes. By default, it's nil which means all bytes in `data` will be sent. Be sure the count should be smaller than the array count. <br /> - `to`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
 | `read(into:count:from:)` | Read data from the specified slave device.<br />  **Parameter:**<br /> - `into`: the buffer to store the coming data. It needs an UInt8 array which is passed as inout in order to be changed. <br /> - `count`: number of bytes received from device. <br /> - `from`: the address of the slave device. <br /> **Return value:**<br /> A result indicating whether the communication is finished successfully or a type of error. |
 
+</TabItem>
 
+<TabItem value="sht3x">
 
 **`SHT3x`** - this is the driver for SHT3x sensor. You'll use it read temperature and humidity directly from the sensor.
 
@@ -177,6 +190,8 @@ The circuits above are simplified versions for your reference.
 | `readCelsius()` | Read temperature in Celcius. |
 | `readHumidity()` | Read relative humidity. |
 
+</TabItem>
+</Tabs>
 
 
 ## 🔸Projects
