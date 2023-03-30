@@ -5,13 +5,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'MadMachine',
   tagline: 'MadMachine Documentation',
+  favicon: 'img/favicon.ico',
+
   url: 'https://docs.madmachine.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+
   organizationName: 'MadMachine', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
+
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'warn',
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
@@ -19,7 +22,39 @@ module.exports = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-  themeConfig: {
+
+  presets: [
+    [
+      'classic',
+      ({
+        docs: {
+          sidebarPath: require.resolve('./sidebars.js'),
+          // Please change this to your repo.
+          editUrl:
+            'https://github.com/madmachineio/docs/',
+          routeBasePath: '/',
+        },
+        blog: {
+          blogTitle: 'Docusaurus blog!',
+          blogDescription: 'A Docusaurus powered blog!',
+          postsPerPage: 'ALL',
+        },
+        theme: {
+          customCss: require.resolve('./src/css/custom.css'),
+        },
+        gtag: {
+          // You can also use your "G-" Measurement ID here.
+          trackingID: 'G-8H7H6DLEJ5',
+          // Optional fields.
+          anonymizeIP: false, // Should IPs be anonymized?
+        },
+      }),
+    ],
+  ],
+
+  themeConfig:
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  ({
     navbar: {
       //title: 'Machine',
       style: 'dark',
@@ -125,37 +160,9 @@ module.exports = {
       // Optional: Algolia search parameters
       // searchParameters: {},
     },
-  },
+  }),
   stylesheets: [
     'https://fonts.googleapis.com/css?family=Roboto:400,400i,700',
     'https://fonts.googleapis.com/css?family=Source+Code+Pro',
-  ],
-  presets: [
-    [
-      '@docusaurus/preset-classic',
-      {
-        docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/madmachineio/docs/',
-          routeBasePath: '/',
-        },
-        blog: {
-          blogTitle: 'Docusaurus blog!',
-          blogDescription: 'A Docusaurus powered blog!',
-          postsPerPage: 'ALL',
-        },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-        gtag: {
-          // You can also use your "G-" Measurement ID here.
-          trackingID: 'G-8H7H6DLEJ5',
-          // Optional fields.
-          anonymizeIP: true, // Should IPs be anonymized?
-        },
-      },
-    ],
   ],
 };
