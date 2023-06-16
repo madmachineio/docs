@@ -57,7 +57,10 @@ BTW, the RTC module on your kit doesn't come with a battery, so it needs to be c
 
 The RTC module is connected to **I2C0** (SCL0 and SDA0).
 
-
+<img
+  src={require('./img/rtcCircuit.png').default}
+  alt="RTC module circuit" width="960"
+/>
 
 :::note
 The circuits above are simplified versions for your reference.
@@ -129,8 +132,8 @@ public struct C01S06ReadTime {
         // Please use current time to adjust the RTC time if it has been lost power.
         // The day of week is from 0 to 6. In this case, 0 refers to Monday.
         let currentTime = PCF8563.Time(
-            year: 2023, month: 3, day: 1, hour: 16,
-            minute: 20, second: 0, dayOfWeek: 2
+            year: 2023, month: 4, day: 9, hour: 10,
+            minute: 26, second: 0, dayOfWeek: 6
         )
         // If the RTC has lost power, its time will be updated.
         // If not, its time should be accurate and thus won't be changed.
@@ -230,7 +233,7 @@ public struct C01S06BlinkUsingRTC {
     public static func main() {
         let i2c = I2C(Id.I2C0)
         let rtc = PCF8563(i2c)
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
 
         while true {
             let time = rtc.readTime()
@@ -325,7 +328,7 @@ public struct C01S06Alarm {
         let i2c = I2C(Id.I2C0)
         let rtc = PCF8563(i2c)
 
-        let led = DigitalOut(Id.19)
+        let led = DigitalOut(Id.D18)
         let stopButton = DigitalIn(Id.D1)
         let buzzer = PWMOut(Id.PWM5A)
 

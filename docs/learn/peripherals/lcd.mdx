@@ -188,9 +188,29 @@ In this tutorial, the stuff displayed on the LCD are all raster graphics. There 
 * **BMP** stands for bitmap. BMP image is uncompressed and stores the color data of all pixels. Therefore it usually has a large file size. 
 * **JPG** file uses compression algorithms to deal with similar pixels to reduce the file size. So it needs to be decoded as you open the file. It is a widely used format, so the image viewers on your computer can open it successfully. 
 
-## 🔸Circuit - LCD module
+## 🔸Circuit - LCD
 
-The LCD is connected to **SPI0** for communication and **D9** for the CS signal. The other wires connected to the digital pins are used to configure the LCD: BL is connected to D2, RST is connected to D14, and DC is connected to D10.
+<table>
+  <tr>
+    <th>LCD pin</th>
+    <td>SPI (SCK)</td>
+    <td>SPI (SDI)</td>
+    <td>BL</td>
+    <td>RST</td>
+    <td>DC</td>
+    <td>CS</td>
+  </tr>
+  <tr>
+    <th>Feather Pin</th>
+    <td>SPI0 (SCK0)</td>
+    <td>SPI0 (SDO0)</td>
+    <td>D2</td>
+    <td>D3</td>
+    <td>D4</td>
+    <td>D5</td>
+  </tr>
+</table>
+
 
 <img
   src={require('./img/lcdCircuit.png').default}
@@ -224,8 +244,8 @@ The circuits above are simplified versions for your reference.
 
 **`SPI`** - this class is used to send and receive data using SPI protocol.
 
-| Method | Explanation |
-| ------ | ----------- |
+| Method                                            | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `init(_:speed:csPin:`<br />`CPOL:CPHA:bitOrder:)` | Initialize an SPI interface. <br />**Parameter:** <br /> - `idName`: spi pin id that the device connects to. <br /> - `speed`: the communication speed, 5MHz by default. The maximum speed is about 30MHz. <br /> - `csPin`: a `DigitalOut` pin as a CS pin. It is nil by default. If you don't set it, you need to control it manually when communicating with devices. <br />- `CPOL`: the state of clock signal when it's idle, `false` by default. <br />- `CPHA`: the edge of clock signal to sample data, false for first edge and true for second edge. `false` by default. <br />- `bitOrder`: the bit order during data transmission, `.MSB` by default. |
 
 </TabItem>
@@ -234,12 +254,12 @@ The circuits above are simplified versions for your reference.
 
 **`ST7789`** - it configures the LCD and allows you to draw pixels on it.
 
-| Method | Explanation |
-| ------ | ----------- |
+| Method                                                  | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `init(spi:cs:dc:rst:bl:`<br />`width:height:rotation:)` | Initialize an LCD. <br />**Parameter:** <br /> - `spi`: the SPI interface that the LCD connects to.<br />- `cs`: the cs pin for SPI communication. The cs pin is controlled in this class, so the `csPin` in `SPI` class should be nil. <br />- `dc`: a `DigitalOut` pin used for data and command selection. <br />- `rst`: a `DigitalOut` pin used to reset the LCD.<br />- `bl`: a `DigitalOut` pin used for backlight control.<br /> - `width`: the width of the LCD, 240 by default.<br /> - `height`: the height of the LCD, 240 by default. <br />- `rotation`: the degree of LCD rotation, `.angle0` by default. It is used to set the position of origin. |
-| `writePixel(x:y:color:)` | Set a single pixel on the screen. <br />**Parameter:**<br /> - `x`, `y`: the coordinate of the pixel. <br /> - `color`: a UInt16 color value. |
-| `writeBitmap(x:y:`<br />`width:height:data:)` | Set an area of pixels on the screen. <br />**Parameter:**<br />- `x`, `y`: the coordinate of the starting point, that is, the left upper corner of the area. <br /> - `width`: the width of the area.<br /> - `height`: the height of the area. <br /> - `data`: the color data stored in an UInt8 array. Please note the data is stored in UInt8, so two values are used for one pixel. |
-| `clearScreen(_:)` | Fill the whole screen with one color. <br />**Parameter:**<br /> - `color`: a color data in UInt16. |
+| `writePixel(x:y:color:)`                                | Set a single pixel on the screen. <br />**Parameter:**<br /> - `x`, `y`: the coordinate of the pixel. <br /> - `color`: a UInt16 color value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `writeBitmap(x:y:`<br />`width:height:data:)`           | Set an area of pixels on the screen. <br />**Parameter:**<br />- `x`, `y`: the coordinate of the starting point, that is, the left upper corner of the area. <br /> - `width`: the width of the area.<br /> - `height`: the height of the area. <br /> - `data`: the color data stored in an UInt8 array. Please note the data is stored in UInt8, so two values are used for one pixel.                                                                                                                                                                                                                                                                           |
+| `clearScreen(_:)`                                       | Fill the whole screen with one color. <br />**Parameter:**<br /> - `color`: a color data in UInt16.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
 
 These methods to draw on the screen are quite similar:
@@ -307,9 +327,9 @@ public struct C01S08LCD {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D9)
-        let dc = DigitalOut(Id.D10)
-        let rst = DigitalOut(Id.D14)
+        let cs = DigitalOut(Id.D5)
+        let dc = DigitalOut(Id.D4)
+        let rst = DigitalOut(Id.D3)
         let bl = DigitalOut(Id.D2)
 
         // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
@@ -533,9 +553,9 @@ public struct C01S08Rainbow {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D9)
-        let dc = DigitalOut(Id.D10)
-        let rst = DigitalOut(Id.D14)
+        let cs = DigitalOut(Id.D5)
+        let dc = DigitalOut(Id.D4)
+        let rst = DigitalOut(Id.D3)
         let bl = DigitalOut(Id.D2)
 
         // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
@@ -647,9 +667,9 @@ public struct C01S08ScrollEffect {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D9)
-        let dc = DigitalOut(Id.D10)
-        let rst = DigitalOut(Id.D14)
+        let cs = DigitalOut(Id.D5)
+        let dc = DigitalOut(Id.D4)
+        let rst = DigitalOut(Id.D3)
         let bl = DigitalOut(Id.D2)
 
         // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
@@ -767,9 +787,9 @@ public struct C01S08AnalogVisualizer {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D9)
-        let dc = DigitalOut(Id.D10)
-        let rst = DigitalOut(Id.D14)
+        let cs = DigitalOut(Id.D5)
+        let dc = DigitalOut(Id.D4)
+        let rst = DigitalOut(Id.D3)
         let bl = DigitalOut(Id.D2)
 
         // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
@@ -898,9 +918,9 @@ public struct C01S08AccelerationVisualizer {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D9)
-        let dc = DigitalOut(Id.D10)
-        let rst = DigitalOut(Id.D14)
+        let cs = DigitalOut(Id.D5)
+        let dc = DigitalOut(Id.D4)
+        let rst = DigitalOut(Id.D3)
         let bl = DigitalOut(Id.D2)
         // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
         let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)

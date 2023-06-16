@@ -76,7 +76,7 @@ module.exports = {
           type: 'doc',
           docId: 'learn/introduction',
           position: 'left',
-          label: 'Learning A-Z',
+          label: 'Learning Playground',
         },
         {
           type: 'doc',

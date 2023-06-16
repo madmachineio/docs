@@ -30,7 +30,7 @@ In this project, you will send morse code using a button. A long button press re
 
 ## Circuit
 
-You will use a button (D1) as an input and an LCD (SPI0) for text display. A button (D1) and An LED (D19) serve as notifications.
+You will use a button (D1) as an input and an LCD (SPI0) for text display. A button (D1) and An LED (D18) serve as notifications.
 
 <img
   src={require('./img/morseCircuit.png').default}
@@ -77,7 +77,7 @@ public struct MorseCode {
         let group = Group()
 
         // Initialize an LED as an indicator.
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
         // Initialize a button used to type characters.
         let button = DigitalIn(Id.D1)
         // Initialize a buzzer used to tell typing states.

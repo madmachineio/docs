@@ -140,17 +140,63 @@ The SwiftIO Feather board also has a built-in USB-Serial converter. Therefore, y
 
 ### ASCII
 
-ASCII stands for American Standard Code for Information Interchange and is a character encoding standard used for representing text in computers and other devices. 
+Computers store data in binary format using 1s and 0s. For example, the decimal number 10 is represented as 0b1010. How about the letter "A"? Well, that's where character encoding schemes come into play, and one commonly used one is **ASCII** (American Standard Code for Information Interchange). 
 
-ASCII uses a 7-bit binary code to represent 128 characters: the first 32 codes are non-printable control characters, while the remaining 95 codes represent printable characters, such as letters, numbers, and symbols. 
+ASCII uses a **7-bit** binary code to represent **128 characters**, including letters, numbers, and symbols. Taking the word "HELLO" as an example:
 
-The ASCII code for a character can be represented in binary or hexadecimal format. For example, the ASCII code for the uppercase letter "A" is 65 in decimal, 1000001 in binary, and 41 in hexadecimal.
+| Letter | Decimal | Hexadecimal | Binary     |
+| ------ | ------- | ----------- | ---------- |
+| H      | 72      | 0x48        | 0b01001000 |
+| E      | 69      | 0x45        | 0b01000101 |
+| L      | 76      | 0x4C        | 0b01001100 |
+| L      | 76      | 0x4C        | 0b01001100 |
+| O      | 79      | 0x4F        | 0b01001111 |
 
-When data is transmitted over a serial communication link, it is often encoded in ASCII format for ease of interpretation. This allows the data to be easily read and understood by humans. However, as ASCII is a 7-bit encoding, some applications use extended ASCII or other encoding systems that can handle 8-bit characters or support international characters.
+As shown in the table, these letters can thus be represented in binary format on computers. By referring to the ASCII table, computers can seamlessly decode and interpret these binary representations into the corresponding letters.
 
-## 🔸Circuit - UART-Serial converter module
+:::tip
+
+In computer systems, numerical values and strings of numbers can indeed be stored differently.
+
+**Numerical values** are typically stored using specific data types that directly represent the value as a binary representation. For example, the UInt8 value of 1 is stored as 0x01.
+
+On the other hand, **strings of numbers** are treated as sequences of characters and encoded using a character encoding scheme. The string "1" is represented as the byte 0x31 in ASCII.
+
+:::
+
+### Unicode
+
+While ASCII is sufficient for basic English characters, digits, punctuation marks, and some special characters, it falls short when representing characters from non-English languages, like Latin, Cyrillic, Chinese, Arabic, etc.
+
+**Unicode** was created to address this limitation. It assigns a unique **code point** to each character, as its identifier. It allows for consistent representation and exchange of text across different platforms, applications, and languages. 
+
+For example,
+* the emoji "😀" is encoded as U+1F600 (128512 in decimal).
+* the Chinese character "你" (which means you) is represented in Unicode as U+4F60 (20320 in decimal).
+
+Unicode can be regarded as a superset of ASCII. The numbers 0-127 in ASCII have the same meaning and representation in Unicode.
+
+Thanks to Unicode, computers can now store and process a vast array of characters from various languages and scripts.
 
 
+### UTF-8, UTF-16, UTF-32
+ 
+Unicode characters require up to 21 bits to represent all existing characters. In practice, encoding schemes like UTF-8, UTF-16, and UTF-32 were designed to accommodate various considerations.
+
+* **UTF-32** uses a fixed **4 bytes** to represent each Unicode character, ensuring a straightforward encoding scheme but potentially leading to wasted space for characters with smaller code points.
+* **UTF-16** uses **2 or 4 bytes** to represent characters based on their code points. 
+* **UTF-8** uses **1-4 bytes** to represent characters based on their code points. It is specifically designed to be space-efficient, particularly for text that primarily consists of ASCII characters. ASCII characters are represented using a single byte (8 bits), while characters outside the ASCII range require more bytes. 
+
+Different encoding schemes interpret and represent characters differently. Therefore, to properly decode text, it is essential to know the specific encoding scheme that was used to encode it.
+
+## 🔸Circuit - UART-Serial Converter
+
+The UART-Serial Converter connects to the chip MAX98357. And the chip connects to **I2S0** (SYNC0, BCLK0, TX0).
+
+<img
+  src={require('./img/usbSerialCircuit.png').default}
+  alt="USB serial converter circuit" width="960"
+/>
 
 :::note
 The circuits above are simplified versions for your reference.
@@ -165,13 +211,288 @@ The circuits above are simplified versions for your reference.
 **`UART`** - this class allows you to write and read data via the UART bus.
 
 | Method | Explanation |
-| ------ | ----------- |
-|  `init(_:baudRate:`<br />`parity:stopBits:`<br />`dataBits:`<br />`readBufferLength:)`      |  initialize a UART interface. <br />**Parameter:** <br /> - `idName`: id of the UART interface that the device connects to. <br /> - `baudRate`: the baud rate for UART communication, 115200 by default. <br /> - `parity`: the parity bit to ensure the data transmission. By default, no parity bit is used. <br /> - `stopBits`: the number of stop bit, 1 bit by default. <br /> - `dataBits`: the number of data bits, 8 bits by default. <br /> - `readBufferLength`: the length of receive buffer, 64 bytes by default. Make sure it's large enough to store data. |
-|  `read()`     |             |
-|  `write()`    |             |
+| ------ | ------------- |
+| `init(_:baudRate:`<br />`parity:stopBits:`<br />`dataBits:`<br />`readBufferLength:)` | initialize a UART interface. <br />**Parameter:** <br /> - `idName`: id of the UART interface that the device connects to. <br /> - `baudRate`: the baud rate for UART communication, 115200 by default. <br /> - `parity`: the parity bit to ensure the data transmission. By default, no parity bit is used. <br /> - `stopBits`: the number of stop bit, 1 bit by default. <br /> - `dataBits`: the number of data bits, 8 bits by default. <br /> - `readBufferLength`: the length of receive buffer, 64 bytes by default. Make sure it's large enough to store data. |
+
 
 
 ## 🔸Projects
 
-### 1. 
+### 1. Serial echo
+
+In this project, the board acts as an echo device, sending back the messages it receives from the computer. By connecting to a serial monitor, you can easily view the messages being echoed by the board.
+
+
+<img
+  src={require('./img/serialEcho.png').default}
+  alt="" width="960"
+/>
+
+**Project overview**
+
+* Connect the USB-Serial Converter to the USB port of your computer and choose the corresponding port on the serial monitor.
+* Type a message in the serial monitor's input field and send the message to the board.
+* After the board receives the message on the UART port, it will echo it back to the computer. You should see the echoed message in the serial monitor.
+
+**Example code**
+
+```swift title="C02S01SerialEcho.swift" showLineNumbers
+// Send message from computer to USB-Serial converter using serial monitor. 
+// Then send the message back using UART.
+import SwiftIO
+import MadBoard
+
+@main
+public struct C02S01SerialEcho {
+    public static func main() {
+        let uart = UART(Id.UART0)
+
+        var message = [UInt8](repeating: 0, count: 100)
+
+        while true {
+            // Check if there is available data in the UART buffer.
+            let count = uart.checkBufferReceived()
+
+            if count > 0 {
+                for i in message.indices {
+                    message[i] = 0
+                }
+                // Read data from the buffer.
+                uart.read(into: &message, count: count)
+                // Send the message back. 
+                uart.write(Array(message[0..<count]))
+            }
+            
+            sleep(ms: 10)
+        }
+    }
+}
+```
+
+**Code analysis**
+
+```swift
+let uart = UART(Id.UART0)
+```
+
+The default UART settings are as follows:
+
+- Baud Rate: 115200
+- Stop Bit: 1
+- Data Bits: 8
+- Parity: None
+
+Make sure that the serial monitor on your computer is configured to match these settings. 
+
+```swift
+let count = uart.checkBufferReceived()
+```
+
+As mentioned before, UART has a receive buffer for incoming data. This statement checks the receive buffer and determines the number of bytes that are currently available for reading.
+
+```swift
+uart.read(into: &message, count: count)
+```
+Read the incoming bytes from UART's receive buffer and store them in the array. The receive buffer is then cleared for new incoming data.
+
+```swift
+uart.write(Array(message[0..<count]))
+```
+Send received bytes back to the computer, allowing them to be displayed on the serial monitor.
+
+
+### 2. Serial LED switch
+
+Turn on/off the LED by sending commands from your computer.
+
+**Project overview**
+
+* Connect the USB-Serial Converter to the USB port of your computer and choose the corresponding port on the serial monitor. 
+* Send 1 from the computer to turn on the LED.
+* Send 0 from the computer to turn off the LED.
+
+
+**Example code**
+
+```swift title="C02S01SerialLEDSwitch.swift" showLineNumbers
+// Connect the USB-Serial converter module to your computer 
+// and choose the port in the serial monitor.
+// Send message (1/0) from computer to turn on/off the LED.
+
+import SwiftIO
+import MadBoard
+
+@main
+public struct C02S01SerialLEDSwitch {
+    public static func main() {
+        let uart = UART(Id.UART0)
+        let led = DigitalOut(Id.D18)
+
+        while true {
+            // Check if there is any message from computer.
+            let count = uart.checkBufferReceived()
+            
+            if count > 0 {
+                // Read data from UART buffer.
+                var buffer = [UInt8](repeating: 0, count: count)
+                uart.read(into: &buffer)
+                
+                // Decode the data since the text from computer is sent in UTF8 format.
+                let command = String(decoding: buffer, as: UTF8.self)
+                // Connect the port on your feather board in serial monitor to see printed message
+                print(command)
+                
+                // Set digital output according to the command from computer.
+                switch command  {
+                case "0": led.low()
+                case "1": led.high()
+                default: break
+                }
+            }
+            
+            sleep(ms: 10)
+        }
+    }
+}
+```
+
+**Code analysis**
+
+```swift
+let command = String(decoding: buffer, as: UTF8.self)
+```
+
+
+UART transmits data as a sequence of 0s and 1s. It doesn't have built-in support for specific encoding formats like UTF-8.
+
+When you receive data through UART, it arrives as a stream of binary bits. To make sense of this data, you need to process and interpret it according to the desired encoding format, such as UTF-8.
+
+### 3. Remote LED switch
+
+Implement a remote LED switch with two boards connected via UART
+
+<img
+  src={require('./img/remoteLEDSwitch.png').default}
+  alt="" width="960"
+/>
+
+**Project overview**
+
+* Connect two boards to your computer using USB cables. Then two boards are connected through the UART0 port: 
+  * **RX0** of board 1 (left board in the image) connected to **TX0** of board 2 (right board in the image), 
+  * **TX0** of board 1 connected to **RX0** of board 2.
+* If the button (D1) is pressed/released, board 1 will send the corresponding command via the UART bus to board 2.
+* Board 2 will receive the command and turn on/off the LED (D18) connected to it based on the received command.
+
+**Example code**
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Board1"
+  values={[
+    { label: 'Board 1 connected to button', value: 'Board1', },
+    { label: 'Board 2 connected to LED', value: 'Board2', },
+  ]
+}>
+
+<TabItem value="Board1">
+
+```swift showLineNumbers
+// This code is downloaded to the board connected to a button.
+// Detect if the button is pressed/released and send message to another board via UART bus.
+// Connect UART0 (RX/TX) of this board to the UART0 (TX/RX) of the other board.
+
+import SwiftIO
+import MadBoard
+
+@main
+public struct Button {
+    public static func main() {
+        let uart = UART(Id.UART0)
+        let button = DigitalIn(Id.D1)
+
+        var lastState = false
+
+        while true {
+            let currentState = button.read()
+
+            // If button is pressed, send message to turn on LED connected to another board.
+            if currentState && !lastState {
+                uart.write("on")
+                lastState = true
+            }
+
+            // If button is released, send message to turn off LED connected to another board.
+            if lastState && !currentState {
+                uart.write("off")
+                lastState = false
+            }
+
+            sleep(ms: 5)
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="Board2">
+
+```swift showLineNumbers
+// This code is downloaded to the board connected to an LED.
+// Wait for UART data from the other board to turn on/off the LED.
+// Connect the UART0 (RX/TX) of this board to the UART0 (TX/RX) of the other board.
+
+import SwiftIO
+import MadBoard
+
+@main
+public struct LED {
+    public static func main() {
+        let uart = UART(Id.UART0)
+        let led = DigitalOut(Id.D18)
+
+        var buffer: [UInt8] = []
+
+        while true {
+            // Receive all data from another board via UART bus.
+            while uart.checkBufferReceived() > 0 {
+                var byte: UInt8 = 0
+                uart.read(into: &byte)
+                buffer.append(byte)
+                sleep(ms: 1)
+            }
+
+            // Match the message and change the LED state.
+            if buffer.count > 0 {
+                // The message from another board is sent in cString 
+                // which means the last data is 0, so you need to convert
+                // the data in buffer to string using the given encoding. 
+                let str = String(cString: buffer)
+                
+                buffer.removeAll()
+
+                switch str {
+                case "on": 
+                    led.high()
+                case "off": 
+                    led.low()
+                default: break
+                }
+            }
+            
+            sleep(ms: 10)
+        }
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+Make sure that only one board is connected to the computer at a time for code upload.
+:::
 

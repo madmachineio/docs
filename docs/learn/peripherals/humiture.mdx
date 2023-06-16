@@ -136,8 +136,8 @@ Take decimal number 48 for example, it's equivalent to 0b00110000 in binary and 
   alt="binary and hexadecimal table" width="240"
 />
 
-## 🔸Circuit - humiture sensor module
-The humiture sensor is connected to I2C0 (pin SCL0 and SDA0).
+## 🔸Circuit - Humiture sensor
+The humiture sensor is connected to **I2C0** (pin SCL0 and SDA0).
 
 <img
   src={require('./img/humitureCircuit.png').default}
@@ -388,7 +388,7 @@ public struct C01S05TemperatureMeasurement {
         let sht = SHT3x(i2c)
 
         // Initialize the LED indicator pin.
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
         // Initialize the button pin.
         let button = DigitalIn(Id.D1)
 

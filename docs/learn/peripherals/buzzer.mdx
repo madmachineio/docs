@@ -109,7 +109,7 @@ So to make the buzzer play a piece of melody, you need to find the frequency and
 
 
 
-## 🔸Circuit - buzzer module
+## 🔸Circuit - Buzzer
 
 The buzzer is connected to the pin **PWM5A**. 
 
@@ -386,7 +386,7 @@ You'll adjust the brightness of the LED using two buttons: one is reserved to in
 **Project overview**
 
 * Detect if any of the buttons are pressed.
-* If detected, update the duty cycle. A press of up button (D21) will increase its value while a press of down button (D1) will decrease it.
+* If detected, update the duty cycle. A press of up button (D19) will increase its value while a press of down button (D1) will decrease it.
 * Set the PWM signal with the new duty cycle to adjust LED brightness.
 
 **Example code**
@@ -415,7 +415,7 @@ public struct C01S03ButtonPWM {
 
         // Initialize the digital pins. downButton is to dim the LED and the upButton is to brighten the LED.
         let downButton = DigitalIn(Id.D1)
-        let upButton = DigitalIn(Id.D21)
+        let upButton = DigitalIn(Id.D19)
 
         var changed = false
 
@@ -469,7 +469,7 @@ In this project, let's test the reflex time.
 **Project overview**
 
 * Press the button D1 to start the game. You'll hear a beep from the buzzer as a notification.
-* Once you see the red LED turns on, press the button D21 immediately.
+* Once you see the red LED turns on, press the button D19 immediately.
 * Then the LED turns off and you can see your reflex time printed on a serial monitor.
 * To restart the game, press button D1 again.
 
@@ -483,9 +483,9 @@ import MadBoard
 public struct C01S03ReflexGame {
     public static func main() {
         let startButton = DigitalIn(Id.D1)
-        let player = DigitalIn(Id.D21)
+        let player = DigitalIn(Id.D19)
         let buzzer = PWMOut(Id.PWM5A)
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
 
         while true {
             // Press the start button to begin the game.

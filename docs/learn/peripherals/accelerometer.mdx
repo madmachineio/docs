@@ -67,7 +67,7 @@ Now let's go back to the sensor.
 The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit only connects to the I2C interface. The raw values provided by the sensor range from -32768 to 32767 (16-bit). Then they will be converted to the acceleration value according to the measurement range. The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. 
 
 
-## 🔸Circuit - accelerometer module
+## 🔸Circuit - Accelerometer
 
 The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
 
@@ -232,7 +232,7 @@ public struct C01S07AccelerometerDice {
         let dice = LIS3DH(i2c)
 
         // Initialize an LED used as an indicator when shaking the sensor.
-        let indicator = DigitalOut(Id.D19)
+        let indicator = DigitalOut(Id.D18)
 
         // Create a variable to store the time after the sensor stops movement.
         var steadyCount = 999
@@ -307,7 +307,7 @@ let package = Package(
 **Code analysis**
 
 ```swift
-let indicator = DigitalOut(Id.D19)
+let indicator = DigitalOut(Id.D18)
 ```
 
 This LED is served as an indicator when shaking the sensor.
@@ -374,6 +374,7 @@ You can also view the messages on a serial monitor for reference.
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Import SwiftIO to set the communication and MadBoard to use pin id. 
 import SwiftIO
 import MadBoard
 // Import LIS3DH to read the accelerations from the sensor.
@@ -387,7 +388,7 @@ public struct C01S07AccelerometerLock {
         let acc = LIS3DH(i2c)
 
         // Initialize LED and buzzer as indicators.
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
         let buzzer = PWMOut(Id.PWM5A)
 
         // Initialize the button to change the password.
@@ -422,11 +423,11 @@ public struct C01S07AccelerometerLock {
                         start = true
                     }
 
-                    // If the movement matches the desired one, blink the LED as an indicator.
+                    // If the movement matches the desired one, generate a beep as an indicator.
                     if direction == password[currentIndex] {
                         currentIndex += 1
                         print("Correct!")
-                        blink()
+                        beep(500)
                     } else {
                         // If not, restart from the first direction.
                         currentIndex = 0
@@ -458,7 +459,7 @@ public struct C01S07AccelerometerLock {
                 reset = false
 
                 led.low()
-                beep()
+                beep(1000)
 
                 print("Timeout or reset button is pressed. Password is reset. Tilt/move your board to restart.")
             }
@@ -467,17 +468,10 @@ public struct C01S07AccelerometerLock {
         }
 
         // Generate a short beep. 
-        func beep() {
-            buzzer.set(frequency: 500, dutycycle: 0.5)
+        func beep(_ fre: Int) {
+            buzzer.set(frequency: fre, dutycycle: 0.5)
             sleep(ms: 300)
             buzzer.suspend()
-        }
-
-        // Blink the LED as an indicator.
-        func blink() {
-            led.high()
-            sleep(ms: 1000)
-            led.low()
         }
 
         // Replace the previous password with a new one. 

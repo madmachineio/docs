@@ -122,7 +122,7 @@ _Vcc is a power source, R is a resistor, <img
 /> is an LED, and pin is a digital output pin_
 
 
-There are many types of LEDs with different colors and sizes. The LED on your SwiftIO Circuit Playgrounds is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
+There are many types of LEDs with different colors and sizes. The LED on your SwiftIO Playground is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
 
 ### Resistor
 
@@ -324,7 +324,7 @@ Another warning: if you're not careful about selecting an appropriately strong r
 
 The image below shows how the LED module is connected to the SwiftIO Feather board in a simplified way. 
 
-The LED is connected to **D19**. GND and 3V3 are connected respectively to the corresponding pin on the board. 
+The LED is connected to **D18**. GND and 3V3 are connected respectively to the corresponding pin on the board. 
 
 :::info
 On circuit diagrams, the red line is usually for power and the black line for ground.
@@ -394,7 +394,7 @@ import MadBoard
 public struct C01S01LEDBlink {
     public static func main() {
         // Initialize the specified pin used for digital output.
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
 
         // The code in the loop will run over and over again. 
         while true {
@@ -433,7 +433,7 @@ These two libraries are necessary for all your projects with the boards. In shor
 `MadBoard` contains the ids of all types of boards. The ids for different types of boards may be different due to different board designs. Make sure the pin ids used in your code match the circuit. 
 
 ```swift
-let led = DigitalOut(Id.D19)
+let led = DigitalOut(Id.D18)
 ```
 
 `let` is the keyword to declare a constant. A **constant** is like a container whose content will never change. But before using it, you need to declare it in advance. Its name can be whatever you like and it's better to be descriptive, instead of a random name like abc. If the name of your constant consists of several words, then except for the first word, the first letter of the rest words needs to be capitalized, like `ledPin`. This is known as the **camel case**.
@@ -441,11 +441,11 @@ let led = DigitalOut(Id.D19)
 The **class**, in brief, is more like a mold to create different examples, known as instances, with similar characteristics. The class `DigitalOut` provides ways to change the digital output on a specified pin, so all its instances share the functionalities. The process of creating an instance is called initialization.
 
 The constant `led` is the instance of the `DigitalOut` class. To initialize it,  
-* you need to specify which pin is used. `Id` is an enumeration including the ids of all pins in `MadBoard`. As for **enumeration**, enum for short, it groups a set of related values. Just remember that the id needs to be written as `Id.D19`. 
+* you need to specify which pin is used. `Id` is an enumeration including the ids of all pins in `MadBoard`. As for **enumeration**, enum for short, it groups a set of related values. Just remember that the id needs to be written as `Id.D18`. 
 * the `mode` of the digital pin is `pushPull` in most cases and you will know more about it in the future.
-* the `value` decides the output state of the pin after it's initialized. By default, it outputs a low level. If you want the pin to output 3.3V by default, the statement should be `let led = DigitalOut(Id.D19, value: true)`.
+* the `value` decides the output state of the pin after it's initialized. By default, it outputs a low level. If you want the pin to output 3.3V by default, the statement should be `let led = DigitalOut(Id.D18, value: true)`.
 
-In this way, pin D19 would work as a digital output pin and get prepared for the following instructions. Its voltage is low by default.
+In this way, pin D18 would work as a digital output pin and get prepared for the following instructions. Its voltage is low by default.
 
 ```swift
 while true {
@@ -464,7 +464,7 @@ led.write(true)
 
 The `led` instance has access to all the instance methods in the `DigitalOut`. `write()` is one of its methods. You'll use **dot syntax** to access it: the instance name, followed by a dot, and the method at the end. Then you need the voltage level as its parameter, `true` for high voltage, `false` for low voltage. A value either `true` or `false` is of **Boolean** type.
 
-This statement makes the pin D19 output high voltage. And the LED connected to that pin requires a high level to be on. Therefore, the LED turns on.
+This statement makes the pin D18 output high voltage. And the LED connected to that pin requires a high level to be on. Therefore, the LED turns on.
 
 ```swift
 sleep(ms: 1000)
@@ -627,7 +627,7 @@ import MadBoard
 public struct C01S01LEDMorseCode {
     public static func main() {
         // Initialize the digital output pin.
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
 
         // Define the LED states to represent the letter s and o.
         let sSignal = [false, false, false]
@@ -747,7 +747,7 @@ You will learn a new way to blink an LED - blink using a timer.
 **Project overview**
 
 * The onboard blue LED and the red LED module are off by default.
-* The blue LED blinks continuously: on for 500ms and off for 500ms.
+* The blue LED blinks continuously: off for 500ms and on for 500ms.
 * Every 1.5s, the red LED changes its state, thus blinking slower.
 
 <img
@@ -790,7 +790,7 @@ import MadBoard
 public struct C01S02TimerLEDToggle {
     public static func main() {
         // Initialize a digital pin for the LED module.
-        let led = DigitalOut(Id.D19)
+        let led = DigitalOut(Id.D18)
 
         // Initialize the onboard blue LED.
         let blueLed = DigitalOut(Id.BLUE)
@@ -825,7 +825,7 @@ let timer = Timer(period: 1500)
 ```
 
 Initialize a timer by setting the time interval.
-* The timer's **mode** is `period` by default, which means the interrupt occurs every time the specified interval elapsed, that is, the ISR will be executed periodically. If it is set to `oneShot`, the timer interrupt happens once, so the task will be done once.
+* The timer's **mode** is `period` by default, which means the interrupt occurs every time the specified interval elapsed, that is, the specified task will be executed periodically. If it is set to `oneShot`, the timer interrupt happens once, so the task will be done once.
 * The parameter `period` sets the time interval in milliseconds.
 
 ```swift
