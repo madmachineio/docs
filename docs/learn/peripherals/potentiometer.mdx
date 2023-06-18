@@ -1,0 +1,493 @@
+---
+title: Potentiometer
+description: Learn about ADC and read analog input from potentiometer.
+---
+
+# Potentiometer
+
+You have learned a lot about digital signals and tried many projects with digital devices. Now let's know something about analog signals. The potentiometer is a typical component to give you analog readings. You'll connect a potentiometer to your circuit and read analog values.
+
+**Learning goals**
+
+* Learn about analog signals and distinguish them from digital signals.
+* Learn how ADC works.
+* Understand the working principle of potentiometers.
+* Learn how the voltage divider works in circuits.
+* Use the serial monitor to view printed values.
+
+## 🔸Background 
+
+### What is an analog signal?
+
+As mentioned before, the signals can be divided into two types: digital signal and analog signal. Unlike the digital signal changing among several values, the analog signal is **continuous**. Its voltages change smoothly with time, which means there are infinite possible values from minimum to maximum voltage (0 - 3.3V). 
+
+<img
+  src={require('./img/analogSignal.png').default}
+  alt="Analog signal" width="480"
+/>
+
+### Peripheral - ADC
+
+But the microcontrollers are digital components, how do they read the analog voltage at a specific time?
+
+Indeed, the microcontrollers cannot directly read analog values. It needs an **analog-to-digital converter (ADC)**. The ADC works by sampling the analog signal at discrete intervals and then converting the measured voltage to a corresponding digital value that can be processed by the microcontroller. The digital value represents the amplitude of the analog signal at the time it was sampled.
+
+The ability to measure analog values depends on the ADC resolution. The **resolution** tells the number of possible values. For example, if the resolution is 2-bit, there can be 2<sup>2</sup> = 4 possible values: 0, 1, 2, 3. These values are called **raw values**. And if it's 3-bit, there are 2<sup>3</sup> = 8 values (0-7).
+
+<img
+  src={require('./img/resolution.png').default}
+  alt="ADC resolution" width="960"
+/>
+
+
+The digital values output by an ADC are often referred to as **"raw" values**, and they may not be easy to understand or use. To make sense of these values, they need to **be mapped back to their corresponding voltage values**.
+
+To do this mapping, you need to know the voltage range that the ADC is measuring, 0 to 3.3V in this case. The SwiftIO Feather board has a built-in 12-bit ADC, so there are 4096 (2<sup>12</sup>) levels, from 0 to 4095. Therefore, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 1365 corresponds to (3.3 / 4095) * 1365 = 1.1V. 
+
+Here is the equation for the conversion:
+
+> **voltage = (3.3 / 4095) * raw value**
+
+According to the formula, you can infer, higher resolution means more possible values, so the voltage obtained will be more accurate. For instance, if you get a raw value of 6 with a 3-bit ADC, the voltage should be around 3.3 / 7 * 6 ≈ 2.8V. But the same voltage might be considered as 3.3V with a 2-bit ADC.
+
+
+
+
+## 🔸New component
+
+### Potentiometer
+
+**Potentiometer** (pot for short, also called knob) is a kind of **variable resistor**. You can rotate it to change its resistance and thus change the voltage in a circuit. It is commonly used to control the volume on audio devices, as a menu selector knob on home appliances, etc. 
+
+The potentiometer has a **movable wiper** inside it. As you rotate it clockwise or anticlockwise, the wiper moves with it to **change the available resistance in the circuit**. 
+
+<img
+  src={require('./img/potentiometer.png').default}
+  alt="potentiometer" width="240"
+/>
+
+Symbols: <img
+  src={require('./img/potSymbol1.png').default}
+  alt="International potentiometer symbol" width="80" align="center"
+/>(international), <img
+  src={require('./img/potSymbol2.png').default}
+  alt="American potentiometer symbol" width="80" align="center"
+/>(US)
+
+As shown in the image above, it has three terminals. The resistance between two ends (a and c) represents the maximum resistance. The middle one is connected to a wiper. As you **rotate the knob**, the position of the wiper changes and the **resistances on two side of the wiper changes proportionally**. 
+
+For example, if you connect the outer pin a to the ground, the other outer pin c to power, and the middle pin b to the input pin, let's see how it works. 
+* When you turn it to make the wiper move gradually far away from a, the actual resistance between a and b in the circuit increases. And the voltage measured on pin b would increase with it, gradually to 3.3V. 
+* If you turn it in the opposite direction, the voltage on pin b would decrease to 0.
+
+<img
+  src={require('./img/rotatePot.png').default}
+  alt="Rotate a potentiometer" width="480"
+/>
+
+## 🔸New concept
+
+### Voltage divider
+A voltage divider circuit is commonly used to **get a voltage that is a fraction of the input voltage**. Usually, there are **resistors connected in series**. As the current flows through the resistors, the voltage drops.
+
+<img
+  src={require('./img/voltageDivider.png').default}
+  alt="Voltage divider" width="240"
+/>
+
+The voltage divider calculation is based on ohm's law. Here's the equation: 
+
+> **V<sub>R1</sub> = V<sub>in</sub> * R1 / (R1 + R2)**
+
+_V<sub>in</sub>: input voltage_, _V<sub>R1</sub>: voltage drop on R1_
+
+The two resistors are in series, which means the current flows through them are the same, so V<sub>R1</sub> / R<sub>R1</sub> = V<sub>in</sub> / (R<sub>R1</sub> + R<sub>R2</sub>). Then you can get the formula above.
+
+
+The potentiometer is a typical example of it. The whole resistor is cut into two parts by the wiper. As the wiper goes, the ratio of the resistor changes, thus the voltage drop changes accordingly.
+
+## 🔸Circuit - potentiometer module
+There are two potentiometers on your SwiftIO Playground. They are connected respectively to A0 and A11.
+
+<img
+  src={require('./img/potCircuit.png').default}
+  alt="Potentiometer module circuit" width="960"
+/>
+
+<img
+  src={require('./img/potCircuitDiagram.png').default}
+  alt="Potentiometer module circuit diagram" width="360"
+/>
+
+:::note
+The circuits above are simplified for your reference.
+:::
+
+## 🔸API
+
+**Class**
+
+**`AnalogIn`** - this class allows you to read the analog input. 
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:)` | Initialize an analog pin. The only parameter is the pin id. |
+| `readVoltage()` | Read the voltage value on the pin. The return value is a float between 0 and 3.3. |
+| `readPercent()` | Read the input value and represent it as a percentage. The return value is between 0 and 1. |
+
+**Global function**
+
+`print(_:)` - print the value out. You can view it on any serial monitor.
+
+## 🔸Projects
+
+
+
+### 1. Reading input value
+
+In this project, you will rotate the potentiometer to change the input value. You will view the voltage value on the serial monitor.
+
+**Project overview**
+
+* After you download the code and connect the port to the serial monitor, the value is printed on the window one by one per second. 
+* When you turn the potentiometer, the value changes. It gradually goes to the maximum or minimum value according to the direction you twist.
+
+<img
+  src={require('./img/readPot.png').default}
+  alt="Read analog values changed by potentiometer" width="960"
+/>
+
+**Example code**
+
+```swift title="C01S04Potentiometer.swift" showLineNumbers
+// Import SwiftIO library to control input and output, and MadBoard to use the pin name.
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04Potentiometer {
+    public static func main() {
+        // Initialize the analog pin A0 for the potentiometer.
+        let knob = AnalogIn(Id.A0)
+
+        // Read the voltage value and print it out every second.
+        while true {
+            let value = knob.readVoltage()
+            print(value)
+            sleep(ms: 1000)
+        }
+    }
+}
+```
+
+**Code analysis**
+
+```swift
+let value = knob.readVoltage()
+```
+
+Declare a constant to store the returned voltage value.
+
+There are three different methods in `AnalogIn` class to read analog input. The only difference is the forms of the return value: raw value, voltage value, or a percentage. The method `readVoltage()` returns the voltage reading.
+
+```swift
+print(value)
+```
+It allows you to see the value on a serial monitor. 
+
+It is a useful tool to debug your code if there is something unexpected in your program. You could add it after each statement that changes a value. Then you could infer which step goes wrong according to the printed results.
+
+<details>
+    <summary>How to use the serial monitor?</summary>
+
+1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-to-SERIAL device on your board.
+2. After finishing downloading the project, click **SERIAL MONITOR** tab.
+
+<img
+  src={require('./img/serialMonitor.png').default}
+  alt="" width="960"
+/>
+
+3. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
+
+<img
+  src={require('./img/choosePort.png').default}
+  alt="" width="960"
+/>
+
+
+4. Select the **baudrate 115200**.
+
+<img
+  src={require('./img/chooseBaudrate.png').default}
+  alt="" width="960"
+/>
+
+5. Click the button **Start Monitoring**.
+
+<img
+  src={require('./img/startMonitoring.png').default}
+  alt="" width="960"
+/>
+
+And now you should see the values printed on after another.
+
+<img
+  src={require('./img/printValues.png').default}
+  alt="" width="960"
+/>
+
+</details>
+
+
+
+### 2. Controlling buzzer sound
+
+You will use a potentiometer to control the sound from the buzzer. 
+
+**Project overview**
+
+* Read the analog value from the potentiometer in percentage.
+* Set the PWM frequency based on the value.
+* Therefore, the pitch becomes higher when you turn it clockwise and lower when you turn it anticlockwise. 
+
+<img
+  src={require('./img/potBuzzer.png').default}
+  alt="Change buzzer sound with a potentiometer" width="480"
+/>
+
+**Example code**
+
+```swift title="C01S04PotentiometerBuzzer.swift" showLineNumbers
+// Import the SwiftIO to control input and output and the MadBoard to use the pin name.
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04PotentiometerBuzzer {
+    public static func main() {
+        // Initialize the analog pin for the potentiometer and PWM pin for the LED.
+        let knob = AnalogIn(Id.A0)
+        let buzzer = PWMOut(Id.PWM5A)
+
+        // Read the input value in percentage. 
+        // Then calculate the value into the frequency. 
+        // Set the PWM with the frequency and a duty cycle.
+        while true {
+            let value = knob.readPercent()
+            let f = 50 + Int(1000 * value)
+            buzzer.set(frequency: f, dutycycle: 0.5)
+            sleep(ms: 20)
+        }
+    }
+}
+```
+
+
+**Code analysis**
+
+```swift
+let value = knob.readPercent()
+```
+Here you use another method `readPercent()` to get the input value represented as a percentage.
+
+```swift
+let f = 50 + Int(1000 * value)
+```
+
+The reading value is too small to serve as frequencies. You then map it to a bigger value to get a frequency from 50 to 1050. 
+
+```swift
+buzzer.set(frequency: f, dutycycle: 0.5)
+```
+The PWM pins will output signals with the specified frequency to drive the buzzer. In this way, when you turn the potentiometer, the buzzer pitch will change gradually.
+
+
+
+### 3. Controlling LED brightness
+
+The potentiometer can also be used to change LED brightness. In this project, you'll turn the potentiometer to brighten and dim an LED.
+
+**Project overview**
+
+* Read the analog value from the potentiometer in percentage.
+* Set the PWM duty cycle using this value.
+* Therefore, the LED becomes brighter when you turn it clockwise and dimmer when you turn it anticlockwise. 
+
+<img
+  src={require('./img/potLED.png').default}
+  alt="Change LED brightness with a potentiometer" width="480"
+/>
+
+**Example code**
+
+```swift title="C01S04PotentiometerLED.swift" showLineNumbers
+// Import SwiftIO library to control input and output, and MadBoard to use the pin name.
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04PotentiometerLED {
+    public static func main() {
+        // Initialize the analog pin for the potentiometer and PWM pin for the LED.
+        let knob = AnalogIn(Id.A0)
+        let led = PWMOut(Id.PWM4A)
+
+        // Read the input value. 
+        // The value is represented in percentage, while the duty cycle is also between 0 and 1, 
+        // so you can directly use the reading value to set the PWM.
+        while true {
+            let dutycycle = knob.readPercent()
+            led.setDutycycle(dutycycle)
+
+            sleep(ms: 20)
+        }
+    }
+}
+```
+
+
+### 4. Controlling LED blink rate and brightness
+
+Blink the LED. The LED brightness is changed by the potentiometer (A0). The blink rate is changed by the potentiometer (A11).
+
+**Project overview**
+
+* Read analog value from the potentiometer (A0) in percentage. This value is used to set the duty cycle of the PWM signal, hence it adjusts LED brightness.
+* Read raw analog value from the potentiometer (A11). This value sets how long the PWM signal will last, and thus change the LED blink rate.
+
+
+**Example code**
+
+```swift title="C01S04LEDBrightnessBlink.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04LEDBrightnessBlink {
+    public static func main() {
+        // Initialize the analog pin used to adjust LED brightness.
+        let brightnessPot = AnalogIn(Id.A0)
+        // Initialize the analog pin used to change blink rate. 
+        let blinkPot = AnalogIn(Id.A11)
+        // Initialize the PWM pin for the LED.
+        let led = PWMOut(Id.PWM4A)
+
+        while true {
+            // Read raw value from the analog pin. It sets the LED blink rate.
+            let blinkTime = blinkPot.readRawValue() / 2
+
+            // Read value from the analog pin. 
+            // It serves as duty cycle for PWM to set LED brightness.
+            led.setDutycycle(brightnessPot.readPercent())
+            sleep(ms: blinkTime)
+
+            // After a specified time, suspend the output to turn off the LED.
+            led.suspend()
+            sleep(ms: blinkTime)
+        }
+    }
+}
+```
+
+
+### 5. Dual LED brightness control
+
+In this project, two potentiometers work together to control the LED brightness. One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
+
+
+**Project overview**
+
+* Read the analog value for potentiometer A11 in percentage. Map it into a specified maximum duty cycle range, which determines the maximum LED brightness.
+* Read the analog value for potentiometer A0 in percentage. It is used to adjust LED brightness between the darkest and the maximum.
+* Multiply the two values above to get a final duty cycle.
+* Set the PWM signal with the given duty cycle to adjust LED brightness.
+
+**Example code**
+
+```swift title="C01S04TwoPotentiometersLED.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04TwoPotentiometersLED {
+    public static func main() {
+        // Initialize the analog pin used to adjust LED brightness from min and max.
+        let brightnessPot = AnalogIn(Id.A0)
+        // Initialize the analog pin used to set max brightness. 
+        let intensityPot = AnalogIn(Id.A11)
+        // Initialize the PWM pin for the LED.
+        let led = PWMOut(Id.PWM4A)
+
+        // Define the available range of max duty cycle adjusted by A11. 
+        let minIntensity: Float = 0.2
+        let maxIntensity: Float = 1
+
+        while true {
+            // Map the analog value from the range 0-1 to the range minIntensity-maxIntensity. 
+            // It decides the max duty cycle for the PWM signal.
+            // That's to say, it changes the maximum intensity of the LED.
+            let maxDutycycle = intensityPot.readPercent() * (maxIntensity - minIntensity) + minIntensity
+
+            // Read the analog value (0-1) from pin A0.
+            let rawDutycycle = brightnessPot.readPercent()
+
+            // Calculate the final duty cycle value (0-maxDutycycle).
+            // Set the PWM output using the result.
+            led.setDutycycle(rawDutycycle * maxDutycycle)
+            sleep(ms: 20)
+        }
+    }
+}
+```
+
+
+### 6. Play tones manually
+
+Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one by one.
+
+
+**Project overview**
+* Store the frequencies of musical notes in an array.
+* Read raw analog value from the potentiometer and map it into the index of the array.
+* If the new index is different from the last one, set the PWM signal using the corresponding frequency to play the note.
+
+**Example code**
+
+```swift title="C01S04PlayTones.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct C01S04PlayTones {
+    public static func main() {
+        // Initialize a PWM pin for the buzzer.
+        let buzzer = PWMOut(Id.PWM5A)
+        // Initialize an analog pin for the potentiometer.
+        let pot = AnalogIn(Id.A0)
+
+        // Declare a constant to store an array of frequencies. 
+        // They matches respectively notes C4, D4, E4, F4, G4, A4, B4, C5.
+        let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
+
+        // Store the last frequency index to avoid playing the same note.
+        var lastIndex = frequencies.count
+
+        while true {
+            // Read the raw analog value from the pin.
+            // Map the value into the index of the array.
+            let index = Int((Float(pot.readRawValue() * (frequencies.count - 1)) / Float(pot.maxRawValue)).rounded(.toNearestOrAwayFromZero))
+
+            // Check if the note hasn't been played.
+            if index != lastIndex {
+                // Play the new note for 500ms.
+                buzzer.set(frequency: frequencies[index], dutycycle: 0.5)
+                sleep(ms: 500)
+                buzzer.suspend()
+                lastIndex = index
+            }
+            sleep(ms: 10)
+        }
+    }
+}
+```

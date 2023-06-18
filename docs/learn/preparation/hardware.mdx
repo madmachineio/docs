@@ -1,103 +1,115 @@
 ---
 title: Know your hardware
-description: Take a quick look at the hardware for the tutorials. 
+description: Take a quick look at the hardware for the following tutorials. 
 ---
 
 # Know your hardware
 
-In this tutorial, you will get a general idea of the hardware you'll use.
+In this tutorial, you will get to know the hardware that will be your companion throughout this learning journey.
 
-## SwiftIO Feather board
-
-The SwiftIO Feather board (or SwiftIO board) can execute the code you write and makes your idea come to life. After you connect it to different hardware and download code to it, it can interact with the real world, using sensors to detect its surroundings or utilize things like light or speaker as an output.
-
-The board you'll use is the SwiftIO Feather board. It is a simplified version of the SwiftIO board. Though small in size, it’s powerful enough for all projects. One of its advantages is that it can be easily embedded in any of your projects. 
-
-The SwiftIO Feather board is compatible with the [Adafruit feather system](https://learn.adafruit.com/adafruit-feather). This means you could use it together with the hardware in their system. There are so many possibilities! 
-
-Let’s take a look at it in detail:
+The whole kit - SwiftIO Playground kit consists of two parts: 
+* SwiftIO Feather Board - main board
 
 <img
-  src={require('./img/featherParts.png').default}
-  alt="Parts of feather board" width="720"
+  src={require('./img/Feather.png').default}
+  alt="SwiftIO feather board" width="480"
 />
 
-| Part | Detail |
-| --- | ------- |
-| MCU | i.MX RT1062 Crossover Processor with Arm® Cortex®-M7 core @600MHz |
-| Storage | 8MB flash, 32MB external RAM |
-| Power | 3.3V |
-| LED | Built-in RGB LED |
-| USB port | USB-C, used to download the code, as well as power the board. |
-| GPIO | 36 (D0-D35), used for digital input or output. |
-| ADC | 14 (A0-A13) 12-bit resolution analog to digital converter, used for analog input. |
-| PWM | 14 (some are paired), used for PWM output. |
-| I2C | 2 (I2C0, I2C1), SCL and SDA pins used for I2C communication. |
-| SPI | 2 (SPI0, SPI1), SCK, SDO, SDI pins used for SPI communication. |
-| UART | 3 (UART0, UART1, UART2), RX and TX pins used for UART communication. |
-| I2SIn | 1 (I2SIn0), SYNC, BCLK and RX pins used for I2S audio input. |
-| I2SOut | 1 (I2SOut0), SYNC, BCLK and TX pins used for I2S audio output. |
-| CAN | 1, CTX and CRX pins used for CAN communication. |
-| Counter | 2 (C0-C1), used to measure the number of pulses. |
+* SwiftIO Playground - expansion board
+
+<img
+  src={require('./img/playground.png').default}
+  alt="SwiftIO playground" width="960"
+/>
+
+## SwiftIO Feather Board
+
+By connecting it to various hardware components and downloading code onto it, you can interact with the real world, utilizing sensors to detect the environment or generating outputs such as lights and speakers.
+
+While compact in size, the SwiftIO Feather board is incredibly powerful. It is capable of handling all kinds of your projects and can be easily integrated into any of your creative endeavors.
+
+What's more, the SwiftIO Feather board is compatible with the [Adafruit Feather system](https://learn.adafruit.com/adafruit-feather), allowing you to combine it with the hardware available in their system.
+
+Now, let's delve into the details of the board:
+
+<img
+  src={require('./img/FeatherParts.png').default}
+  alt="Parts of feather board" width="960"
+/>
+
+| Part     | Detail                                                                           |
+| -------- | -------------------------------------------------------------------------------- |
+| MCU      | i.MX RT1062 Crossover Processor with Arm® Cortex®-M7 core @600MHz                |
+| Storage  | 16MB flash, 32MB external RAM                                                    |
+| Power    | 3.3V                                                                             |
+| LED      | onboard RGB LEDs                                                                 |
+| USB port | USB-C, used to download the code, print values, as well as power the board       |
+| GPIO     | 44 (D0-D43), used for digital input or output                                    |
+| ADC      | 14 (A0-A13) 12-bit resolution analog to digital converter, used for analog input |
+| PWM      | 14, used for PWM output                                                          |
+| I2C      | 2 (I2C0, I2C1), SCL and SDA pins used for I2C communication                      |
+| SPI      | 2 (SPI0, SPI1), SCK, SDO, SDI pins used for SPI communication                    |
+| UART     | 3 (UART0-UART2), RX and TX pins used for UART communication                      |
+| I2SIn    | 1 (I2SIn0), SYNC, BCLK and RX pins used for I2S audio input                      |
+| I2SOut   | 1 (I2SOut0), SYNC, BCLK and TX pins used for I2S audio output                    |
+| CAN      | 1, CTX and CRX pins used for CAN communication                                   |
 
 
-A pin refers to a connector on the board. They are on the two sides. You can connect other hardware to the board through these pins. This is the pinout diagram of SwiftIO Feather board. It shows the usage of all pins.
+You can connect other hardware to the board through the pins on two sides. This is the pinout diagram of SwiftIO Feather board. It shows the usage of all pins.
 
 <img
   src={require('./img/featherPinout.png').default}
   alt="Pinout of feather board" width="720"
 />
 
-You may notice some of the pins are marked with several names. It means they can be used for multiple functionalities. Therefore you need to decide the pin’s usage in your code. You will know more about it [in the next tutorial](./swiftio-madboard).
+As mentioned before, most pins on the board are [multiplexed](./peripherals#how-are-pins-organized), therefore you need to decide the pin's usage in your code.
 
 
 
-## SwiftIO Circuit Playgrounds kit
+## SwiftIO Playground
 
-Only with the board, you may still don't know how to start. Luckily, the SwiftIO Circuit Playgrounds is an easy-to-use starter kit for you. It is specially designed for all newbies. No wire is needed! All the modules are directly connected to the shield in the middle through the stamp holes. 
-
-<img
-  src={require('./img/stampHole.png').default}
-  alt="Stamp hole on the kit" width="480"
-/>
-
-The shield on the middle of the kit is for easier connection, and it's the SwiftIO Feather board that communicates with all the modules. After you plug the SwiftIO Feather board into the shield, the circuit is built. Then you could program the SwiftIO Feather board to control the modules. 
+Only with the SwiftIO Feather board, you may still don't know how to start. the expansion board - SwiftIO Playground is specially designed for all newbies to get started. No wire is needed! All modules are directly connected to the shield in the middle.
 
 <img
-  src={require('./img/plug.png').default}
-  alt="Plug SwiftIO Feather to the shield" width="480"
+  src={require('./img/playgroundPins.png').default}
+  alt="playground module connection" width="720"
 />
 
-Let’s look into these modules in detail:
+The shield in the middle is for easier connection, and it's the SwiftIO Feather board that communicates with all the modules. After you plug the SwiftIO Feather board into the shield, the circuit is built. Then you could program the SwiftIO Feather board to control the modules. 
 
 <img
-  src={require('./img/playgroundsParts.png').default}
-  alt="Each part of playgrounds" width="960"
+  src={require('./img/plugFeather.png').default}
+  alt="Plug SwiftIO Feather to the shield" width="960"
 />
 
-| Module | Quantity | Description |
-| ------ | -------- | ----------- |
-| LED | 1 | Can be toggled on and off, or set to any brightness. |
-| Button | 2 | Control the current flow in circuits as you press or release it. |
-| Potentiometer | 2 | Vary resistance connected in the circuit. |
-| Buzzer | 1 | Produce sounds of different pitches. |
-| Humiture | 1 | Measure temperature and humidity. |
-| Color sensor | 1 | Detect the color of an object and the light intensity. |
-| Accelerometer | 1 | Detect movement by measuring the acceleration. |
-| Speaker | 1 | Generate sounds or play the audio files back. |
-| Microphone | 1 | Record sound. |
-| LCD | 1 | Display graphics or images. |
+Let's look into these modules in detail:
+
+
+| Module               | Quantity | Description                                                        |
+| -------------------- | -------- | ------------------------------------------------------------------ |
+| LED                  | 1        | Can be toggled on and off, or set to any brightness.               |
+| Button               | 2        | Control the current flow in circuits as you press or release it.   |
+| Potentiometer        | 2        | Vary resistance connected in the circuit.                          |
+| Buzzer               | 1        | Produce sounds of different pitches.                               |
+| Humiture             | 1        | Measure temperature and humidity.                                  |
+| Real Time Clock      | 1        | Read the current time and date.                                    |
+| Accelerometer        | 1        | Detect movement by measuring the acceleration.                     |
+| Speaker              | 1        | Generate sounds or play the audio files back.                      |
+| USB-Serial Converter | 1        | Connect to the USB port of another device to transmit serial data. |
+| LCD                  | 1        | Display graphics or images.                                        |
+| ESP32-C3             | 1        | Serve as a Wi-Fi module.                                             |
+
 
 
 
 <details>
-    <summary> You may wonder why some modules have a connector, while others don’t.</summary>
+    <summary> You may wonder why some modules have a connector, while others don't.</summary>
 
-These connectors are provided in the event that you wish to disassemble the board. Please note that disassembly is a one-way process, though, and you will not be able to reconnect the parts through the included board. Once apart, use 4-pin cables to connect the module to the shield. Some modules (the LCD, speaker, and microphone) don’t have a connector since they require more than 4 wires and don’t support 4-pin connectors. 
+These connectors are provided in the event that you wish to disassemble the board. Please note that disassembly is a one-way process, though, and you will not be able to reconnect the parts through the included board. Once apart, use 4-pin cables to connect the module to the shield. Some modules (like LCD) don't have a connector since they require more than 4 wires and don't support 4-pin connectors. 
 
 <img
   src={require('./img/disassembledParts.png').default}
-  alt="Each part of playgrounds" width="960"
+  alt="Each part of playground" width="960"
 />
 
 :::caution Attention
@@ -110,7 +122,7 @@ Make sure not to connect these modules to the shield through the connectors sinc
 <details>
     <summary>How can you disassemble the board?</summary>
 
-As mentioned before, there are several pairs of stamp holes on each module for circuit connection. So the modules are separated by cutting at these holes as shown below.
+The modules can be separated by cutting as shown below.
 
 <img
   src={require('./img/disassemble.png').default}
@@ -118,7 +130,7 @@ As mentioned before, there are several pairs of stamp holes on each module for c
 />
 
 :::caution Attention
-Once again, you cannot put the board back together and once you’ve broken it apart, you will need to connect any circuits manually using cables.
+Once again, you cannot put the board back together and once you've broken it apart, you will need to connect any circuits manually using cables.
 :::
 
 </details>

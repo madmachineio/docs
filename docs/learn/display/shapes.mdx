@@ -63,7 +63,7 @@ The upper left vertex is the starting point of a rectangle. After setting its wi
 | `fill(color:)`| Fill the inner area of the rectangle with the specified color. |
 | `setOutline(color:)` | Set the color of the stroke. |
 
-Let’s see how you create rectangles:
+Let's see how you create rectangles:
 
 ```swift
 let rect1 = Rect(x: 0, y: 0, width: 65, height: 50, fill: Color.yellow, outline: Color.orange, stroke: 2)
@@ -97,7 +97,7 @@ In the image below, the orange area is a rounded rectangle. The dashed line mark
   alt="The upper left corner of a rounded rectangle" width="240"
 />
 
-Let’s look at some examples:
+Let's look at some examples:
 
 ```swift
 let roundRect1 = RoundRect(x: 15, y: 20, width: 55, height: 70, radius: 5, fill: Color.magenta, outline: Color.white, stroke: 3)
@@ -127,7 +127,7 @@ As you create a circle, its position is decided by its center. To move it, you s
 | `outline(color:)` | Set the color of its outline. |
 
 
-Let’s create some circles:
+Let's create some circles:
 
 ```swift
 let circle1 = Circle(x: 50, y: 50, radius: 50, fill: Color.green, outline: Color.yellow, stroke: 2)
@@ -156,7 +156,7 @@ You can use it to create triangles. 3 vertices are needed to decide a triangle.
 | `fill(color:)` | Change the color of the triangle. |
 
 
-Let’s draw triangles:
+Let's draw triangles:
 
 ```swift
 let triangle1 = Triangle(x0: 0, y0: 0, x1: 0, y1: 100, x2: 50, y2: 50, fill: Color.purple, outline: Color.red)
@@ -183,7 +183,7 @@ It allows you to draw a random shape. You can set any number of points. Then the
 | `init(_:outline:)` | Create a polygon. <br />**Parameters:**<br /> - `points`: an array of coordinates of all vertices. <br /> - `outline`: the color of the stroke. |
 
 
-Let’s create some polygons:
+Let's create some polygons:
 
 ```swift
 let points1 = [(100,50), (52,85), (71,140), (129,140), (148,85)]

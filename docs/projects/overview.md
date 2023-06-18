@@ -16,4 +16,4 @@ There are three parts in total:
 
 - [**SwiftIO Maker Kit**](./swiftio-maker-kit/overview) - use the modules in the maker kit to try a dozen missions. You will use these components to build simple circuits and program your board.
 
-- [**SwiftIO Circuit Playgrounds**](./swiftio-circuit-playgrounds) - learn basic knowledge about electronics and Swift language using an all-in-one kit. During learning, you don't need to build the circuits as all modules have been connected to the board.
+- [**SwiftIO Playground**](./swiftio-playground) - learn basic knowledge about electronics and Swift language using an all-in-one kit. During learning, you don't need to build the circuits as all modules have been connected to the board.

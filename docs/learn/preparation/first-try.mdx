@@ -5,15 +5,19 @@ description: Install the software and run your hello world project.
 
 # First try
 
-Before getting into any detailed knowledge, it's a good idea to try your first project. You'll have a first impression of what your board can do. Let's blink an LED. 
 
-## Set up software 
+Before diving into the nitty-gritty details, it's always a good idea to get hands-on and try your first project. So, let's kick off your journey by blinking an LED!
 
-At first, you will set up the software for your board.
+## Step 1: Set up software 
 
-1. **Open the Visual Studio Code**. I believe most of you guys have installed it. We have created an extension for it. It is really handy and easy to use.
+At first, you will get started with the software setup process.
 
-2. **Install the extension MadMachine** as shown below:
+
+1. **Download the latest [mm-sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build and download your project.
+
+2. **Open the Visual Studio Code**. I believe most of you guys have installed it. We've created an extension for it. It is really handy and easy to use.
+
+3. **Install the extension** as shown below:
     1. click the Extensions button on the left bar.
     2. enter the extension name MadMachine in the search box.
     3. click the Install button.
@@ -23,9 +27,8 @@ At first, you will set up the software for your board.
   alt="Install the extension" width="960"
 />
 
-3. **Download the latest [mm sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build your project. Choose the version marked with the label **Latest**. The versions marked with Pre-release are still for internal testing.
 
-4. **Open the Settings** by clicking **Code** / **Preferences** / **Settings** to set the extension.
+4. **Click ⚙️ / Extension Settings** to open the settings.
 
 <img
   src={require('./img/settings.png').default}
@@ -33,27 +36,56 @@ At first, you will set up the software for your board.
 />
 
 
-5. Click **Extensions** to expand it and find **MadMachine**. **Indicate the mm sdk location** in the box that matches your operating system. If you change the location of sdk later, you will need to update it again. 
+5. **Indicate the mm-sdk location** in the box that matches your operating system. So far, only Mac and Linux are supported. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Mac"
+  values={[
+    { label: 'Mac', value: 'Mac', },
+    { label: 'Linux', value: 'Linux', },
+  ]
+}>
+
+<TabItem value="Mac">
 
 <img
-  src={require('./img/sdkPath.png').default}
-  alt="Set the path of sdk" width="960"
+  src={require('./img/sdkPathMac.png').default}
+  alt="Indicate the path of sdk on Mac." width="960"
 />
+
+</TabItem>
+<TabItem value="Linux">
+
+<img
+  src={require('./img/sdkPathLinux.png').default}
+  alt="Indicate the path of sdk on Linux." width="960"
+/>
+
+</TabItem>
+</Tabs>
+
+:::note
+If you change the location of the SDK later, don't forget to update its path here. 
+:::
+
 
 OK, the software gets prepared👏.
 
-## Create a project
+##  Step 2: Create a project
 
 Now, you will start your first project.
 
-1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three functionalities. Click **New Project**.
+1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three buttons. Click **New Project**.
 
 <img
   src={require('./img/create.png').default}
   alt="Create a new project" width="960"
 />
 
-2. Choose the project as an executable. Your project will run on the board after it is downloaded, so you need an executable. And the projects later in the following sections are all executables.
+2. Choose the project as an **executable**. Your project will run on the board, so you need an executable. And the projects in the following sections are all executables.
 
 <img
   src={require('./img/projectType.png').default}
@@ -84,13 +116,13 @@ Now, you will start your first project.
 
 Well, the project is created and will open in a new window.
 
-## Write code
+##  Step 3: Write code
 
 Then you will need to edit the code for the project. 
 
-1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. This file stores the main code for your project. So you will always edit this file for all your projects.
+1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. Your program will start from here marked with `@main`. So you will always edit this file for all your projects.
 
-2. Copy the code below into the file. In the next section, you will learn more about the code.
+2. Copy the code below into the file. In the [next section](../peripherals/led), you will learn how everything works.
 
 ```swift title="Blink.swift" showLineNumbers
 import SwiftIO
@@ -117,39 +149,39 @@ public struct Blink {
   alt="Code" width="960"
 />
 
-## Download code to the board
+##  Step 4: Connect board to computer
 
 Now you come to the last step - download your project to the board.
 
-1. **Connect** your SwiftIO Feather board to your computer. In the illustration below, the SwiftIO Feather board is plugged into the SwiftIO Circuit Playgrounds board. You can also disconnect them. 
+1. Insert the SD card into the SwiftIO Feather board.
+
+<img
+  src={require('./img/insertSDCard.png').default}
+  alt="Insert SD card to board" width="480"
+/>
+
+2. **Connect** your SwiftIO Feather board to your computer using a USB cable.
 
 <img
   src={require('./img/connect.png').default}
-  alt="Connect your board to computer" width="480"
+  alt="Connect your board to computer" width="960"
 />
 
-2. **Press** the download button.
 
-<img
-  src={require('./img/press.png').default}
-  alt="Press the download button" width="240"
-/>
+:::info
+If you are using our **prototype board** that has a LiPo battery connector, there is one more shield board in between. Make sure to connect the USB port on the shield to your computer for code downloading instead of the other two ports.
+:::
 
-3. Wait until the onboard LED turns to **steady green**.
+##  Step 5: Download code to the board
 
-<img
-  src={require('./img/greenLED.png').default}
-  alt="Onboard LED turns to steady green" width="240"
-/>
-
-4. Click the **Build** button to build your project.
+1. Click the **Build** button to build your project. Wait until the message **Done** appears on the window.
 
 <img
   src={require('./img/build.png').default}
   alt="click build button" width="960"
 />
 
-5. Click the **Download** button. It will take a few seconds.
+2. Click the **Download** button. It will take a few seconds.
 
 <img
   src={require('./img/download.png').default}

@@ -20,9 +20,9 @@ A label is a group that contains all characters of the text. Each character is a
   alt="Label is a group that contains several tiles" width="480"
 />
 
-When creating a label, you set its text, its position, color, scale and font. By default, a label doesn’t have a background color. You can set it using `updateBackgroundColor`. The background is also a tile and will be added to that group.
+When creating a label, you set its text, its position, color, scale and font. By default, a label doesn't have a background color. You can set it using `updateBackgroundColor`. The background is also a tile and will be added to that group.
 
-You can display a label directly on the screen as it's a group. And it’s better to take it as a subgroup and add it to a whole group so you can organize all contents better.
+You can display a label directly on the screen as it's a group. And it's better to take it as a subgroup and add it to a whole group so you can organize all contents better.
 
 
 **Class**
@@ -51,9 +51,9 @@ let label2 = Label(x: 10, y: 10, scale: 2, text: "Hello world!", color: Color.re
 
 ### Font
 
-The fonts used for labels are **bitmap fonts**. These fonts define a matrix of pixels to show each glyph. You can regard it as a set of images. When displaying text, your board reads pixel info for each character. So it’s suitable for text display on such a screen. 
+The fonts used for labels are **bitmap fonts**. These fonts define a matrix of pixels to show each glyph. You can regard it as a set of images. When displaying text, your board reads pixel info for each character. So it's suitable for text display on such a screen. 
 
-Besides, the texts on different websites are usually **vector font**. They use mathematical formulas to describe their look. As you zoom in or zoom out a webpage, the text will be resized without affecting its glyph. So far, we don’t support it. 
+Besides, the texts on different websites are usually **vector font**. They use mathematical formulas to describe their look. As you zoom in or zoom out a webpage, the text will be resized without affecting its glyph. So far, we don't support it. 
 
 <img
   src={require('./img/bitmapVectorFont.png').default}
@@ -101,7 +101,7 @@ let label4 = Label(text: "Hello!", font: font)
 ```
 
 :::note
-Don’t forget to copy the pcf file into the SD card when you use it. After all, your board can only read the files on the card, not on your computer🤣. Then indicate its path when using it.
+Don't forget to copy the pcf file into the SD card when you use it. After all, your board can only read the files on the card, not on your computer🤣. Then indicate its path when using it.
 :::
 
 
