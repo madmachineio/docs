@@ -53,7 +53,7 @@ PCF8563 is one of the commonly-used RTCs and is optimized for low power consumpt
 BTW, the RTC module on your kit doesn't come with a battery, so it needs to be calibrated after inserting the battery.
 
 
-## 🔸Circuit - RTC module
+## 🔸Circuit - RTC
 
 The RTC module is connected to **I2C0** (SCL0 and SDA0).
 
@@ -62,8 +62,14 @@ The RTC module is connected to **I2C0** (SCL0 and SDA0).
   alt="RTC module circuit" width="960"
 />
 
+<img
+  src={require('./img/rtcCircuitDiagram.png').default}
+  alt="RTC module circuit diagram" width="480"
+/>
+
 :::note
 The circuits above are simplified versions for your reference.
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 ## 🔸API

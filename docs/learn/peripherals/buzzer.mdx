@@ -127,6 +127,7 @@ The PWM pins are marked with a tilde (~) on the silkscreen of your board. Most o
 
 :::note
 The circuits above are simplified for your reference.
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 ## 🔸API
@@ -533,6 +534,56 @@ The two functions are used together to measure a short period (a few seconds) wi
 `getClockCycle()` gets the current time stamp in clock cycles. The duration of a cycle is determined by the CPU frequency. This value is from a 32-bit register driven by the CPU frequency and will **overflow every few seconds**.
 
 `cyclesToNanoseconds()` calculates the passed time in nanoseconds using a start time and stop time. 
+
+```swift
+print("Reflex time: \(Float(duration) / 1000_000)ms")
+```
+It allows you to see the value on a serial monitor. 
+
+It is a useful tool to debug your code if there is something unexpected in your program. You could add it after each statement that changes a value. Then you could infer which step goes wrong according to the printed results.
+
+<details>
+    <summary>How to use the serial monitor?</summary>
+
+1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-to-SERIAL device on your board.
+2. After finishing downloading the project, click **SERIAL MONITOR** tab.
+
+<img
+  src={require('./img/serialMonitor.png').default}
+  alt="" width="960"
+/>
+
+3. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
+
+<img
+  src={require('./img/choosePort.png').default}
+  alt="" width="960"
+/>
+
+
+4. Select the **baudrate 115200**.
+
+<img
+  src={require('./img/chooseBaudrate.png').default}
+  alt="" width="960"
+/>
+
+5. Click the button **Start Monitoring**.
+
+<img
+  src={require('./img/startMonitoring.png').default}
+  alt="" width="960"
+/>
+
+And now you should see the values printed on after another.
+
+<img
+  src={require('./img/printValues.png').default}
+  alt="" width="960"
+/>
+
+</details>
+
 
 
 ### 5. LED pattern change

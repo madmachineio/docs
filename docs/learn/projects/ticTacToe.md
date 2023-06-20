@@ -5,21 +5,25 @@ description: You'll explore more with some advanced projects.
 
 # Tic Tac Toe
 
-Let's play the Tic Tac Toe game in this project. Two potentiometers (A0, A11) are used to move among 3x3 grids and two buttons (D1, D21) are used to select the grid.
+Let's play the Tic Tac Toe game in this project. Two potentiometers (A0, A11) are used to move among 3x3 grids and two buttons (D1, D19) are used to select the grid.
 
 
 ## Circuit
 
-You will use the two buttons (D1, 21) and two potentiometers (A0, A11) on the kit to play the game.
+You will use the two buttons (D1, 19) and two potentiometers (A0, A11) on the kit to play the game.
 
 <img
-  src={require('./img/etchASketchCircuit.png').default}
+  src={require('./img/tictactoeCircuit.png').default}
   alt="Modules for this project" width="960"
 />
 
 ## Program overview
 
-
+* The display is divided into 3x3 grids.
+* The first player rotates the potentiometer (A0) to choose a grid. Press the button (D1) to confirm the selection.
+* Then the second player rotates the potentiometer (A11) to choose a grid. Press the button (D19) to confirm the selection.
+* Two players take turns.
+* Finally, the first player who marks the grids in a row/column/diagonal wins.
 
 ## Example code
 

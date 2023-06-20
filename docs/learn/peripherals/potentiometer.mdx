@@ -106,7 +106,7 @@ The two resistors are in series, which means the current flows through them are 
 
 The potentiometer is a typical example of it. The whole resistor is cut into two parts by the wiper. As the wiper goes, the ratio of the resistor changes, thus the voltage drop changes accordingly.
 
-## 🔸Circuit - potentiometer module
+## 🔸Circuit - Potentiometer
 There are two potentiometers on your SwiftIO Playground. They are connected respectively to A0 and A11.
 
 <img
@@ -121,6 +121,7 @@ There are two potentiometers on your SwiftIO Playground. They are connected resp
 
 :::note
 The circuits above are simplified for your reference.
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 ## 🔸API
@@ -188,56 +189,7 @@ let value = knob.readVoltage()
 
 Declare a constant to store the returned voltage value.
 
-There are three different methods in `AnalogIn` class to read analog input. The only difference is the forms of the return value: raw value, voltage value, or a percentage. The method `readVoltage()` returns the voltage reading.
-
-```swift
-print(value)
-```
-It allows you to see the value on a serial monitor. 
-
-It is a useful tool to debug your code if there is something unexpected in your program. You could add it after each statement that changes a value. Then you could infer which step goes wrong according to the printed results.
-
-<details>
-    <summary>How to use the serial monitor?</summary>
-
-1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-to-SERIAL device on your board.
-2. After finishing downloading the project, click **SERIAL MONITOR** tab.
-
-<img
-  src={require('./img/serialMonitor.png').default}
-  alt="" width="960"
-/>
-
-3. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
-
-<img
-  src={require('./img/choosePort.png').default}
-  alt="" width="960"
-/>
-
-
-4. Select the **baudrate 115200**.
-
-<img
-  src={require('./img/chooseBaudrate.png').default}
-  alt="" width="960"
-/>
-
-5. Click the button **Start Monitoring**.
-
-<img
-  src={require('./img/startMonitoring.png').default}
-  alt="" width="960"
-/>
-
-And now you should see the values printed on after another.
-
-<img
-  src={require('./img/printValues.png').default}
-  alt="" width="960"
-/>
-
-</details>
+There are three different methods in `AnalogIn` class to read analog input. The only difference is the forms of the return value: raw value, voltage value, or percentage. The method `readVoltage()` returns the voltage reading.
 
 
 
