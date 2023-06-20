@@ -122,7 +122,7 @@ module.exports = {
             },
             {
               label: 'Blog',
-              href: 'https://madmachine.io/blog',
+              href: 'https://docs.madmachine.io/blog',
             }
           ],
         },
