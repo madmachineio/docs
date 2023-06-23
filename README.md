@@ -8,7 +8,7 @@ If you have no idea how to start your project, you're in the right place. Here y
 
 - **Overview** - get familiar with the MadMachine project, learn basic operations and useful guides for your projects.
 
-- **Learning A-Z** - learn from zero electronics and language and understand how everything works.
+- **Learning Playground** - learn from zero electronics and language and understand how everything works.
 
 - **Projects** - learn with some built-in projects and get inspiration for your own projects. 
 

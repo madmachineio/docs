@@ -78,11 +78,17 @@ module.exports = {
           position: 'left',
           label: 'Learning Playground',
         },
+        // {
+        //   type: 'doc',
+        //   docId: 'projects/overview',
+        //   position: 'left',
+        //   label: 'Projects',
+        // },
         {
           type: 'doc',
-          docId: 'projects/overview',
+          docId: 'overview/hardware/overview',
           position: 'left',
-          label: 'Projects',
+          label: 'Hardware',
         },
         {
           type: 'doc',

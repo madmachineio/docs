@@ -1,5 +1,5 @@
 ---
-title: SwiftIO Board
+title: SwiftIO Board (Discontinued)
 description: SwiftIO Board allows you to interact with all kinds of electronic devices using Swift language. You will know about details of the board and the functionalities of all pins.
 ---
 

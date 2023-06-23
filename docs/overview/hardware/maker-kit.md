@@ -1,5 +1,5 @@
 ---
-title: SwiftIO Maker kit
+title: SwiftIO Maker kit (retired)
 description: SwiftIO Maker kit is a beginner kit to learn about simple circuits. You will program your board in Swift language to control all modules. After several demos, you can DIY more projects. 
 ---
 

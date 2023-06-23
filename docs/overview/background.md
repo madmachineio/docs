@@ -75,7 +75,7 @@ Also, we now use **copy and run mode**, so your application will be copied from 
 
 ## What’s the difference between SwiftIO and similar boards in the market?
 
-![](img/comparison.png)
+
 
 ### Arduino:
 
