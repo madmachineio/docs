@@ -40,7 +40,7 @@ You will use two potentiometers (A0, A11), the buzzer (PWM5A) and the LCD (SPI0)
   alt="Modules for this project" width="960"
 />
 
-## Program overview
+## Project overview
 
 1. Read analog values from the potentiometers to calculate the beats in a measure and the BPM.
 2. Display the beat settings on the LCD. 

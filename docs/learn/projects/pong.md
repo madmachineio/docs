@@ -1,6 +1,6 @@
 ---
 title: Pong
-description: You'll explore more with some advanced projects.
+description: Play pong game.
 ---
 
 # Pong
@@ -18,7 +18,7 @@ The two potentiometers (A0, A11) are used to move paddles. The button (D1) is us
   alt="Modules for this project" width="960"
 />
 
-## Program overview
+## Project overview
 
 1. The game will start with the ball moving at a specified speed from its starting position. The ball will move in both the x and y directions.
 2. Each player rotates a potentiometer to move the paddle in order to hit the ball.

@@ -7,34 +7,32 @@ description: Take a quick look at the hardware for the following tutorials.
 
 In this tutorial, you will get to know the hardware that will be your companion throughout this learning journey.
 
-The whole kit - SwiftIO Playground kit consists of two parts: 
-* SwiftIO Feather Board - main board
-
+The SwiftIO Playground kit consists of two parts: 
+* SwiftIO Micro - main board
 <img
-  src={require('./img/Feather.png').default}
-  alt="SwiftIO feather board" width="480"
+  src={require('./img/micro.png').default}
+  alt="SwiftIO Micro" width="480"
 />
 
 * SwiftIO Playground - expansion board
-
 <img
   src={require('./img/playground.png').default}
   alt="SwiftIO playground" width="960"
 />
 
-## SwiftIO Feather Board
+## SwiftIO Micro
 
 By connecting it to various hardware components and downloading code onto it, you can interact with the real world, utilizing sensors to detect the environment or generating outputs such as lights and speakers.
 
-While compact in size, the SwiftIO Feather board is incredibly powerful. It is capable of handling all kinds of your projects and can be easily integrated into any of your creative endeavors.
+While compact in size, the SwiftIO Micro is incredibly powerful. It is capable of handling all kinds of your projects and can be easily integrated into any of your creative endeavors.
 
-What's more, the SwiftIO Feather board is compatible with the [Adafruit Feather system](https://learn.adafruit.com/adafruit-feather), allowing you to combine it with the hardware available in their system.
+What's more, the SwiftIO Micro is compatible with the [Adafruit Feather system](https://learn.adafruit.com/adafruit-feather), allowing you to combine it with the hardware available in their system.
 
 Now, let's delve into the details of the board:
 
 <img
-  src={require('./img/FeatherParts.png').default}
-  alt="Parts of feather board" width="960"
+  src={require('./img/microParts.png').default}
+  alt="Parts of Micro" width="960"
 />
 
 | Part     | Detail                                                                           |
@@ -55,11 +53,11 @@ Now, let's delve into the details of the board:
 | CAN      | 1, CTX and CRX pins used for CAN communication                                   |
 
 
-You can connect other hardware to the board through the pins on two sides. This is the pinout diagram of SwiftIO Feather board. It shows the usage of all pins.
+You can connect other hardware to the board through the pins on two sides. This is the pinout diagram of SwiftIO Micro. It shows the usage of all pins.
 
 <img
-  src={require('./img/featherPinout.png').default}
-  alt="Pinout of feather board" width="720"
+  src={require('./img/microPinout.png').default}
+  alt="Pinout of Micro" width="720"
 />
 
 As mentioned before, most pins on the board are [multiplexed](./peripherals#how-are-pins-organized), therefore you need to decide the pin's usage in your code.
@@ -68,18 +66,18 @@ As mentioned before, most pins on the board are [multiplexed](./peripherals#how-
 
 ## SwiftIO Playground
 
-Only with the SwiftIO Feather board, you may still don't know how to start. the expansion board - SwiftIO Playground is specially designed for all newbies to get started. No wire is needed! All modules are directly connected to the shield in the middle.
+Only with the SwiftIO Micro, you may still don't know how to start. The expansion board - SwiftIO Playground is specially designed for all newbies to get started. No wire is needed! All modules are directly connected to the shield in the middle.
 
 <img
   src={require('./img/playgroundPins.png').default}
   alt="playground module connection" width="720"
 />
 
-The shield in the middle is for easier connection, and it's the SwiftIO Feather board that communicates with all the modules. After you plug the SwiftIO Feather board into the shield, the circuit is built. Then you could program the SwiftIO Feather board to control the modules. 
+The shield in the middle is for easier connection, and it's the SwiftIO Micro that communicates with all the modules. After you plug the SwiftIO Micro into the shield, the circuit is built. Then you could program the SwiftIO Micro to control the modules. 
 
 <img
-  src={require('./img/plugFeather.png').default}
-  alt="Plug SwiftIO Feather to the shield" width="960"
+  src={require('./img/plugMicro.png').default}
+  alt="Plug SwiftIO Micro to the shield" width="960"
 />
 
 Let's look into these modules in detail:

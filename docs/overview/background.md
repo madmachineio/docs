@@ -38,7 +38,7 @@ Unlike the **swift-project1** and **swift-embedded** that run on bare-metal, we 
 
 ## How does the building procedure work?
 
-If your project is built successfully, you will find a file `swiftio.bin` or `feather.bin` generated in the directory `.build`. After you copy it to the root directory of the SD card, eject it, the board will reset and run your code.
+If your project is built successfully, you will find a file `swiftio.bin` generated in the directory `.build`. After you copy it to the root directory of the SD card, eject it, the board will reset and run your code.
 
 When you click the build button or download button, the MadMachine tool will use related tools and libraries in [mm-sdk](https://github.com/madmachineio/mm-sdk/releases) to build the whole project. At present, the build script is written in Python. Later, when Swift package manager could run well in Windows, we are going to rewrite it using Swift. So we can take full advantage of the package management feature of SPM. Now, let me explain in detail the whole process of building. Suppose you create a project named **Blink**:
 

@@ -1,6 +1,6 @@
 ---
 title: Tic Tac Toe
-description: You'll explore more with some advanced projects.
+description: Play Tic Tac Toe game.
 ---
 
 # Tic Tac Toe
@@ -17,7 +17,7 @@ You will use the two buttons (D1, 19) and two potentiometers (A0, A11) on the ki
   alt="Modules for this project" width="960"
 />
 
-## Program overview
+## Project overview
 
 * The display is divided into 3x3 grids.
 * The first player rotates the potentiometer (A0) to choose a grid. Press the button (D1) to confirm the selection.

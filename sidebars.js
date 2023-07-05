@@ -20,7 +20,6 @@ const sidebars = {
   
   docsSidebar: [
     'overview/introduction', 
-    //'overview/roadmap',
     {
       type: 'category',
       collapsed: false,
@@ -64,23 +63,7 @@ const sidebars = {
         },
       ],
     },
-    // {
-    //   type: 'category',
-    //   collapsed: false,
-    //   label: '🔧Meet your hardware',
-    //   link: {
-    //     type: 'doc',
-    //     id: 'overview/hardware/overview',
-    //   },
-    //   items: [
-    //     'overview/hardware/swiftio-feather',
-    //     'overview/hardware/swiftio-playground',
-    //     'overview/hardware/swiftio-board',
-    //     'overview/hardware/maker-kit',
-    //   ],
-    // },
     'overview/background', 
-    //'overview/pin-id', 
     'overview/faq', 
   ],
 
@@ -101,7 +84,6 @@ const sidebars = {
             'learn/preparation/peripherals',
             'learn/preparation/sensors-actuators',
             'learn/preparation/hardware',
-            //'learn/preparation/swiftio-madboard',
           ],
         },
 
@@ -226,29 +208,6 @@ const sidebars = {
         },
       ],
     },
-    // {
-    //   type: 'category',
-    //   collapsed: false,
-    //   label: '🔸SwiftIO Maker Kit',
-    //   link: {
-    //     type: 'doc',
-    //     id: 'projects/swiftio-maker-kit/overview',
-    //   },
-    //   items: [
-    //     'projects/swiftio-maker-kit/mission1',
-    //     'projects/swiftio-maker-kit/mission2',
-    //     'projects/swiftio-maker-kit/mission3',
-    //     'projects/swiftio-maker-kit/mission4',
-    //     'projects/swiftio-maker-kit/mission5',
-    //     'projects/swiftio-maker-kit/mission6',
-    //     'projects/swiftio-maker-kit/mission7',
-    //     'projects/swiftio-maker-kit/mission8',
-    //     'projects/swiftio-maker-kit/mission9',
-    //     'projects/swiftio-maker-kit/mission10',
-    //     'projects/swiftio-maker-kit/mission11',
-    //     'projects/swiftio-maker-kit/mission12',
-    //   ],
-    // },
     'projects/swiftio-playground',
   ],
 
@@ -257,45 +216,32 @@ const sidebars = {
   ],
 
   hardwareSidebar: [
+    'hardware/swiftio-micro',
+    'hardware/swiftio-playground',
+    'hardware/swiftio-board',
     {
       type: 'category',
-      collapsed: false,
-      label: '🔧Meet your hardware',
+      collapsed: true,
+      label: 'SwiftIO Maker Kit (Discontinued)',
       link: {
         type: 'doc',
-        id: 'overview/hardware/overview',
+        id: 'hardware/maker-kit',
       },
       items: [
-        'overview/hardware/swiftio-feather',
-        'overview/hardware/swiftio-playground',
-        'overview/hardware/swiftio-board',
-        // 'overview/hardware/maker-kit',
-        {
-          type: 'category',
-          collapsed: true,
-          label: 'SwiftIO Maker Kit (Discontinued)',
-          link: {
-            type: 'doc',
-            id: 'overview/hardware/maker-kit',
-          },
-          items: [
-            'projects/swiftio-maker-kit/mission1',
-            'projects/swiftio-maker-kit/mission2',
-            'projects/swiftio-maker-kit/mission3',
-            'projects/swiftio-maker-kit/mission4',
-            'projects/swiftio-maker-kit/mission5',
-            'projects/swiftio-maker-kit/mission6',
-            'projects/swiftio-maker-kit/mission7',
-            'projects/swiftio-maker-kit/mission8',
-            'projects/swiftio-maker-kit/mission9',
-            'projects/swiftio-maker-kit/mission10',
-            'projects/swiftio-maker-kit/mission11',
-            'projects/swiftio-maker-kit/mission12',
-          ],
-        },
+        'projects/swiftio-maker-kit/mission1',
+        'projects/swiftio-maker-kit/mission2',
+        'projects/swiftio-maker-kit/mission3',
+        'projects/swiftio-maker-kit/mission4',
+        'projects/swiftio-maker-kit/mission5',
+        'projects/swiftio-maker-kit/mission6',
+        'projects/swiftio-maker-kit/mission7',
+        'projects/swiftio-maker-kit/mission8',
+        'projects/swiftio-maker-kit/mission9',
+        'projects/swiftio-maker-kit/mission10',
+        'projects/swiftio-maker-kit/mission11',
+        'projects/swiftio-maker-kit/mission12',
       ],
     },
-
   ],
 };
 

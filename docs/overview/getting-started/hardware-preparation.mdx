@@ -7,9 +7,34 @@ description: Connect your board and build the circuit.
 
 Follow the steps below to connect the board to your computer. 
 
-1. If your project needs other components, you could build the circuit first. And in this case, only the onboard LED is used, so just skip this step.
+If your project needs other components, you could build the circuit first. And in this case, only the onboard LED is used.
 
-2. Insert an **SD card** into the slot.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="micro"
+  values={[
+    { label: 'SwiftIO Micro', value: 'micro', },
+    { label: 'SwiftIO board', value: 'swiftio', },
+  ]
+}>
+
+<TabItem value="micro">
+
+Connect the board to your computer through the port using a USB cable.
+
+<img
+  src={require('./img/microConnectComputer.png').default}
+  alt="Connect board to computer" width="960"
+/>
+
+</TabItem>
+
+<TabItem value="swiftio">
+
+1. Insert an **SD card** into the slot.
 
 <img
   src={require('./img/SDcard.png').default}
@@ -17,10 +42,19 @@ Follow the steps below to connect the board to your computer.
 />
 
 
-3. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO Feather board has only the download port. SwiftIO board has both download and serial ports, so make sure you connect the correct port.
+2. Connect the board to your computer through the **Download port** using a USB cable. SwiftIO board has both download and serial ports, so make sure you connect the correct port.
 
 <img
-  src={require('./img/downloadPort.png').default}
+  src={require('./img/swiftIOConnectComputer.png').default}
   alt="Connect board to computer" width="960"
 />
+
+
+</TabItem>
+</Tabs>
+
+
+
+
+
 

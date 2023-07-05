@@ -49,7 +49,7 @@ Here are some important concepts about PWM:
 
 The PWM peripheral in a microcontroller is designed to **generate PWM signals**. The PWM pins are typically labeled with a tilde symbol (~) to indicate their capability. These pins can be used to control the speed of motors, the brightness of LEDs...
 
-If you look at the [PWM pin names](../preparation/hardware) of the SwiftIO Feather board, you may find they are marked with A or B at the end. Actually, the **PWM pins are grouped in pairs**, like PWM2A and PWM2B. The two pins in a group **share the same frequency**. So if you need two PWM pins with different frequencies, you should use the pins in different groups, like PWM0A and PWM1A.
+If you look at the [PWM pin names](../preparation/hardware) of the SwiftIO Micro, you may find they are marked with A or B at the end. Actually, the **PWM pins are grouped in pairs**, like PWM2A and PWM2B. The two pins in a group **share the same frequency**. So if you need two PWM pins with different frequencies, you should use the pins in different groups, like PWM0A and PWM1A.
 
 
 ## 🔸New component
@@ -113,12 +113,20 @@ So to make the buzzer play a piece of melody, you need to find the frequency and
 
 The buzzer is connected to the pin **PWM5A**. 
 
-The PWM pins are marked with a tilde (~) on the silkscreen of your board. Most of the pins on your SwiftIO Feather board are multifunctional. A pin may be used as digital pins and PWM pins. You can refer to [this pinout](../../../overview/hardware/swiftio-feather#pins) to know the functionalities of each pin.
+The PWM pins are marked with a tilde (~) on the silkscreen of your board. Most of the pins on your SwiftIO Micro are multifunctional. A pin may be used as digital pins and PWM pins. You can refer to [this pinout](../../hardware/swiftio-micro#pins) to know the functionalities of each pin.
 
 <img
   src={require('./img/buzzerCircuit.png').default}
   alt="Buzzer circuit" width="960"
 />
+
+| Buzzer Pin | SwiftIO Micro Pin |
+| - | - |
+| SIG | PWM5A |
+| NC (Not Connected) | - |
+| 3V3 | 3V3 |
+| GND | GND |
+
 
 <img
   src={require('./img/buzzerCircuitDiagram.png').default}
@@ -164,13 +172,13 @@ In this project, the buzzer will play the musical scale.
 
 **Example code**
 
-```swift title="C01S03Buzzer.swift" showLineNumbers
+```swift title="Buzzer.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03Buzzer {
+public struct Buzzer {
     public static func main() {
         // Initialize a PWM pin for the buzzer.
         let buzzer = PWMOut(Id.PWM5A)
@@ -251,13 +259,13 @@ So let's try a breathing LED! You may notice it when a new message comes on your
 
 **Example code**
 
-```swift title="C01S03PWMLed.swift" showLineNumbers
+```swift title="PWMLed.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03PWMLed {
+public struct PWMLed {
     public static func main() {
         // Initialize a PWM output pin for the LED.
         let led = PWMOut(Id.PWM4A)
@@ -393,13 +401,13 @@ You'll adjust the brightness of the LED using two buttons: one is reserved to in
 **Example code**
 
 
-```swift title="C01S03ButtonPWM.swift" showLineNumbers
+```swift title="ButtonPWM.swift" showLineNumbers
 // Import two necessary libraries.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03ButtonPWM {
+public struct ButtonPWM {
     public static func main() {
         // Initialize the PWM pin.
         let led = PWMOut(Id.PWM4A)
@@ -476,12 +484,12 @@ In this project, let's test the reflex time.
 
 **Example code**
 
-```swift title="C01S03ReflexGame.swift" showLineNumbers
+```swift title="ReflexGame.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03ReflexGame {
+public struct ReflexGame {
     public static func main() {
         let startButton = DigitalIn(Id.D1)
         let player = DigitalIn(Id.D19)
@@ -545,7 +553,7 @@ It is a useful tool to debug your code if there is something unexpected in your 
 <details>
     <summary>How to use the serial monitor?</summary>
 
-1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-to-SERIAL device on your board.
+1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-Serial device on your board.
 2. After finishing downloading the project, click **SERIAL MONITOR** tab.
 
 <img
@@ -600,12 +608,12 @@ Many types of light decorations, such as Christmas lights or string lights, ofte
 
 **Example code**
 
-```swift title="C01S03LEDPatternChange.swift" showLineNumbers
+```swift title="LEDPatternChange.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03LEDPatternChange {
+public struct LEDPatternChange {
     public static func main() {
         let led = PWMOut(Id.PWM4A)
         let button = DigitalIn(Id.D1)

@@ -1,6 +1,6 @@
 ---
 title: Morse code
-description: You'll explore more with some advanced projects.
+description: Send morse code and display the message.
 ---
 
 # Morse code
@@ -37,7 +37,7 @@ You will use a button (D1) as an input and an LCD (SPI0) for text display. The b
   alt="Modules for this project" width="960"
 />
 
-## Program overview
+## Project overview
 
 1. Read digital values from the button.
 2. Once it's true, the button is pressed. Check how long the button is pressed. 

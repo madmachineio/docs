@@ -76,6 +76,13 @@ The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
   alt="Accelerometer circuit" width="960"
 />
 
+| Accelerometer Pin | SwiftIO Micro Pin |
+| - | - |
+| SCL | I2C0 (SCL0) |
+| SDA | I2C0 (SDA0) |
+| 3V3 | 3V3 |
+| GND | GND |
+
 <img
   src={require('./img/accelerometerCircuitDiagram.png').default}
   alt="Accelerometer circuit diagram" width="360"
@@ -100,7 +107,7 @@ The circuits above are simplified versions for your reference.
 ## 🔸Projects
 
 
-### 1. Read acceleration
+### 1. Reading acceleration
 
 Let's start with the simplest project - read the accelerations and print the values.
 
@@ -118,7 +125,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S07Accelerometer.swift', value: 'main', },
+    { label: 'Accelerometer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -133,7 +140,7 @@ import MadBoard
 import LIS3DH
 
 @main
-public struct C01S07Accelerometer {
+public struct Accelerometer {
     public static func main() {
         // Initialize the I2C pins and the sensor.
         let i2c = I2C(Id.I2C0)
@@ -159,7 +166,7 @@ public struct C01S07Accelerometer {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S07Accelerometer",
+    name: "Accelerometer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -171,7 +178,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S07Accelerometer",
+            name: "Accelerometer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -180,8 +187,8 @@ let package = Package(
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S07AccelerometerTests",
-            dependencies: ["C01S07Accelerometer"]),
+            name: "AccelerometerTests",
+            dependencies: ["Accelerometer"]),
     ]
 )
 ```
@@ -210,7 +217,7 @@ Let's build a dice with the accelerometer. You can shake or tilt the sensor to s
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S07AccelerometerDice.swift', value: 'main', },
+    { label: 'AccelerometerDice.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -226,7 +233,7 @@ import MadBoard
 import LIS3DH
 
 @main
-public struct C01S07AccelerometerDice {
+public struct AccelerometerDice {
     public static func main() {
         // Initialize an I2C interface and use it to set the sensor.
         let i2c = I2C(Id.I2C0)
@@ -275,7 +282,7 @@ public struct C01S07AccelerometerDice {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S07AccelerometerDice",
+    name: "AccelerometerDice",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -287,7 +294,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S07AccelerometerDice",
+            name: "AccelerometerDice",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -296,8 +303,8 @@ let package = Package(
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S07AccelerometerDiceTests",
-            dependencies: ["C01S07AccelerometerDice"]),
+            name: "AccelerometerDiceTests",
+            dependencies: ["AccelerometerDice"]),
     ]
 )
 ```
@@ -367,7 +374,7 @@ You can also view the messages on a serial monitor for reference.
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S07AccelerometerLock.swift', value: 'main', },
+    { label: 'AccelerometerLock.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -382,7 +389,7 @@ import MadBoard
 import LIS3DH
 
 @main
-public struct C01S07AccelerometerLock {
+public struct AccelerometerLock {
     public static func main() {
         // Initialize the I2C pins and the sensor.
         let i2c = I2C(Id.I2C0)
@@ -514,7 +521,7 @@ public struct C01S07AccelerometerLock {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S07AccelerometerLock",
+    name: "AccelerometerLock",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -526,7 +533,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S07AccelerometerLock",
+            name: "AccelerometerLock",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -535,8 +542,8 @@ let package = Package(
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S07AccelerometerLockTests",
-            dependencies: ["C01S07AccelerometerLock"]),
+            name: "AccelerometerLockTests",
+            dependencies: ["AccelerometerLock"]),
     ]
 )
 ```

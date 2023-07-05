@@ -3,7 +3,7 @@ title: LED Blink
 description: Learn about GPIO and set digital output to blink LED.
 ---
 
-# LED blink
+# LED Blink
 
 
 Now it's time for your first project! Let's start by learning how to use the most basic and commonly used component: the LED. It's everywhere in life, for lighting, indication, or decoration...
@@ -47,19 +47,19 @@ Here are different expressions to represent two states:
 For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true...
 :::
 
-Digital signals are ideal for working with components that have discrete states, such as LEDs (on/off) and buttons (pressed or released).
+Digital signals are ideal for working with components that have discrete states, such as LEDs (on/off) and buttons (pressed/released).
 
 ### Peripheral - GPIO
 
-The peripheral **GPIO** (general-purpose input/output) allows **sending and receiving digital signals** between MCUs and various devices. 
+The peripheral **GPIO** (general-purpose input/output) allows sending and receiving digital signals between MCUs and various devices. 
 
-**GPIO pins** can be configured as either **input or output pins using software**, meaning they can either read or send signals to control the state of an external device or to read data from an external sensor. 
+**GPIO pins** can be configured as either **input or output pins using software**. 
 
 - When a GPIO pin is configured as an **output**, it can be set to either a high or low voltage level to control the state of an external device, such as turning an LED on or off. 
-- When a GPIO pin is configured as an [**input**](./button), it can read the voltage level of an external signal, such as the state of a button or the output of a sensor.
+- When a GPIO pin is configured as an [**input**](./button), it can read the voltage level of an external signal, either high or low.
 
 
-In this tutorial, you'll make a GPIO pin **output digital signal to control the LED**. For the LED module on your kit, when you apply a high signal, it will turn on, and if you apply a low signal, it will be off. 
+In this tutorial, you'll make a GPIO pin output digital signal to control the LED. For the LED module on your kit, when you apply a high signal, it will turn on, and if you apply a low signal, it will be off. 
 
 
 
@@ -84,16 +84,17 @@ LED (Light-emitting diode) is a type of diode that convert electrical energy int
 />
 
 
-:::info
-How to identify the two legs of LED?
+<details>
+  <summary> How to identify the two legs of an LED? </summary>
 
 1. Typically the long leg is positive and the short leg is negative. 
 2. Alternatively, sometimes you will find a notch on the negative side.
-:::
+
+</details>
 
 The LED allows a **limited range of current**, usually no more than 20mA. So you should add a [resistor](#resistor) when connecting it to your circuit. Or the LED might burn out when driving too much current.
 
-**Circuit connection**
+**LED Circuit connection**
 
 When you connect the LED in the circuit, there are two cases to control the LED:
 
@@ -109,7 +110,7 @@ _Pin is a digital output pin, R is a resistor, <img
   alt="LED symbol" width="40" align="center"
 /> is an LED, and GND is ground_
 
-* Another method is to connect the **anode to a power source and connect the cathode to a digital output pin**. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on. This is how the built-in LED works on the SwiftIO Feather board.
+* Another method is to connect the **anode to a power source and connect the cathode to a digital output pin**. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on. This is how the built-in LED works on the SwiftIO Micro.
 
 <img
   src={require('./img/LEDConnect3V3.png').default}
@@ -122,11 +123,12 @@ _Vcc is a power source, R is a resistor, <img
 /> is an LED, and pin is a digital output pin_
 
 
-There are many types of LEDs with different colors and sizes. The LED on your SwiftIO Playground is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
+There are many types of LEDs with different colors and sizes. The LED on your kit is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
 
 ### Resistor
 
-The resistor functions as a current-limiting component that, just as its name suggests, can **resist the current** in the circuit. It has two legs. You can connect it in either direction as it is not polarized. 
+Resistor functions as a current-limiting component that, just as its name suggests, can **resist the current** in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current, called **resistance**, is measured in **ohm (Ω)**.
+
 <img
   src={require('./img/10kResistor.png').default}
   alt="resistor" width="240"
@@ -135,19 +137,19 @@ The resistor functions as a current-limiting component that, just as its name su
 Symbol: <img
   src={require('./img/resistorSymbol1.png').default}
   alt="International resistor symbol" width="80" align="center"
-/> (international), <img
+/> (International), <img
   src={require('./img/resistorSymbol2.png').default}
   alt="American resistor symbol" width="80" align="center"
 /> (US)
 
-Its ability to resist the current, called **resistance**, is measured in **ohm (Ω)**.
 
-:::info
+
+:::info Exercise
+
 How can you tell how much resistance a resistor provides?
 
 Each resistor has a specific resistance. Note the colored bands in the diagram. Each band corresponds to a certain number. [Here](https://www.allaboutcircuits.com/tools/resistor-color-code-calculator/) is an online guide and calculator to determine how to total the value of all the bands together. 
 
-**Challenge**
 
 What's the resistance of the sample resistor R1 pictured above, as well as the resistors R2 and R3 below? See below for the answer! 
 
@@ -172,7 +174,7 @@ What's the resistance of the sample resistor R1 pictured above, as well as the r
 
 :::
 
-This kind of resistor is useful primarily when you DIY some stuff. However, the SwiftIO Feather board and the rest of the kit use surface mount resistors as they are smaller and more suitable for mass production.
+This kind of resistor is useful primarily when you DIY some stuff. The kit use surface mount resistors as they are smaller and more suitable for mass production.
 
 ## 🔸New concept
 
@@ -214,7 +216,7 @@ and
 > **I = V / R**
 
 
-As stated previously, all digital pins on the SwiftIO Feather board output a high signal of 3.3V. For example, if the resistance in the circuit is 330Ω, the current would be 3.3 / 330 = 0.01A. 
+As stated previously, all digital pins on the SwiftIO Micro output a high signal of 3.3V. For example, if the resistance in the circuit is 330Ω, the current would be 3.3 / 330 = 0.01A. 
 
 :::info Exercise
 
@@ -231,57 +233,73 @@ Here is the equation:
 * V<sub>F</sub>: forward voltage for the LED, that is, voltage drop as the current across the LED. 
 * I<sub>F</sub>: forward current for the LED (usually 10-20mA). It's the maximum current. If you don't have the specs about LED, you could normally suppose it to be 20mA.
 
-The resistor needed for the LED is:
+Btw, the resistance of the LED itself is little so you could ignore it. 
 
+<details>
+    <summary> Answer </summary>
+
+The resistor needed for the LED is:
 R = (3.3 - 3.0) / 0.015 = 20Ω
 
-Btw, the resistance of the LED itself is little so you could ignore it. 
+</details>
+
 
 Frequently you will be unable to find a resistor that matches the exact theoretical value. When this happens, you can use a resistor that has slightly greater resistance.
 
 In general, the resistance calculated is a minimum requirement. You can also choose a resistor with larger resistance. Doing so will cause the LED's brightness to change with it. Greater resistance will cause the LED to be dimmer.
+
 :::
 
-
-You could try this [online ohm's law simulator](
+You can also try this [online Ohm's law simulator](
 https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html) to get more familiar with it.
 
 ### Series circuit and parallel circuit
 
 Series and parallel circuits are the ways to connect more than two devices in the circuit. 
 
-* In a **series circuit**, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same.
+* In a **series circuit**, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same: **I<sub>R1</sub> = I<sub>R2</sub>**.
+* In a **parallel circuit**, devices share two common nodes, like R3 and R4. Node a connects both two devices, so the current flows through both of them. The voltages between the two devices are the same: **V<sub>R3</sub> = V<sub>R4</sub>**.
 
+<img
+  src={require('./img/seriesParallel.png').default}
+  alt="Series and parallel circuit" width="960"
+/>                  
+
+
+:::info Exercise
+
+Calculate the current and voltage of each resistor in the circuit above using Ohm's law. 
 
 <details>
-    <summary>Suppose R1 is 100Ω and R2 is 200Ω, the voltage supply is 3V.</summary>
+    <summary> Suppose R1 is 100Ω and R2 is 200Ω, the voltage supply is 3V.  </summary>
 
-  * R = R<sub>R1</sub> + R<sub>R2</sub> = 300Ω
+  * R<sub>Total</sub> = R<sub>R1</sub> + R<sub>R2</sub> = 300Ω
   * I<sub>R1</sub> = I<sub>R2</sub> = 3V / 300Ω = 0.01A
   * V<sub>R1</sub> = 0.01A x 100Ω = 1V
   * V<sub>R2</sub> = 0.01A x 200Ω = 2V
 
 </details>
 
-
-* In a **parallel circuit**, devices share two common nodes, like R3 and R4. Node a connects both two devices, so the current flows through both of them. The voltages between two devices are the same.
-
 <details>
-    <summary>Suppose R3 is 100Ω and R4 is 200Ω, the voltage supply is 3V.</summary>
+    <summary> Suppose R3 is 100Ω and R4 is 200Ω, the voltage supply is 3V. </summary>
 
   * V<sub>R3</sub> = V<sub>R4</sub> = 3V
   * I<sub>R3</sub> = 3V / 100Ω = 0.03A
   * I<sub>R4</sub> = 3V / 200Ω = 0.015A
   * I = I<sub>R3</sub> + I<sub>R4</sub> = 0.045A
-  * R = (R3 x R4) / (R3 + R4) ≈ 66.67Ω
+
+You could also get total resistance in the circuit:
+
+1. V / R<sub>Total</sub> = V<sub>R3</sub> / R<sub>R3</sub> + V<sub>R4</sub> / R<sub>R4</sub>
+2. 1 / R<sub>Total</sub> = 1 / R<sub>R3</sub> + 1 / R<sub>R4</sub>
+3. Thus you get the formula for the total resistance in the circuit:
+  R<sub>Total</sub> = (R<sub>R3</sub> x R<sub>R4</sub>) / (R<sub>R3</sub> + R<sub>R4</sub>) ≈ 66.67Ω
 
 </details>
 
-  
-<img
-  src={require('./img/seriesParallel.png').default}
-  alt="Series and parallel circuit" width="960"
-/>                  
+
+:::
+
 
 
 In your real situation, the circuit would not be that easy. The series and parallel circuits would both be used when building the circuit.
@@ -289,7 +307,7 @@ In your real situation, the circuit would not be that easy. The series and paral
 Let's look at an example.
 
 * In the first circuit, the two lamps are connected in series, so the switch can control both of them. If any of the lamps breaks down, even if the switch is closed, the other lamp will not be lit. 
-* In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the switch connected in series: switch1 controls the lamp1, switch2 controls the lamp2. And the two lamps work separately.
+* In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the switch connected in series: switch1 controls the lamp1, switch2 controls the lamp2. The two lamps work separately.
 
 <img
   src={require('./img/seriesParallelCombination.png').default}
@@ -302,7 +320,7 @@ In addition to the previously mentioned types of circuits, there are three more 
 
 * The first figure is a **closed circuit**. This allows current to flow freely from the positive terminal through a load that consumes electric power, finally returning to the negative terminal. 
 * In an **open circuit**, there is a gap somewhere on the circuit, therefore disallowing any current to flow through it.
-* Current tends to flow through the path with lower resistance, if you accidentally connect the positive to the negative terminal of the power supply, the current will flow directly through this path and bypass the other paths with higher resistance. The resistance of wires is so small that you could normally ignore it. This causes a **short circuit**. When the current reaches sufficiently high levels, this can cause serious damage.
+* Current tends to flow through the path with lower resistance, if you accidentally connect the positive to the negative terminal of the power supply, the current will flow directly through this path and bypass the other paths with higher resistance. The resistance of wires is so small that you could normally ignore it. This causes a **short circuit**. It can be dangerous as it can cause overheating, damage to components, or even fires.
 
 <img
   src={require('./img/threeCircuits.png').default}
@@ -310,7 +328,7 @@ In addition to the previously mentioned types of circuits, there are three more 
 />  
 
 
-:::caution Current safety
+:::danger Current safety
 In a complete circuit, the current will always flow from the point of higher voltage (usually power) to the one of lower voltage (usually ground or GND). Consumed energy is turned into light, heat, sound and many other forms. 
 
 If you were to connect the power directly to the ground using a wire, this would cause a short circuit. It can (and usually do) cause damage to your circuit and board, and is also very possible to start a fire.  
@@ -322,20 +340,27 @@ Another warning: if you're not careful about selecting an appropriately strong r
 
 ## 🔸Circuit - LED
 
-The image below shows how the LED module is connected to the SwiftIO Feather board in a simplified way. 
-
-The LED is connected to **D18**. GND and 3V3 are connected respectively to the corresponding pin on the board. 
-
-:::info
-On circuit diagrams, the red line is usually for power and the black line for ground.
-:::
-
 The circuits are all built when designing the board, so **you don't need to connect any wires**. And as mentioned before, the white sockets are used to build the circuit after the board is disassembled.
+
+The image below shows how the LED module is connected to the SwiftIO Micro in a simplified way. 
+
 
 <img
   src={require('./img/LEDCircuit.png').default}
   alt="LED module on the kit" width="960"
 />
+
+:::info
+On circuit diagrams, the red line is usually for power and the black line for ground.
+:::
+
+| LED Pin | SwiftIO Micro Pin |
+| - | - |
+| SIG | D18 |
+| NC (Not Connected) | - |
+| 3V3 | 3V3 |
+| GND | GND |
+
 
 <img
   src={require('./img/ledCircuitDiagram.png').default}
@@ -356,8 +381,8 @@ The circuits above are simplified for your reference.
 | Method | Explanation |
 | ------- | -----------|
 | `init(_:mode:value:)` | Initialize a digital output pin. <br />The first parameter needs the pin id which is listed in the Id enumeration. The parameters `mode` and `value` already have a default value: the mode is `pushPull` and the output value is `false`. |
-|`write(_:)` | Set the pin to output high or low voltage. <br />Its parameter is a boolean type: `true` or `false`. `true` corresponds to a high level and `false` corresponds to a low level. |
-| `toggle()` | Reverse the digital output between high and low. |
+|`write(_:)` | Set the pin to output high or low voltage. <br />Its parameter is a boolean type: `true` corresponds to a high level and `false` corresponds to a low level. |
+| `toggle()` | Reverse the digital output. |
 | `high()` | Output high voltage. |
 | `low()` | Output low voltage. |
 
@@ -377,22 +402,23 @@ On your first try, let's make the LED blink.
 * The LED stays off by default.
 * For the first second, the LED **turns on** due to **high** digital output.
 * For the next second, the LED **turns off** due to **low** digital output.
-* The LED turns on and off repeatedly.
+* The LED turns on and off repeatedly...
 
 <img
   src={require('./img/blink.png').default}
   alt="LED blink" width="480"
 />
 
+
 **Example code**
 
-```swift title="C01S01LEDBlink.swift" showLineNumbers
+```swift title="LEDBlink.swift" showLineNumbers
 // First import the SwiftIO and MadBoard libraries into the project to use related functionalities.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S01LEDBlink {
+public struct LEDBlink {
     public static func main() {
         // Initialize the specified pin used for digital output.
         let led = DigitalOut(Id.D18)
@@ -439,12 +465,22 @@ let led = DigitalOut(Id.D18)
 
 `let` is the keyword to declare a constant. A **constant** is like a container whose content will never change. But before using it, you need to declare it in advance. Its name can be whatever you like and it's better to be descriptive, instead of a random name like abc. If the name of your constant consists of several words, then except for the first word, the first letter of the rest words needs to be capitalized, like `ledPin`. This is known as the **camel case**.
 
-The **class**, in brief, is more like a mold to create different examples, known as instances, with similar characteristics. The class `DigitalOut` provides ways to change the digital output on a specified pin, so all its instances share the functionalities. The process of creating an instance is called initialization.
+The **class**, in brief, is more like a mold to create different examples, known as instances, with similar characteristics. The class `DigitalOut` provides ways to change the digital output on a specified pin, so all its instances share the functionalities. The process of creating an instance is called **initialization**.
 
 The constant `led` is the instance of the `DigitalOut` class. To initialize it,  
-* you need to specify which pin is used. `Id` is an enumeration including the ids of all pins in `MadBoard`. As for **enumeration**, enum for short, it groups a set of related values. Just remember that the id needs to be written as `Id.D18`. 
-* the `mode` of the digital pin is `pushPull` in most cases and you will know more about it in the future.
-* the `value` decides the output state of the pin after it's initialized. By default, it outputs a low level. If you want the pin to output 3.3V by default, the statement should be `let led = DigitalOut(Id.D18, value: true)`.
+* specify the pin connected to the LED. `Id` is an enumeration including the ids of all pins in `MadBoard`. As for **enumeration**, enum for short, it groups a set of related values. Just remember that the id needs to be written as `Id.D18`. 
+* the `mode` of the digital pin is [`pushPull`](#push-pull-and-open-drain) in most cases.
+* the `value` decides the output state of the pin after it's initialized. By default, it outputs a low level, which means the LED is off by default. 
+
+<details>
+  <summary> Do you know how to initialize this LED to be on by default? </summary>
+
+```swift
+let led = DigitalOut(Id.D18, value: true)
+```
+
+</details>
+
 
 In this way, pin D18 would work as a digital output pin and get prepared for the following instructions. Its voltage is low by default.
 
@@ -463,26 +499,33 @@ Sometimes you find nothing that needs to run repeatedly, you can add `sleep` in 
 led.write(true)
 ```
 
+This statement makes the pin D18 output high voltage. The LED connected to that pin requires a high level to be on. Therefore, the LED turns on.
+
 The `led` instance has access to all the instance methods in the `DigitalOut`. `write()` is one of its methods. You'll use **dot syntax** to access it: the instance name, followed by a dot, and the method at the end. Then you need the voltage level as its parameter, `true` for high voltage, `false` for low voltage. A value either `true` or `false` is of **Boolean** type.
 
-This statement makes the pin D18 output high voltage. And the LED connected to that pin requires a high level to be on. Therefore, the LED turns on.
+
 
 ```swift
 sleep(ms: 1000)
 ```
 
-An instance method needs dot syntax to invoke it, but a global function doesn't. You can directly call it. The function `sleep(ms:)` has a parameter to define the time in milliseconds. During sleep time, the microcontroller would suspend its task.
+The function `sleep(ms:)` has a parameter to define the time in milliseconds. During sleep time, the microcontroller would suspend its task.
 
-:::info
-Both methods and functions group a code block, and you can realize the same functionality by calling their name. Their difference is that a method belongs to a class while a function is separately declared. 
-:::
+An instance method needs dot syntax to invoke it, but a global function doesn't. You can directly call it.
 
-Why add this statement? The microcontroller executes state change of digital pins extremely quickly. If you change the output state between high and low without `sleep`, the LED will be on and off so quickly that you cannot notice it. So a short period is added here to slow it down. If you want the LED to blink faster, just reduce the sleep time.
+Both methods and functions group a code block to realize specific functionality. Their difference is that a method belongs to a type, such as class, while a function is separately declared. 
 
 
-:::info
-When using methods or functions, why do some parameters need to add a name and others don't? 
+<details>
+  <summary> Delete the two `sleep` statements in the code and see what happens. Why? </summary>
 
+The microcontroller executes state change of digital pins extremely quickly. If you change the output state between high and low without `sleep`, the LED will be on and off so quickly that you cannot notice it. So a short period is added here to slow it down. If you want the LED to blink faster, just reduce the sleep time.
+
+</details>
+
+
+<details>
+  <summary> When using methods/functions, why do some parameters need to add a name and others don't?  </summary>
 
 Let's look at the code below for example: 
 
@@ -494,19 +537,24 @@ The parameter has an argument label and a parameter name. The argument label is 
 ```swift
 func sleep(ms: Int) { }
 ```
-In this case, `ms` serves as the argument label by default, so it's necessary: `sleep(ms: 1000)`.
+In this case, the parameter uses its parameter name as the argument label. So `ms` is necessary: `sleep(ms: 1000)`.
 
+</details>
+
+
+:::tip Exercise
+1. Try to blink the LED faster, such as 500ms on and 500ms off.
+2. Blink an LED with variable speed by manually changing the sleep time (i.e. a random number from 200 to 2000).
 :::
-
 
 
 ### 2. RGB LED
 
-Control onboard RGB LED to emit different colors.
+In this project, you'll control onboard RGB LED to emit different colors.
 
-The onboard LED serves as an [indicator](../../overview/hardware/swiftio-feather#built-in-rgb-led) during board connection and code downloading. It consists of red, green and blue LEDs in a package. You can control them separately by setting digital output signals. 
+The onboard LED serves as an indicator during board connection and code downloading. It consists of red, green and blue LEDs in a package. You can control them separately by setting digital output signals. 
 
-The overall color of the light depends on the LEDs that are on. If only one of them is on, it shows its color. If two or three of the LEDs are on, the lights are mixed to create a different color, as in the image below. For example, if you turn on red and green, the combination of two lights results in yellow.
+The overall color of the light depends on the internal LEDs that are on. If only one of them is on, it shows its color. If two or three of the LEDs are on, the lights are mixed to create a different color, as in the image below. For example, if you turn on red and green, the combination of two lights results in yellow.
 
 <img
   src={require('./img/RGB.png').default}
@@ -529,12 +577,12 @@ The overall color of the light depends on the LEDs that are on. If only one of t
 
 **Example code**
 
-```swift title="C01S01RGBLED.swift" showLineNumbers
+```swift title="RGBLED.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S01RGBLED {
+public struct RGBLED {
     public static func main() {
         // Initialize the built-in red, green, and blue LED.
         // They need a low level to be turned on.
@@ -583,9 +631,9 @@ let green = DigitalOut(Id.GREEN, value: true)
 let blue = DigitalOut(Id.BLUE, value: true)
 ```
 
-`RED`, `GREEN`, `BLUE` (all capitalized) refer to the onboard red, green and blue LEDs. They are also DigitalOut pins. You can change the output to turn these LEDs on/off.
+`RED`, `GREEN`, `BLUE` (all capitalized) are used to control the onboard red, green and blue LEDs. These DigitalOut pins have been connected to the LEDs by default. You can change the output to turn these LEDs on/off.
 
-As mentioned above, the [connection of these LEDs](#led) is different from the LED module. You need to apply a low level to turn them on. So the `value` is set to `true` to keep them off by default. 
+The [connection of these LEDs](#led) is different from the LED module. You need to apply a low level to turn them on. So the `value` is set to `true` to keep them off by default. 
 
 ```swift
 func setRGB(_ redOn: Bool, _ greenOn: Bool, _ blueOn: Bool) {
@@ -608,24 +656,32 @@ In the while loop, turn on the RGB LED using different patterns to get different
 
 Blink the red LED at a different speed to generate the SOS signal.
 
-Have you heard of Morse code? It encodes characters into a sequence of dashes and dots to send messages. To reproduce it, you will use long flash and short flash respectively. In morse code, S is represented by three dots, O is represented by three dashes. So an SOS signal needs three short flashes, three long flashes, and then three short flashes again. 
+Have you heard of Morse code? It encodes characters into a sequence of dashes and dots to send messages. 
+
+<img
+  src={require('./img/morseCode.png').default}
+  alt="" width="480"
+/>
+
+To reproduce it, you will use long flash and short flash respectively. So an SOS signal needs three short flashes, three long flashes, and then three short flashes again. 
+
 
 **Project overview**
 
 * The LED is off by default.
-* The LED blinks fast 3 times to represent the S signal: on for 500ms and off for 500ms.
-* The LED blinks slower 3 times to represent the O signal: on for 1s and off for 500ms.
-* The LED blinks fast 3 times again to represent the S signal.
+* To represent the "S" signal, the LED blinks rapidly three times: on for 500ms and off for 500ms.
+* Next, to represent the "O" signal, the LED blinks slower three times: on for 1s and off for 500ms.
+* Finally, the LED blinks rapidly three times again to represent the "S" signal.
 
 **Example code**
 
-```swift title="C01S01LEDMorseCode.swift" showLineNumbers
+```swift title="LEDMorseCode.swift" showLineNumbers
 // Import the libraries to use all their functionalities.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S01LEDMorseCode {
+public struct LEDMorseCode {
     public static func main() {
         // Initialize the digital output pin.
         let led = DigitalOut(Id.D18)
@@ -693,7 +749,7 @@ This function controls the LED for a single letter. It needs two parameters: the
 
 This function is to make your code more organized and clear. Of course, you can use other ways of abstraction.
 
-:::info
+:::tip
 Usually, it's better not to use the variable or constants that are declared out of the function itself. **All stuff needed is passed in as its parameters**. Thus the code becomes more reusable and clean. This practice would be really helpful as you work on great projects in the future.
 :::
 
@@ -737,9 +793,8 @@ Back to the code above, the `value` is judged to know how long the LED should be
 
 ```swift
 light.high()
-light.low()
 ```
-Set high or low voltage. This is similar to the method `write()`, but it's more straightforward. The statement `led.write(true)` works the same.
+Set high voltage. This is works the same as `led.write(true)`.
 
 ### 4. LED blink using timer
 
@@ -747,15 +802,13 @@ You will learn a new way to blink an LED - blink using a timer.
 
 **Project overview**
 
-* The onboard blue LED and the red LED module are off by default.
 * The blue LED blinks continuously: off for 500ms and on for 500ms.
-* Every 1.5s, the red LED changes its state, thus blinking slower.
+* The red LED blinking slower: off for 1500ms and on for 1500ms.
 
 <img
   src={require('./img/timerLED.png').default}
   alt="" width="480"
 />
-
 
 
 **What is a timer?**
@@ -782,13 +835,13 @@ The timer here is quite similar. It is a software timer provided by Zephyr. You 
 
 **Example code**
 
-```swift title="C01S02TimerLEDToggle.swift" showLineNumbers
+```swift title="TimerLEDToggle.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S02TimerLEDToggle {
+public struct TimerLEDToggle {
     public static func main() {
         // Initialize a digital pin for the LED module.
         let led = DigitalOut(Id.D18)
@@ -846,20 +899,16 @@ while true {
 ```
 In the loop, the microcontroller will do other work. Here you will make the onboard blue LED blink every 500ms.
 
-As you can see, you can control two LEDs without worrying about their timing. 
-
-Configuration! You've finished all the projects🥳. 
-
 
 ## 🔸Go further 
 
-### Push pull and open drain
+### Push-pull and open-drain
 
-There are Typically two pin configurations: push-pull and open-drain.
+There are typically two pin configurations: push-pull and open-drain.
 
 **Push-pull**
 
-A push-pull output can both source and sink current. This is how it got its name since it pushes the signal high and pulls it low.
+A push-pull output can **both source and sink current**. This is how it got its name since it pushes the signal high and pulls it low.
 
 In a push-pull circuit, two active devices are used to drive a load. One device is used to "push" current into the load, while the other device is used to "pull" current out of the load. The two devices switch back and forth, following the internal signal, to create the output.
 
@@ -874,7 +923,7 @@ The GPIO pins are configured to push-pull by default. So you can set them to out
 
 **Open-drain**
 
-In contrast, an open-drain output can only sink current.
+In contrast, an open-drain output can **only sink current**.
 
 An active device is used to pull the output voltage to a low state, but does not actively drive it to a high state. It acts like a switch that connects the signal line to the ground, pulling the voltage level of the signal line low. This is called "drain" because it is "draining" current away from the signal line. And if it is turned off, the signal line is in an "open" state, not connected to either power or ground. This means that there is no current flowing through the line and it would float.
 

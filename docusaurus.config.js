@@ -86,7 +86,7 @@ module.exports = {
         // },
         {
           type: 'doc',
-          docId: 'overview/hardware/overview',
+          docId: 'hardware/swiftio-micro',
           position: 'left',
           label: 'Hardware',
         },

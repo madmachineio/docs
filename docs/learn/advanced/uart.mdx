@@ -5,7 +5,7 @@ description: Learn how to transmit data via UART bus.
 
 # UART
 
-
+In this tutorial, let's delve into UART communication.
 
 **Learning goals**
 
@@ -134,7 +134,7 @@ When you connect it to a computer, it appears as a virtual COM port. To use this
 
 To monitor the communication between them, a **serial monitor** program can be used. This program allows you to view the messages transmitted between the two devices and can display the data in various formats, such as ASCII or hexadecimal. It is usually used in embedded systems development to debug and troubleshoot communication between devices. 
 
-The SwiftIO Feather board also has a built-in USB-Serial converter. Therefore, you can connect the board directly to your computer via USB and communicate with it over a serial port.
+The SwiftIO Micro also has a built-in USB-Serial converter. Therefore, you can connect the board directly to your computer via USB and communicate with it over a serial port.
 
 ## 🔸New concept
 
@@ -189,14 +189,23 @@ Unicode characters require up to 21 bits to represent all existing characters. I
 
 Different encoding schemes interpret and represent characters differently. Therefore, to properly decode text, it is essential to know the specific encoding scheme that was used to encode it.
 
-## 🔸Circuit - UART-Serial Converter
+## 🔸Circuit - USB-Serial Converter
 
-The UART-Serial Converter connects to the chip MAX98357. And the chip connects to **I2S0** (SYNC0, BCLK0, TX0).
+The USB-Serial Converter connects to **UART0**.
 
 <img
   src={require('./img/usbSerialCircuit.png').default}
   alt="USB serial converter circuit" width="960"
 />
+
+| USB-Serial Converter Pin | SwiftIO Micro Pin |
+| - | - |
+| TX   | UART0 (RX) |
+| RX   | UART0 (TX) |
+| 3V3  | 3V3 |
+| GND  | GND |
+
+
 
 <img
   src={require('./img/serialCircuitDiagram.png').default}
@@ -242,14 +251,14 @@ In this project, the board acts as an echo device, sending back the messages it 
 
 **Example code**
 
-```swift title="C02S01SerialEcho.swift" showLineNumbers
+```swift title="SerialEcho.swift" showLineNumbers
 // Send message from computer to USB-Serial converter using serial monitor. 
 // Then send the message back using UART.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C02S01SerialEcho {
+public struct SerialEcho {
     public static func main() {
         let uart = UART(Id.UART0)
 
@@ -320,7 +329,7 @@ Turn on/off the LED by sending commands from your computer.
 
 **Example code**
 
-```swift title="C02S01SerialLEDSwitch.swift" showLineNumbers
+```swift title="SerialLEDSwitch.swift" showLineNumbers
 // Connect the USB-Serial converter module to your computer 
 // and choose the port in the serial monitor.
 // Send message (1/0) from computer to turn on/off the LED.
@@ -329,7 +338,7 @@ import SwiftIO
 import MadBoard
 
 @main
-public struct C02S01SerialLEDSwitch {
+public struct SerialLEDSwitch {
     public static func main() {
         let uart = UART(Id.UART0)
         let led = DigitalOut(Id.D18)
@@ -345,7 +354,7 @@ public struct C02S01SerialLEDSwitch {
                 
                 // Decode the data since the text from computer is sent in UTF8 format.
                 let command = String(decoding: buffer, as: UTF8.self)
-                // Connect the port on your feather board in serial monitor to see printed message
+                // Connect the port on your Micro in serial monitor to see printed message
                 print(command)
                 
                 // Set digital output according to the command from computer.

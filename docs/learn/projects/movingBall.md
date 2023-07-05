@@ -1,6 +1,6 @@
 ---
 title: Moving ball
-description: You'll explore more with some advanced projects.
+description: Move the ball on the screen by moving the board.
 ---
 
 # Moving ball
@@ -22,7 +22,7 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
   alt="Moving ball circuit" width="960"
 />
 
-## Program overview
+## Project overview
 
 1. Display a ball (circle) at the center of the LCD.
 2. Read the accelerations to know how the board moves.

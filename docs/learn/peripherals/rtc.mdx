@@ -62,6 +62,13 @@ The RTC module is connected to **I2C0** (SCL0 and SDA0).
   alt="RTC module circuit" width="960"
 />
 
+| RTC Pin | SwiftIO Micro Pin |
+| - | - |
+| SCL | I2C0 (SCL0) |
+| SDA | I2C0 (SDA0) |
+| 3V3 | 3V3 |
+| GND | GND |
+
 <img
   src={require('./img/rtcCircuitDiagram.png').default}
   alt="RTC module circuit diagram" width="480"
@@ -89,7 +96,7 @@ The circuits above are simplified versions for your reference.
 ## 🔸Projects
 
 
-### 1. Read time
+### 1. Reading time
 
 As usual, your first project is to read values, in this case, the current time from the sensor and view it in serial monitor. 
 
@@ -109,7 +116,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S06ReadTime.swift', value: 'main', },
+    { label: 'ReadTime.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -124,7 +131,7 @@ import MadBoard
 import PCF8563
 
 @main
-public struct C01S06ReadTime {
+public struct ReadTime {
     public static func main() {
         let i2c = I2C(Id.I2C0)
         let rtc = PCF8563(i2c)
@@ -176,7 +183,7 @@ public struct C01S06ReadTime {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S06ReadTime",
+    name: "ReadTime",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -188,7 +195,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S06ReadTime",
+            name: "ReadTime",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -197,8 +204,8 @@ let package = Package(
                 .product(name: "PCF8563", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S06ReadTimeTests",
-            dependencies: ["C01S06ReadTime"]),
+            name: "ReadTimeTests",
+            dependencies: ["ReadTime"]),
     ]
 )
 ```
@@ -206,7 +213,7 @@ let package = Package(
 </Tabs>
 
 
-### 2. Blink using RTC
+### 2. Blinking using RTC
 
 In this project, let's blink an LED based on the time from RTC.
 
@@ -220,7 +227,7 @@ In this project, let's blink an LED based on the time from RTC.
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S06BlinkUsingRTC.swift', value: 'main', },
+    { label: 'BlinkUsingRTC.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -235,7 +242,7 @@ import MadBoard
 import PCF8563
 
 @main
-public struct C01S06BlinkUsingRTC {
+public struct BlinkUsingRTC {
     public static func main() {
         let i2c = I2C(Id.I2C0)
         let rtc = PCF8563(i2c)
@@ -255,7 +262,7 @@ public struct C01S06BlinkUsingRTC {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S06BlinkUsingRTC",
+    name: "BlinkUsingRTC",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -267,7 +274,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S06BlinkUsingRTC",
+            name: "BlinkUsingRTC",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -276,8 +283,8 @@ let package = Package(
                 .product(name: "PCF8563", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S06BlinkUsingRTCTests",
-            dependencies: ["C01S06BlinkUsingRTC"]),
+            name: "BlinkUsingRTCTests",
+            dependencies: ["BlinkUsingRTC"]),
     ]
 )
 ```
@@ -313,7 +320,7 @@ PCF8563 provides built-in alarm and timer functions that can be set to trigger a
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S06Alarm.swift', value: 'main', },
+    { label: 'Alarm.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -329,7 +336,7 @@ import MadBoard
 import PCF8563
 
 @main
-public struct C01S06Alarm {
+public struct Alarm {
     public static func main() {
         let i2c = I2C(Id.I2C0)
         let rtc = PCF8563(i2c)
@@ -402,7 +409,7 @@ public struct C01S06Alarm {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S06Alarm",
+    name: "Alarm",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -414,7 +421,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S06Alarm",
+            name: "Alarm",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -423,8 +430,8 @@ let package = Package(
                 .product(name: "PCF8563", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S06AlarmTests",
-            dependencies: ["C01S06Alarm"]),
+            name: "AlarmTests",
+            dependencies: ["Alarm"]),
     ]
 )
 ```

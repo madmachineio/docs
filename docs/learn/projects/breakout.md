@@ -12,7 +12,7 @@ Let's play the classic breakout game in this project. Rotate the potentiometer (
 
 
 
-## Program overview
+## Project overview
 
 
 

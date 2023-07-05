@@ -43,7 +43,7 @@ An I2S peripheral on an MCU is **a hardware module that implements the I2S proto
 
 The I2S peripheral on MCU usually has several **registers** that can be configured to **control various aspects of the I2S operation**, such as the clock frequency, word length, data alignment, and channel configuration. To use the peripheral, you would typically need to initialize the I2S peripheral and configures it for the desired audio format and operation. Once the I2S peripheral is configured, you can use it to send or receive digital audio data to or from external audio devices.
 
-The SwiftIO Feather board always serves as a master device. It provides two I2S interfaces: 
+The SwiftIO Micro always serves as a master device. It provides two I2S interfaces: 
 * one is used to send digital audio data from the MCU to other audio devices, such as a digital-to-analog converter (DAC) or an audio amplifier. In this case, the serial data line is TX, used to send data.
 
 <img
@@ -243,6 +243,15 @@ The speaker connects to the chip MAX98357. And the chip connects to **I2S0** (SY
   alt="Speaker circuit" width="960"
 />
 
+| Speaker Pin | SwiftIO Micro Pin |
+| - | - |
+| 3V3  | 3V3 |
+| GND  | GND |
+| SD   | - |
+| RX   | I2S0 (TX) |
+| BCLK | I2S0 (BCLK) |
+| SYNC | I2S0 (SYNC) |
+
 <img
   src={require('./img/speakerCircuitDiagram.png').default}
   alt="Speaker circuit diagram" width="360"
@@ -266,13 +275,13 @@ By connecting the pin SD on the Speaker module to GND directly, you can set the 
 
 | Method | Explanation |
 | ------ | ----------- |
-| `init(_:rate:bits:`<br />`channel:mode:)` | Initialize an I2S output interface for audio devices.<br /> **Parameter:** <br />- `idName`: the specified I2S pin.<br />- `rate`: the sample rate of the audio. The default rate is 16000 Hz.<br />- `bits`: the sample depth of the audio, 16-bit by default.<br /> - `channel`: the audio channel settings: left, right and stereo. By default, it is `.monoLeft`.<br /> - `mode`: define when the data is sent. The `.philips` is the default mode. |
-| `write(_:count:`<br />`timeout:`) | Send audio data out to devices. <br />**Parameter:** <br />- `sample`: the audio data stored in a UInt8 array. <br />- `count`: the count of data to be sent. |
+| `init(_:rate:bits:`<br />`mode:)` | Initialize an I2S output interface for audio devices.<br /> **Parameter:** <br />- `idName`: the specified I2S pin.<br />- `rate`: the sample rate of the audio. The default rate is 16000 Hz.<br />- `bits`: the sample depth of the audio, 16-bit by default.<br /> - `mode`: define when the data is sent. The `.philips` is the default mode. |
+| `write(_:count:)` | Send audio data out to devices. <br />**Parameter:** <br />- `sample`: the audio data stored in a UInt8 array. <br />- `count`: the count of data to be sent. If nil, it equals the count of elements in the `sample`. |
 
 ## 🔸Projects
 
 
-### 1. Play scales
+### 1. Playing scales
 
 Different waveforms can generate different sounds. In this project, you will generate a square wave and a triangle wave manually. Then play scales using two sounds.
 
@@ -283,14 +292,14 @@ Different waveforms can generate different sounds. In this project, you will gen
 
 **Example code**
 
-```swift title="C01S09Speaker.swift" showLineNumbers
+```swift title="Speaker.swift" showLineNumbers
 // Import the SwiftIO library to control input and output.
 import SwiftIO
 // Import the MadBoard to use the id of the pins.
 import MadBoard
 
 @main
-public struct C01S09Speaker {
+public struct Speaker {
     public static func main() {
         // Initialize the speaker using I2S communication. 
         // The default setting is 16k sample rate, 16bit sample bits.
@@ -552,8 +561,49 @@ In the while loop, the speaker will play scales over and over again.
 
 
 
-
 ### 2. Music player
+
+Play music using the speaker. You can also pass other scores to play the music.
+
+
+**Music notes**
+
+Let's explore some common concepts in music together. 
+
+A standard piano keyboard typically consists of 88 keys, ranging from A0 to C8. Each key represents a different musical pitch or frequency from low to high.
+
+<img
+  src={require('./img/keyboard.png').default}
+  alt="Piano keyboard" width="960"
+/>
+
+<img
+  src={require('./img/note.png').default}
+  alt="" width="960"
+/>
+
+A **half step**, or semitone, is the smallest interval between notes. The interval between the key A and key A# is a half step. Two half steps constitute a **whole step**, like the interval between A and B.
+
+**Beat** is a basic unit of time in music. When you tap your toes along with a song, you actually follow its beat. 
+
+In music, all beats are divided into multiple sections, called **measures** or bars. A measure usually consists of several beats.
+
+A **quarter note** is the common note length in music and has one beat. Then other notes are based on it: a half note has two beats, a whole note has four beats, an eighth note has a half beat, etc.
+
+**Time signature** describes the count of beats in a measure and tells which note serves as one beat. 4/4 time signature is the most widely used. In this case, a measure has 4 beats, and a quarter note is one beat, an eighth note is one half beat, etc. 2/4 means 2 beats per measure and a quarter note serves as one beat. You could learn more about it [here](https://www.skoove.com/blog/time-signatures-explained/).
+
+**BPM**, or beat per minute, measures the tempo of a piece of music. For example, 60 BPM means 60 beats in a minute, and each one lasts 1 second.
+
+
+
+**Project overview**
+
+* The score stores the frequency and duration of each note.
+* Generate the samples by calculating the sine value at each phase. 
+* To create a fading effect, the amplitude values of the last samples of each note are decreased gradually over a specified fading duration. 
+* If there are multiple tracks, the samples from each track can be averaged at specified time intervals.
+* Then send the samples to the speaker using I2S communication.
+
 
 **Example code**
 
@@ -563,7 +613,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S09MusicPlayer.swift', value: 'main', },
+    { label: 'MusicPlayer.swift', value: 'main', },
     { label: 'Player.swift', value: 'player', },
     { label: 'Note.swift', value: 'note', },
     { label: 'Mario.swift', value: 'mario', },
@@ -577,7 +627,7 @@ import SwiftIO
 import MadBoard
 
 @main
-public struct C01S09MusicPlayer {
+public struct MusicPlayer {
     public static func main() {
         // The sample rate of I2S and Player should be the same.
         // Note: the speaker needs stereo channel but only uses the samples of left channel. 

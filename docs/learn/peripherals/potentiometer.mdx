@@ -42,7 +42,7 @@ The ability to measure analog values depends on the ADC resolution. The **resolu
 
 The digital values output by an ADC are often referred to as **"raw" values**, and they may not be easy to understand or use. To make sense of these values, they need to **be mapped back to their corresponding voltage values**.
 
-To do this mapping, you need to know the voltage range that the ADC is measuring, 0 to 3.3V in this case. The SwiftIO Feather board has a built-in 12-bit ADC, so there are 4096 (2<sup>12</sup>) levels, from 0 to 4095. Therefore, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 1365 corresponds to (3.3 / 4095) * 1365 = 1.1V. 
+To do this mapping, you need to know the voltage range that the ADC is measuring, 0 to 3.3V in this case. The SwiftIO Micro has a built-in 12-bit ADC, so there are 4096 (2<sup>12</sup>) levels, from 0 to 4095. Therefore, if the raw value equals 0, the voltage would be 0V; if the raw value equals 4095, the voltage would be 3.3V; and 1365 corresponds to (3.3 / 4095) * 1365 = 1.1V. 
 
 Here is the equation for the conversion:
 
@@ -114,6 +114,14 @@ There are two potentiometers on your SwiftIO Playground. They are connected resp
   alt="Potentiometer module circuit" width="960"
 />
 
+| Potentiometer Pin | SwiftIO Micro Pin |
+| - | - |
+| SIG | A0 |
+| NC (Not Connected) | - |
+| 3V3 | 3V3 |
+| GND | GND |
+
+
 <img
   src={require('./img/potCircuitDiagram.png').default}
   alt="Potentiometer module circuit diagram" width="360"
@@ -160,13 +168,13 @@ In this project, you will rotate the potentiometer to change the input value. Yo
 
 **Example code**
 
-```swift title="C01S04Potentiometer.swift" showLineNumbers
+```swift title="Potentiometer.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S04Potentiometer {
+public struct Potentiometer {
     public static func main() {
         // Initialize the analog pin A0 for the potentiometer.
         let knob = AnalogIn(Id.A0)
@@ -210,13 +218,13 @@ You will use a potentiometer to control the sound from the buzzer.
 
 **Example code**
 
-```swift title="C01S04PotentiometerBuzzer.swift" showLineNumbers
+```swift title="PotentiometerBuzzer.swift" showLineNumbers
 // Import the SwiftIO to control input and output and the MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S04PotentiometerBuzzer {
+public struct PotentiometerBuzzer {
     public static func main() {
         // Initialize the analog pin for the potentiometer and PWM pin for the LED.
         let knob = AnalogIn(Id.A0)
@@ -273,13 +281,13 @@ The potentiometer can also be used to change LED brightness. In this project, yo
 
 **Example code**
 
-```swift title="C01S04PotentiometerLED.swift" showLineNumbers
+```swift title="PotentiometerLED.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S04PotentiometerLED {
+public struct PotentiometerLED {
     public static func main() {
         // Initialize the analog pin for the potentiometer and PWM pin for the LED.
         let knob = AnalogIn(Id.A0)
@@ -311,12 +319,12 @@ Blink the LED. The LED brightness is changed by the potentiometer (A0). The blin
 
 **Example code**
 
-```swift title="C01S04LEDBrightnessBlink.swift" showLineNumbers
+```swift title="LEDBrightnessBlink.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S04LEDBrightnessBlink {
+public struct LEDBrightnessBlink {
     public static func main() {
         // Initialize the analog pin used to adjust LED brightness.
         let brightnessPot = AnalogIn(Id.A0)
@@ -357,12 +365,12 @@ In this project, two potentiometers work together to control the LED brightness.
 
 **Example code**
 
-```swift title="C01S04TwoPotentiometersLED.swift" showLineNumbers
+```swift title="TwoPotentiometersLED.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S04TwoPotentiometersLED {
+public struct TwoPotentiometersLED {
     public static func main() {
         // Initialize the analog pin used to adjust LED brightness from min and max.
         let brightnessPot = AnalogIn(Id.A0)
@@ -394,7 +402,7 @@ public struct C01S04TwoPotentiometersLED {
 ```
 
 
-### 6. Play tones manually
+### 6. Playing tones manually
 
 Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one by one.
 
@@ -406,12 +414,12 @@ Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one 
 
 **Example code**
 
-```swift title="C01S04PlayTones.swift" showLineNumbers
+```swift title="PlayTones.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S04PlayTones {
+public struct PlayTones {
     public static func main() {
         // Initialize a PWM pin for the buzzer.
         let buzzer = PWMOut(Id.PWM5A)

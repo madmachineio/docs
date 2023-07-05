@@ -192,7 +192,7 @@ In this tutorial, the stuff displayed on the LCD are all raster graphics. There 
 
 <table>
   <tr>
-    <th>LCD pin</th>
+    <th>LCD Pin</th>
     <td>SPI (SCK)</td>
     <td>SPI (SDI)</td>
     <td>BL</td>
@@ -201,7 +201,7 @@ In this tutorial, the stuff displayed on the LCD are all raster graphics. There 
     <td>CS</td>
   </tr>
   <tr>
-    <th>Feather Pin</th>
+    <th>SwiftIO Micro Pin</th>
     <td>SPI0 (SCK0)</td>
     <td>SPI0 (SDO0)</td>
     <td>D2</td>
@@ -309,7 +309,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08LCD.swift', value: 'main', },
+    { label: 'LCD.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -324,7 +324,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08LCD {
+public struct LCD {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -419,7 +419,7 @@ public struct C01S08LCD {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08LCD",
+    name: "LCD",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -431,7 +431,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -440,8 +440,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -455,7 +455,7 @@ let package = Package(
 ```swift
 let spi = SPI(Id.SPI0, speed: 30_000_000)
 ```
-The LCD needs quite a lot of data for display, so the SPI speed needs to be fast enough to get a better view. And the Feather board support 30MHz SPI speed at most. 
+The LCD needs quite a lot of data for display, so the SPI speed needs to be fast enough to get a better view. And the Micro support 30MHz SPI speed at most. 
 
 The CS pin is not set when initializing the SPI, so it needs to be set when initializing the screen.
 
@@ -537,7 +537,7 @@ Fill the screen with rainbow colors.
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08Rainbow.swift', value: 'main', },
+    { label: 'Rainbow.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -550,7 +550,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08Rainbow {
+public struct Rainbow {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -607,7 +607,7 @@ public struct C01S08Rainbow {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08Rainbow",
+    name: "Rainbow",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -619,7 +619,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -628,8 +628,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -651,7 +651,7 @@ Create a scroll effect to update the display with rainbow colors in turn.
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08ScrollEffect.swift', value: 'main', },
+    { label: 'ScrollEffect.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -664,7 +664,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08ScrollEffect {
+public struct ScrollEffect {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -725,7 +725,7 @@ public struct C01S08ScrollEffect {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08ScrollEffect",
+    name: "ScrollEffect",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -737,7 +737,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -746,8 +746,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -771,7 +771,7 @@ Visualize analog values on the screen. The line height changes with the value fr
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08AnalogVisualizer.swift', value: 'main', },
+    { label: 'AnalogVisualizer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -784,7 +784,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08AnalogVisualizer {
+public struct AnalogVisualizer {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -850,7 +850,7 @@ public struct C01S08AnalogVisualizer {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08AnalogVisualizer",
+    name: "AnalogVisualizer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -862,7 +862,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -871,8 +871,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -899,7 +899,7 @@ This project involves reading accelerations from the accelerometer and drawing t
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08AccelerationVisualizer.swift', value: 'main', },
+    { label: 'AccelerationVisualizer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -915,7 +915,7 @@ import LIS3DH
 import ST7789
 
 @main
-public struct C01S08AccelerationVisualizer {
+public struct AccelerationVisualizer {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -1019,7 +1019,7 @@ public struct C01S08AccelerationVisualizer {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S08AccelerationVisualizer",
+    name: "AccelerationVisualizer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -1031,7 +1031,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08AccelerationVisualizer",
+            name: "AccelerationVisualizer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -1042,8 +1042,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08AccelerationVisualizerTests",
-            dependencies: ["C01S08AccelerationVisualizer"]),
+            name: "AccelerationVisualizerTests",
+            dependencies: ["AccelerationVisualizer"]),
     ]
 )
 ```

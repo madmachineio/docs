@@ -3,7 +3,7 @@ title: SwiftIO Board (Discontinued)
 description: SwiftIO Board allows you to interact with all kinds of electronic devices using Swift language. You will know about details of the board and the functionalities of all pins.
 ---
 
-# SwiftIO Board
+# SwiftIO Board (Discontinued)
 
 SwiftIO board is our first board that runs Swift language. It is powerful enough and fully functional for most of your projects.
 
@@ -37,7 +37,6 @@ You can see 2 buttons on the SwiftIO board.
 There are 2 USB ports, one for serial communication and one for code downloading. Both of them can be power your board.
 
 - You need to connect the **Download port** on the SwiftIO board to your computer to download your code.
-
 - You can print the values and see them in the serial monitor by connecting the **Serial port** since there is a UART to USB converter on the board.
 
  
@@ -100,8 +99,7 @@ When you apply a low voltage, the built-in LEDs will be on. When you apply a hig
 **IOREF**: this pin provides a voltage corresponding to the input and output of that board,  that's to say 3.3V.
 
 
-## By the way
 
 All these details may sound quite confusing at first. Don't worry, most of them are not commonly used. 
 
-If you have not idea how to start, you can work with [SwiftIO Maker kit](./maker-kit) to learn with some simple projects. 
+If you have no idea how to start, you can work with [SwiftIO Maker kit](./maker-kit) to learn with some simple projects. 
