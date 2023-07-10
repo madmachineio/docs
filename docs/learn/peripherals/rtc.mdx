@@ -83,7 +83,7 @@ The circuits above are simplified versions for your reference.
 
 **Class**
 
-**`PCF8563`** - it allows you to set and read RTC time more easily.
+**[`PCF8563`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/PCF8563)** - it allows you to set and read RTC time more easily.
 
 | Method             | Explanation                                                         |
 | ------------------ | ------------------------------------------------------------------- |
@@ -98,17 +98,19 @@ The circuits above are simplified versions for your reference.
 
 ### 1. Reading time
 
-As usual, your first project is to read values, in this case, the current time from the sensor and view it in serial monitor. 
+As usual, your first project is to read values, in this case, the current time from the sensor and view it in the serial monitor. 
 
 
 **Project overview**
 
-1. Update RTC time. 
-2. Read the current time.
-3. Format the time from the RTC and print it.
+* Update RTC time if the module has lost power. 
+* Read the current time.
+* Format the time from the RTC and print it.
 
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/06RTC/ReadingTime).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -116,7 +118,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'ReadTime.swift', value: 'main', },
+    { label: 'ReadingTime.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -131,7 +133,7 @@ import MadBoard
 import PCF8563
 
 @main
-public struct ReadTime {
+public struct ReadingTime {
     public static func main() {
         let i2c = I2C(Id.I2C0)
         let rtc = PCF8563(i2c)
@@ -183,7 +185,7 @@ public struct ReadTime {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "ReadTime",
+    name: "ReadingTime",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -195,7 +197,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "ReadTime",
+            name: "ReadingTime",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -205,7 +207,7 @@ let package = Package(
             ]),
         .testTarget(
             name: "ReadTimeTests",
-            dependencies: ["ReadTime"]),
+            dependencies: ["ReadingTime"]),
     ]
 )
 ```
@@ -219,10 +221,12 @@ In this project, let's blink an LED based on the time from RTC.
 
 **Project overview**
 
-1. Read the current time from RTC.
-2. Set digital output according to the second: 0s high level, 1s low level, 2s high level... The LED thus blinks every second.
+* Read the current time from RTC.
+* Set digital output according to the second: 0s high level, 1s low level, 2s high level... The LED thus blinks every second.
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/06RTC/BlinkUsingRTC).
 
 <Tabs
   defaultValue="main"
@@ -303,11 +307,11 @@ PCF8563 provides built-in alarm and timer functions that can be set to trigger a
 
 **Project overview**
 
-1. Set a desired alarm time.
-2. Get the current time from RTC.
-3. Compare the current time to the desired alarm time.
-4. If the current time matches the alarm time, the buzzer starts buzzing and the LED turns on.
-5. After a specified time or if you press the stop button, the sound stops and the LED turns off.
+* Set a desired alarm time.
+* Get the current time from RTC.
+* Compare the current time to the desired alarm time.
+* If the current time matches the alarm time, the buzzer starts buzzing and the LED turns on.
+* After a specified time or if you press the stop button, the sound stops and the LED turns off.
 
 <img
   src={require('./img/alarm.png').default}
@@ -316,6 +320,8 @@ PCF8563 provides built-in alarm and timer functions that can be set to trigger a
 
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/06RTC/Alarm).
 
 <Tabs
   defaultValue="main"

@@ -121,7 +121,7 @@ Let's see the new class you are going to use in this project.
 
 **Class**
 
-**`DigitalIn`** - this class allows you to get the current state of a specified input pin.
+**[`DigitalIn`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalin)** - this class allows you to get the current state of a specified input pin.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -132,7 +132,7 @@ Let's see the new class you are going to use in this project.
 
 ## 🔸Projects
 
-### 1. LED switch
+### 1. Momentary LED switch
 
 Let's start to build a simple LED switch. 
 
@@ -171,16 +171,17 @@ Let's start to build a simple LED switch.
 </table>
 
 
-
 **Example code**
 
-```swift title="ButtonLED.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/MomentaryLEDSwitch).
+
+```swift title="MomentaryLEDSwitch.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
 @main
-public struct ButtonLED {
+public struct MomentaryLEDSwitch {
     public static func main() {
         // Initialize the input pin for the button and output pin for the LED.
         let led = DigitalOut(Id.D18)
@@ -289,6 +290,8 @@ In this project, the LED changes state between on and off every time you press t
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/ButtonInterrupt).
+
 ```swift title="ButtonInterrupt.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
@@ -388,7 +391,7 @@ while true {
 The sleep time can be a random value. It makes the board sleep while interrupt doesn't occur and decreases power consumption. Without it, the board will run extremely quickly again and again but do nothing.
 
 
-### 3. LED switch (press + release)
+### 3. Toggle LED switch
 
 In this project, the LED state changes right after you release the button that has been pressed. If you press and hold the button, the LED state keeps the same. After you release the button, the LED is toggled.
 
@@ -428,15 +431,16 @@ In this project, the LED state changes right after you release the button that h
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/ToggleLEDSwitch).
 
-```swift title="ToggleLED.swift" showLineNumbers
+```swift title="ToggleLEDSwitch.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and 
 // the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
 @main
-public struct ToggleLED {
+public struct ToggleLEDSwitch {
     public static func main() {
         // Initialize the input pin for the button and the output pin for the LED.
         let led = DigitalOut(Id.D18)
@@ -485,7 +489,7 @@ if !currentState && currentState != lastState {
 ```
 In this project, the LED is toggled when the current state is false and the last is true, that is, the button is just released.
 
-### 4. LED toggle switches
+### 4. 2-Way LED switches
 
 Pressing any of the two buttons (D1, D19) will toggle the LED state. The state is updated immediately after pressing the button. 
 
@@ -541,14 +545,16 @@ It works like light switches in your room. You may press any of the switches in 
 
 **Example code**
 
-```swift title="TwoButtonsOneLED.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/TwoWayLEDSwitches).
+
+```swift title="TwoWayLEDSwitches.swift" showLineNumbers
 // SwiftIO is used to set input and output of the pins.
 import SwiftIO
 // MadBoard is for pin ids.
 import MadBoard
 
 @main
-public struct TwoButtonsOneLED {
+public struct TwoWayLEDSwitches {
     public static func main() {
         // Initialize the pins for two buttons and the LED.
         let button0 = DigitalIn(Id.D1)
@@ -599,7 +605,7 @@ In this condition, both input values need to be `false`, meaning they are all re
 
 Why not try to adjust the code a bit to make the LED remain unchanged when the button is pressed and toggle right after the button is released👀?
 
-### 5. LED On/Off switches 
+### 5. On/Off buttons 
 
 Two buttons are reserved for the on (D1) and the off (D19) buttons respectively. The LED state is updated only after a press and release.
 
@@ -645,6 +651,7 @@ Two buttons are reserved for the on (D1) and the off (D19) buttons respectively.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/OnOffButtons).
 
 ```swift title="OnOffButtons.swift" showLineNumbers
 // Control the LED with two specified buttons.

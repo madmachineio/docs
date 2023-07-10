@@ -142,7 +142,7 @@ The circuits above are simplified for your reference.
 
 **Class**
 
-**`PWMOut`** - this class allows you to set the frequency and duty cycle of PWM output from the board.
+**[`PWMOut`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/pwmout)** - this class allows you to set the frequency and duty cycle of PWM output from the board.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -154,7 +154,7 @@ The circuits above are simplified for your reference.
 
 ## 🔸Projects
 
-### 1. Musical scale
+### 1. Playing a scale
 
 In this project, the buzzer will play the musical scale. 
 
@@ -172,13 +172,15 @@ In this project, the buzzer will play the musical scale.
 
 **Example code**
 
-```swift title="Buzzer.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/PlayingScale).
+
+```swift title="PlayingScale.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
 @main
-public struct Buzzer {
+public struct PlayingScale {
     public static func main() {
         // Initialize a PWM pin for the buzzer.
         let buzzer = PWMOut(Id.PWM5A)
@@ -259,13 +261,15 @@ So let's try a breathing LED! You may notice it when a new message comes on your
 
 **Example code**
 
-```swift title="PWMLed.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/BreathingLED).
+
+```swift title="BreathingLED.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
 @main
-public struct PWMLed {
+public struct BreathingLED {
     public static func main() {
         // Initialize a PWM output pin for the LED.
         let led = PWMOut(Id.PWM4A)
@@ -383,7 +387,7 @@ This statement is to know whether the duty cycle exceeds its range. If so, `upDi
 
 
 
-### 3. LED brightness control
+### 3. Button dimmer
 
 You'll adjust the brightness of the LED using two buttons: one is reserved to increase the brightness, the other is to reduce the brightness.
 
@@ -400,14 +404,15 @@ You'll adjust the brightness of the LED using two buttons: one is reserved to in
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/ButtonDimmer).
 
-```swift title="ButtonPWM.swift" showLineNumbers
+```swift title="ButtonDimmer.swift" showLineNumbers
 // Import two necessary libraries.
 import SwiftIO
 import MadBoard
 
 @main
-public struct ButtonPWM {
+public struct ButtonDimmer {
     public static func main() {
         // Initialize the PWM pin.
         let led = PWMOut(Id.PWM4A)
@@ -483,6 +488,8 @@ In this project, let's test the reflex time.
 * To restart the game, press button D1 again.
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/ReflexGame).
 
 ```swift title="ReflexGame.swift" showLineNumbers
 import SwiftIO
@@ -607,6 +614,8 @@ Many types of light decorations, such as Christmas lights or string lights, ofte
 * If the button is pressed again, the LED turns off.
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/LEDPatternChange).
 
 ```swift title="LEDPatternChange.swift" showLineNumbers
 import SwiftIO

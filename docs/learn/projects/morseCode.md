@@ -39,20 +39,22 @@ You will use a button (D1) as an input and an LCD (SPI0) for text display. The b
 
 ## Project overview
 
-1. Read digital values from the button.
-2. Once it's true, the button is pressed. Check how long the button is pressed. 
-3. If the button press is longer than 300ms, the morse code is a dah, or else it's a dit.
-4. Once the button is released, store the time after it.
-5. The threshold for the gap between words is 150ms, and the gap between letters is 60ms. The sound from the buzzer serves as a notification.
-6. If the morse code for a letter is done, find the corresponding letters and print it.
-7. Repeat the process until a word is finished. Add a space after the word.
+* Read digital values from the button.
+* Once it's true, the button is pressed. Check how long the button is pressed. 
+* If the button press is longer than 300ms, the morse code is a dah, or else it's a dit.
+* Once the button is released, store the time after it.
+* The threshold for the gap between words is 150ms, and the gap between letters is 60ms. The sound from the buzzer serves as a notification.
+* If the morse code for a letter is done, find the corresponding letters and print it.
+* Repeat the process until a word is finished. Add a space after the word.
 
 As you can see, the key point of this program is the state of the button. If it's pressed, you need to know if it's a long press or a short press. If it's released, you need to store the gap before the next press to tell if it's the gap between letters or words.
 
 
 ## Example code
 
-```swift showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03MoreProjects/MorseCode).
+
+```swift title="MorseCode.swift" showLineNumbers
 // Import the SwiftIO library to set input/output and MadBoard to use pin id.
 import SwiftIO
 import MadBoard

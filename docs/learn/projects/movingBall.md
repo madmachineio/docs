@@ -8,10 +8,6 @@ description: Move the ball on the screen by moving the board.
 
 In this project, you will move your board to move the ball displayed on the LCD. When you tilt your board to any direction, the ball moves with it. 
 
-<img
-  src={require('./img/movingBall.png').default}
-  alt="Moving ball project" width="480"
-/>
 
 ## Circuit
 
@@ -24,16 +20,19 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
 
 ## Project overview
 
-1. Display a ball (circle) at the center of the LCD.
-2. Read the accelerations to know how the board moves.
-3. If it moves to the left, the ball's coordinate on the x-axis will decrease. If it's right, the x-coordinate increases.
-4. If it moves forward, the y-coordinate decreases, so the ball moves forward. And if it's downward, the y-coordinate increases.
-5. Update the ball's position on the LCD.
-6. Read the accelerations again and repeat the process.
+* Display a ball at the center of the LCD.
+* Read the accelerations to know how the board moves.
+* If it moves to the left, the ball's coordinate on the x-axis will decrease. If it's right, the x-coordinate increases.
+* If it moves forward, the y-coordinate decreases, so the ball moves forward. And if it's downward, the y-coordinate increases.
+* Update the ball's position on the LCD.
+* Read the accelerations again and repeat the process.
 
 ## Example code
 
-```swift showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03MoreProjects/MovingBall).
+
+
+```swift title="MovingBall.swift" showLineNumbers
 // Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
 import SwiftIO
 import MadBoard

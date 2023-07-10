@@ -223,7 +223,7 @@ The circuits above are simplified versions for your reference.
 
 **Class**
 
-**`UART`** - this class allows you to write and read data via the UART bus.
+**[`UART`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/uart)** - this class allows you to write and read data via the UART bus.
 
 | Method | Explanation |
 | ------ | ------------- |
@@ -250,6 +250,8 @@ In this project, the board acts as an echo device, sending back the messages it 
 * After the board receives the message on the UART port, it will echo it back to the computer. You should see the echoed message in the serial monitor.
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02AdvancedPeripherals/01UART/SerialEcho).
 
 ```swift title="SerialEcho.swift" showLineNumbers
 // Send message from computer to USB-Serial converter using serial monitor. 
@@ -329,6 +331,8 @@ Turn on/off the LED by sending commands from your computer.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02AdvancedPeripherals/01UART/SerialLEDSwitch).
+
 ```swift title="SerialLEDSwitch.swift" showLineNumbers
 // Connect the USB-Serial converter module to your computer 
 // and choose the port in the serial monitor.
@@ -401,6 +405,7 @@ Implement a remote LED switch with two boards connected via UART
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02AdvancedPeripherals/01UART/RemoteLEDSwitch).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';

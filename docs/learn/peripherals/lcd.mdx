@@ -243,17 +243,17 @@ The circuits above are simplified versions for your reference.
 
 <TabItem value="spi">
 
-**`SPI`** - this class is used to send and receive data using SPI protocol.
+**[`SPI`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/spi)** - this class is used to send and receive data using SPI protocol.
 
-| Method                                            | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Method    | Explanation  |
+| ------ | ----------------- |
 | `init(_:speed:csPin:`<br />`CPOL:CPHA:bitOrder:)` | Initialize an SPI interface. <br />**Parameter:** <br /> - `idName`: spi pin id that the device connects to. <br /> - `speed`: the communication speed, 5MHz by default. The maximum speed is about 30MHz. <br /> - `csPin`: a `DigitalOut` pin as a CS pin. It is nil by default. If you don't set it, you need to control it manually when communicating with devices. <br />- `CPOL`: the state of clock signal when it's idle, `false` by default. <br />- `CPHA`: the edge of clock signal to sample data, false for first edge and true for second edge. `false` by default. <br />- `bitOrder`: the bit order during data transmission, `.MSB` by default. |
 
 </TabItem>
 
 <TabItem value="st7789">
 
-**`ST7789`** - it configures the LCD and allows you to draw pixels on it.
+**[`ST7789`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/ST7789)** - it configures the LCD and allows you to draw pixels on it.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -302,6 +302,7 @@ You are going to use the library `ST7789` to paint the screen and show some simp
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/LCD).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -534,6 +535,8 @@ Fill the screen with rainbow colors.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/Rainbow).
+
 <Tabs
   defaultValue="main"
   values={[
@@ -647,6 +650,8 @@ Create a scroll effect to update the display with rainbow colors in turn.
 
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/ScrollEffect).
 
 <Tabs
   defaultValue="main"
@@ -767,6 +772,8 @@ Visualize analog values on the screen. The line height changes with the value fr
 * Draw the next lines one by one. They appear from the left, so the previous lines move to the right.
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/AnalogVisualizer).
 
 <Tabs
   defaultValue="main"
@@ -895,6 +902,7 @@ This project involves reading accelerations from the accelerometer and drawing t
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/AccelerationVisualizer).
 
 <Tabs
   defaultValue="main"

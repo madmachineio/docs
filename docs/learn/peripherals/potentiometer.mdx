@@ -136,7 +136,7 @@ The circuits above are simplified for your reference.
 
 **Class**
 
-**`AnalogIn`** - this class allows you to read the analog input. 
+**[`AnalogIn`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/analogin)** - read the analog input. 
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -146,13 +146,12 @@ The circuits above are simplified for your reference.
 
 **Global function**
 
-`print(_:)` - print the value out. You can view it on any serial monitor.
+`print(_:)` - print out the value which you can view on any serial monitor.
 
 ## 🔸Projects
 
 
-
-### 1. Reading input value
+### 1. Reading input
 
 In this project, you will rotate the potentiometer to change the input value. You will view the voltage value on the serial monitor.
 
@@ -166,7 +165,10 @@ In this project, you will rotate the potentiometer to change the input value. Yo
   alt="Read analog values changed by potentiometer" width="960"
 />
 
+
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/04Potentiometer/Potentiometer).
 
 ```swift title="Potentiometer.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
@@ -201,7 +203,7 @@ There are three different methods in `AnalogIn` class to read analog input. The 
 
 
 
-### 2. Controlling buzzer sound
+### 2. Pitch control
 
 You will use a potentiometer to control the sound from the buzzer. 
 
@@ -218,13 +220,15 @@ You will use a potentiometer to control the sound from the buzzer.
 
 **Example code**
 
-```swift title="PotentiometerBuzzer.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/04Potentiometer/PitchControl).
+
+```swift title="PitchControl.swift" showLineNumbers
 // Import the SwiftIO to control input and output and the MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
 @main
-public struct PotentiometerBuzzer {
+public struct PitchControl {
     public static func main() {
         // Initialize the analog pin for the potentiometer and PWM pin for the LED.
         let knob = AnalogIn(Id.A0)
@@ -264,7 +268,7 @@ The PWM pins will output signals with the specified frequency to drive the buzze
 
 
 
-### 3. Controlling LED brightness
+### 3. LED dimmer
 
 The potentiometer can also be used to change LED brightness. In this project, you'll turn the potentiometer to brighten and dim an LED.
 
@@ -281,13 +285,15 @@ The potentiometer can also be used to change LED brightness. In this project, yo
 
 **Example code**
 
-```swift title="PotentiometerLED.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/04Potentiometer/LEDDimmer).
+
+```swift title="LEDDimmer.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
 @main
-public struct PotentiometerLED {
+public struct LEDDimmer {
     public static func main() {
         // Initialize the analog pin for the potentiometer and PWM pin for the LED.
         let knob = AnalogIn(Id.A0)
@@ -307,7 +313,7 @@ public struct PotentiometerLED {
 ```
 
 
-### 4. Controlling LED blink rate and brightness
+### 4. LED blink control
 
 Blink the LED. The LED brightness is changed by the potentiometer (A0). The blink rate is changed by the potentiometer (A11).
 
@@ -319,12 +325,14 @@ Blink the LED. The LED brightness is changed by the potentiometer (A0). The blin
 
 **Example code**
 
-```swift title="LEDBrightnessBlink.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/04Potentiometer/LEDBlinkControl).
+
+```swift title="LEDBlinkControl.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct LEDBrightnessBlink {
+public struct LEDBlinkControl {
     public static func main() {
         // Initialize the analog pin used to adjust LED brightness.
         let brightnessPot = AnalogIn(Id.A0)
@@ -351,7 +359,7 @@ public struct LEDBrightnessBlink {
 ```
 
 
-### 5. Dual LED brightness control
+### 5. Double LED dimmer
 
 In this project, two potentiometers work together to control the LED brightness. One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
 
@@ -365,12 +373,14 @@ In this project, two potentiometers work together to control the LED brightness.
 
 **Example code**
 
-```swift title="TwoPotentiometersLED.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/04Potentiometer/DoubleLEDDimmer).
+
+```swift title="DoubleLEDDimmer.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct TwoPotentiometersLED {
+public struct DoubleLEDDimmer {
     public static func main() {
         // Initialize the analog pin used to adjust LED brightness from min and max.
         let brightnessPot = AnalogIn(Id.A0)
@@ -402,24 +412,27 @@ public struct TwoPotentiometersLED {
 ```
 
 
-### 6. Playing tones manually
+### 6. Playing tones
 
 Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one by one.
 
 
 **Project overview**
+
 * Store the frequencies of musical notes in an array.
 * Read raw analog value from the potentiometer and map it into the index of the array.
 * If the new index is different from the last one, set the PWM signal using the corresponding frequency to play the note.
 
 **Example code**
 
-```swift title="PlayTones.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/04Potentiometer/PlayingTones).
+
+```swift title="PlayingTones.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct PlayTones {
+public struct PlayingTones {
     public static func main() {
         // Initialize a PWM pin for the buzzer.
         let buzzer = PWMOut(Id.PWM5A)

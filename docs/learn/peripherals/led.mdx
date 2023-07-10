@@ -376,7 +376,7 @@ The circuits above are simplified for your reference.
 
 **Class**
 
-**`DigitalOut`** - as indicated by its name, this class is used to control digital output, to get high or low voltage.
+**[`DigitalOut`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout)** - as indicated by its name, this class is used to control digital output, to get high or low voltage.
 
 | Method | Explanation |
 | ------- | -----------|
@@ -411,6 +411,8 @@ On your first try, let's make the LED blink.
 
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/LEDBlink).
 
 ```swift title="LEDBlink.swift" showLineNumbers
 // First import the SwiftIO and MadBoard libraries into the project to use related functionalities.
@@ -577,6 +579,8 @@ The overall color of the light depends on the internal LEDs that are on. If only
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/RGBLED).
+
 ```swift title="RGBLED.swift" showLineNumbers
 import SwiftIO
 import MadBoard
@@ -674,6 +678,8 @@ To reproduce it, you will use long flash and short flash respectively. So an SOS
 * Finally, the LED blinks rapidly three times again to represent the "S" signal.
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/LEDMorseCode).
 
 ```swift title="LEDMorseCode.swift" showLineNumbers
 // Import the libraries to use all their functionalities.
@@ -796,7 +802,7 @@ light.high()
 ```
 Set high voltage. This is works the same as `led.write(true)`.
 
-### 4. LED blink using timer
+### 4. LED blink with timer
 
 You will learn a new way to blink an LED - blink using a timer.
 
@@ -825,7 +831,7 @@ The timer here is quite similar. It is a software timer provided by Zephyr. You 
 
 **Class**
 
-**`Timer`** -  this class is used to set interrupt at a specific time interval.
+**[`Timer`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/timer)** -  this class is used to set interrupt at a specific time interval.
 
 | Method | Explanation |
 | ------ | ------------|
@@ -835,13 +841,15 @@ The timer here is quite similar. It is a software timer provided by Zephyr. You 
 
 **Example code**
 
-```swift title="TimerLEDToggle.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/LEDBlinkWithTimer).
+
+```swift title="LEDBlinkWithTimer.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
 @main
-public struct TimerLEDToggle {
+public struct LEDBlinkWithTimer {
     public static func main() {
         // Initialize a digital pin for the LED module.
         let led = DigitalOut(Id.D18)
