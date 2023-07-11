@@ -25,7 +25,7 @@ You will use the two buttons (D1, 21) and two potentiometers (A0, A11) on the ki
   alt="Modules for this project" width="960"
 />
 
-## Program overview
+## Project overview
 
 1. Display a filled circle on the screen. 
 2. As you rotate the two knobs, the stylus (circle) moves and draw the corresponding pixels. 

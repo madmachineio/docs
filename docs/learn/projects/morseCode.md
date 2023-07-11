@@ -1,6 +1,6 @@
 ---
 title: Morse code
-description: You'll explore more with some advanced projects.
+description: Send morse code and display the message.
 ---
 
 # Morse code
@@ -26,56 +26,44 @@ There are also some requirements for the gap between each code:
 * The gap between letters equals 3 dit duration. 
 * And the gap between words equals 7 dit duration. 
 
-In this project, you will send morse code using a button. A long button press represents the dah, and a short press represents the dit. And you'll not follow all these requirements strictly. It's a little hard to always type within the specified time.
+In this project, you will send morse code using a button. A long button press represents the dah, and a short press represents the dit.
 
 ## Circuit
 
-You will use a button (D1) as an input and an LCD (SPI0) for text display. A button (D1) and An LED (D18) serve as notifications.
+You will use a button (D1) as an input and an LCD (SPI0) for text display. The button (D1) and the LED (D18) are used for notifications.
 
 <img
   src={require('./img/morseCircuit.png').default}
   alt="Modules for this project" width="960"
 />
 
-## Program overview
+## Project overview
 
-1. Read digital values from the button.
-2. Once it's true, the button is pressed. Check how long the button is pressed. 
-3. If the button press is longer than 300ms, the morse code is a dah, or else it's a dit.
-4. Once the button is released, store the time after it.
-5. The threshold for the gap between words is 150ms, and the gap between letters is 60ms. The sound from the buzzer serves as notifications.
-6. If the morse code for a letter is done, find the corresponding letters and display it on the screen.
-7. Repeat the process until a word is finished. Add a space after the word.
+* Read digital values from the button.
+* Once it's true, the button is pressed. Check how long the button is pressed. 
+* If the button press is longer than 300ms, the morse code is a dah, or else it's a dit.
+* Once the button is released, store the time after it.
+* The threshold for the gap between words is 150ms, and the gap between letters is 60ms. The sound from the buzzer serves as a notification.
+* If the morse code for a letter is done, find the corresponding letters and print it.
+* Repeat the process until a word is finished. Add a space after the word.
 
-As you can see, the key point of this program is the state of the button. If it's pressed, you need to know it's a long press or short press. If it's released, you need to store the gap before the next press to tell it's the gap between letters or words.
+As you can see, the key point of this program is the state of the button. If it's pressed, you need to know if it's a long press or a short press. If it's released, you need to store the gap before the next press to tell if it's the gap between letters or words.
 
 
 ## Example code
 
-```swift showLineNumbers
-// Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03MoreProjects/MorseCode).
+
+```swift title="MorseCode.swift" showLineNumbers
+// Import the SwiftIO library to set input/output and MadBoard to use pin id.
 import SwiftIO
 import MadBoard
-// Import the driver for the screen and graphical library for display.
+// Import the driver for the screen.
 import ST7789
-import MadDisplay
 
 @main
 public struct MorseCode {
     public static func main() {
-        // Initialize the pins for the screen.
-        let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D9)
-        let dc = DigitalOut(Id.D10)
-        let rst = DigitalOut(Id.D14)
-        let bl = DigitalOut(Id.D2)
-
-        // Initialize the screen with the pins above.
-        let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
-        // Create an instance using the screen for dispay later.
-        let display = MadDisplay(screen: screen)
-        let group = Group()
-
         // Initialize an LED as an indicator.
         let led = DigitalOut(Id.D18)
         // Initialize a button used to type characters.
@@ -106,10 +94,6 @@ public struct MorseCode {
         // Store all characters.
         var text = ""
 
-        // Create a label to display the input text.
-        var label = Label(y: 10, color: Color.orange)
-        group.append(label)
-
         // A threshold for a long press which matches a dah.
         let longPressCount = 30
 
@@ -124,6 +108,10 @@ public struct MorseCode {
         // Store the states of the button.
         var justPressed = false
         var justReleased = false
+
+        var buzzerCount = 0
+
+        var lastLetter = ""
 
         timer.setInterrupt() {
             if button.read() {
@@ -155,11 +143,6 @@ public struct MorseCode {
             }
         }
 
-        var buzzerCount = 0
-
-        var lastLetter = ""
-
-
         while true {
             // Check if you finish typing a single character or a word.
             if releaseCount > wordReleaseCount {
@@ -168,8 +151,8 @@ public struct MorseCode {
                 // The buzzer produces a higher sound as a notification.
                 if lastLetter != "" && lastLetter != " "{
                     text += " "
-                    label.updateText(text)
-                    display.update(group)
+
+                    print("Message: \"\(text)\"")
                     
                     buzzer.set(frequency: 2000, dutycycle: 0.5)
                     buzzerCount = 0
@@ -182,8 +165,7 @@ public struct MorseCode {
                 if let letter = dict[morseCode] {
                     text += letter
 
-                    label.updateText(text)
-                    display.update(group)
+                    print("Message: \"\(text)\"")
                     
                     lastLetter = letter
                     

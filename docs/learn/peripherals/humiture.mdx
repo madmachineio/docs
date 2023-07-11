@@ -83,7 +83,7 @@ Each communication protocol has its own rules that define how the data is transm
 
 Earlier in the tutorial, you looked at the [push-pull and open-drain](./led#push-pull-and-open-drain) configurations. I2C bus uses open-drain output, which means it can pull the output voltage to a low state, but does not actively drive it to a high state, hence it needs external pull-up resistors.
 
-By default, the I2C interfaces on the SwiftIO Feather board add resistors. So you don't have to add external pull-up resistors when connecting other I2C devices.
+By default, the I2C interfaces on the SwiftIO Micro add resistors. So you don't have to add external pull-up resistors when connecting other I2C devices.
 
 <img
   src={require('./img/pullUp.png').default}
@@ -97,7 +97,7 @@ By default, the I2C interfaces on the SwiftIO Feather board add resistors. So yo
 
 An I2C peripheral is a **built-in hardware module that provides interfaces for the MCU to communicate with other digital devices over the I2C protocol**. 
 
-It allows MCU to communicate with one or more I2C peripherals, such as sensors, memory devices, or other MCUs, which can act as either master or slave devices. In the case of the **SwiftIO Feather board**, it will always act as the **master device**, while the other devices connected to it will act as slaves.
+It allows MCU to communicate with one or more I2C peripherals, such as sensors, memory devices, or other MCUs, which can act as either master or slave devices. In the case of the **SwiftIO Micro**, it will always act as the **master device**, while the other devices connected to it will act as slaves.
 
 The I2C peripheral typically provides a set of registers that can be programmed to configure the I2C interface, such as the baud rate, clock speed, and data format. The MCU firmware ([SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio/i2c)) then uses these registers to control the I2C communication with other devices. Finally, you can use the provided APIs to read and write data over the I2C bus.
 
@@ -144,6 +144,14 @@ The humiture sensor is connected to **I2C0** (pin SCL0 and SDA0).
   alt="Humiture module circuit" width="960"
 />
 
+| Humiture Pin | SwiftIO Micro Pin |
+| - | - |
+| SCL | I2C0 (SCL0) |
+| SDA | I2C0 (SDA0) |
+| 3V3 | 3V3 |
+| GND | GND |
+
+
 <img
   src={require('./img/humitureCircuitDiagram.png').default}
   alt="Humiture module circuit diagram" width="360"
@@ -151,6 +159,7 @@ The humiture sensor is connected to **I2C0** (pin SCL0 and SDA0).
 
 :::note
 The circuits above are simplified versions for your reference.
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 
@@ -170,7 +179,7 @@ The circuits above are simplified versions for your reference.
 
 <TabItem value="i2c">
 
-**`I2C`** - this class controls the I2C communication between your board and sensorss. The data is sent or read in bytes.
+**[`I2C`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/i2c)** - this class controls the I2C communication between your board and sensorss. The data is sent or read in bytes.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -182,7 +191,7 @@ The circuits above are simplified versions for your reference.
 
 <TabItem value="sht3x">
 
-**`SHT3x`** - this is the driver for SHT3x sensor. You'll use it read temperature and humidity directly from the sensor.
+**[`SHT3x`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/SHT3x)** - this is the driver for SHT3x sensor. You'll use it read temperature and humidity directly from the sensor.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -201,8 +210,7 @@ The circuits above are simplified versions for your reference.
 
 Let's use the humiture sensor to get the temperature and humidity. 
 
-
-**project overview**
+**Project overview**
 
 * After you download the code, the sensor begins to take a measurement every second.
 * You can see the temperature and humidity values printed on the serial monitor.
@@ -210,13 +218,15 @@ Let's use the humiture sensor to get the temperature and humidity.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/05Humiture/Humiture).
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S05Humiture.swift', value: 'main', },
+    { label: 'Humiture.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -231,7 +241,7 @@ import MadBoard
 import SHT3x
 
 @main
-public struct C01S05Humiture {
+public struct Humiture {
     public static func main() {
         // Initialize the I2C interface and use it to initialize the sensor.
         let i2c = I2C(Id.I2C0)
@@ -258,7 +268,7 @@ public struct C01S05Humiture {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S05Humiture",
+    name: "Humiture",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -270,7 +280,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S05Humiture",
+            name: "Humiture",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -279,8 +289,8 @@ let package = Package(
                 .product(name: "SHT3x", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S05HumitureTests",
-            dependencies: ["C01S05Humiture"]),
+            name: "HumitureTests",
+            dependencies: ["Humiture"]),
     ]
 )
 
@@ -295,7 +305,7 @@ let package = Package(
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S05Humiture.swift', value: 'main', },
+    { label: 'Humiture.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -349,7 +359,7 @@ This file defines the content of this package. You may notice the two highlighte
 
 
 
-### 2. Reading Temperature
+### 2. Average temperature
 
 In this project, you'll decide when the sensor starts to measure temperature. 
 
@@ -365,10 +375,12 @@ In this project, you'll decide when the sensor starts to measure temperature.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/05Humiture/AverageTemperature).
+
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S05TemperatureMeasurement.swift', value: 'main', },
+    { label: 'AverageTemperature.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -381,7 +393,7 @@ import MadBoard
 import SHT3x
 
 @main
-public struct C01S05TemperatureMeasurement {
+public struct AverageTemperature {
     public static func main() {
         // Initialize the I2C interface and use it to initialize the sensor.
         let i2c = I2C(Id.I2C0)
@@ -433,7 +445,7 @@ public struct C01S05TemperatureMeasurement {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S05TemperatureMeasurement",
+    name: "AverageTemperature",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -445,7 +457,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S05Humiture",
+            name: "Humiture",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -454,8 +466,8 @@ let package = Package(
                 .product(name: "SHT3x", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S05HumitureTests",
-            dependencies: ["C01S05Humiture"]),
+            name: "HumitureTests",
+            dependencies: ["Humiture"]),
     ]
 )
 
@@ -479,7 +491,6 @@ BTW, you can find its datasheet [here](https://sensirion.com/media/documents/213
 **❖ In summary**
 
 1. **Understand the sensor**: to create a sensor driver, you should first understand how the sensor works and how to communicate with it (I2C/SPI/UART). 
-
 
 2. **Decide APIs for the driver**: For a sensor driver, the APIs usually include:
     * initializer, 

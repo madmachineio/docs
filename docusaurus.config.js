@@ -78,11 +78,17 @@ module.exports = {
           position: 'left',
           label: 'Learning Playground',
         },
+        // {
+        //   type: 'doc',
+        //   docId: 'projects/overview',
+        //   position: 'left',
+        //   label: 'Projects',
+        // },
         {
           type: 'doc',
-          docId: 'projects/overview',
+          docId: 'hardware/swiftio-micro',
           position: 'left',
-          label: 'Projects',
+          label: 'Hardware',
         },
         {
           type: 'doc',

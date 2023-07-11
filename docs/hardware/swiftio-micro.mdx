@@ -1,16 +1,28 @@
 ---
-title: SwiftIO Feather board
-description: SwiftIO Feather is a simplified board and is suitable to be embedded in all your designs. You can use it to build prototypes and program your projects in a modern way.
+title: SwiftIO Micro
+description: SwiftIO Micro is a compact board suitable to be embedded in all your designs.
 ---
 
-# SwiftIO Feather board
+# SwiftIO Micro
 
-SwiftIO Feather board is a simplified version of the SwiftIO board. Though small in size, it is powerful enough for all projects. One of its advantages is that it is suitable to be embedded in any of your projects.
+SwiftIO Micro is our flagship microcontroller board designed specifically for Swift hardware programming. It is ideal for embedding into your projects, offering a perfect balance between size and power.
 
-It is compatible with the Adafruit feather system. This means you can use it together with the hardware in this system.
+Despite its compact size, SwiftIO Micro is powerful enough to tackle any project you have in mind.
 
- 
-![SwiftIO Feather](img/FeatherParts.png)
+<img
+  src={require('./img/micro.png').default}
+  alt="SwiftIO Micro" width="480"
+/>
+
+It can work with the expansion board called [SwiftIO Playground](./swiftio-playground) to get you started.
+
+
+:::info
+BTW, this board is compatible with the [Adafruit FeatherWings](https://learn.adafruit.com/adafruit-feather/featherwings), allowing you to enhance its capabilities by adding compatible wings.
+:::
+
+![SwiftIO Micro](img/MicroParts.png)
+
 
 ## MCU
 
@@ -19,35 +31,27 @@ i.MX RT1062 Crossover Processor with Arm® Cortex®-M7 core @600MHz. This 32-bit
 
 ## Memory
 
-16MB flash, 32MB SDRAM.
+32MB RAM, 16MB Flash
 
 
 ## Buttons
 
-- The **download button** allows you to mount your board as a USB drive on your computer to download code. 
-- The **reset button** can restart the code that has been downloaded to your board. Sometimes, if your code don't run normally, you may press it to solve the problem.
-
+- **Reset button**: restart the code that has been downloaded to your board. Sometimes, if your code doesn't run normally, you may press it to solve the problem.
+- **Download button**: allows you to mount your board as a USB drive on your computer to download code. 
 
 ## USB
 
 a USB-C port to download your code and print values. It can also power the board. The power from it will be regulated to 3.3V.
 
-## Built-in RGB LED
-It contains red, blue and green LEDs. You can know from it the status of your board. 
+## RGB LED
+It contains red, blue and green LEDs. 
 
-| LED State | RED | GREEN | BLUE |
-| :--- | :--- | :--- | :--- |
-| On | USB communication failed | USB connection established | - |
-| Slow flashing | Fail to verify file `feather.bin` | - | - |
-| Fast flashing | Fail to open file `feather.bin` | Detecting USB connection | Detecting SD card |
-
-
-Besides, you can control them by setting digital levels. The built-in LEDs will be on with a low voltage, and off with a high voltage.
+It indicates the board's status. Besides, it can also be controlled by adjusting digital levels. To turn an LED on, you set the corresponding digital level to a low voltage. Conversely, setting the digital level to high turns the LED off.
 
 
 ## Pins
 
-![SwiftIO Feather pinout](img/FeatherPinout.png)
+![SwiftIO Micro pinout](img/MicroPinout.png)
 
 **GND**: 2 GND pins on your board to ground the circuit.
 
@@ -84,6 +88,4 @@ Besides, you can control them by setting digital levels. The built-in LEDs will 
 **B0/B1**: the two pins are reserved for bootloader update.
 
 
-## By the way
 
-It can work with the expansion board called [SwiftIO Playground](./swiftio-playground) to get started.

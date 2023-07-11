@@ -1,17 +1,13 @@
 ---
-title: Interactive moving ball
-description: You'll explore more with some advanced projects.
+title: Moving ball
+description: Move the ball on the screen by moving the board.
 ---
 
-# Interactive moving ball
+# Moving ball
 
 
 In this project, you will move your board to move the ball displayed on the LCD. When you tilt your board to any direction, the ball moves with it. 
 
-<img
-  src={require('./img/movingBall.png').default}
-  alt="Moving ball project" width="480"
-/>
 
 ## Circuit
 
@@ -22,29 +18,32 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
   alt="Moving ball circuit" width="960"
 />
 
-## Program overview
+## Project overview
 
-1. Display a ball (circle) at the center of the LCD.
-2. Read the accelerations to know how the board moves.
-3. If it moves to the left, the ball's coordinate on the x-axis will decrease. If it's right, the x-coordinate increases.
-4. If it moves forward, the y-coordinate decreases, so the ball moves forward. And if it's downward, the y-coordinate increases.
-5. Update the ball's position on the LCD.
-6. Read the accelerations again and repeat the process.
+* Display a ball at the center of the LCD.
+* Read the accelerations to know how the board moves.
+* If it moves to the left, the ball's coordinate on the x-axis will decrease. If it's right, the x-coordinate increases.
+* If it moves forward, the y-coordinate decreases, so the ball moves forward. And if it's downward, the y-coordinate increases.
+* Update the ball's position on the LCD.
+* Read the accelerations again and repeat the process.
 
 ## Example code
 
-```swift showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03MoreProjects/MovingBall).
+
+
+```swift title="MovingBall.swift" showLineNumbers
 // Import the SwiftIO library to set SPI communication and MadBoard to use pin id.
 import SwiftIO
 import MadBoard
-// Import the driver for the screen and graphical library for display.
+// Import the driver for the screen.
 import ST7789
-import MadDisplay
 // Import the accelerometer driver to sense the movement.
 import LIS3DH
 
 @main
 public struct MovingBall {
+
     public static func main() {
         // Initialize the i2c interface and use it to intialize the sensor.
         let i2c = I2C(Id.I2C0)
@@ -60,34 +59,29 @@ public struct MovingBall {
         // Initialize the screen with the pins above.
         let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        // Create an instance using the screen to display graphics.
-        let display = MadDisplay(screen: screen)
-
-        // The size of the screen.
-        var height = 240
-        var width = 240
+        typealias Point = (x: Int, y: Int)
 
         // The original coordinate of the ball. It's at the center.
-        var x = width / 2 - 1
-        var y = height / 2 - 1
+        var x = screen.width / 2 - 1
+        var y = screen.height / 2 - 1
 
         // Create a ball.
-        let radius = 15 
-        let ball = Circle(x: x, y: y, radius: radius, fill: Color.yellow)
-
-        // Add the ball to a group for display.
-        let group = Group()
-        group.append(ball)
+        let ballWidth = 15 
+        let ballColor: UInt16 = 0xF800
 
         // The count of pixels the ball will move each time.
-        var change = 5
+        let step = 5
         // The threshold for the accelerations to move the ball.
         let threshold: Float = 0.2
 
         // The anchor of the ball when you move it is at the upper left corner of this tile. 
         // But it's at the center when creating the ball.
-        x -= radius
-        y -= radius
+        x -= ballWidth
+        y -= ballWidth
+        
+        drawSquare(at: (x, y), width: ballWidth, color: ballColor)
+
+        var lastPos: Point = (x, y)
 
         while true {
             // Read the new accelerations to know the movement.
@@ -97,19 +91,14 @@ public struct MovingBall {
             if abs(accelerations.x) > threshold {
                 // Get the direction of the ball's movement horizontally.
                 // When you tilt your board left, the ball moves to the left, and vice versa.
-                if accelerations.x < 0 {
-                    change = abs(change)
-                } else {
-                    change = -abs(change)
-                }
-
                 // Calculate the x coordinate of the ball.
-                x += change
+                x += accelerations.x < 0 ? step : -step
+
                 // Keep the ball within the screen.
                 if x < 0 {
                     x = 0
-                } else if x > width - radius * 2 - 1 {
-                    x = width - radius * 2 - 1
+                } else if x > screen.width - ballWidth - 1 {
+                    x = screen.width - ballWidth - 1
                 }
             }
 
@@ -117,26 +106,72 @@ public struct MovingBall {
             if abs(accelerations.y) > threshold {
                 // Get the direction of the ball's movement vertically.
                 // When you tilt your board forward, the ball moves forward, and vice versa.
-                if accelerations.y < 0 {
-                    change = -abs(change)
-                } else {
-                    change = abs(change)
-                }
-
                 // Calculate the y coordinate of the ball. 
-                y += change
+                y += accelerations.y < 0 ? -step : step
+                
                 // Keep the ball within the screen.
                 if y < 0 {
                     y = 0
-                } else if y > height - radius * 2 - 1 {
-                    y = height - radius * 2 - 1
+                } else if y > screen.height - ballWidth - 1 {
+                    y = screen.height - ballWidth - 1
                 }
             }
 
             // Update the ball's position on the LCD.
-            ball.setXY(x: x, y: y)
-            display.update(group)
+            if x != lastPos.x || y != lastPos.y {
+                update(width: ballWidth, height: ballWidth,
+                    from: lastPos, bgColor: 0, to: (x, y), color: ballColor
+                )
+                lastPos = (x, y)
+            }
+            
             sleep(ms: 20)
+        }
+
+        func drawSquare(at point: Point, width: Int, color: UInt16) {
+            for py in point.y..<(point.y + width) {
+                for px in point.x..<(point.x + width) {
+                    screen.writePixel(x: px, y: py, color: color)
+                }
+            }
+        }
+
+        func update(
+            width: Int, height: Int,
+            from lastPos: Point, bgColor: UInt16,
+            to newPos: Point, color: UInt16)
+        {
+            var x0 = 0
+            var x1 = 0
+            if lastPos.x < newPos.x {
+                x0 = lastPos.x
+                x1 = newPos.x + width
+            } else {
+                x0 = newPos.x
+                x1 = lastPos.x + width
+            }
+
+            var y0 = 0
+            var y1 = 0
+            if lastPos.y < newPos.y {
+                y0 = lastPos.y
+                y1 = newPos.y + height
+            } else {
+                y0 = newPos.y
+                y1 = lastPos.y + height
+            }
+
+            var buffer = [UInt16](repeating: bgColor, count: (x1 - x0) * (y1 - y0))
+
+            for py in newPos.y..<newPos.y + height {
+                for px in newPos.x..<newPos.x + width {
+                    buffer[(py - y0) * (x1 - x0) + (px - x0)] = color
+                }
+            }
+
+            buffer.withUnsafeBytes {
+                screen.writeBitmap(x: x0, y: y0, width: x1 - x0, height: y1 - y0, data: $0)
+            }
         }
     }
 }

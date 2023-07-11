@@ -49,7 +49,7 @@ Here are some important concepts about PWM:
 
 The PWM peripheral in a microcontroller is designed to **generate PWM signals**. The PWM pins are typically labeled with a tilde symbol (~) to indicate their capability. These pins can be used to control the speed of motors, the brightness of LEDs...
 
-If you look at the [PWM pin names](../preparation/hardware) of the SwiftIO Feather board, you may find they are marked with A or B at the end. Actually, the **PWM pins are grouped in pairs**, like PWM2A and PWM2B. The two pins in a group **share the same frequency**. So if you need two PWM pins with different frequencies, you should use the pins in different groups, like PWM0A and PWM1A.
+If you look at the [PWM pin names](../preparation/hardware) of the SwiftIO Micro, you may find they are marked with A or B at the end. Actually, the **PWM pins are grouped in pairs**, like PWM2A and PWM2B. The two pins in a group **share the same frequency**. So if you need two PWM pins with different frequencies, you should use the pins in different groups, like PWM0A and PWM1A.
 
 
 ## 🔸New component
@@ -113,12 +113,20 @@ So to make the buzzer play a piece of melody, you need to find the frequency and
 
 The buzzer is connected to the pin **PWM5A**. 
 
-The PWM pins are marked with a tilde (~) on the silkscreen of your board. Most of the pins on your SwiftIO Feather board are multifunctional. A pin may be used as digital pins and PWM pins. You can refer to [this pinout](../../../overview/hardware/swiftio-feather#pins) to know the functionalities of each pin.
+The PWM pins are marked with a tilde (~) on the silkscreen of your board. Most of the pins on your SwiftIO Micro are multifunctional. A pin may be used as digital pins and PWM pins. You can refer to [this pinout](../../hardware/swiftio-micro#pins) to know the functionalities of each pin.
 
 <img
   src={require('./img/buzzerCircuit.png').default}
   alt="Buzzer circuit" width="960"
 />
+
+| Buzzer Pin | SwiftIO Micro Pin |
+| - | - |
+| SIG | PWM5A |
+| NC (Not Connected) | - |
+| 3V3 | 3V3 |
+| GND | GND |
+
 
 <img
   src={require('./img/buzzerCircuitDiagram.png').default}
@@ -127,13 +135,14 @@ The PWM pins are marked with a tilde (~) on the silkscreen of your board. Most o
 
 :::note
 The circuits above are simplified for your reference.
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 ## 🔸API
 
 **Class**
 
-**`PWMOut`** - this class allows you to set the frequency and duty cycle of PWM output from the board.
+**[`PWMOut`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/pwmout)** - this class allows you to set the frequency and duty cycle of PWM output from the board.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -145,7 +154,7 @@ The circuits above are simplified for your reference.
 
 ## 🔸Projects
 
-### 1. Musical scale
+### 1. Playing a scale
 
 In this project, the buzzer will play the musical scale. 
 
@@ -163,13 +172,15 @@ In this project, the buzzer will play the musical scale.
 
 **Example code**
 
-```swift title="C01S03Buzzer.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/PlayingScale).
+
+```swift title="PlayingScale.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03Buzzer {
+public struct PlayingScale {
     public static func main() {
         // Initialize a PWM pin for the buzzer.
         let buzzer = PWMOut(Id.PWM5A)
@@ -250,13 +261,15 @@ So let's try a breathing LED! You may notice it when a new message comes on your
 
 **Example code**
 
-```swift title="C01S03PWMLed.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/BreathingLED).
+
+```swift title="BreathingLED.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output and the MadBoard to use the pin id.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03PWMLed {
+public struct BreathingLED {
     public static func main() {
         // Initialize a PWM output pin for the LED.
         let led = PWMOut(Id.PWM4A)
@@ -374,7 +387,7 @@ This statement is to know whether the duty cycle exceeds its range. If so, `upDi
 
 
 
-### 3. LED brightness control
+### 3. Button dimmer
 
 You'll adjust the brightness of the LED using two buttons: one is reserved to increase the brightness, the other is to reduce the brightness.
 
@@ -391,14 +404,15 @@ You'll adjust the brightness of the LED using two buttons: one is reserved to in
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/ButtonDimmer).
 
-```swift title="C01S03ButtonPWM.swift" showLineNumbers
+```swift title="ButtonDimmer.swift" showLineNumbers
 // Import two necessary libraries.
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03ButtonPWM {
+public struct ButtonDimmer {
     public static func main() {
         // Initialize the PWM pin.
         let led = PWMOut(Id.PWM4A)
@@ -475,12 +489,14 @@ In this project, let's test the reflex time.
 
 **Example code**
 
-```swift title="C01S03ReflexGame.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/ReflexGame).
+
+```swift title="ReflexGame.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03ReflexGame {
+public struct ReflexGame {
     public static func main() {
         let startButton = DigitalIn(Id.D1)
         let player = DigitalIn(Id.D19)
@@ -534,6 +550,56 @@ The two functions are used together to measure a short period (a few seconds) wi
 
 `cyclesToNanoseconds()` calculates the passed time in nanoseconds using a start time and stop time. 
 
+```swift
+print("Reflex time: \(Float(duration) / 1000_000)ms")
+```
+It allows you to see the value on a serial monitor. 
+
+It is a useful tool to debug your code if there is something unexpected in your program. You could add it after each statement that changes a value. Then you could infer which step goes wrong according to the printed results.
+
+<details>
+    <summary>How to use the serial monitor?</summary>
+
+1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-Serial device on your board.
+2. After finishing downloading the project, click **SERIAL MONITOR** tab.
+
+<img
+  src={require('./img/serialMonitor.png').default}
+  alt="" width="960"
+/>
+
+3. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
+
+<img
+  src={require('./img/choosePort.png').default}
+  alt="" width="960"
+/>
+
+
+4. Select the **baudrate 115200**.
+
+<img
+  src={require('./img/chooseBaudrate.png').default}
+  alt="" width="960"
+/>
+
+5. Click the button **Start Monitoring**.
+
+<img
+  src={require('./img/startMonitoring.png').default}
+  alt="" width="960"
+/>
+
+And now you should see the values printed on after another.
+
+<img
+  src={require('./img/printValues.png').default}
+  alt="" width="960"
+/>
+
+</details>
+
+
 
 ### 5. LED pattern change
 
@@ -549,12 +615,14 @@ Many types of light decorations, such as Christmas lights or string lights, ofte
 
 **Example code**
 
-```swift title="C01S03LEDPatternChange.swift" showLineNumbers
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/LEDPatternChange).
+
+```swift title="LEDPatternChange.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
 @main
-public struct C01S03LEDPatternChange {
+public struct LEDPatternChange {
     public static func main() {
         let led = PWMOut(Id.PWM4A)
         let button = DigitalIn(Id.D1)

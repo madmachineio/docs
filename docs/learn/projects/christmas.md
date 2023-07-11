@@ -12,7 +12,7 @@ In this project, you will create a Christmas decoration. The screen displays an 
 
 
 
-## Program overview
+## Project overview
 
 
 

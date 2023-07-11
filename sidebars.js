@@ -20,7 +20,6 @@ const sidebars = {
   
   docsSidebar: [
     'overview/introduction', 
-    'overview/roadmap',
     {
       type: 'category',
       collapsed: false,
@@ -64,23 +63,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      type: 'category',
-      collapsed: false,
-      label: '🔧Meet your hardware',
-      link: {
-        type: 'doc',
-        id: 'overview/hardware/overview',
-      },
-      items: [
-        'overview/hardware/swiftio-board',
-        'overview/hardware/swiftio-feather',
-        'overview/hardware/maker-kit',
-        'overview/hardware/swiftio-playground',
-      ],
-    },
     'overview/background', 
-    //'overview/pin-id', 
     'overview/faq', 
   ],
 
@@ -101,7 +84,6 @@ const sidebars = {
             'learn/preparation/peripherals',
             'learn/preparation/sensors-actuators',
             'learn/preparation/hardware',
-            //'learn/preparation/swiftio-madboard',
           ],
         },
 
@@ -226,13 +208,24 @@ const sidebars = {
         },
       ],
     },
+    'projects/swiftio-playground',
+  ],
+
+  referenceSidebar: [
+    'reference/reference',
+  ],
+
+  hardwareSidebar: [
+    'hardware/swiftio-micro',
+    'hardware/swiftio-playground',
+    'hardware/swiftio-board',
     {
       type: 'category',
-      collapsed: false,
-      label: '🔸SwiftIO Maker Kit',
+      collapsed: true,
+      label: 'SwiftIO Maker Kit (Discontinued)',
       link: {
         type: 'doc',
-        id: 'projects/swiftio-maker-kit/overview',
+        id: 'hardware/maker-kit',
       },
       items: [
         'projects/swiftio-maker-kit/mission1',
@@ -249,11 +242,6 @@ const sidebars = {
         'projects/swiftio-maker-kit/mission12',
       ],
     },
-    'projects/swiftio-playground',
-  ],
-
-  referenceSidebar: [
-    'reference/reference',
   ],
 };
 

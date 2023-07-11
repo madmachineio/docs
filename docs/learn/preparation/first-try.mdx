@@ -14,9 +14,7 @@ At first, you will get started with the software setup process.
 
 
 1. **Download the latest [mm-sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build and download your project.
-
 2. **Open the Visual Studio Code**. I believe most of you guys have installed it. We've created an extension for it. It is really handy and easy to use.
-
 3. **Install the extension** as shown below:
     1. click the Extensions button on the left bar.
     2. enter the extension name MadMachine in the search box.
@@ -93,7 +91,7 @@ Now, you will start your first project.
 />
 
 
-3. Choose the board for this project - **SwiftIOFeather**.
+3. Choose the board for this project - **SwiftIOMicro**.
 
 <img
   src={require('./img/boardType.png').default}
@@ -121,8 +119,7 @@ Well, the project is created and will open in a new window.
 Then you will need to edit the code for the project. 
 
 1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. Your program will start from here marked with `@main`. So you will always edit this file for all your projects.
-
-2. Copy the code below into the file. In the [next section](../peripherals/led), you will learn how everything works.
+2. **Copy the code below** into the file. In the [next section](../peripherals/led), you will learn how everything works.
 
 ```swift title="Blink.swift" showLineNumbers
 import SwiftIO
@@ -151,16 +148,7 @@ public struct Blink {
 
 ##  Step 4: Connect board to computer
 
-Now you come to the last step - download your project to the board.
-
-1. Insert the SD card into the SwiftIO Feather board.
-
-<img
-  src={require('./img/insertSDCard.png').default}
-  alt="Insert SD card to board" width="480"
-/>
-
-2. **Connect** your SwiftIO Feather board to your computer using a USB cable.
+**Connect** your SwiftIO Micro to your computer using a USB cable.
 
 <img
   src={require('./img/connect.png').default}
@@ -169,7 +157,7 @@ Now you come to the last step - download your project to the board.
 
 
 :::info
-If you are using our **prototype board** that has a LiPo battery connector, there is one more shield board in between. Make sure to connect the USB port on the shield to your computer for code downloading instead of the other two ports.
+The SwiftIO Micro supports [XIP](../../../blog/A%20brief%20introduction%20about%20Swift%20in%20embedded%20development#hardware-difference-mmu) now and doesn't require an SD card. 
 :::
 
 ##  Step 5: Download code to the board

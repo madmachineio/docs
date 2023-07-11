@@ -1,6 +1,6 @@
 ---
 title: Pong
-description: You'll explore more with some advanced projects.
+description: Play pong game.
 ---
 
 # Pong
@@ -11,14 +11,30 @@ Let's play the pong game in this project. You rotate the potentiometers (A0, A11
 
 ## Circuit
 
+The two potentiometers (A0, A11) are used to move paddles. The button (D1) is used to reset the game. The speaker (I2S0) plays sound effects during the game.
 
+<img
+  src={require('./img/pongCircuit.png').default}
+  alt="Modules for this project" width="960"
+/>
 
-## Program overview
+## Project overview
+
+* The game will start with the ball moving at a specified speed from its starting position. The ball will move in both the x and y directions.
+* Each player rotates a potentiometer to move the paddle in order to hit the ball.
+* Handle collision:
+    * **Wall Collision**: If the ball collides with the top or bottom wall, it will bounce off and change its vertical direction.
+    * **Paddle Collision**: If the ball collides with a paddle, it will bounce off and change its horizontal direction.
+* Scoring: 
+    * If a player fails to hit the ball and it passes the paddle, the opponent will **score** a point. The ball's position and speed will be reset for the next serve.
+    * If either player reaches the **score limit**, the game ends.
+* The players can press the reset button to start a new game with scores reset to zero.
 
 
 
 ## Example code
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03MoreProjects/Pong).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -577,3 +593,7 @@ extension ST7789 {
 ```
 </TabItem>
 </Tabs>
+
+:::note
+Don't forget to copy the sound files in the demo project to the SD card and insert it into board.
+:::

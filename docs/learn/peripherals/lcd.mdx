@@ -192,7 +192,7 @@ In this tutorial, the stuff displayed on the LCD are all raster graphics. There 
 
 <table>
   <tr>
-    <th>LCD pin</th>
+    <th>LCD Pin</th>
     <td>SPI (SCK)</td>
     <td>SPI (SDI)</td>
     <td>BL</td>
@@ -201,7 +201,7 @@ In this tutorial, the stuff displayed on the LCD are all raster graphics. There 
     <td>CS</td>
   </tr>
   <tr>
-    <th>Feather Pin</th>
+    <th>SwiftIO Micro Pin</th>
     <td>SPI0 (SCK0)</td>
     <td>SPI0 (SDO0)</td>
     <td>D2</td>
@@ -223,7 +223,8 @@ In this tutorial, the stuff displayed on the LCD are all raster graphics. There 
 />
 
 :::note
-The circuits above are simplified versions for your reference.
+The circuits above are simplified versions for your reference. 
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 ## 🔸API
@@ -242,24 +243,24 @@ The circuits above are simplified versions for your reference.
 
 <TabItem value="spi">
 
-**`SPI`** - this class is used to send and receive data using SPI protocol.
+**[`SPI`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/spi)** - this class is used to send and receive data using SPI protocol.
 
-| Method                                            | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Method    | Explanation  |
+| ------ | ----------------- |
 | `init(_:speed:csPin:`<br />`CPOL:CPHA:bitOrder:)` | Initialize an SPI interface. <br />**Parameter:** <br /> - `idName`: spi pin id that the device connects to. <br /> - `speed`: the communication speed, 5MHz by default. The maximum speed is about 30MHz. <br /> - `csPin`: a `DigitalOut` pin as a CS pin. It is nil by default. If you don't set it, you need to control it manually when communicating with devices. <br />- `CPOL`: the state of clock signal when it's idle, `false` by default. <br />- `CPHA`: the edge of clock signal to sample data, false for first edge and true for second edge. `false` by default. <br />- `bitOrder`: the bit order during data transmission, `.MSB` by default. |
 
 </TabItem>
 
 <TabItem value="st7789">
 
-**`ST7789`** - it configures the LCD and allows you to draw pixels on it.
+**[`ST7789`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/ST7789)** - it configures the LCD and allows you to draw pixels on it.
 
-| Method                                                  | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Method | Explanation |
+| ------ | ----------- |
 | `init(spi:cs:dc:rst:bl:`<br />`width:height:rotation:)` | Initialize an LCD. <br />**Parameter:** <br /> - `spi`: the SPI interface that the LCD connects to.<br />- `cs`: the cs pin for SPI communication. The cs pin is controlled in this class, so the `csPin` in `SPI` class should be nil. <br />- `dc`: a `DigitalOut` pin used for data and command selection. <br />- `rst`: a `DigitalOut` pin used to reset the LCD.<br />- `bl`: a `DigitalOut` pin used for backlight control.<br /> - `width`: the width of the LCD, 240 by default.<br /> - `height`: the height of the LCD, 240 by default. <br />- `rotation`: the degree of LCD rotation, `.angle0` by default. It is used to set the position of origin. |
-| `writePixel(x:y:color:)`                                | Set a single pixel on the screen. <br />**Parameter:**<br /> - `x`, `y`: the coordinate of the pixel. <br /> - `color`: a UInt16 color value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `writeBitmap(x:y:`<br />`width:height:data:)`           | Set an area of pixels on the screen. <br />**Parameter:**<br />- `x`, `y`: the coordinate of the starting point, that is, the left upper corner of the area. <br /> - `width`: the width of the area.<br /> - `height`: the height of the area. <br /> - `data`: the color data stored in an UInt8 array. Please note the data is stored in UInt8, so two values are used for one pixel.                                                                                                                                                                                                                                                                           |
-| `clearScreen(_:)`                                       | Fill the whole screen with one color. <br />**Parameter:**<br /> - `color`: a color data in UInt16.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `writePixel(x:y:color:)` | Set a single pixel on the screen. <br />**Parameter:**<br /> - `x`, `y`: the coordinate of the pixel. <br /> - `color`: a UInt16 color value.   |
+| `writeBitmap(x:y:`<br />`width:height:data:)`           | Set an area of pixels on the screen. <br />**Parameter:**<br />- `x`, `y`: the coordinate of the starting point, that is, the left upper corner of the area. <br /> - `width`: the width of the area.<br /> - `height`: the height of the area. <br /> - `data`: the color data stored in an UInt8 array. Please note the data is stored in UInt8, so two values are used for one pixel.     |
+| `clearScreen(_:)`  | Fill the whole screen with one color. <br />**Parameter:**<br /> - `color`: a color data in UInt16.  |
 
 
 These methods to draw on the screen are quite similar:
@@ -301,6 +302,7 @@ You are going to use the library `ST7789` to paint the screen and show some simp
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/LCD).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -308,7 +310,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08LCD.swift', value: 'main', },
+    { label: 'LCD.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -323,7 +325,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08LCD {
+public struct LCD {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -418,7 +420,7 @@ public struct C01S08LCD {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08LCD",
+    name: "LCD",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -430,7 +432,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -439,8 +441,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -454,7 +456,7 @@ let package = Package(
 ```swift
 let spi = SPI(Id.SPI0, speed: 30_000_000)
 ```
-The LCD needs quite a lot of data for display, so the SPI speed needs to be fast enough to get a better view. And the Feather board support 30MHz SPI speed at most. 
+The LCD needs quite a lot of data for display, so the SPI speed needs to be fast enough to get a better view. And the Micro support 30MHz SPI speed at most. 
 
 The CS pin is not set when initializing the SPI, so it needs to be set when initializing the screen.
 
@@ -533,10 +535,12 @@ Fill the screen with rainbow colors.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/Rainbow).
+
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08Rainbow.swift', value: 'main', },
+    { label: 'Rainbow.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -549,7 +553,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08Rainbow {
+public struct Rainbow {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -606,7 +610,7 @@ public struct C01S08Rainbow {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08Rainbow",
+    name: "Rainbow",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -618,7 +622,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -627,8 +631,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -647,10 +651,12 @@ Create a scroll effect to update the display with rainbow colors in turn.
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/ScrollEffect).
+
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08ScrollEffect.swift', value: 'main', },
+    { label: 'ScrollEffect.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -663,7 +669,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08ScrollEffect {
+public struct ScrollEffect {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -724,7 +730,7 @@ public struct C01S08ScrollEffect {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08ScrollEffect",
+    name: "ScrollEffect",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -736,7 +742,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -745,8 +751,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -767,10 +773,12 @@ Visualize analog values on the screen. The line height changes with the value fr
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/AnalogVisualizer).
+
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08AnalogVisualizer.swift', value: 'main', },
+    { label: 'AnalogVisualizer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -783,7 +791,7 @@ import MadBoard
 import ST7789
 
 @main
-public struct C01S08AnalogVisualizer {
+public struct AnalogVisualizer {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -849,7 +857,7 @@ public struct C01S08AnalogVisualizer {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S08AnalogVisualizer",
+    name: "AnalogVisualizer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -861,7 +869,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08LCD",
+            name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -870,8 +878,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08LCDTests",
-            dependencies: ["C01S08LCD"]),
+            name: "LCDTests",
+            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -894,11 +902,12 @@ This project involves reading accelerations from the accelerometer and drawing t
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/08LCD/AccelerationVisualizer).
 
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S08AccelerationVisualizer.swift', value: 'main', },
+    { label: 'AccelerationVisualizer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -914,7 +923,7 @@ import LIS3DH
 import ST7789
 
 @main
-public struct C01S08AccelerationVisualizer {
+public struct AccelerationVisualizer {
     public static func main() {
         // Initialize the SPI pin and the digital pins for the LCD.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
@@ -1018,7 +1027,7 @@ public struct C01S08AccelerationVisualizer {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S08AccelerationVisualizer",
+    name: "AccelerationVisualizer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -1030,7 +1039,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S08AccelerationVisualizer",
+            name: "AccelerationVisualizer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -1041,8 +1050,8 @@ let package = Package(
                 .product(name: "ST7789", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S08AccelerationVisualizerTests",
-            dependencies: ["C01S08AccelerationVisualizer"]),
+            name: "AccelerationVisualizerTests",
+            dependencies: ["AccelerationVisualizer"]),
     ]
 )
 ```

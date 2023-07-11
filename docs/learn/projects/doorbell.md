@@ -24,7 +24,7 @@ The modules used for this project are the button (D1), the buzzer(PWM5A) and the
 />
 
 
-## Program overview
+## Project overview
 
 1. Create a label to show the message "Ring the bell" on the screen.
 2. Read the digital input to check if the button is pressed.

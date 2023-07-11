@@ -14,7 +14,7 @@ If you **have already different electronic components in hand and bought one of 
 
 1. [Follow the step-by-step guide](../../overview/getting-started/overview.mdx) to get started.
 2. Download all [example projects here](https://github.com/madmachineio/MadExamples). 
-3. If you are using SwiftIO Feather board, just skip this step. Otherwise, you will need to [change the board type](../../../overview/advanced/change-board) of the examples.
+3. If you are using SwiftIO Micro, just skip this step. Otherwise, you will need to [change the board type](../../../overview/advanced/change-board) of the examples.
 4. Follow the guides below and [try the corresponding project](../../../overview/advanced/run-example).
 
 

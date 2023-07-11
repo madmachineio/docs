@@ -1,9 +1,9 @@
 ---
-title: 4. Download project to board
+title: 4. Downloading project to board
 description: Download Swift code to your board.
 ---
 
-# 4. Download project to board
+# 4. Downloading project to board
 
 Well, it's time to download the code to your board. The downloading process is different on different types of boards.
 
@@ -12,14 +12,14 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
-  defaultValue="feather"
+  defaultValue="micro"
   values={[
-    { label: 'SwiftIO Feather board', value: 'feather', },
+    { label: 'SwiftIO Micro', value: 'micro', },
     { label: 'SwiftIO board', value: 'swiftio', },
   ]
 }>
 
-<TabItem value="feather">
+<TabItem value="micro">
 
 1. **Click the Build button** to build the project. It will generate a file that can run on your board. 
 
@@ -32,14 +32,14 @@ import TabItem from '@theme/TabItem';
 During this process, mm-sdk will fetch all the necessary dependencies from GitHub, as shown in the first several lines of the message. So check the internet connection if it fails.
 :::
 
-Once the building process is finished, you will see the message **Done!** in the terminal.
+Once the building process is finished, you will see the message Done! in the terminal.
 
 <img
   src={require('./img/buildDone.png').default}
   alt="Finish building" width="960"
 />
 
-2. **Click the Download button** to download the file to your board. If it's successfully downloaded, you'll see the message **Done!**.
+2. **Click the Download button** to download the file to your board. If it's successfully downloaded, you'll see the message Done!.
 
 <img
   src={require('./img/download.png').default}
@@ -88,14 +88,14 @@ Bad quality USB cable or some third-party USB hub may cause connection failure. 
 During this process, mm-sdk will fetch all the necessary dependencies from GitHub, as shown in the first several lines of the message. So check the internet connection if it fails.
 :::
 
-Once the building process is finished, you will see the message **Done!** in the terminal.
+Once the building process is finished, you will see the message Done! in the terminal.
 
 <img
   src={require('./img/buildDoneSwiftIO.png').default}
   alt="Finish building" width="960"
 />
 
-4. **Click the Download button** to download the file to your board. If it's successfully downloaded, you'll see the message **Done!**.
+4. **Click the Download button** to download the file to your board. If it's successfully downloaded, you'll see the message Done!.
 
 <img
   src={require('./img/downloadSwiftIO.png').default}

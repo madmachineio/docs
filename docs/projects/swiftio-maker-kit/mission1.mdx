@@ -109,7 +109,7 @@ There are two ways to connect an LED to your circuit:
     * When the pin outputs a low voltage, the current can flow from the power to that pin, and the LED will be on. 
   
 
-You can find an LED beside the download button on your board. It is a different type for easier soldering. This RGB LED has three colors: red, green and blue. As you download the code, it serves as a [status indicator](../../overview/hardware/swiftio-board#built-in-rgb-led). Besides, you can also control its color and state by setting the output voltage.
+You can find an LED beside the download button on your board. It is a different type for easier soldering. This RGB LED has three colors: red, green and blue. As you download the code, it serves as a [status indicator](../../hardware/swiftio-board#built-in-rgb-led). Besides, you can also control its color and state by setting the output voltage.
 
 * You can light any one of them, which means the red, green, or blue LED will be turned on. 
 * You can also turn on two of them. For example, if you choose red and blue, you can notice the light appears magenta. 
@@ -132,7 +132,7 @@ import MadBoard
 ```
 [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) consists of all the functionalities to control your board. All programs must first reference it so you can use everything in it, like classes and functions.
 
-[MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) defines the corresponding pin ids of all boards, including the SwiftIO board. Go to [this guide](../../overview/pin-id) if you are confused about all these ids.
+[MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift) defines the corresponding pin ids of all boards, including the SwiftIO board.
 
 ```swift
 let led = DigitalOut(Id.BLUE)

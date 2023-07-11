@@ -76,6 +76,13 @@ The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
   alt="Accelerometer circuit" width="960"
 />
 
+| Accelerometer Pin | SwiftIO Micro Pin |
+| - | - |
+| SCL | I2C0 (SCL0) |
+| SDA | I2C0 (SDA0) |
+| 3V3 | 3V3 |
+| GND | GND |
+
 <img
   src={require('./img/accelerometerCircuitDiagram.png').default}
   alt="Accelerometer circuit diagram" width="360"
@@ -83,13 +90,14 @@ The accelerometer module is connected to **I2C0** (SCL0 and SDA0).
 
 :::note
 The circuits above are simplified versions for your reference.
+[Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
 ## 🔸API
 
 **Class**
 
-**`LIS3DH`** - it is the library for LIS3DH accelerometer. It provides predefined methods for you to get readings from the sensor in an easy way.
+**[`LIS3DH`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/LIS3DH)** - it is the library for LIS3DH accelerometer. It provides predefined methods for you to get readings from the sensor in an easy way.
 
 | Method | Explanation |
 | ------ | ----------- |
@@ -99,7 +107,7 @@ The circuits above are simplified versions for your reference.
 ## 🔸Projects
 
 
-### 1. Read acceleration
+### 1. Reading acceleration
 
 Let's start with the simplest project - read the accelerations and print the values.
 
@@ -111,13 +119,15 @@ Let's start with the simplest project - read the accelerations and print the val
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/07Accelerometer/Accelerometer).
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S07Accelerometer.swift', value: 'main', },
+    { label: 'Accelerometer.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -132,7 +142,7 @@ import MadBoard
 import LIS3DH
 
 @main
-public struct C01S07Accelerometer {
+public struct Accelerometer {
     public static func main() {
         // Initialize the I2C pins and the sensor.
         let i2c = I2C(Id.I2C0)
@@ -158,7 +168,7 @@ public struct C01S07Accelerometer {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S07Accelerometer",
+    name: "Accelerometer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -170,7 +180,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S07Accelerometer",
+            name: "Accelerometer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -179,8 +189,8 @@ let package = Package(
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S07AccelerometerTests",
-            dependencies: ["C01S07Accelerometer"]),
+            name: "AccelerometerTests",
+            dependencies: ["Accelerometer"]),
     ]
 )
 ```
@@ -188,7 +198,7 @@ let package = Package(
 </Tabs>
 
 
-### 2. Digital dice
+### 2. Accelerometer dice
 
 Let's build a dice with the accelerometer. You can shake or tilt the sensor to simulate the process of rolling a dice. After that, you put it back on your table or keep it in a horizontal position, you should get a random number from 1 to 6.
 
@@ -206,10 +216,12 @@ Let's build a dice with the accelerometer. You can shake or tilt the sensor to s
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/07Accelerometer/AccelerometerDice).
+
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S07AccelerometerDice.swift', value: 'main', },
+    { label: 'AccelerometerDice.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -225,7 +237,7 @@ import MadBoard
 import LIS3DH
 
 @main
-public struct C01S07AccelerometerDice {
+public struct AccelerometerDice {
     public static func main() {
         // Initialize an I2C interface and use it to set the sensor.
         let i2c = I2C(Id.I2C0)
@@ -274,7 +286,7 @@ public struct C01S07AccelerometerDice {
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 let package = Package(
-    name: "C01S07AccelerometerDice",
+    name: "AccelerometerDice",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -286,7 +298,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S07AccelerometerDice",
+            name: "AccelerometerDice",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -295,8 +307,8 @@ let package = Package(
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S07AccelerometerDiceTests",
-            dependencies: ["C01S07AccelerometerDice"]),
+            name: "AccelerometerDiceTests",
+            dependencies: ["AccelerometerDice"]),
     ]
 )
 ```
@@ -354,19 +366,21 @@ There is a random password that consists of several movement directions. You wil
 * Hold your board. **Tilt/move it in a certain direction**. Meanwhile, the board starts timing. After each movement, keep it horizontal.
     * If the direction doesn't match the first in the password, try a new movement.
     * If the direction is correct, the LED blinks once and you continue with the second one.
-* If all directions are correct, the LED turns on.
+* If all directions are correct, you'll hear a beep.
 * If there are any wrong directions, restart from the first one.
-* If the time is out and you fail to guess the password, reset the password. You will hear a beep as a notification.
+* If the time is out and you fail to guess the password, reset the password. You will hear a beep with a higher pitch as a notification.
 
 You can also view the messages on a serial monitor for reference.
 
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/07Accelerometer/AccelerometerLock).
+
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'C01S07AccelerometerLock.swift', value: 'main', },
+    { label: 'AccelerometerLock.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -381,7 +395,7 @@ import MadBoard
 import LIS3DH
 
 @main
-public struct C01S07AccelerometerLock {
+public struct AccelerometerLock {
     public static func main() {
         // Initialize the I2C pins and the sensor.
         let i2c = I2C(Id.I2C0)
@@ -513,7 +527,7 @@ public struct C01S07AccelerometerLock {
 ```swift showLineNumbers
 import PackageDescription
 let package = Package(
-    name: "C01S07AccelerometerLock",
+    name: "AccelerometerLock",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -525,7 +539,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .executableTarget(
-            name: "C01S07AccelerometerLock",
+            name: "AccelerometerLock",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -534,8 +548,8 @@ let package = Package(
                 .product(name: "LIS3DH", package: "MadDrivers")
             ]),
         .testTarget(
-            name: "C01S07AccelerometerLockTests",
-            dependencies: ["C01S07AccelerometerLock"]),
+            name: "AccelerometerLockTests",
+            dependencies: ["AccelerometerLock"]),
     ]
 )
 ```

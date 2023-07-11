@@ -66,11 +66,8 @@ Actuators are devices that can be used to produce a physical effect based on the
 The devices that can be connected to the board typically have some specific requirements in terms of power and communication.
 
 - **Power**: Many devices will require a specific voltage and/or current to function properly. For example, some sensors may run on 3.3V while others may require 5V. Some motors may require a lot of current, while others may only require a small amount. It is important to ensure that the board can provide the necessary power to the connected devices.
-
 - **Communication**: Different devices may use different communication protocols to send and receive data. For example, some sensors may use I2C or SPI, while others may use UART. It is important to ensure that the board is configured to use the same protocol as the connected device.
 
-- **Connector**: There are several common methods for connecting sensors and other devices to an MCU. 
-
+There are several common methods for connecting sensors and other devices to an MCU. 
   - The most straightforward approach is to use **jumper wires**, where each pin must be manually matched. Essential connections for power (Vcc) and ground (GND) must always be established. In addition, sensors will provide specific pins for signals such as digital input/output, analog, I2C...
-
   - Another commonly used method is the [**grove connector**](https://wiki.seeedstudio.com/Grove_System/), which is used in SwiftIO Playground. This method simplifies connections using 4-pin cables, making it easier to interface with your MCU.
