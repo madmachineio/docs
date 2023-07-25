@@ -8,33 +8,95 @@ description: Install the software and run your hello world project.
 
 Before diving into the nitty-gritty details, it's always a good idea to get hands-on and try your first project. So, let's kick off your journey by blinking an LED!
 
+:::info
+We only support macOS 11.0 and above, as well as Linux. Windows is not supported yet. 
+:::
+
 ## Step 1: Set up software 
 
 At first, you will get started with the software setup process.
 
+### 1. Install USB driver
 
-1. **Download the latest [mm-sdk](https://github.com/madmachineio/mm-sdk/releases)**. It is used to build and download your project.
-2. **Open the Visual Studio Code**. I believe most of you guys have installed it. We've created an extension for it. It is really handy and easy to use.
-3. **Install the extension** as shown below:
-    1. click the Extensions button on the left bar.
-    2. enter the extension name MadMachine in the search box.
-    3. click the Install button.
+1. Download **[the macOS driver](img/CH341SER_MAC.ZIP)** and unzip it. 
+2. Install the **dmg format** driver in the zip file. 
 
+  <img
+    src={require('./img/dmg.png').default}
+    alt="" width="480"
+  />
+
+3. Drag CH34xVCPDriver into Application folder.
+
+  <img
+    src={require('./img/drag.png').default}
+    alt="" width="240"
+  />
+
+4. Open LaunchPad and **open the CH34xVCPDriver** app. 
+
+    <details>
+      <summary> Click Open if there is a popup window. </summary>
+    <img
+      src={require('./img/openDriver.png').default}
+      alt="" width="240"
+    />
+    </details>
+
+5. Click the **Install** button.
+
+  <img
+    src={require('./img/installDriver.png').default}
+    alt="" width="480"
+  />
+
+  <details>
+    <summary> If there is a popup message saying System Extension Blocked. </summary>
+
+  Click Open System Settings button.
+  <img
+    src={require('./img/openSystemSettings.png').default}
+    alt="" width="240"
+  />
+
+  Click Allow.
+  <img
+    src={require('./img/allow.png').default}
+    alt="" width="480"
+  />
+
+  The driver is installed successfully.
+  <img
+    src={require('./img/installed.png').default}
+    alt="" width="240"
+  />
+  </details>
+
+:::info
+1. To uninstall the driver, remove the app to Trash.
+2. Restart the computer before reinstalling the driver.
+:::
+
+### 2. Download mm-sdk
+
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/0.9.0-alpha.0)** according to your operating system. This sdk is used to build and download your project.
+
+### 3. Install MadMachine extension for VS Code
+
+In Visual Studio Code, 
+1. click the **Extensions** button on the left bar.
+2. enter the extension name **MadMachine** in the search box.
+3. click the **Install** button.
 <img
   src={require('./img/install.png').default}
   alt="Install the extension" width="960"
 />
-
-
-4. **Click ⚙️ / Extension Settings** to open the settings.
-
+4. Click **⚙️ / Extension Settings** to open the settings.
 <img
-  src={require('./img/settings.png').default}
-  alt="Open the settings window" width="960"
+src={require('./img/settings.png').default}
+alt="Open the settings window" width="960"
 />
-
-
-5. **Indicate the mm-sdk location** in the box that matches your operating system. So far, only Mac and Linux are supported. 
+5. Indicate the **mm-sdk location** in the box that matches your operating system.
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -65,12 +127,13 @@ import TabItem from '@theme/TabItem';
 </TabItem>
 </Tabs>
 
-:::note
-If you change the location of the SDK later, don't forget to update its path here. 
+:::info
+If you change the location of the SDK later, don't forget to update its path. 
 :::
 
 
 OK, the software gets prepared👏.
+
 
 ##  Step 2: Create a project
 

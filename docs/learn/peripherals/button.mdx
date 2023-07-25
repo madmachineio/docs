@@ -173,7 +173,7 @@ Let's start to build a simple LED switch.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/MomentaryLEDSwitch).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/MomentaryLEDSwitch).
 
 ```swift title="MomentaryLEDSwitch.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
@@ -190,16 +190,20 @@ public struct MomentaryLEDSwitch {
         // Keep repeating the following steps.
         while true {
             // Read the input pin to check the button state.
-            let value = button.read()
+            let buttonPressed = button.read()
+
             // If the value is true which means the button is pressed, turn on the LED. Otherwise, turn off the LED.
-            if value == true {
+            if buttonPressed == true {
                 led.write(true)
             } else {
                 led.write(false)
             }
-        }
+            
+            // Alternatively
+            // led.write(button.read())
 
-        sleep(ms: 10)
+            sleep(ms: 10)
+        }
     }
 }
 ```
@@ -215,13 +219,13 @@ The button is an instance created for the `DigitalIn` class. As usual, the id of
 And there is another parameter `mode` with a default value `pullDown`, which means a pull-down resistor connected to the pin. There are two more options: `pullUp` (pull-up resistor), `pullNone` (no pull resistors).
 
 ```swift
-button.read() 
+let buttonPressed = button.read()
 ```
 
-Use the instance method `read()` to get the pin state. The return value tells you if it is high or low voltage. 
+Use the instance method `read()` to get the pin state. The return value tells you if it is high or low voltage, which means if the button is pressed.
 
 ```swift
-if value == true {
+if buttonPressed == true {
     led.write(true)
 } else {
     led.write(false)
@@ -290,7 +294,7 @@ In this project, the LED changes state between on and off every time you press t
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/ButtonInterrupt).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/ButtonInterrupt).
 
 ```swift title="ButtonInterrupt.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
@@ -431,7 +435,7 @@ In this project, the LED state changes right after you release the button that h
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/ToggleLEDSwitch).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/ToggleLEDSwitch).
 
 ```swift title="ToggleLEDSwitch.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and 
@@ -442,23 +446,23 @@ import MadBoard
 @main
 public struct ToggleLEDSwitch {
     public static func main() {
-        // Initialize the input pin for the button and the output pin for the LED.
+        // Initialize the input pin for the button and output pin for the LED.
         let led = DigitalOut(Id.D18)
         let button = DigitalIn(Id.D1)
 
-        var lastState = false
+        var buttonPressed = false
 
         while true {
-            // If currentState is false, the button is released. 
-            // Besides, if lastState is true, it means the button has been pressed.
-            // So it checks if the button has been pressed and is now released. 
+            // If buttonPressing is false, the button is released. 
+            // Besides, if buttonPressed is true, it means the button has been pressed.
+            // So it checks if the button has been pressed and released. 
             // If so, toggle the LED.
-            let currentState = button.read()
-            if !currentState && currentState != lastState {
+            let buttonPressing = button.read()
+            if !buttonPressing && buttonPressed {
                 led.toggle()
             }
             // Store the latest button state.
-            lastState = currentState
+            buttonPressed = buttonPressing
             sleep(ms: 10)
         }
     }
@@ -468,26 +472,26 @@ public struct ToggleLEDSwitch {
 **Code analysis**
 
 ```
-var lastState = false
+var buttonPressed = false
 ```
 
 A variable, like a constant, is a container for a value but can be changed with other values of the same type. 
 
-In this case, it stores the last button state used to compare with the current state. Thus, you can infer if the button is pressed or released. These are possible situations:
+In this case, it stores whether you pressed the button, which is used to compare with the latest state (whether you are pressing the button). Thus, you can infer if the button is pressed or released. These are possible situations:
 
-* If the last state is low and the current is still low, the button is always released.
-* If the last state is low and the current is high, the button is just pressed.
-* If the last state is high and the current is still high, the button is being held/pressed.
-* If the last state is high and the current is low, the button is just released.
+* If the `buttonPressed` is low and the latest reading is still low, the button is always released.
+* If the `buttonPressed` is low and the latest reading is high, the button is just pressed.
+* If the `buttonPressed` is high and the latest reading is still high, the button is being held/pressed.
+* If the `buttonPressed` is high and the latest reading is low, the button is just released.
 
 It is important to clarify all the possible **button state changes** in advance when working on projects that involve buttons. 
 
 ```swift
-if !currentState && currentState != lastState {
+if !buttonPressing && buttonPressed {
     led.toggle()
 }
 ```
-In this project, the LED is toggled when the current state is false and the last is true, that is, the button is just released.
+When you are not pressing the button now but did press it, that is, the button is just released, the LED will be toggled.
 
 ### 4. 2-Way LED switches
 
@@ -545,7 +549,7 @@ It works like light switches in your room. You may press any of the switches in 
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/TwoWayLEDSwitches).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/TwoWayLEDSwitches).
 
 ```swift title="TwoWayLEDSwitches.swift" showLineNumbers
 // SwiftIO is used to set input and output of the pins.
@@ -561,20 +565,21 @@ public struct TwoWayLEDSwitches {
         let button1 = DigitalIn(Id.D19)
         let led = DigitalOut(Id.D18)
 
-        // Store if a button has been pressed.
-        var pressed = false
+        // Store if the LED state is toggled after a button press.
+        // It ensures the LED state doesn't change again when the button is being pressed.
+        var ledToggled = false
 
         // Toggle the LED after any of the two buttons are pressed.
         while true {
-            // If any of the buttons are pressed, toggle the LED.
-            if !pressed && (button0.read() || button1.read()) {
+            // When any of the buttons are pressed, toggle the LED.
+            if !ledToggled && (button0.read() || button1.read()) {
                 led.toggle()
-                pressed = true
+                ledToggled = true
             }
 
-            // If the two buttons are released, update the state to wait for the next press.
+            // If both buttons are released, update the state to wait for next press.
             if !button0.read() && !button1.read() {
-                pressed = false
+                ledToggled = false
             }
 
             sleep(ms: 10)
@@ -586,24 +591,26 @@ public struct TwoWayLEDSwitches {
 **Code analysis**
 
 ```swift
-if !pressed && (button0.read() || button1.read()) {
+if !ledToggled && (button0.read() || button1.read()) {
     led.toggle()
-    pressed = true
+    ledToggled = true
 }
 ```
 
-When either of the input values is `true`, one button is pressed. `pressed` is a supplementary condition to signify the button is just pressed. So the LED will be toggled right after the button is pressed. 
+When either of the input values is `true`, one button is pressed. 
 
-After `pressed` is changed to `true`, even if one button is held and the input reads `true`, the LED remains unchanged.
+`ledToggled` is a supplementary condition to ensure the LED will only be toggled right after a button is pressed. After `ledToggled` is changed to `true`, even if one button is held and the input reads `true`, the LED remains unchanged.
 
 ```swift
 if !button0.read() && !button1.read() {
-    pressed = false
+    ledToggled = false
 }
 ```
-In this condition, both input values need to be `false`, meaning they are all released. 
+In this condition, both input values need to be `false`, meaning they are all released. Then update `ledToggled` for the next LED change.
 
+:::tip excercise
 Why not try to adjust the code a bit to make the LED remain unchanged when the button is pressed and toggle right after the button is released👀?
+:::
 
 ### 5. On/Off buttons 
 
@@ -651,7 +658,7 @@ Two buttons are reserved for the on (D1) and the off (D19) buttons respectively.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/02Button/OnOffButtons).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/OnOffButtons).
 
 ```swift title="OnOffButtons.swift" showLineNumbers
 // Control the LED with two specified buttons.
@@ -665,49 +672,49 @@ import MadBoard
 @main
 public struct OnOffButtons {
     public static func main() {
-        // Initialize the pin for the button used to turn on LED.
+        // Initialize the pin for the button used to turn ON LED.
         let onButton = DigitalIn(Id.D1)
-        // Initialize the pin for the button used to turn off the LED.
+        // Initialize the pin for the button used to turn OFF the LED.
         let offButton = DigitalIn(Id.D19)
         let led = DigitalOut(Id.D18)
 
         // Store the current LED state.
-        var ledState = false
+        var ledOn = false
 
-        // Store the last button state used to decide whether the button is released.
-        var lastOnButtonState = false
-        var lastOffButtonState = false
+        // Store the last button state used to decide whether the button is released now.
+        var onButtonPressed = false
+        var offButtonPressed = false
 
         while true {
-            if !ledState {
-                // If the LED is off, check if the on button (D1) is pressed. 
-                // If so, turn on the LED after the button is released.
-
-                // Update the button state if it is pressed. 
-                if onButton.read() {
-                    lastOnButtonState = true
-                }
-
-                // If the button was pressed and is released now, turn on the LED and update all states.
-                if lastOnButtonState && !onButton.read() {
-                    led.high()
-                    lastOnButtonState = false
-                    ledState = true
-                }
-            } else {
+            if ledOn {
                 // If the LED is on, check if the off button (D19) is pressed. 
                 // If so, turn off the LED after the button is released.
 
-                // Update the button state if it is pressed. 
+                // Update the OFF button state if it is pressed. 
                 if offButton.read() {
-                    lastOffButtonState = true
+                    offButtonPressed = true
                 }
 
-                // If the button was pressed and is released now, turn off the LED and update all states.
-                if lastOffButtonState && !offButton.read() {
+                // If the OFF button has been pressed and is released now, turn off the LED and update all states.
+                if offButtonPressed && !offButton.read() {
                     led.low()
-                    lastOffButtonState = false
-                    ledState = false
+                    offButtonPressed = false
+                    ledOn = false
+                }
+            } else {
+                // If the LED is off, check if the on button (D1) is pressed. 
+                // If so, turn on the LED after the button is released.
+
+                // Update the ON button state if it is pressed. 
+                if onButton.read() {
+                    onButtonPressed = true
+                }
+
+                // If the ON button has been pressed and is released now, turn on the LED and update all states.
+                if onButtonPressed && !onButton.read() {
+                    led.high()
+                    onButtonPressed = false
+                    ledOn = true
                 }
             }
             
@@ -802,8 +809,59 @@ So you need **debounce methods** to avoid this situation. There are many solutio
 
 * **Software debounce**: when designing the program, you can make the MCU ignore the bounce and wait for the real state. 
   
-  Usually, you'll **check many times or wait a few milliseconds to skip this unstable period**. After this period, the value read from the pin should be the one needed. A fast press would typically last at least 50ms. You could have a look at [this example code](../../projects/general/simpleio/debounce.mdx#example-code). 
+  Usually, you'll **check many times or wait a few milliseconds to skip this unstable period**. After this period, the value read from the pin should be the one needed. A fast press would typically last at least 50ms. 
 
-  :::info
-  Since the button module on SwiftIO Playground uses a hardware debounce method, you may not meet this problem so frequently.
-  :::
+<details>
+  <summary> Debounce example code </summary>
+
+
+
+  ```swift
+  // Check if the button is pressed using a debounce method.
+// Import the library to enable the relevant classes and functions.
+import SwiftIO
+import MadBoard
+
+@main
+public struct Debounce {
+    public static func main() {
+        // Initialize the red LED.
+        let led = DigitalOut(Id.D18)
+        // Initialize the digital input pin that the button is connected to.
+        let button = DigitalIn(Id.D1)
+        
+        // Declare the values to record and judge the button state.
+        var count = 0
+        var triggered = false
+        
+        while true {
+            // Read from the input pin.
+            let buttonPressed = button.read()
+            
+            // Ignore the change due to the noise.
+            if buttonPressed {
+                count += 1
+            } else {
+                count = 0
+                triggered = false
+            }
+            
+            // Wait a certain period to check if the button is indeed pressed. 
+            // Toggle the LED and then reset the value for the next press.
+            if count > 50 && !triggered {
+                led.toggle()
+                triggered = true
+                count = 0
+            }
+            
+            // Wait a millisecond and then read to ensure the current state last for enough time. 
+            sleep(ms: 1)
+        }
+    }
+}
+```
+</details>
+
+:::info
+Since the button module on SwiftIO Playground uses a hardware debounce method, you may not meet this problem so frequently.
+:::

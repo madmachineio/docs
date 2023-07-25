@@ -412,7 +412,7 @@ On your first try, let's make the LED blink.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/LEDBlink).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/LEDBlink).
 
 ```swift title="LEDBlink.swift" showLineNumbers
 // First import the SwiftIO and MadBoard libraries into the project to use related functionalities.
@@ -579,7 +579,7 @@ The overall color of the light depends on the internal LEDs that are on. If only
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/RGBLED).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/RGBLED).
 
 ```swift title="RGBLED.swift" showLineNumbers
 import SwiftIO
@@ -679,7 +679,7 @@ To reproduce it, you will use long flash and short flash respectively. So an SOS
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/LEDMorseCode).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/LEDMorseCode).
 
 ```swift title="LEDMorseCode.swift" showLineNumbers
 // Import the libraries to use all their functionalities.
@@ -841,7 +841,7 @@ The timer here is quite similar. It is a software timer provided by Zephyr. You 
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/01LED/LEDBlinkWithTimer).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/LEDBlinkWithTimer).
 
 ```swift title="LEDBlinkWithTimer.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
@@ -851,8 +851,8 @@ import MadBoard
 @main
 public struct LEDBlinkWithTimer {
     public static func main() {
-        // Initialize a digital pin for the LED module.
-        let led = DigitalOut(Id.D18)
+        // Initialize a digital pin for LED module.
+        let redLed = DigitalOut(Id.D18)
 
         // Initialize the onboard blue LED.
         let blueLed = DigitalOut(Id.BLUE)
@@ -860,13 +860,13 @@ public struct LEDBlinkWithTimer {
         // Initialize a timer for 1500ms.
         let timer = Timer(period: 1500)
 
-        // Toggle the LED.
-        func toggleLed() {
-            led.toggle()
+        // Define a new function used to toggle the LED.
+        func ToggleLEDSwitch() {
+            redLed.toggle()
         }
 
-        // Set an interrupt to reverse the LED state every 1.5m.
-        timer.setInterrupt(toggleLed)
+        // Set an interrupt to reverse the LED state every time the interrupt occurs.
+        timer.setInterrupt(ToggleLEDSwitch)
 
         // Blink onboard blue LED.
         while true {
@@ -894,7 +894,7 @@ Initialize a timer by setting the time interval.
 timer.setInterrupt(toggleLed)
 ```
 
-Set the task to be executed if the time interval has elapsed. It needs a function as its parameter, `toggleLed` as above. So every 1500ms the state of `led` changes to make it blink.
+Set the task to be executed if the time interval has elapsed. It needs a function as its parameter, `toggleLed` as above. So every 1500ms the state of `redLed` changes to make it blink.
 
 ```swift
 while true {

@@ -110,7 +110,7 @@ As usual, your first project is to read values, in this case, the current time f
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/06RTC/ReadingTime).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/06RTC/ReadingTime).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -164,16 +164,16 @@ public struct ReadingTime {
 
         // Add leading zero if number is one-digit.
         // For example, number 1 will be 01.
-        func format(_ number: UInt8) -> String {
+        func formatNum(_ number: UInt8) -> String {
             return number < 10 ? "0\(number)" : "\(number)"
         }
 
         // Format the date and time, i.e. 2023/03/01 Wednesday 16:20:00.
         func formatDateTime(_ time: PCF8563.Time) -> String {
             var string = ""
-            string += "\(time.year)" + "/" + format(time.month) + "/" + format(time.day)
+            string += "\(time.year)" + "/" + formatNum(time.month) + "/" + formatNum(time.day)
             string += " " + daysOfWeek[Int(time.dayOfWeek)] + " "
-            string += format(time.hour) + ":" + format(time.minute) + ":" + format(time.second)
+            string += formatNum(time.hour) + ":" + formatNum(time.minute) + ":" + formatNum(time.second)
             return string
         }
     }
@@ -226,7 +226,7 @@ In this project, let's blink an LED based on the time from RTC.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/06RTC/BlinkUsingRTC).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/06RTC/BlinkUsingRTC).
 
 <Tabs
   defaultValue="main"
@@ -321,7 +321,7 @@ PCF8563 provides built-in alarm and timer functions that can be set to trigger a
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/06RTC/Alarm).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/06RTC/Alarm).
 
 <Tabs
   defaultValue="main"
@@ -348,8 +348,10 @@ public struct Alarm {
         let rtc = PCF8563(i2c)
 
         let led = DigitalOut(Id.D18)
-        let stopButton = DigitalIn(Id.D1)
         let buzzer = PWMOut(Id.PWM5A)
+
+        // Stop the alarm after it goes off.
+        let stopButton = DigitalIn(Id.D1)
 
         // Set the alarm time.
         let alarm = AlarmTime(hour: 10, minute: 40)
@@ -360,22 +362,23 @@ public struct Alarm {
         while true {
             let time = rtc.readTime()
 
-            if !isAlarmed {
-                // If the time comes, start the sound and turn on the LED.
-                if alarm.isTimeUp(time) {
-                    print("Current time: \(time)")
-                    led.high()
-                    buzzer.set(frequency: 500, dutycycle: 0.5)
-                    isAlarmed = true
-                }
-            } else {
-                // If it's time to stop sounding or you press the stop button,
+            if isAlarmed {
+                // After the alarm clock goes off, 
+                // if it's time to stop sounding or you press the stop button,
                 // stop the sound and turn off the LED.
                 if stopAlarm.isTimeUp(time) || stopButton.read() {
                     print("Current time: \(time)")
                     led.low()
                     buzzer.suspend()
                     isAlarmed = false
+                }
+            } else {
+                // If the time comes, start the sound and turn on the LED.
+                if alarm.isTimeUp(time) {
+                    print("Current time: \(time)")
+                    led.high()
+                    buzzer.set(frequency: 500, dutycycle: 0.5)
+                    isAlarmed = true
                 }
             }
 

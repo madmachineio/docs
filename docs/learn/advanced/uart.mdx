@@ -251,7 +251,7 @@ In this project, the board acts as an echo device, sending back the messages it 
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02AdvancedPeripherals/01UART/SerialEcho).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/10UART/SerialEcho).
 
 ```swift title="SerialEcho.swift" showLineNumbers
 // Send message from computer to USB-Serial converter using serial monitor. 
@@ -331,7 +331,7 @@ Turn on/off the LED by sending commands from your computer.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02AdvancedPeripherals/01UART/SerialLEDSwitch).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/10UART/SerialLEDSwitch).
 
 ```swift title="SerialLEDSwitch.swift" showLineNumbers
 // Connect the USB-Serial converter module to your computer 
@@ -405,7 +405,7 @@ Implement a remote LED switch with two boards connected via UART
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02AdvancedPeripherals/01UART/RemoteLEDSwitch).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/10UART/RemoteLEDSwitch).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -434,21 +434,21 @@ public struct Button {
         let uart = UART(Id.UART0)
         let button = DigitalIn(Id.D1)
 
-        var lastState = false
+        var buttonPressed = false
 
         while true {
-            let currentState = button.read()
+            let pressingButton = button.read()
 
             // If button is pressed, send message to turn on LED connected to another board.
-            if currentState && !lastState {
+            if pressingButton && !buttonPressed {
                 uart.write("on")
-                lastState = true
+                buttonPressed = true
             }
 
             // If button is released, send message to turn off LED connected to another board.
-            if lastState && !currentState {
+            if buttonPressed && !pressingButton {
                 uart.write("off")
-                lastState = false
+                buttonPressed = false
             }
 
             sleep(ms: 5)
