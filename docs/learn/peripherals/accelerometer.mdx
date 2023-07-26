@@ -119,7 +119,7 @@ Let's start with the simplest project - read the accelerations and print the val
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/07Accelerometer/Accelerometer).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/07Accelerometer/Accelerometer).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -146,14 +146,14 @@ public struct Accelerometer {
     public static func main() {
         // Initialize the I2C pins and the sensor.
         let i2c = I2C(Id.I2C0)
-        let acc = LIS3DH(i2c)
+        let accelerometer = LIS3DH(i2c)
 
         // Read the accelerations and each of them.
         while true {
-            let value = acc.readXYZ()
-            print("x: \(value.x)g")
-            print("y: \(value.y)g")
-            print("z: \(value.z)g")
+            let accelerations = accelerometer.readXYZ()
+            print("x: \(accelerations.x)g")
+            print("y: \(accelerations.y)g")
+            print("z: \(accelerations.z)g")
             print("\n")
             sleep(ms: 1000)
         }
@@ -216,7 +216,7 @@ Let's build a dice with the accelerometer. You can shake or tilt the sensor to s
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/07Accelerometer/AccelerometerDice).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/07Accelerometer/AccelerometerDice).
 
 <Tabs
   defaultValue="main"
@@ -375,7 +375,7 @@ You can also view the messages on a serial monitor for reference.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/07Accelerometer/AccelerometerLock).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/07Accelerometer/AccelerometerLock).
 
 <Tabs
   defaultValue="main"
@@ -399,7 +399,7 @@ public struct AccelerometerLock {
     public static func main() {
         // Initialize the I2C pins and the sensor.
         let i2c = I2C(Id.I2C0)
-        let acc = LIS3DH(i2c)
+        let accelerometer = LIS3DH(i2c)
 
         // Initialize LED and buzzer as indicators.
         let led = DigitalOut(Id.D18)
@@ -416,7 +416,7 @@ public struct AccelerometerLock {
         updatePassword()
 
         // Keep track of the index of direction.
-        var currentIndex = 0
+        var passwordIndex = 0
 
         var reset = false
         var start = false
@@ -429,8 +429,8 @@ public struct AccelerometerLock {
         print("Tilt/move your board to start.")
 
         while true {
-            if currentIndex < password.count {
-                if let direction = getDirection(acc.readXYZ()) {
+            if passwordIndex < password.count {
+                if let direction = getDirection(accelerometer.readXYZ()) {
                     // After the first movement, start the timer.
                     if !start {
                         timer.start()
@@ -438,23 +438,23 @@ public struct AccelerometerLock {
                     }
 
                     // If the movement matches the desired one, generate a beep as an indicator.
-                    if direction == password[currentIndex] {
-                        currentIndex += 1
+                    if direction == password[passwordIndex] {
+                        passwordIndex += 1
                         print("Correct!")
                         beep(500)
                     } else {
                         // If not, restart from the first direction.
-                        currentIndex = 0
+                        passwordIndex = 0
                         print("Wrong! Restart from the first one...")
                     }
                 }
-            } else if currentIndex == password.count {
+            } else if passwordIndex == password.count {
                 // If all 3 directions are matched, turn on the LED.
                 led.high()
                 print("Unlocked!")
                 timer.stop()
                 // End the game.
-                currentIndex += 1
+                passwordIndex += 1
             }
 
             // If reset button is pressed, it's time to reset the game.
@@ -468,7 +468,7 @@ public struct AccelerometerLock {
                 updatePassword()
                 timer.stop()
 
-                currentIndex = 0
+                passwordIndex = 0
                 start = false
                 reset = false
 
@@ -482,8 +482,8 @@ public struct AccelerometerLock {
         }
 
         // Generate a short beep. 
-        func beep(_ fre: Int) {
-            buzzer.set(frequency: fre, dutycycle: 0.5)
+        func beep(_ frequency: Int) {
+            buzzer.set(frequency: frequency, dutycycle: 0.5)
             sleep(ms: 300)
             buzzer.suspend()
         }

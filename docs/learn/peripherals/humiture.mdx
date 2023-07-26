@@ -218,7 +218,7 @@ Let's use the humiture sensor to get the temperature and humidity.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/05Humiture/Humiture).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/05Humiture/Humiture).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -245,13 +245,13 @@ public struct Humiture {
     public static func main() {
         // Initialize the I2C interface and use it to initialize the sensor.
         let i2c = I2C(Id.I2C0)
-        let sht = SHT3x(i2c)
+        let humiture = SHT3x(i2c)
 
         // Read the temperature and humidity and print their values out. 
         // Stop for 1s and repeat it.
         while true {
-            let temp = sht.readCelsius()
-            let humidity = sht.readHumidity()
+            let temp = humiture.readCelsius()
+            let humidity = humiture.readHumidity()
             print("Temperature: \(temp)C")
             print("Humidity: \(humidity)%")
             sleep(ms: 1000)
@@ -322,15 +322,15 @@ import SHT3x
 
 ```swift
 let i2c = I2C(Id.I2C0)
-let sht = SHT3x(i2c)
+let humiture = SHT3x(i2c)
 ```
 At first, you initialize an I2C interface for communication. Its default speed satisfies the needs of the sensor, so you can ignore it.
 
 The class `SHT3x` needs the I2C pin to which the sensor is connected. So you pass the i2c instance created above. The device address is configured by default, and you don't need to change it.
 
 ```swift
-let temp = sht.readCelsius()
-let humidity = sht.readHumidity()
+let temp = humiture.readCelsius()
+let humidity = humiture.readHumidity()
 ```
 Use the two instance methods of `SHT3x` to read temperature and humidity values. As you can see, with a predefined driver, reading from sensors can be so easy!
 
@@ -375,7 +375,7 @@ In this project, you'll decide when the sensor starts to measure temperature.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/05Humiture/AverageTemperature).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/05Humiture/AverageTemperature).
 
 <Tabs
   defaultValue="main"
@@ -397,36 +397,36 @@ public struct AverageTemperature {
     public static func main() {
         // Initialize the I2C interface and use it to initialize the sensor.
         let i2c = I2C(Id.I2C0)
-        let sht = SHT3x(i2c)
+        let humiture = SHT3x(i2c)
 
         // Initialize the LED indicator pin.
         let led = DigitalOut(Id.D18)
         // Initialize the button pin.
         let button = DigitalIn(Id.D1)
 
-        // Decide if it's time to read the temperature.
-        var start = false
+        // Decide if it's time to read temperature.
+        var startMeasurement = false
 
         while true {
-            // If the button is pressed, update the state.
+            // If button is pressed, update the state.
             if button.read() {
-                start = true
+                startMeasurement = true
             }
 
             // If the button has been pressed and is released, time to measure the temperature.
-            if start && !button.read() {
+            if startMeasurement && !button.read() {
                 // Turn on the LED as an indicator.
                 led.high()
-                // Read the value 20 times in a second to calculate the average.
+                // Read the value 20 times to calculate the average.
                 var sum: Float = 0
                 for _ in 0..<20 {
-                    sum += sht.readCelsius()
-                    sleep(ms: 50)
+                    sum += humiture.readCelsius()
+                    sleep(ms: 3)
                 }
 
-                // Print the average temperature in Celsius.
-                print("Temperature: \(sum / 20.0)°C")
-                start = false
+                // Print the average temperature in celsius.
+                print("Temperature: \(sum / 20.0)C")
+                startMeasurement = false
                 // Turn off the indicator.
                 led.low()
             }

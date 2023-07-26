@@ -172,7 +172,7 @@ In this project, the buzzer will play the musical scale.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/PlayingScale).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03Buzzer/PlayingScale).
 
 ```swift title="PlayingScale.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output, and the MadBoard to use the pin id.
@@ -261,7 +261,7 @@ So let's try a breathing LED! You may notice it when a new message comes on your
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/BreathingLED).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03Buzzer/BreathingLED).
 
 ```swift title="BreathingLED.swift" showLineNumbers
 // Import the SwiftIO library to set the input and output and the MadBoard to use the pin id.
@@ -404,7 +404,7 @@ You'll adjust the brightness of the LED using two buttons: one is reserved to in
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/ButtonDimmer).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03Buzzer/ButtonDimmer).
 
 ```swift title="ButtonDimmer.swift" showLineNumbers
 // Import two necessary libraries.
@@ -431,27 +431,27 @@ public struct ButtonDimmer {
         let downButton = DigitalIn(Id.D1)
         let upButton = DigitalIn(Id.D19)
 
-        var changed = false
+        var dutycycleChanged = false
 
         // Each time this button is pressed, the LED will dim a little until it reaches the minimum brightness.
         downButton.setInterrupt(.rising) {
             dutycycle -= stepDutycycle
             dutycycle = max(dutycycle, minDutycycle)
-            changed = true
+            dutycycleChanged = true
         }
 
         // Once this button is pressed, the LED becomes brighter until it reaches the maximum brightness.
         upButton.setInterrupt(.rising) {
             dutycycle += stepDutycycle
             dutycycle = min(dutycycle, maxDutycycle)
-            changed = true
+            dutycycleChanged = true
         }
 
         // Update the duty cycle of PWM signal to change the LED brightness.
         while true {
-            if changed {
+            if dutycycleChanged {
                 led.setDutycycle(dutycycle)
-                changed = false
+                dutycycleChanged = false
             }
             sleep(ms: 10)
         }
@@ -465,7 +465,7 @@ public struct ButtonDimmer {
 downButton.setInterrupt(.rising) {
     dutycycle -= stepDutycycle
     dutycycle = max(dutycycle, minDutycycle)
-    changed = true
+    dutycycleChanged = true
 }
 ```
 
@@ -489,7 +489,7 @@ In this project, let's test the reflex time.
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/ReflexGame).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03Buzzer/ReflexGame).
 
 ```swift title="ReflexGame.swift" showLineNumbers
 import SwiftIO
@@ -517,7 +517,7 @@ public struct ReflexGame {
                 // Turn on the red LED as a sign of start.
                 led.high()
                 // Store the current clock cycle.
-                let start = getClockCycle()
+                let startClockCycle = getClockCycle()
 
                 // Wait until the button is pressed.
                 while !player.read() {
@@ -525,7 +525,7 @@ public struct ReflexGame {
                 }
 
                 // Calculate the time in ns.
-                let duration = cyclesToNanoseconds(start: start, stop: getClockCycle())
+                let duration = cyclesToNanoseconds(start: startClockCycle, stop: getClockCycle())
                 // Turn off the indicator.
                 led.low()
                 print("Reflex time: \(Float(duration) / 1000_000)ms")
@@ -540,8 +540,8 @@ public struct ReflexGame {
 **Code analysis**
 
 ```swift
-let start = getClockCycle()
-let duration = cyclesToNanoseconds(start: start, stop: getClockCycle())
+let startClockCycle = getClockCycle()
+let duration = cyclesToNanoseconds(start: startClockCycle, stop: getClockCycle())
 ```
 
 The two functions are used together to measure a short period (a few seconds) with precision. 
@@ -560,15 +560,14 @@ It is a useful tool to debug your code if there is something unexpected in your 
 <details>
     <summary>How to use the serial monitor?</summary>
 
-1. Please **download and install the [driver](https://github.com/WCHSoftGroup/ch34xser_macos)** for the USB-Serial device on your board.
-2. After finishing downloading the project, click **SERIAL MONITOR** tab.
-
+1. After finishing downloading the project, click **SERIAL MONITOR** tab.
+ 
 <img
   src={require('./img/serialMonitor.png').default}
   alt="" width="960"
 />
 
-3. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
+2. **Choose the port** of your board. Its name should start with **tty.wchusbserial**.
 
 <img
   src={require('./img/choosePort.png').default}
@@ -576,27 +575,25 @@ It is a useful tool to debug your code if there is something unexpected in your 
 />
 
 
-4. Select the **baudrate 115200**.
+3. Select the **baudrate 115200**.
 
 <img
   src={require('./img/chooseBaudrate.png').default}
   alt="" width="960"
 />
 
-5. Click the button **Start Monitoring**.
+4. Click the button **Start Monitoring**.
 
 <img
   src={require('./img/startMonitoring.png').default}
   alt="" width="960"
 />
 
-And now you should see the values printed on after another.
+And then you should see the values printed one after another.
 
-<img
-  src={require('./img/printValues.png').default}
-  alt="" width="960"
-/>
-
+:::note
+Before you download your project to the board, make sure to disconnect the port.
+:::
 </details>
 
 
@@ -615,7 +612,7 @@ Many types of light decorations, such as Christmas lights or string lights, ofte
 
 **Example code**
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01CommonPeripherals/03Buzzer/LEDPatternChange).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03Buzzer/LEDPatternChange).
 
 ```swift title="LEDPatternChange.swift" showLineNumbers
 import SwiftIO
@@ -635,7 +632,7 @@ public struct LEDPatternChange {
         var stepDutycycle: Float = 0.01
 
         // The duration in ms of each loop.
-        let duration = 10
+        let loopDuration = 10
         // Make the LED on for 500ms and off for 500ms.
         let blinkPeriod = 1000
         var blinkTime = 0
@@ -646,11 +643,11 @@ public struct LEDPatternChange {
         // Set the duty cycle depending on the pattern.
         resetDutycycle()
 
-        var pressed = false
+        var buttonPressed = false
 
-        // If the button is pressed and released, change to the next pattern.
+        // If the button has been pressed and is released now, change to the next pattern.
         button.setInterrupt(.falling) {
-            pressed = true
+            buttonPressed = true
         }
 
         while true { 
@@ -665,17 +662,17 @@ public struct LEDPatternChange {
             
             // Set the PWM with the given duty cycle to change LED brightness.
             led.setDutycycle(dutycycle)
-            sleep(ms: duration) 
+            sleep(ms: loopDuration) 
 
-            // Update pattern index after button is pressed and released.
-            if pressed {
+            // Update pattern index after button has been pressed and is released now.
+            if buttonPressed {
                 changePattern = true
                 patternIndex += 1
                 if patternIndex == LEDPattern.allCases.count { 
                     patternIndex = 0
                 }
 
-                pressed = false
+                buttonPressed = false
             }
         }
 
@@ -702,7 +699,7 @@ public struct LEDPatternChange {
                 // For the first half of blinkPeriod, turn on the LED.
                 // For the second half of blinkPeriod, turn off the LED.
                 // The duty cycle changes between 0.0 and 1.0 to turn on and off the LED in turn.
-                blinkTime += duration
+                blinkTime += loopDuration
                 dutycycle = blinkTime % blinkPeriod < (blinkPeriod / 2) ? maxDutycycle : minDutycycle
             case .breathing: 
                 // The duty cycle gradually increases to the maximum, then decrease to the mininum.

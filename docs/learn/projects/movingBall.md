@@ -29,7 +29,7 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
 
 ## Example code
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/03MoreProjects/MovingBall).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/11MoreProjects/MovingBall).
 
 
 ```swift title="MovingBall.swift" showLineNumbers
@@ -72,7 +72,7 @@ public struct MovingBall {
         // The count of pixels the ball will move each time.
         let step = 5
         // The threshold for the accelerations to move the ball.
-        let threshold: Float = 0.2
+        let moveThreshold: Float = 0.2
 
         // The anchor of the ball when you move it is at the upper left corner of this tile. 
         // But it's at the center when creating the ball.
@@ -80,15 +80,14 @@ public struct MovingBall {
         y -= ballWidth
         
         drawSquare(at: (x, y), width: ballWidth, color: ballColor)
-
-        var lastPos: Point = (x, y)
+        var lastPosition: Point = (x, y)
 
         while true {
             // Read the new accelerations to know the movement.
             let accelerations = accelerometer.readXYZ()
 
             // Check if the acceleration on x-axis exceeds the threshold.
-            if abs(accelerations.x) > threshold {
+            if abs(accelerations.x) > moveThreshold {
                 // Get the direction of the ball's movement horizontally.
                 // When you tilt your board left, the ball moves to the left, and vice versa.
                 // Calculate the x coordinate of the ball.
@@ -103,7 +102,7 @@ public struct MovingBall {
             }
 
             // Check if the acceleration on y-axis exceeds the threshold.
-            if abs(accelerations.y) > threshold {
+            if abs(accelerations.y) > moveThreshold {
                 // Get the direction of the ball's movement vertically.
                 // When you tilt your board forward, the ball moves forward, and vice versa.
                 // Calculate the y coordinate of the ball. 
@@ -118,11 +117,11 @@ public struct MovingBall {
             }
 
             // Update the ball's position on the LCD.
-            if x != lastPos.x || y != lastPos.y {
-                update(width: ballWidth, height: ballWidth,
-                    from: lastPos, bgColor: 0, to: (x, y), color: ballColor
+            if x != lastPosition.x || y != lastPosition.y {
+                updatePosition(width: ballWidth, height: ballWidth,
+                    from: lastPosition, bgColor: 0, to: (x, y), color: ballColor
                 )
-                lastPos = (x, y)
+                lastPosition = (x, y)
             }
             
             sleep(ms: 20)
@@ -136,29 +135,29 @@ public struct MovingBall {
             }
         }
 
-        func update(
+        func updatePosition(
             width: Int, height: Int,
-            from lastPos: Point, bgColor: UInt16,
+            from lastPosition: Point, bgColor: UInt16,
             to newPos: Point, color: UInt16)
         {
             var x0 = 0
             var x1 = 0
-            if lastPos.x < newPos.x {
-                x0 = lastPos.x
+            if lastPosition.x < newPos.x {
+                x0 = lastPosition.x
                 x1 = newPos.x + width
             } else {
                 x0 = newPos.x
-                x1 = lastPos.x + width
+                x1 = lastPosition.x + width
             }
 
             var y0 = 0
             var y1 = 0
-            if lastPos.y < newPos.y {
-                y0 = lastPos.y
+            if lastPosition.y < newPos.y {
+                y0 = lastPosition.y
                 y1 = newPos.y + height
             } else {
                 y0 = newPos.y
-                y1 = lastPos.y + height
+                y1 = lastPosition.y + height
             }
 
             var buffer = [UInt16](repeating: bgColor, count: (x1 - x0) * (y1 - y0))
