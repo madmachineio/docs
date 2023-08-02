@@ -89,11 +89,11 @@ Download and unzip the sdk to the directory `~`
 cd ~/Documents
 mkdir DemoProgram
 cd DemoProgram
-~/mm-sdk/usr/mm/mm init -b SwiftIOFeather
+~/mm-sdk/usr/mm/mm init -b SwiftIOMicro
 ```
 or
 ```shell
-python3 ~/mm-sdk/mm/src/mm.py init -b SwiftIOFeather
+python3 ~/mm-sdk/mm/src/mm.py init -b SwiftIOMicro
 ```
 
 The `Package.swift` should look like below
@@ -106,9 +106,9 @@ let package = Package(
     name: "DemoProgram",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/madmachineio/SwiftIO.git", .upToNextMajor(from: "0.0.1")),
-        .package(url: "https://github.com/madmachineio/MadBoards.git", .upToNextMajor(from: "0.0.1")),
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -141,14 +141,14 @@ python3 ~/mm-sdk/mm/src/mm.py build
 
 ### Download an executable to the board
 
-After building your project successfully, there would be `.build/release/feather.bin` in your project directory. Note that the `.build` directory is hidden by default.
+After building your project successfully, there would be `.build/release/micro.img` in your project directory. Note that the `.build` directory is hidden by default.
 
 Follow those steps to download the executable:
 
 1. Insert an SD card into the board and connect it to your computer through USB cable
 2. Press the **Download** button and wait until the onboard RGB LED turns to static **green**
 2. A USB disk drive should be mounted on your computer
-3. Copy the `feather.bin` to the SD card root directory
+3. Copy the `micro.img` to the SD card root directory
 4. Eject the USB drive and the program would run automatically
 
 ### Download an executable to the board using command (Only on macOS now)
