@@ -12,6 +12,15 @@ Before diving into the nitty-gritty details, it's always a good idea to get hand
 We only support macOS 11.0 and above, as well as Linux. Windows is not supported yet. 
 :::
 
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/B5H6tOMcefI?si=DtokZEP6EBhPz1EQ'
+    controls={true}
+  />
+</div>
+
 ## Step 1: Set up software 
 
 At first, you will get started with the software setup process.
@@ -139,6 +148,14 @@ OK, the software gets prepared👏.
 
 Now, you will start your first project.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/mKe0BYHnjDU?si=jttzKnouAKZYxZpV'
+    controls={true}
+  />
+</div>
+
+
 1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three buttons. Click **New Project**.
 
 <img
@@ -181,26 +198,21 @@ Well, the project is created and will open in a new window.
 
 Then you will need to edit the code for the project. 
 
-1. Click on the **Blink** / **Sources** / **Blink** / **Blink.swift** to open the file. Your program will start from here marked with `@main`. So you will always edit this file for all your projects.
+1. Click on the **Blink** / **Sources** / **miain.swift** to open the file.
 2. **Copy the code below** into the file. In the [next section](../peripherals/led), you will learn how everything works.
 
-```swift title="Blink.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
-@main
-public struct Blink {
-    public static func main() {
-        let led = DigitalOut(Id.BLUE)
+let led = DigitalOut(Id.BLUE)
 
-        while true {
-            led.write(true)
-            sleep(ms: 1000)
+while true {
+    led.write(true)
+    sleep(ms: 1000)
 
-            led.write(false)
-            sleep(ms: 1000)
-        }
-    }
+    led.write(false)
+    sleep(ms: 1000)
 }
 ```
 
