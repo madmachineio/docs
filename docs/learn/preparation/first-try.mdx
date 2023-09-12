@@ -1,6 +1,6 @@
 ---
 title: First try
-description: Install the software and run your hello world project.
+description: Install the software and run your hello world project using embedded Swift programming.
 ---
 
 # First try
@@ -12,6 +12,10 @@ Before diving into the nitty-gritty details, it's always a good idea to get hand
 We only support macOS 11.0 and above, as well as Linux. Windows is not supported yet. 
 :::
 
+## Step 1: Set up software 
+
+At first, you will get started with the software setup process.
+
 import ReactPlayer from 'react-player/youtube';
 
 <div className='row row--no-gutters'>
@@ -21,9 +25,7 @@ import ReactPlayer from 'react-player/youtube';
   />
 </div>
 
-## Step 1: Set up software 
 
-At first, you will get started with the software setup process.
 
 ### 1. Install USB driver
 
@@ -198,21 +200,21 @@ Well, the project is created and will open in a new window.
 
 Then you will need to edit the code for the project. 
 
-1. Click on the **Blink** / **Sources** / **miain.swift** to open the file.
+1. Click on the **Sources** / **main.swift** to open the file.
 2. **Copy the code below** into the file. In the [next section](../peripherals/led), you will learn how everything works.
 
 ```swift title="main.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
-let led = DigitalOut(Id.BLUE)
+let led = DigitalOut(Id.D18)
 
 while true {
     led.write(true)
-    sleep(ms: 1000)
+    sleep(ms: 500)
 
     led.write(false)
-    sleep(ms: 1000)
+    sleep(ms: 500)
 }
 ```
 
