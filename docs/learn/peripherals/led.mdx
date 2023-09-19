@@ -397,6 +397,16 @@ The circuits above are simplified for your reference.
 
 On your first try, let's make the LED blink.
 
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/sHAp3VDYKGE?si=1zj-AD_fPAbA3kg4'
+    controls={true}
+  />
+</div>
+
+
 **Project overview**
 
 * The LED stays off by default.
@@ -414,29 +424,24 @@ On your first try, let's make the LED blink.
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/LEDBlink).
 
-```swift title="LEDBlink.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // First import the SwiftIO and MadBoard libraries into the project to use related functionalities.
 import SwiftIO
 import MadBoard
 
-@main
-public struct LEDBlink {
-    public static func main() {
-        // Initialize the specified pin used for digital output.
-        let led = DigitalOut(Id.D18)
+// Initialize the specified pin used for digital output.
+let led = DigitalOut(Id.D18)
 
-        // The code in the loop will run over and over again. 
-        while true {
-            //Output high voltage to turn on the LED.   
-            led.write(true)
-            // Keep the LED on for 1 second.
-            sleep(ms: 1000)
+// The code in the loop will run over and over again. 
+while true {
+    //Output high voltage to turn on the LED.   
+    led.write(true)
+    // Keep the LED on for 1 second.
+    sleep(ms: 1000)
 
-            // Turn off the LED and then keep that state for 1s.
-            led.write(false)
-            sleep(ms: 1000)
-        }
-    }
+    // Turn off the LED and then keep that state for 1s.
+    led.write(false)
+    sleep(ms: 1000)
 }
 ```
 
@@ -554,6 +559,13 @@ In this case, the parameter uses its parameter name as the argument label. So `m
 
 In this project, you'll control onboard RGB LED to emit different colors.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/gZYqHhew1g0?si=Yl9eRxbdll3zBi6V'
+    controls={true}
+  />
+</div>
+
 The onboard LED serves as an indicator during board connection and code downloading. It consists of red, green and blue LEDs in a package. You can control them separately by setting digital output signals. 
 
 The overall color of the light depends on the internal LEDs that are on. If only one of them is on, it shows its color. If two or three of the LEDs are on, the lights are mixed to create a different color, as in the image below. For example, if you turn on red and green, the combination of two lights results in yellow.
@@ -581,49 +593,44 @@ The overall color of the light depends on the internal LEDs that are on. If only
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/RGBLED).
 
-```swift title="RGBLED.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 import SwiftIO
 import MadBoard
 
-@main
-public struct RGBLED {
-    public static func main() {
-        // Initialize the built-in red, green, and blue LED.
-        // They need a low level to be turned on.
-        // So set the digital value of true to turn them off in the beginning.
-        let red = DigitalOut(Id.RED, value: true)
-        let green = DigitalOut(Id.GREEN, value: true)
-        let blue = DigitalOut(Id.BLUE, value: true)
-        
-        while true {
-            // Red.
-            setRGB(true, false, false)
-            // Green.
-            setRGB(false, true, false)
-            // Blue.
-            setRGB(false, false, true)
-            // Yellow (red + green).
-            setRGB(true, true, false)
-            // Magenta (red + blue).
-            setRGB(true, false, true)
-            // Cyan (green + blue).
-            setRGB(false, true, true)
-            // White (red + green + blue). 
-            setRGB(true, true, true)
-            // Off.
-            setRGB(false, false, false)
-        }
+// Initialize the built-in red, green, blue LED.
+// They need a low level to be turned on.
+// So set the digital value of true to turn them off in the beginning.
+let red = DigitalOut(Id.RED, value: true)
+let green = DigitalOut(Id.GREEN, value: true)
+let blue = DigitalOut(Id.BLUE, value: true)
 
-        // Control red, green and blue LED with given values.
-        // Apply low voltage to turn on the built-in LEDs. 
-        // For example, if you want the red LED on, you should write false.
-        func setRGB(_ redOn: Bool, _ greenOn: Bool, _ blueOn: Bool) {
-            red.write(!redOn)
-            green.write(!greenOn)
-            blue.write(!blueOn)
-            sleep(ms: 1000)
-        }
-    }
+while true {
+    // Red.
+    setRGB(true, false, false)
+    // Green.
+    setRGB(false, true, false)
+    // Blue.
+    setRGB(false, false, true)
+    // Yellow (red + green).
+    setRGB(true, true, false)
+    // Magenta (red + blue).
+    setRGB(true, false, true)
+    // Cyan (green + blue).
+    setRGB(false, true, true)
+    // White (red + green + blue). 
+    setRGB(true, true, true)
+    // Off.
+    setRGB(false, false, false)
+}
+
+// Control red, green and blue LED with the given values.
+// Apply low voltage to turn on the built-in LEDs. 
+// For example, if you want the red LED on, you should write false.
+func setRGB(_ redOn: Bool, _ greenOn: Bool, _ blueOn: Bool) {
+    red.write(!redOn)
+    green.write(!greenOn)
+    blue.write(!blueOn)
+    sleep(ms: 1000)
 }
 ```
 
@@ -669,6 +676,13 @@ Have you heard of Morse code? It encodes characters into a sequence of dashes an
 
 To reproduce it, you will use long flash and short flash respectively. So an SOS signal needs three short flashes, three long flashes, and then three short flashes again. 
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/qOtnzUPo29k?si=kAscoy9HyylPygRn'
+    controls={true}
+  />
+</div>
+
 
 **Project overview**
 
@@ -681,52 +695,47 @@ To reproduce it, you will use long flash and short flash respectively. So an SOS
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/LEDMorseCode).
 
-```swift title="LEDMorseCode.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Import the libraries to use all their functionalities.
 import SwiftIO
 import MadBoard
 
-@main
-public struct LEDMorseCode {
-    public static func main() {
-        // Initialize the digital output pin.
-        let led = DigitalOut(Id.D18)
+// Initialize the digital output pin.
+let led = DigitalOut(Id.D18)
 
-        // Define the LED states to represent the letter s and o.
-        let sSignal = [false, false, false]
-        let oSignal = [true, true ,true]
+// Define the LED states to represent the letter s and o.
+let sSignal = [false, false, false]
+let oSignal = [true, true ,true]
 
-        // Set the LED blink pattern according to the values in the array.
-        func send(_ values: [Bool], to light: DigitalOut) {
-            // The duration of slow flash and quick flash.
-            let long = 1000
-            let short = 500
+// Set the LED blink rate according to the values in the array.
+func send(_ values: [Bool], to light: DigitalOut) {
+    // The duration of slow flash and quick flash.
+    let long = 1000
+    let short = 500
 
-            // Iterate all the values in the array. 
-            // If the value is true, the LED will be on for 1s, which is a slow flash.
-            // And if it's false, the LED will be on for 0.5s, which is a quick flash.
-            for value in values {
-                light.high()
-                if value {
-                    sleep(ms: long)
-                } else {
-                    sleep(ms: short)
-                }
-                light.low()
-                sleep(ms: short)
-            }
+    // Iterate all the values in the array. 
+    // If the value is true, the LED will be on for 1s, which is a slow flash.
+    // And if it’s false, the LED will be on for 0.5s, which is a quick flash.
+    for value in values {
+        light.high()
+        if value {
+            sleep(ms: long)
+        } else {
+            sleep(ms: short)
         }
-
-        // Blink the LED.
-        // At first, the LED starts 3 fast blinks to represent s, then 3 slow blinks to represent o, and 3 fast blinks again.
-        // Wait 1s before repeating the signal.
-        while true {
-            send(sSignal, to: led)
-            send(oSignal, to: led)
-            send(sSignal, to: led)
-            sleep(ms: 1000)
-        }
+        light.low()
+        sleep(ms: short)
     }
+}
+
+// Blink the LED.
+// At first, the LED starts 3 fast blink to represent s, then 3 slow blink to represent o, and 3 fast blink again.
+// Wait 1s before repeating again.
+while true {
+    send(sSignal, to: led)
+    send(oSignal, to: led)
+    send(sSignal, to: led)
+    sleep(ms: 1000)
 }
 ```
 
@@ -777,6 +786,11 @@ This is a **for-in loop**. It has two keywords: `for` and `in`. It's used to rep
 `value` represents the element in the array `values`. At first, it refers to the first element, then the second..., until it reaches the last one. It doesn't matter if you use `value` or a, b, c to name it. In this way, the code inside the curly brackets would repeat several times to iterate all elements in the array.
 
 ```swift
+light.high()
+```
+Set high voltage. This is works the same as `led.write(true)`.
+
+```swift
 if condition {
     task1
 } else {
@@ -795,16 +809,28 @@ This is a **conditional statement**. The **if-else** statement makes it possible
 
 If the condition evaluates true, task1 will be executed and task2 will be skipped. If the condition is false, task2 will be executed instead of task1.
 
+```swift
+if value {
+    sleep(ms: long)
+} else {
+    sleep(ms: short)
+}
+```
+
 Back to the code above, the `value` is judged to know how long the LED should be on.
 
-```swift
-light.high()
-```
-Set high voltage. This is works the same as `led.write(true)`.
+
 
 ### 4. LED blink with timer
 
 You will learn a new way to blink an LED - blink using a timer.
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/fD7AJrshZKg?si=zLZnUlZek-qigcTG'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -843,40 +869,35 @@ The timer here is quite similar. It is a software timer provided by Zephyr. You 
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/01LED/LEDBlinkWithTimer).
 
-```swift title="LEDBlinkWithTimer.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-@main
-public struct LEDBlinkWithTimer {
-    public static func main() {
-        // Initialize a digital pin for LED module.
-        let redLed = DigitalOut(Id.D18)
+// Initialize a digital pin for LED module.
+let redLed = DigitalOut(Id.D18)
 
-        // Initialize the onboard blue LED.
-        let blueLed = DigitalOut(Id.BLUE)
+// Initialize the onboard blue LED.
+let blueLed = DigitalOut(Id.BLUE)
 
-        // Initialize a timer for 1500ms.
-        let timer = Timer(period: 1500)
+// Initialize a timer for 1500ms.
+let timer = Timer(period: 1500)
 
-        // Define a new function used to toggle the LED.
-        func ToggleLEDSwitch() {
-            redLed.toggle()
-        }
+// Define a new function used to toggle the LED.
+func ToggleLEDSwitch() {
+    redLed.toggle()
+}
 
-        // Set an interrupt to reverse the LED state every time the interrupt occurs.
-        timer.setInterrupt(ToggleLEDSwitch)
+// Set an interrupt to reverse the LED state every time the interrupt occurs.
+timer.setInterrupt(ToggleLEDSwitch)
 
-        // Blink onboard blue LED.
-        while true {
-            blueLed.high()
-            sleep(ms: 500)
+// Blink onboard blue LED.
+while true {
+    blueLed.high()
+    sleep(ms: 500)
 
-            blueLed.low()
-            sleep(ms: 500)
-        }
-    }
+    blueLed.low()
+    sleep(ms: 500)
 }
 ```
 
@@ -887,14 +908,14 @@ let timer = Timer(period: 1500)
 ```
 
 Initialize a timer by setting the time interval.
-* The timer's **mode** is `period` by default, which means the interrupt occurs every time the specified interval elapsed, that is, the specified task will be executed periodically. If it is set to `oneShot`, the timer interrupt happens once, so the task will be done once.
-* The parameter `period` sets the time interval in milliseconds.
+* The timer's **`mode`** is `period` by default, which means the interrupt occurs every time the specified interval elapsed, that is, the specified task will be executed periodically. If it is set to `oneShot`, the timer interrupt happens once, so the task will be done once.
+* The parameter **`period`** sets the time interval in milliseconds.
 
 ```swift
-timer.setInterrupt(toggleLed)
+timer.setInterrupt(ToggleLEDSwitch)
 ```
 
-Set the task to be executed if the time interval has elapsed. It needs a function as its parameter, `toggleLed` as above. So every 1500ms the state of `redLed` changes to make it blink.
+Set the task to be executed if the time interval has elapsed. It needs a function as its parameter, `ToggleLEDSwitch` as above. So every 1500ms the state of `redLed` changes to make it blink.
 
 ```swift
 while true {
