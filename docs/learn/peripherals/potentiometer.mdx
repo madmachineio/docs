@@ -1,6 +1,6 @@
 ---
 title: Potentiometer
-description: Learn about ADC and read analog input from potentiometer.
+description: Learn about ADC and read analog input from potentiometers using embedded Swift programming.
 ---
 
 # Potentiometer
@@ -155,6 +155,15 @@ The circuits above are simplified for your reference.
 
 In this project, you will rotate the potentiometer to change the input value. You will view the voltage value on the serial monitor.
 
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/C_oa3ecqWSM?si=IHddPu5VSqB_1yJF'
+    controls={true}
+  />
+</div>
+
 **Project overview**
 
 * After you download the code and connect the port to the serial monitor, the value is printed on the window one by one per second. 
@@ -170,24 +179,20 @@ In this project, you will rotate the potentiometer to change the input value. Yo
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/04Potentiometer/Potentiometer).
 
-```swift title="Potentiometer.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-@main
-public struct Potentiometer {
-    public static func main() {
-        // Initialize the analog pin A0 for the potentiometer.
-        let pot = AnalogIn(Id.A0)
 
-        // Read the voltage value and print it out every second.
-        while true {
-            let potVoltage = pot.readVoltage()
-            print(potVoltage)
-            sleep(ms: 1000)
-        }
-    }
+// Initialize the analog pin A0 for the potentiometer.
+let pot = AnalogIn(Id.A0)
+
+// Read the voltage value and print it out every second.
+while true {
+    let potVoltage = pot.readVoltage()
+    print(potVoltage)
+    sleep(ms: 1000)
 }
 ```
 
@@ -250,6 +255,13 @@ Before you download your project to the board, make sure to disconnect the port.
 
 You will use a potentiometer to control the sound from the buzzer. 
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/BPmwydCknp0?si=PxY9xbR1L_ypUKzP'
+    controls={true}
+  />
+</div>
+
 **Project overview**
 
 * Read the analog value from the potentiometer in percentage.
@@ -265,28 +277,24 @@ You will use a potentiometer to control the sound from the buzzer.
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/04Potentiometer/PitchControl).
 
-```swift title="PitchControl.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Import the SwiftIO to control input and output and the MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-@main
-public struct PitchControl {
-    public static func main() {
-        // Initialize the analog pin for the potentiometer and PWM pin for the LED.
-        let pot = AnalogIn(Id.A0)
-        let buzzer = PWMOut(Id.PWM5A)
 
-        // Read the input value in percentage. 
-        // Then calculate the value into the frequency. 
-        // Set the PWM with the frequency and a duty cycle.
-        while true {
-            let potPercentage = pot.readPercent()
-            let frequency = 50 + Int(1000 * potPercentage)
-            buzzer.set(frequency: frequency, dutycycle: 0.5)
-            sleep(ms: 20)
-        }
-    }
+// Initialize the analog pin for the potentiometer and PWM pin for the LED.
+let pot = AnalogIn(Id.A0)
+let buzzer = PWMOut(Id.PWM5A)
+
+// Read the input value in percentage. 
+// Then calculate the value into the frequency. 
+// Set the PWM with the frequency and a duty cycle.
+while true {
+    let potPercentage = pot.readPercent()
+    let frequency = 50 + Int(1000 * potPercentage)
+    buzzer.set(frequency: frequency, dutycycle: 0.5)
+    sleep(ms: 20)
 }
 ```
 
@@ -315,6 +323,13 @@ The PWM pins will output signals with the specified frequency to drive the buzze
 
 The potentiometer can also be used to change LED brightness. In this project, you'll turn the potentiometer to brighten and dim an LED.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/YBli3aste0k?si=ND3iP7R4-PBykBus'
+    controls={true}
+  />
+</div>
+
 **Project overview**
 
 * Read the analog value from the potentiometer in percentage.
@@ -330,28 +345,24 @@ The potentiometer can also be used to change LED brightness. In this project, yo
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/04Potentiometer/LEDDimmer).
 
-```swift title="LEDDimmer.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Import SwiftIO library to control input and output, and MadBoard to use the pin name.
 import SwiftIO
 import MadBoard
 
-@main
-public struct LEDDimmer {
-    public static func main() {
-        // Initialize the analog pin for the potentiometer and PWM pin for the LED.
-        let pot = AnalogIn(Id.A0)
-        let led = PWMOut(Id.PWM4A)
 
-        // Read the input value. 
-        // The value is represented in percentage, while the duty cycle is also between 0 and 1, 
-        // so you can directly use the reading value to set the PWM.
-        while true {
-            let dutycycle = pot.readPercent()
-            led.setDutycycle(dutycycle)
+// Initialize the analog pin for the potentiometer and PWM pin for the LED.
+let pot = AnalogIn(Id.A0)
+let led = PWMOut(Id.PWM4A)
 
-            sleep(ms: 20)
-        }
-    }
+// Read the input value. 
+// The value is represented in percentage, while the duty cycle is also between 0 and 1, 
+// so you can directly use the reading value to set the PWM.
+while true {
+    let dutycycle = pot.readPercent()
+    led.setDutycycle(dutycycle)
+
+    sleep(ms: 20)
 }
 ```
 
@@ -359,6 +370,13 @@ public struct LEDDimmer {
 ### 4. LED blink control
 
 Blink the LED. The LED brightness is changed by the potentiometer (A0). The blink rate is changed by the potentiometer (A11).
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/9ZFMw1ERooQ?si=aIQFpSTvJbHDNsq1'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -370,34 +388,35 @@ Blink the LED. The LED brightness is changed by the potentiometer (A0). The blin
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/04Potentiometer/LEDBlinkControl).
 
-```swift title="LEDBlinkControl.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// Use two potentiometers to control LED.
+// One changes LED brightness and the other changes the blink rate.
+
+// Import SwiftIO to control input and output.
 import SwiftIO
+// Import MadBoard to use the pin ids.
 import MadBoard
 
-@main
-public struct LEDBlinkControl {
-    public static func main() {
-        // Initialize the analog pin used to adjust LED brightness.
-        let brightnessPot = AnalogIn(Id.A0)
-        // Initialize the analog pin used to change blink rate. 
-        let blinkRatePot = AnalogIn(Id.A11)
-        // Initialize the PWM pin for the LED.
-        let led = PWMOut(Id.PWM4A)
 
-        while true {
-            // Read raw value from the analog pin. It sets the LED blink rate.
-            let blinkTime = blinkRatePot.readRawValue() / 2
+// Initialize the analog pin used to adjust LED brightness.
+let brightnessPot = AnalogIn(Id.A0)
+// Initialize the analog pin used to change blink rate. 
+let blinkRatePot = AnalogIn(Id.A11)
+// Initialize the PWM pin for the LED.
+let led = PWMOut(Id.PWM4A)
 
-            // Read value from the analog pin. 
-            // It serves as duty cycle for PWM to set LED brightness.
-            led.setDutycycle(brightnessPot.readPercent())
-            sleep(ms: blinkTime)
+while true {
+    // Read raw value from the analog pin. It sets the LED blink rate.
+    let blinkTime = blinkRatePot.readRawValue() / 2
 
-            // After a specified time, suspend the output to turn off the LED.
-            led.suspend()
-            sleep(ms: blinkTime)
-        }
-    }
+    // Read value from the analog pin. 
+    // It serves as duty cycle for PWM to set LED brightness.
+    led.setDutycycle(brightnessPot.readPercent())
+    sleep(ms: blinkTime)
+
+    // After a specified time, suspend the output to turn off the LED.
+    led.suspend()
+    sleep(ms: blinkTime)
 }
 ```
 
@@ -406,6 +425,12 @@ public struct LEDBlinkControl {
 
 In this project, two potentiometers work together to control the LED brightness. One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/fUQpbZqPbm8?si=0OSaW777luwtx4gR'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -418,39 +443,40 @@ In this project, two potentiometers work together to control the LED brightness.
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/04Potentiometer/DoubleLEDDimmer).
 
-```swift title="DoubleLEDDimmer.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// In this project, two potentiometers control the LED brightness.
+// One controls the maximum intensity and the other adjusts the brightness between the minimum and the maximum.
+
+// Import SwiftIO to control input and output.
 import SwiftIO
+// Import MadBoard to use the pin ids.
 import MadBoard
 
-@main
-public struct DoubleLEDDimmer {
-    public static func main() {
-        // Initialize the analog pin used to adjust LED brightness from min and max.
-        let brightnessPot = AnalogIn(Id.A0)
-        // Initialize the analog pin used to set max brightness. 
-        let intensityPot = AnalogIn(Id.A11)
-        // Initialize the PWM pin for the LED.
-        let led = PWMOut(Id.PWM4A)
 
-        // Define the available range of max duty cycle adjusted by A11. 
-        let minIntensity: Float = 0.2
-        let maxIntensity: Float = 1
+// Initialize the analog pin used to adjust LED brightness from min and max.
+let brightnessPot = AnalogIn(Id.A0)
+// Initialize the analog pin used to set max brightness. 
+let intensityPot = AnalogIn(Id.A11)
+// Initialize the PWM pin for the LED.
+let led = PWMOut(Id.PWM4A)
 
-        while true {
-            // Map the analog value from the range 0-1 to the range minIntensity-maxIntensity. 
-            // It decides the max duty cycle for the PWM signal.
-            // That's to say, it changes the maximum intensity of the LED.
-            let maxDutycycle = intensityPot.readPercent() * (maxIntensity - minIntensity) + minIntensity
+// Define the available range of max duty cycle adjusted by A11. 
+let minIntensity: Float = 0.2
+let maxIntensity: Float = 1
 
-            // Read the analog value (0-1) from pin A0 which serves as a ratio for the final duty cycle.
-            let dutycycleRatio = brightnessPot.readPercent()
+while true {
+    // Map the analog value from the range 0-1 to the range minIntensity-maxIntensity. 
+    // It decides the max duty cycle for the PWM signal.
+    // That's to say, it changes the maximum intensity of the LED.
+    let maxDutycycle = intensityPot.readPercent() * (maxIntensity - minIntensity) + minIntensity
 
-            // Calculate the final duty cycle value (0-maxDutycycle).
-            // Set the PWM output using the result.
-            led.setDutycycle(dutycycleRatio * maxDutycycle)
-            sleep(ms: 20)
-        }
-    }
+    // Read the analog value (0-1) from the pin A0 which serves as ratio for final duty cycle.
+    let dutycycleRatio = brightnessPot.readPercent()
+
+    // Calculate the final duty cycle value (0-maxDutycycle).
+    // Set the PWM output using the result.
+    led.setDutycycle(dutycycleRatio * maxDutycycle)
+    sleep(ms: 20)
 }
 ```
 
@@ -459,6 +485,12 @@ public struct DoubleLEDDimmer {
 
 Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one by one.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/YRyyHM1t7o0?si=zr6KZQsOEvJGRPBh'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -470,40 +502,39 @@ Play a scale manually. Rotate the potentiometer to play notes from C4 to C5 one 
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/04Potentiometer/PlayingTones).
 
-```swift title="PlayingTones.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// Play scales by rotating a potentiometer slowly.
+
+// Import the SwiftIO library to set the input and output, and the MadBoard to use the pin ids.
 import SwiftIO
 import MadBoard
 
-@main
-public struct PlayingTones {
-    public static func main() {
-        // Initialize a PWM pin for the buzzer.
-        let buzzer = PWMOut(Id.PWM5A)
-        // Initialize a analog pin for the potentiometer.
-        let pot = AnalogIn(Id.A0)
 
-        // Declare a constant to store an array of frequencies. 
-        // They matches respectively notes C4, D4, E4, F4, G4, A4, B4, C5.
-        let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
+// Initialize a PWM pin for the buzzer.
+let buzzer = PWMOut(Id.PWM5A)
+// Initialize a analog pin for the potentiometer.
+let pot = AnalogIn(Id.A0)
 
-        // Store the last frequency index to avoid playing the same note.
-        var lastFrequencyIndex = frequencies.count
+// Declare a constant to store an array of frequencies. 
+// They matches respectively notes C4, D4, E4, F4, G4, A4, B4, C5.
+let frequencies = [262, 294, 330, 349, 392, 440, 494, 523]
 
-        while true {
-            // Read the raw analog value from the pin.
-            // Map the value into the index of the array.
-            let frequencyIndex = Int((Float(pot.readRawValue() * (frequencies.count - 1)) / Float(pot.maxRawValue)).rounded(.toNearestOrAwayFromZero))
+// Store the last frequency index to avoid playing the same note.
+var lastFrequencyIndex = frequencies.count
 
-            // Check if the note hasn't been played.
-            if frequencyIndex != lastFrequencyIndex {
-                // Play the new note for 500ms.
-                buzzer.set(frequency: frequencies[frequencyIndex], dutycycle: 0.5)
-                sleep(ms: 500)
-                buzzer.suspend()
-                lastFrequencyIndex = frequencyIndex
-            }
-            sleep(ms: 10)
-        }
+while true {
+    // Read the raw analog value from the pin.
+    // Map the value into the index of the array.
+    let frequencyIndex = Int((Float(pot.readRawValue() * (frequencies.count - 1)) / Float(pot.maxRawValue)).rounded(.toNearestOrAwayFromZero))
+
+    // Check if the note hasn't been played.
+    if frequencyIndex != lastFrequencyIndex {
+        // Play the new note for 500ms.
+        buzzer.set(frequency: frequencies[frequencyIndex], dutycycle: 0.5)
+        sleep(ms: 500)
+        buzzer.suspend()
+        lastFrequencyIndex = frequencyIndex
     }
+    sleep(ms: 10)
 }
 ```
