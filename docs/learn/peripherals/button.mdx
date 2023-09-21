@@ -1,6 +1,6 @@
 ---
 title: LED Control with Buttons
-description: Learn about GPIO and read digital input from a button.
+description: Learn about GPIO. Try embedded Swift programming to control LED with buttons.
 ---
 
 # LED Control with Buttons
@@ -136,11 +136,14 @@ Let's see the new class you are going to use in this project.
 
 Let's start to build a simple LED switch. 
 
-<img
-  src={require('./img/buttonLED.png').default}
-  alt="Control LED with button" width="960"
-/>
+import ReactPlayer from 'react-player/youtube';
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/-3MW6Fp31UY?si=TwW3LoKwimpd4IMw'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -148,6 +151,10 @@ Let's start to build a simple LED switch.
 * After you **press** the button, the LED turns **on**. If you hold the button, the LED stays on.
 * Once you **release** the button, the LED turns **off**.
 
+<img
+  src={require('./img/buttonLED.png').default}
+  alt="Control LED with button" width="960"
+/>
 
 <table>
   <tr>
@@ -175,36 +182,36 @@ Let's start to build a simple LED switch.
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/MomentaryLEDSwitch).
 
-```swift title="MomentaryLEDSwitch.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// When you press the button, the LED turns on. 
+// If you continue to hold it, the LED stays on.
+// After you release it, the LED turns off.
+
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-@main
-public struct MomentaryLEDSwitch {
-    public static func main() {
-        // Initialize the input pin for the button and output pin for the LED.
-        let led = DigitalOut(Id.D18)
-        let button = DigitalIn(Id.D1)
 
-        // Keep repeating the following steps.
-        while true {
-            // Read the input pin to check the button state.
-            let buttonPressed = button.read()
+// Initialize the input pin for the button and output pin for the LED.
+let led = DigitalOut(Id.D18)
+let button = DigitalIn(Id.D1)
 
-            // If the value is true which means the button is pressed, turn on the LED. Otherwise, turn off the LED.
-            if buttonPressed == true {
-                led.write(true)
-            } else {
-                led.write(false)
-            }
-            
-            // Alternatively
-            // led.write(button.read())
+// Keep repeating the following steps.
+while true {
+    // Read the input pin to check the button state.
+    let buttonPressed = button.read()
 
-            sleep(ms: 10)
-        }
+    // If the value is true which means the button is pressed, turn on the LED. Otherwise, turn off the LED.
+    if buttonPressed == true {
+        led.write(true)
+    } else {
+        led.write(false)
     }
+    
+    // Alternatively
+    // led.write(button.read())
+
+    sleep(ms: 10)
 }
 ```
 
@@ -234,7 +241,7 @@ if buttonPressed == true {
 
 The microcontroller will judge the value read from the pin. When the value equals `true`, it means the button is pressed, so make the board output a high voltage to turn on the LED. 
 
-BTW, the statements in the while loop can be simplified as: 
+BTW, the statements above can be simplified as: 
 
 ```swift
 led.write(button.read())
@@ -257,6 +264,12 @@ In the previous project, the microcontroller is doing nothing but check the inpu
 
 In this project, the LED changes state between on and off every time you press the button. 
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/8N2U4n5lkik?si=AAZWKCNdxFOJgcXD'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -296,33 +309,30 @@ In this project, the LED changes state between on and off every time you press t
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/ButtonInterrupt).
 
-```swift title="ButtonInterrupt.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// Toggle the LED after you press the buttton by detecting the rising edge.
+
 // Import the SwiftIO library to control input and output and the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-@main
-public struct ButtonInterrupt {
-    public static func main() {
-        // Initialize the input pin for the button and the output pin for the LED.
-        let button = DigitalIn(Id.D1)
-        let led = DigitalOut(Id.D18)
 
-        // Define a new function used to toggle the LED.
-        func toggleLed() {
-            led.toggle()
-        }
+// Initialize the input pin for the button and output pin for the LED.
+let button = DigitalIn(Id.D1)
+let led = DigitalOut(Id.D18)
 
-        // Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
-        button.setInterrupt(.rising, callback: toggleLed)
-
-        // Keep sleeping if the interrupt hasn't been triggered.
-        while true {
-            sleep(ms: 1000)
-        }
-    }
+// Define a new function used to toggle the LED.
+func toggleLed() {
+    led.toggle()
 }
 
+// Set the interrupt to detect the rising edge. Once detected, the LED will change its state.
+button.setInterrupt(.rising, callback: toggleLed)
+
+// Keep sleeping if the interrupt hasn't been triggered.
+while true {
+    sleep(ms: 1000)
+}
 ```
 
 **Code analysis**
@@ -399,6 +409,13 @@ The sleep time can be a random value. It makes the board sleep while interrupt d
 
 In this project, the LED state changes right after you release the button that has been pressed. If you press and hold the button, the LED state keeps the same. After you release the button, the LED is toggled.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/E3U8Z65zUMY?si=MYR5FxISh4bs47IN'
+    controls={true}
+  />
+</div>
+
 **Project overview**
 
 * In the beginnning, the button is **released**/not pressed, the LED stays **off**.
@@ -437,35 +454,33 @@ In this project, the LED state changes right after you release the button that h
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/ToggleLEDSwitch).
 
-```swift title="ToggleLEDSwitch.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// After the button (D1) is pressed and released, the LED (D19) is toggled.
+
 // Import the SwiftIO library to control input and output and 
 // the MadBoard to use the id of the pins.
 import SwiftIO
 import MadBoard
 
-@main
-public struct ToggleLEDSwitch {
-    public static func main() {
-        // Initialize the input pin for the button and output pin for the LED.
-        let led = DigitalOut(Id.D18)
-        let button = DigitalIn(Id.D1)
 
-        var buttonPressed = false
+// Initialize the input pin for the button and output pin for the LED.
+let led = DigitalOut(Id.D18)
+let button = DigitalIn(Id.D1)
 
-        while true {
-            // If buttonPressing is false, the button is released. 
-            // Besides, if buttonPressed is true, it means the button has been pressed.
-            // So it checks if the button has been pressed and released. 
-            // If so, toggle the LED.
-            let buttonPressing = button.read()
-            if !buttonPressing && buttonPressed {
-                led.toggle()
-            }
-            // Store the latest button state.
-            buttonPressed = buttonPressing
-            sleep(ms: 10)
-        }
+var buttonPressed = false
+
+while true {
+    // If buttonPressing is false, the button is released. 
+    // Besides, if buttonPressed is true, it means the button has been pressed.
+    // So it checks if the button has been pressed and released. 
+    // If so, toggle the LED.
+    let buttonPressing = button.read()
+    if !buttonPressing && buttonPressed {
+        led.toggle()
     }
+    // Store the latest button state.
+    buttonPressed = buttonPressing
+    sleep(ms: 10)
 }
 ```
 
@@ -497,7 +512,12 @@ When you are not pressing the button now but did press it, that is, the button i
 
 Pressing any of the two buttons (D1, D19) will toggle the LED state. The state is updated immediately after pressing the button. 
 
-
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/UUcPtjc4_dU?si=R3sz8jxOLktm7Ygc'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -551,40 +571,39 @@ It works like light switches in your room. You may press any of the switches in 
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/TwoWayLEDSwitches).
 
-```swift title="TwoWayLEDSwitches.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
+// Pressing any of the two buttons (D1, D19) will toggle the LED. 
+// The LED state is updated after that button is pressed.
+
 // SwiftIO is used to set input and output of the pins.
 import SwiftIO
 // MadBoard is for pin ids.
 import MadBoard
 
-@main
-public struct TwoWayLEDSwitches {
-    public static func main() {
-        // Initialize the pins for two buttons and the LED.
-        let button0 = DigitalIn(Id.D1)
-        let button1 = DigitalIn(Id.D19)
-        let led = DigitalOut(Id.D18)
 
-        // Store if the LED state is toggled after a button press.
-        // It ensures the LED state doesn't change again when the button is being pressed.
-        var ledToggled = false
+// Initialize the pins for two buttons and the LED.
+let button0 = DigitalIn(Id.D1)
+let button1 = DigitalIn(Id.D19)
+let led = DigitalOut(Id.D18)
 
-        // Toggle the LED after any of the two buttons are pressed.
-        while true {
-            // When any of the buttons are pressed, toggle the LED.
-            if !ledToggled && (button0.read() || button1.read()) {
-                led.toggle()
-                ledToggled = true
-            }
+// Store if the LED state is toggled after a button press.
+// It ensures the LED state doesn't change again when button is being pressed.
+var ledToggled = false
 
-            // If both buttons are released, update the state to wait for next press.
-            if !button0.read() && !button1.read() {
-                ledToggled = false
-            }
-
-            sleep(ms: 10)
-        }
+// Toggle the LED after any of the two buttons are pressed.
+while true {
+    // When any of the buttons are pressed, toggle the LED.
+    if !ledToggled && (button0.read() || button1.read()) {
+        led.toggle()
+        ledToggled = true
     }
+
+    // If both buttons are released, update the state to wait for next press.
+    if !button0.read() && !button1.read() {
+        ledToggled = false
+    }
+
+    sleep(ms: 10)
 }
 ```
 
@@ -616,7 +635,12 @@ Why not try to adjust the code a bit to make the LED remain unchanged when the b
 
 Two buttons are reserved for the on (D1) and the off (D19) buttons respectively. The LED state is updated only after a press and release.
 
-
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/94pVj2yvgtE?si=eUS8UjVK5HxSbWTQ'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -660,67 +684,63 @@ Two buttons are reserved for the on (D1) and the off (D19) buttons respectively.
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/02Button/OnOffButtons).
 
-```swift title="OnOffButtons.swift" showLineNumbers
-// Control the LED with two specified buttons.
-// The button D1 is used to turn on it and D19 is to turn off it.
+```swift title="main.swift" showLineNumbers
+// Control the LED with two dedicated buttons.
+// The button D1 is used to turn on LED and D19 is to turn off it.
 
 // SwiftIO is used to set all input and output.
 import SwiftIO
 // MadBoard is for pin ids.
 import MadBoard
 
-@main
-public struct OnOffButtons {
-    public static func main() {
-        // Initialize the pin for the button used to turn ON LED.
-        let onButton = DigitalIn(Id.D1)
-        // Initialize the pin for the button used to turn OFF the LED.
-        let offButton = DigitalIn(Id.D19)
-        let led = DigitalOut(Id.D18)
 
-        // Store the current LED state.
-        var ledOn = false
+// Initialize the pin for the button used to turn ON LED.
+let onButton = DigitalIn(Id.D1)
+// Initialize the pin for the button used to turn OFF the LED.
+let offButton = DigitalIn(Id.D19)
+let led = DigitalOut(Id.D18)
 
-        // Store the last button state used to decide whether the button is released now.
-        var onButtonPressed = false
-        var offButtonPressed = false
+// Store the current LED state.
+var ledOn = false
 
-        while true {
-            if ledOn {
-                // If the LED is on, check if the off button (D19) is pressed. 
-                // If so, turn off the LED after the button is released.
+// Store the last button state used to decide whether the button is released now.
+var onButtonPressed = false
+var offButtonPressed = false
 
-                // Update the OFF button state if it is pressed. 
-                if offButton.read() {
-                    offButtonPressed = true
-                }
+while true {
+    if ledOn {
+        // If the LED is on, check if the off button (D19) is pressed. 
+        // If so, turn off the LED after the button is released.
 
-                // If the OFF button has been pressed and is released now, turn off the LED and update all states.
-                if offButtonPressed && !offButton.read() {
-                    led.low()
-                    offButtonPressed = false
-                    ledOn = false
-                }
-            } else {
-                // If the LED is off, check if the on button (D1) is pressed. 
-                // If so, turn on the LED after the button is released.
+        // Update the OFF button state if it is pressed. 
+        if offButton.read() {
+            offButtonPressed = true
+        }
 
-                // Update the ON button state if it is pressed. 
-                if onButton.read() {
-                    onButtonPressed = true
-                }
+        // If the OFF button has been pressed and is released now, turn off the LED and update all states.
+        if offButtonPressed && !offButton.read() {
+            led.low()
+            offButtonPressed = false
+            ledOn = false
+        }
+    } else {
+        // If the LED is off, check if the on button (D1) is pressed. 
+        // If so, turn on the LED after the button is released.
 
-                // If the ON button has been pressed and is released now, turn on the LED and update all states.
-                if onButtonPressed && !onButton.read() {
-                    led.high()
-                    onButtonPressed = false
-                    ledOn = true
-                }
-            }
-            
-            sleep(ms: 10)
+        // Update the ON button state if it is pressed. 
+        if onButton.read() {
+            onButtonPressed = true
+        }
+
+        // If the ON button has been pressed and is released now, turn on the LED and update all states.
+        if onButtonPressed && !onButton.read() {
+            led.high()
+            onButtonPressed = false
+            ledOn = true
         }
     }
+    
+    sleep(ms: 10)
 }
 ```
 
@@ -822,42 +842,37 @@ So you need **debounce methods** to avoid this situation. There are many solutio
 import SwiftIO
 import MadBoard
 
-@main
-public struct Debounce {
-    public static func main() {
-        // Initialize the red LED.
-        let led = DigitalOut(Id.D18)
-        // Initialize the digital input pin that the button is connected to.
-        let button = DigitalIn(Id.D1)
-        
-        // Declare the values to record and judge the button state.
-        var count = 0
-        var triggered = false
-        
-        while true {
-            // Read from the input pin.
-            let buttonPressed = button.read()
-            
-            // Ignore the change due to the noise.
-            if buttonPressed {
-                count += 1
-            } else {
-                count = 0
-                triggered = false
-            }
-            
-            // Wait a certain period to check if the button is indeed pressed. 
-            // Toggle the LED and then reset the value for the next press.
-            if count > 50 && !triggered {
-                led.toggle()
-                triggered = true
-                count = 0
-            }
-            
-            // Wait a millisecond and then read to ensure the current state last for enough time. 
-            sleep(ms: 1)
-        }
+// Initialize the red LED.
+let led = DigitalOut(Id.D18)
+// Initialize the digital input pin that the button is connected to.
+let button = DigitalIn(Id.D1)
+
+// Declare the values to record and judge the button state.
+var count = 0
+var triggered = false
+
+while true {
+    // Read from the input pin.
+    let buttonPressed = button.read()
+    
+    // Ignore the change due to the noise.
+    if buttonPressed {
+        count += 1
+    } else {
+        count = 0
+        triggered = false
     }
+    
+    // Wait a certain period to check if the button is indeed pressed. 
+    // Toggle the LED and then reset the value for the next press.
+    if count > 50 && !triggered {
+        led.toggle()
+        triggered = true
+        count = 0
+    }
+    
+    // Wait a millisecond and then read to ensure the current state last for enough time. 
+    sleep(ms: 1)
 }
 ```
 </details>

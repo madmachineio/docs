@@ -1,6 +1,6 @@
 ---
 title: Temperature and humidity measurement
-description: Learn about I2C and read temperature and humidity from sensor using I2C.
+description: Learn about I2C. Try embedded Swift programming to get temperature and humidity from the sensor.
 ---
 
 # Temperature and humidity measurement
@@ -210,6 +210,15 @@ The circuits above are simplified versions for your reference.
 
 Let's use the humiture sensor to get the temperature and humidity. 
 
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/vzcU5cxPKfQ?si=rK1ZOJUleIqPpHh4'
+    controls={true}
+  />
+</div>
+
 **Project overview**
 
 * After you download the code, the sensor begins to take a measurement every second.
@@ -226,7 +235,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'Humiture.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -240,23 +249,19 @@ import MadBoard
 // Import SHT3x to use its functionalities to read values. 
 import SHT3x
 
-@main
-public struct Humiture {
-    public static func main() {
-        // Initialize the I2C interface and use it to initialize the sensor.
-        let i2c = I2C(Id.I2C0)
-        let humiture = SHT3x(i2c)
 
-        // Read the temperature and humidity and print their values out. 
-        // Stop for 1s and repeat it.
-        while true {
-            let temp = humiture.readCelsius()
-            let humidity = humiture.readHumidity()
-            print("Temperature: \(temp)C")
-            print("Humidity: \(humidity)%")
-            sleep(ms: 1000)
-        }
-    }
+// Initialize the I2C interface and use it to initialize the sensor.
+let i2c = I2C(Id.I2C0)
+let humiture = SHT3x(i2c)
+
+// Read the temperature and humidity and print their values out. 
+// Stop for 1s and repeat it.
+while true {
+    let temp = humiture.readCelsius()
+    let humidity = humiture.readHumidity()
+    print("Temperature: \(temp)C")
+    print("Humidity: \(humidity)%")
+    sleep(ms: 1000)
 }
 ```
 
@@ -264,36 +269,32 @@ public struct Humiture {
 <TabItem value="package">
 
 ```swift showLineNumbers
-// swift-tools-version:5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "Humiture",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "Humiture",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
-                // highlight-next-line
-                .product(name: "SHT3x", package: "MadDrivers")
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
+                .product(name: "SHT3x", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "HumitureTests",
-            dependencies: ["Humiture"]),
     ]
 )
-
 ```
 
 </TabItem>
@@ -305,7 +306,7 @@ let package = Package(
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'Humiture.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -363,6 +364,13 @@ This file defines the content of this package. You may notice the two highlighte
 
 In this project, you'll decide when the sensor starts to measure temperature. 
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/G0zvM0j71bg?si=5PiB0B6Y12lGcSHF'
+    controls={true}
+  />
+</div>
+
 **Project overview**
 
 * Press the button D1 to start temperature measurement.
@@ -380,7 +388,7 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'AverageTemperature.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -388,52 +396,52 @@ You can download the project source code [here](https://github.com/madmachineio/
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Measure the temperature and get an average reading after a button press.
+
+// Import SwiftIO to use I2C communication and MadBoard to use pin id. 
 import SwiftIO
 import MadBoard
+// Import SHT3x to use its functionalities to read values. 
 import SHT3x
 
-@main
-public struct AverageTemperature {
-    public static func main() {
-        // Initialize the I2C interface and use it to initialize the sensor.
-        let i2c = I2C(Id.I2C0)
-        let humiture = SHT3x(i2c)
 
-        // Initialize the LED indicator pin.
-        let led = DigitalOut(Id.D18)
-        // Initialize the button pin.
-        let button = DigitalIn(Id.D1)
+// Initialize the I2C interface and use it to initialize the sensor.
+let i2c = I2C(Id.I2C0)
+let humiture = SHT3x(i2c)
 
-        // Decide if it's time to read temperature.
-        var startMeasurement = false
+// Initialize the LED indicator pin.
+let led = DigitalOut(Id.D18)
+// Initialize the button pin.
+let button = DigitalIn(Id.D1)
 
-        while true {
-            // If button is pressed, update the state.
-            if button.read() {
-                startMeasurement = true
-            }
+// Decide if it's time to read temperature.
+var startMeasurement = false
 
-            // If the button has been pressed and is released, time to measure the temperature.
-            if startMeasurement && !button.read() {
-                // Turn on the LED as an indicator.
-                led.high()
-                // Read the value 20 times to calculate the average.
-                var sum: Float = 0
-                for _ in 0..<20 {
-                    sum += humiture.readCelsius()
-                    sleep(ms: 3)
-                }
-
-                // Print the average temperature in celsius.
-                print("Temperature: \(sum / 20.0)C")
-                startMeasurement = false
-                // Turn off the indicator.
-                led.low()
-            }
-
-            sleep(ms: 20)
-        }
+while true {
+    // If button is pressed, update the state.
+    if button.read() {
+        startMeasurement = true
     }
+
+    // If the button has been pressed and is released, time to measure the temperature.
+    if startMeasurement && !button.read() {
+        // Turn on the LED as an indicator.
+        led.high()
+        // Read the value 20 times to calculate the average.
+        var sum: Float = 0
+        for _ in 0..<20 {
+            sum += humiture.readCelsius()
+            sleep(ms: 3)
+        }
+
+        // Print the average temperature in celsius.
+        print("Temperature: \(sum / 20.0)C")
+        startMeasurement = false
+        // Turn off the indicator.
+        led.low()
+    }
+
+    sleep(ms: 20)
 }
 ```
 
@@ -441,36 +449,32 @@ public struct AverageTemperature {
 <TabItem value="package">
 
 ```swift showLineNumbers
-// swift-tools-version:5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "AverageTemperature",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "Humiture",
+            name: "AverageTemperature",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
-                // highlight-next-line
-                .product(name: "SHT3x", package: "MadDrivers")
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
+                .product(name: "SHT3x", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "HumitureTests",
-            dependencies: ["Humiture"]),
     ]
 )
-
 ```
 
 </TabItem>
