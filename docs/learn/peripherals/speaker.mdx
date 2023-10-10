@@ -285,10 +285,14 @@ By connecting the pin SD on the Speaker module to GND directly, you can set the 
 
 Different waveforms can generate different sounds. In this project, you will generate a square wave and a triangle wave manually. Then play scales using two sounds.
 
-<img
-  src={require('./img/music.png').default}
-  alt="Music" width="480"
-/>
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/TFKsPEjm8ls?si=ML-QOLBIWZA_uXTI'
+    controls={true}
+  />
+</div>
 
 **Example code**
 
@@ -567,6 +571,12 @@ In the while loop, the speaker will play scales over and over again.
 
 Play music using the speaker. You can also pass other scores to play the music.
 
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/vAfiW9npK-A?si=bNOx5mH8gqNhZUsD'
+    controls={true}
+  />
+</div>
 
 **Music notes**
 
