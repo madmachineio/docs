@@ -100,6 +100,14 @@ The circuits above are simplified versions for your reference.
 
 As usual, your first project is to read values, in this case, the current time from the sensor and view it in the serial monitor. 
 
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/z-WjPNmL9gU?si=7t8ki5cMobxxUIut'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -118,7 +126,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'ReadingTime.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -132,82 +140,78 @@ import SwiftIO
 import MadBoard
 import PCF8563
 
-@main
-public struct ReadingTime {
-    public static func main() {
-        let i2c = I2C(Id.I2C0)
-        let rtc = PCF8563(i2c)
 
-        let daysOfWeek = [
-            "Monday", "Tuesday", "Wednesday",
-            "Thursday", "Friday", "Saturday",
-            "Sunday"
-        ]
+let i2c = I2C(Id.I2C0)
+let rtc = PCF8563(i2c)
 
-        // Please use current time to adjust the RTC time if it has been lost power.
-        // The day of week is from 0 to 6. In this case, 0 refers to Monday.
-        let currentTime = PCF8563.Time(
-            year: 2023, month: 4, day: 9, hour: 10,
-            minute: 26, second: 0, dayOfWeek: 6
-        )
-        // If the RTC has lost power, its time will be updated.
-        // If not, its time should be accurate and thus won't be changed.
-        // If you indeed need to adjust it, set the parameter `update` to `true`.
-        // rtc.setTime(currentTime, update: true)
-        rtc.setTime(currentTime)
+let daysOfWeek = [
+    "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday",
+    "Sunday"
+]
 
-        while true {
-            let time = rtc.readTime()
-            print(formatDateTime(time))
-            sleep(ms: 1000)
-        }
+// Please use current time to adjust the RTC time if it has been lost power.
+// The day of week is from 0 to 6. In this case, 0 refers to Monday.
+let currentTime = PCF8563.Time(
+    year: 2023, month: 4, day: 9, hour: 10,
+    minute: 26, second: 0, dayOfWeek: 6
+)
+// If the RTC has lost power, its time will be updated.
+// If not, its time should be accurate and thus won't be changed.
+// If you indeed need to adjust it, set the parameter `update` to `true`.
+// rtc.setTime(currentTime, update: true)
+rtc.setTime(currentTime)
 
-        // Add leading zero if number is one-digit.
-        // For example, number 1 will be 01.
-        func formatNum(_ number: UInt8) -> String {
-            return number < 10 ? "0\(number)" : "\(number)"
-        }
+while true {
+    let time = rtc.readTime()
+    print(formatDateTime(time))
+    sleep(ms: 1000)
+}
 
-        // Format the date and time, i.e. 2023/03/01 Wednesday 16:20:00.
-        func formatDateTime(_ time: PCF8563.Time) -> String {
-            var string = ""
-            string += "\(time.year)" + "/" + formatNum(time.month) + "/" + formatNum(time.day)
-            string += " " + daysOfWeek[Int(time.dayOfWeek)] + " "
-            string += formatNum(time.hour) + ":" + formatNum(time.minute) + ":" + formatNum(time.second)
-            return string
-        }
-    }
+// Add leading zero if number is one-digit.
+// For example, number 1 will be 01.
+func formatNum(_ number: UInt8) -> String {
+    return number < 10 ? "0\(number)" : "\(number)"
+}
+
+// Format the date and time, i.e. 2023/03/01 Wednesday 16:20:00.
+func formatDateTime(_ time: PCF8563.Time) -> String {
+    var string = ""
+    string += "\(time.year)" + "/" + formatNum(time.month) + "/" + formatNum(time.day)
+    string += " " + daysOfWeek[Int(time.dayOfWeek)] + " "
+    string += formatNum(time.hour) + ":" + formatNum(time.minute) + ":" + formatNum(time.second)
+    return string
 }
 ```
 </TabItem>
 <TabItem value="package">
 
 ```swift showLineNumbers
+// swift-tools-version: 5.9
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "ReadingTime",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "ReadingTime",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
-                .product(name: "PCF8563", package: "MadDrivers")
+                .product(name: "PCF8563", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "ReadTimeTests",
-            dependencies: ["ReadingTime"]),
     ]
 )
 ```
@@ -218,6 +222,13 @@ let package = Package(
 ### 2. Blinking using RTC
 
 In this project, let's blink an LED based on the time from RTC.
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/cUNIIv8X65Q?si=4VNOMSaOr_Nq9nrh'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -231,7 +242,7 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'BlinkUsingRTC.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -245,50 +256,46 @@ import SwiftIO
 import MadBoard
 import PCF8563
 
-@main
-public struct BlinkUsingRTC {
-    public static func main() {
-        let i2c = I2C(Id.I2C0)
-        let rtc = PCF8563(i2c)
-        let led = DigitalOut(Id.D18)
 
-        while true {
-            let time = rtc.readTime()
-            led.write(time.second % 2 == 0)
-            sleep(ms: 10)
-        }
-    }
+let i2c = I2C(Id.I2C0)
+let rtc = PCF8563(i2c)
+let led = DigitalOut(Id.D18)
+
+while true {
+    let time = rtc.readTime()
+    led.write(time.second % 2 == 0)
+    sleep(ms: 10)
 }
 ```
 </TabItem>
 <TabItem value="package">
 
 ```swift showLineNumbers
+// swift-tools-version: 5.9
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "BlinkUsingRTC",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "BlinkUsingRTC",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
                 .product(name: "PCF8563", package: "MadDrivers")
             ]),
-        .testTarget(
-            name: "BlinkUsingRTCTests",
-            dependencies: ["BlinkUsingRTC"]),
     ]
 )
 ```
@@ -304,6 +311,13 @@ let package = Package(
 In this project, you'll set an alarm on the RTC.
 
 PCF8563 provides built-in alarm and timer functions that can be set to trigger at a specific time, but the driver doesn't provide the related functions. Despite this, you can also implement alarms on your own in your code. You can use the current time provided by the RTC and compare it to the time at which you want the alarm to trigger.
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/R9Ua3NBj-fQ?si=VR2iI3SKLEzOJWvs'
+    controls={true}
+  />
+</div>
 
 **Project overview**
 
@@ -326,7 +340,7 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'Alarm.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -341,72 +355,68 @@ import SwiftIO
 import MadBoard
 import PCF8563
 
-@main
-public struct Alarm {
-    public static func main() {
-        let i2c = I2C(Id.I2C0)
-        let rtc = PCF8563(i2c)
 
-        let led = DigitalOut(Id.D18)
-        let buzzer = PWMOut(Id.PWM5A)
+let i2c = I2C(Id.I2C0)
+let rtc = PCF8563(i2c)
 
-        // Stop the alarm after it goes off.
-        let stopButton = DigitalIn(Id.D1)
+let led = DigitalOut(Id.D18)
+let buzzer = PWMOut(Id.PWM5A)
 
-        // Set the alarm time.
-        let alarm = AlarmTime(hour: 10, minute: 40)
-        // Calculate the time when the alarm will stop sounding.
-        let stopAlarm = getStopAlarm(alarm, after: 1)
-        var isAlarmed = false
+// Stop the alarm after it goes off.
+let stopButton = DigitalIn(Id.D1)
 
-        while true {
-            let time = rtc.readTime()
+// Set the alarm time.
+let alarm = AlarmTime(hour: 10, minute: 40)
+// Calculate the time when the alarm will stop sounding.
+let stopAlarm = getStopAlarm(alarm, after: 1)
+var isAlarmed = false
 
-            if isAlarmed {
-                // After the alarm clock goes off, 
-                // if it's time to stop sounding or you press the stop button,
-                // stop the sound and turn off the LED.
-                if stopAlarm.isTimeUp(time) || stopButton.read() {
-                    print("Current time: \(time)")
-                    led.low()
-                    buzzer.suspend()
-                    isAlarmed = false
-                }
-            } else {
-                // If the time comes, start the sound and turn on the LED.
-                if alarm.isTimeUp(time) {
-                    print("Current time: \(time)")
-                    led.high()
-                    buzzer.set(frequency: 500, dutycycle: 0.5)
-                    isAlarmed = true
-                }
-            }
+while true {
+    let time = rtc.readTime()
 
-            sleep(ms: 10)
+    if isAlarmed {
+        // After the alarm clock goes off, 
+        // if it's time to stop sounding or you press the stop button,
+        // stop the sound and turn off the LED.
+        if stopAlarm.isTimeUp(time) || stopButton.read() {
+            print("Current time: \(time)")
+            led.low()
+            buzzer.suspend()
+            isAlarmed = false
         }
-
-        // Calculate the time for alarm to stop sounding after specified minutes.
-        func getStopAlarm(_ alarm: AlarmTime, after min: Int) -> AlarmTime {
-            var stopMinute = alarm.minute + min
-            var stopHour = alarm.hour
-
-            if stopMinute >= 60 {
-                stopMinute -= 60
-                stopHour = stopHour == 23 ? 0 : stopHour + 1
-            }
-
-            return AlarmTime(hour: stopHour, minute: stopMinute)
+    } else {
+        // If the time comes, start the sound and turn on the LED.
+        if alarm.isTimeUp(time) {
+            print("Current time: \(time)")
+            led.high()
+            buzzer.set(frequency: 500, dutycycle: 0.5)
+            isAlarmed = true
         }
+    }
 
-        struct AlarmTime {
-            let hour: Int
-            let minute: Int
+    sleep(ms: 10)
+}
 
-            // Check if the set time comes.
-            func isTimeUp(_ time: PCF8563.Time) -> Bool {
-                return time.hour == hour && time.minute == minute && time.second == 0
-            }
-        }
+// Calculate the time for alarm to stop sounding after specified minutes.
+func getStopAlarm(_ alarm: AlarmTime, after min: Int) -> AlarmTime {
+    var stopMinute = alarm.minute + min
+    var stopHour = alarm.hour
+
+    if stopMinute >= 60 {
+        stopMinute -= 60
+        stopHour = stopHour == 23 ? 0 : stopHour + 1
+    }
+
+    return AlarmTime(hour: stopHour, minute: stopMinute)
+}
+
+struct AlarmTime {
+    let hour: Int
+    let minute: Int
+
+    // Check if the set time comes.
+    func isTimeUp(_ time: PCF8563.Time) -> Bool {
+        return time.hour == hour && time.minute == minute && time.second == 0
     }
 }
 ```
@@ -416,33 +426,34 @@ public struct Alarm {
 
 
 ```swift showLineNumbers
+// swift-tools-version: 5.9
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "Alarm",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "Alarm",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
-                .product(name: "PCF8563", package: "MadDrivers")
+                .product(name: "PCF8563", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "AlarmTests",
-            dependencies: ["Alarm"]),
     ]
 )
 ```
 </TabItem>
 </Tabs>
+
