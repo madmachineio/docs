@@ -60,14 +60,17 @@ import ST7789
 @main
 public struct Pong {
     public static func main() {
+        let speaker = I2S(Id.I2S0, rate: 44_100)
+
         // Initialize the SPI pin.
         let spi = SPI(Id.SPI0, speed: 30_000_000)
         
         // Initialize the pins used for the screen.
-        let cs = DigitalOut(Id.D5)
-        let dc = DigitalOut(Id.D4)
-        let rst = DigitalOut(Id.D3)
         let bl = DigitalOut(Id.D2)
+        let rst = DigitalOut(Id.D12)
+        let dc = DigitalOut(Id.D13)
+        let cs = DigitalOut(Id.D5)
+
         // Initialize the LCD using the pins above. 
         // Rotate the screen to keep the original at the upper left.
         let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
@@ -79,7 +82,7 @@ public struct Pong {
         let resetButton = DigitalIn(Id.D1)
 
         // Start the game.
-        var game = PongGame(leftPot: leftPot, rightPot: rightPot, screen: screen)
+        var game = PongGame(leftPot: leftPot, rightPot: rightPot, screen: screen, speaker: speaker)
 
         var lastButtonState = false
 
@@ -121,24 +124,33 @@ struct PongGame {
     let leftPot: AnalogIn
     let rightPot: AnalogIn
 
+    let speaker: I2S
+
     var ball: Ball
 
     let screen: ST7789
 
     let window: Window
 
+    var hitBallSound: [UInt8] = []
+    var hitWallSound: [UInt8] = []
+    var scoreSound: [UInt8] = []
+
     var startTime: UInt = 0
 
-    let padding = (Constants.screenWidth - Constants.windowWidth) / 2
+    let padding: Int
 
-    init(leftPot: AnalogIn, rightPot: AnalogIn, screen: ST7789) {
+    init(leftPot: AnalogIn, rightPot: AnalogIn, screen: ST7789, speaker: I2S) {
         self.leftPot = leftPot
         self.rightPot = rightPot
         self.screen = screen
+        self.speaker = speaker
+
+        padding = (screen.width - Constants.windowWidth) / 2
 
         window = Window(
             x: padding,
-            y: Constants.screenHeight - Constants.windowHeight - padding,
+            y: screen.height - Constants.windowHeight - padding,
             width: Constants.windowWidth,
             height: Constants.windowHeight,
             screen: screen
@@ -167,6 +179,10 @@ struct PongGame {
             color: Constants.rightPaddleColor,
             screen: screen
         )
+
+        hitBallSound = readSoundData(from: "/SD:/Resources/Sounds/hitball.wav")
+        hitWallSound = readSoundData(from: "/SD:/Resources/Sounds/hitwall.wav")
+        scoreSound = readSoundData(from: "/SD:/Resources/Sounds/score.wav")
 
         leftPlayer.y = getPaddleY(leftPot)
         rightPlayer.y = getPaddleY(rightPot)
@@ -204,15 +220,22 @@ struct PongGame {
                 let lastPos = (ball.x, ball.y)
 
                 // Update the position of the ball.
-                ball.updatePos(window: window)
+                ball.nextPos()
+                if ball.hitWall(window: window) {
+                    ball.updateAfterHitWall(window: window)
+                    speaker.write(hitWallSound)
+                }
+                print(ball.x, ball.y)
 
                 // If the ball hits left/right paddle, change the ball's
                 // direction to bounce it in an opposite direction.
                 // The speed of the ball will then increase a bit.
                 if leftPlayer.hit(ball) {
                     ball.bounce(leftPlayer)
+                    speaker.write(hitBallSound)
                 } else if rightPlayer.hit(ball) {
                     ball.bounce(rightPlayer)
+                    speaker.write(hitBallSound)
                 }
 
                 // If the ball hits the wall which means the paddle misses the ball,
@@ -224,6 +247,7 @@ struct PongGame {
                     rightPlayer.score += 1
                     updateScoreBoard(left: false)
                     startTime = getClockCycle()
+                    speaker.write(scoreSound)
 
                     // Ensure the target score isn't reached.
                     if rightPlayer.score < Constants.targetScore {
@@ -243,6 +267,7 @@ struct PongGame {
                     leftPlayer.score += 1
                     updateScoreBoard(left: true)
                     startTime = getClockCycle()
+                    speaker.write(scoreSound)
 
                     if leftPlayer.score < Constants.targetScore {
                         while cyclesToNanoseconds(start: startTime, stop: getClockCycle()) / 1000_000 < Constants.interval {
@@ -263,6 +288,23 @@ struct PongGame {
         }
     }
 
+    func readSoundData(from path: String) -> [UInt8] {
+        let headerSize = 0x2C
+
+        let file = FileDescriptor.open(path)
+        defer { file.close() }
+
+        file.seek(offset: 0, from: FileDescriptor.SeekOrigin.end)
+        let size = file.tell() - headerSize
+
+        var buffer = [UInt8](repeating: 0, count: size)
+        buffer.withUnsafeMutableBytes { rawBuffer in 
+            _ = file.read(fromAbsoluteOffest: headerSize, into: rawBuffer, count: size)
+        }
+
+        return buffer
+    }
+
     // Update the score board after gaining a point.
     func updateScoreBoard(left: Bool) {
         var x: Int
@@ -272,7 +314,7 @@ struct PongGame {
             x = Constants.scoreSize * (leftPlayer.score - 1) + padding
             color = leftPlayer.color
         } else {
-            x = Constants.screenWidth - Constants.scoreSize * rightPlayer.score - padding
+            x = screen.width - Constants.scoreSize * rightPlayer.score - padding
             color = rightPlayer.color
         }
 
@@ -299,14 +341,14 @@ struct PongGame {
             )
         } else {
             screen.drawEmptyRect(
-            at: (Constants.screenWidth - padding - totalWidth, padding),
+            at: (screen.width - padding - totalWidth, padding),
             width: totalWidth,
             height: Constants.scoreSize,
             stroke: 1, color: gray)
 
             let width = rightPlayer.score * Constants.scoreSize
             screen.drawRect(
-                at: (Constants.screenWidth - padding - width, padding),
+                at: (screen.width - padding - width, padding),
                 width: width,
                 height: Constants.scoreSize,
                 color: gray
@@ -327,7 +369,7 @@ struct PongGame {
             width: width, height: Constants.scoreSize,
             stroke: 1, color: Constants.leftPaddleColor)
         screen.drawEmptyRect(
-            at: (Constants.screenWidth - padding - width, padding),
+            at: (screen.width - padding - width, padding),
             width: width, height: Constants.scoreSize,
             stroke: 1, color: Constants.rightPaddleColor)
 
@@ -340,10 +382,10 @@ struct PongGame {
     }
 }
 
+
+
 // Store constants used in the game and you only need to change them in one place.
 struct Constants {
-    static let screenWidth = 240
-    static let screenHeight = 240
     static let bgColor: UInt16 = 0xFFFF
 
     static let paddleWidth = 8
@@ -408,6 +450,7 @@ struct Window {
     }
 }
 
+
 struct Ball {
     var x: Int
     var y: Int
@@ -450,18 +493,18 @@ struct Ball {
     }
 
     // Update ball's position.
-    mutating func updatePos(window: Window) {
+    mutating func nextPos() {
         x += xSpeed
         y += ySpeed
+    }
 
-        // Check if the ball hits wall.
-        if y < window.y {
-            y = window.y
-            ySpeed.negate()
-        } else if y > window.y1 - size {
-            y = window.y1 - size
-            ySpeed.negate()
-        }
+    func hitWall(window: Window) -> Bool {
+        return y < window.y || y > window.y1 - size
+    }
+
+    mutating func updateAfterHitWall(window: Window) {
+        ySpeed.negate()
+        y = y < window.y ? window.y : window.y1 - size
     }
 
     // After the ball hits the paddle, update its moving direction to bounce it.
@@ -526,6 +569,7 @@ struct Paddle {
         return (left && (ball.x < window.x)) || (!left && (ball.x > window.x1 - width))
     }
 }
+
 
 extension ST7789 {
     func drawRect(at point: Point, width: Int, height: Int, color: UInt16) {
