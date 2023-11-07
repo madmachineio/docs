@@ -319,7 +319,7 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'LCD.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -333,90 +333,86 @@ import MadBoard
 // Import the library to configure the LCD and write pixels on it.
 import ST7789
 
-@main
-public struct LCD {
-    public static func main() {
-        // Initialize the SPI pin and the digital pins for the LCD.
-        let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D5)
-        let dc = DigitalOut(Id.D4)
-        let rst = DigitalOut(Id.D3)
-        let bl = DigitalOut(Id.D2)
 
-        // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
-        let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+// Initialize the SPI pin and the digital pins for the LCD.
+let bl = DigitalOut(Id.D2)
+let rst = DigitalOut(Id.D12)
+let dc = DigitalOut(Id.D13)
+let cs = DigitalOut(Id.D5)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 
-        // Store some color values for easier reference later.
-        let black: UInt16 = 0x0000
-        let red: UInt16 = 0xF800
-        let green: UInt16 = 0x07E0
-        let blue: UInt16 = 0x001F
-        let white: UInt16 = 0xFFFF
+// Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        // Fill the whole screen with red, green, blue, white, and black in turns. 
-        // The color changes every second. 
-        screen.clearScreen(red)
+// Store some color values for easier reference later.
+let black = UInt16(0x0000).byteSwapped
+let red   = UInt16(0xF800).byteSwapped
+let green = UInt16(0x07E0).byteSwapped
+let blue = UInt16(0x001F).byteSwapped
+let white = UInt16(0xFFFF).byteSwapped
+
+// Fill the whole screen with red, green, blue, white, and black in turns. 
+// The color changes every second. 
+screen.clearScreen(red)
+sleep(ms: 1000)
+
+screen.clearScreen(green)
+sleep(ms: 1000)
+
+screen.clearScreen(blue)
+sleep(ms: 1000)
+
+screen.clearScreen(white)
+sleep(ms: 1000)
+
+screen.clearScreen(black)
+sleep(ms: 1000)
+
+// Draw red horizontal lines every 10 rows, so the lines will be on rows 0, 10, 20, ..., 230.
+for y in stride(from: 0, to: screen.height, by: 10) {
+    for x in 0..<screen.width {
+        screen.writePixel(x: x, y: y, color: red)
+    }
+}
+sleep(ms: 1000)
+
+// Draw blue vertical lines every 10 columns, so the lines will be on columns 0, 10, 20, ..., 230.
+for x in stride(from: 0, to: screen.width, by: 10) {
+    for y in 0..<screen.height {
+        screen.writePixel(x: x, y: y, color: blue)
+    }
+}
+sleep(ms: 1000)
+
+// Paint the screen black to erase all stuff on it.
+screen.clearScreen(black)
+sleep(ms: 1000)
+
+// Store the colors of four squares for later use.
+let colors = [red, green, blue, white]
+
+// Set the size of the square.
+let width = 80
+
+// First, draw a 80x80 red square from the origin. 
+// After one second, draw a green one from the centre of the red square.
+// The blue and white ones are similar.
+while true {
+    var x = 0, y = 0
+
+    for color in colors {
+        fillSquare(x: x, y: y, width: width, color: color)
+        x += width / 2
+        y += width / 2
         sleep(ms: 1000)
+    }
+}
 
-        screen.clearScreen(green)
-        sleep(ms: 1000)
-
-        screen.clearScreen(blue)
-        sleep(ms: 1000)
-
-        screen.clearScreen(white)
-        sleep(ms: 1000)
-
-        screen.clearScreen(black)
-        sleep(ms: 1000)
-
-        // Draw red horizontal lines every 10 rows, so the lines will be on rows 0, 10, 20, ..., 230.
-        for y in stride(from: 0, to: screen.height, by: 10) {
-            for x in 0..<screen.width {
-                screen.writePixel(x: x, y: y, color: red)
-            }
-        }
-        sleep(ms: 1000)
-
-        // Draw blue vertical lines every 10 columns, so the lines will be on columns 0, 10, 20, ..., 230.
-        for x in stride(from: 0, to: screen.width, by: 10) {
-            for y in 0..<screen.height {
-                screen.writePixel(x: x, y: y, color: blue)
-            }
-        }
-        sleep(ms: 1000)
-
-        // Paint the screen black to erase all stuff on it.
-        screen.clearScreen(black)
-        sleep(ms: 1000)
-
-        // Store the colors of four squares for later use.
-        let colors = [red, green, blue, white]
-
-        // Set the size of the square.
-        let width = 80
-
-        // First, draw a 80x80 red square from the origin. 
-        // After one second, draw a green one from the centre of the red square.
-        // The blue and white ones are similar.
-        while true {
-            var x = 0, y = 0
-
-            for color in colors {
-                fillSquare(x: x, y: y, width: width, color: color)
-                x += width / 2
-                y += width / 2
-                sleep(ms: 1000)
-            }
-        }
-
-        // This function allows you to draw a square on the LCD from the point (x,y).
-        func fillSquare(x: Int, y: Int, width: Int, color: UInt16) {
-            for px in y..<(y + width) {
-                for py in x..<(x + width) {
-                    screen.writePixel(x: px, y: py, color: color)
-                }
-            }
+// This function allows you to draw a square on the LCD from the point (x,y).
+func fillSquare(x: Int, y: Int, width: Int, color: UInt16) {
+    for px in y..<(y + width) {
+        for py in x..<(x + width) {
+            screen.writePixel(x: px, y: py, color: color)
         }
     }
 }
@@ -425,33 +421,31 @@ public struct LCD {
 <TabItem value="package">
 
 ```swift showLineNumbers
-// swift-tools-version:5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "LCD",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "LCD",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
-                .product(name: "ST7789", package: "MadDrivers")
+                .product(name: "ST7789", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "LCDTests",
-            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -556,7 +550,7 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'Rainbow.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -564,91 +558,87 @@ You can download the project source code [here](https://github.com/madmachineio/
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Fill the screen with rainbow colors.
+
 import SwiftIO
 import MadBoard
 import ST7789
 
-@main
-public struct Rainbow {
-    public static func main() {
-        // Initialize the SPI pin and the digital pins for the LCD.
-        let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D5)
-        let dc = DigitalOut(Id.D4)
-        let rst = DigitalOut(Id.D3)
-        let bl = DigitalOut(Id.D2)
 
-        // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
-        let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+// Initialize the SPI pin and the digital pins for the LCD.
+let bl = DigitalOut(Id.D2)
+let rst = DigitalOut(Id.D12)
+let dc = DigitalOut(Id.D13)
+let cs = DigitalOut(Id.D5)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 
-        let red: UInt32 = 0xFF0000
-        let orange: UInt32 = 0xFF7F00
-        let yellow: UInt32 = 0xFFFF00
-        let green: UInt32 = 0x00FF00
-        let blue: UInt32 = 0x0000FF
-        let indigo: UInt32 = 0x4B0082
-        let violet: UInt32 = 0x9400D3
-        let colors888 = [red, orange, yellow, green, blue, indigo, violet]
-        // Get 16bit color data.
-        let colors565: [UInt16] = colors888.map { getRGB565LE($0) }
-        
-        // The width for each color bar.
-        let width = screen.width / colors565.count
+// Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        while true {
-            // Use 7 colors in order to draw rectangles on display.
-            for i in colors565.indices {
-                for y in 0..<screen.height {
-                    for x in (width*i)..<(width*(i+1)) {
-                        screen.writePixel(x: x, y: y, color: colors565[i])
-                    }
-                }
+let red: UInt32 = 0xFF0000
+let orange: UInt32 = 0xFF7F00
+let yellow: UInt32 = 0xFFFF00
+let green: UInt32 = 0x00FF00
+let blue: UInt32 = 0x0000FF
+let indigo: UInt32 = 0x4B0082
+let violet: UInt32 = 0x9400D3
+let colors888 = [red, orange, yellow, green, blue, indigo, violet]
+// Get 16bit color data.
+let colors565: [UInt16] = colors888.map { getRGB565BE($0) }
+
+// The width for each color bar.
+let width = screen.width / colors565.count
+
+while true {
+    // Use 7 colors in order to draw rectangles on display.
+    for i in colors565.indices {
+        for y in 0..<screen.height {
+            for x in (width*i)..<(width*(i+1)) {
+                screen.writePixel(x: x, y: y, color: colors565[i])
             }
-
-            sleep(ms: 1000)
-            // Fill the display with black.
-            screen.clearScreen(0)
-        }
-
-        // The screen needs RGB565 color data, so change color data from UInt32 to UInt16.
-        // Besides, the board uses little endian format, so the bytes are swapped.
-        func getRGB565LE(_ color: UInt32) -> UInt16 {
-            return UInt16(((color & 0xF80000) >> 8) | ((color & 0xFC00) >> 5) | ((color & 0xF8) >> 3)).byteSwapped
         }
     }
+
+    sleep(ms: 1000)
+    // Fill the display with black.
+    screen.clearScreen(0)
+}
+
+// The screen needs RGB565 color data, so change color data from UInt32 to UInt16.
+// Besides, the board uses little endian format, so the bytes are swapped.
+func getRGB565BE(_ color: UInt32) -> UInt16 {
+    return UInt16(((color & 0xF80000) >> 8) | ((color & 0xFC00) >> 5) | ((color & 0xF8) >> 3)).byteSwapped
 }
 ```
 </TabItem>
 <TabItem value="package">
 
 ```swift showLineNumbers
-// swift-tools-version:5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "Rainbow",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "LCD",
+            name: "Rainbow",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
-                .product(name: "ST7789", package: "MadDrivers")
+                .product(name: "ST7789", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "LCDTests",
-            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -679,7 +669,7 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'ScrollEffect.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -687,95 +677,90 @@ You can download the project source code [here](https://github.com/madmachineio/
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Create a scroll effect to update the display with rainbow colors in turn.
 import SwiftIO
 import MadBoard
 import ST7789
 
-@main
-public struct ScrollEffect {
-    public static func main() {
-        // Initialize the SPI pin and the digital pins for the LCD.
-        let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D5)
-        let dc = DigitalOut(Id.D4)
-        let rst = DigitalOut(Id.D3)
-        let bl = DigitalOut(Id.D2)
 
-        // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
-        let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+// Initialize the SPI pin and the digital pins for the LCD.
+let bl = DigitalOut(Id.D2)
+let rst = DigitalOut(Id.D12)
+let dc = DigitalOut(Id.D13)
+let cs = DigitalOut(Id.D5)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 
-        let red: UInt32 = 0xFF0000
-        let orange: UInt32 = 0xFF7F00
-        let yellow: UInt32 = 0xFFFF00
-        let green: UInt32 = 0x00FF00
-        let blue: UInt32 = 0x0000FF
-        let indigo: UInt32 = 0x4B0082
-        let violet: UInt32 = 0x9400D3
-        let colors888 = [red, orange, yellow, green, blue, indigo, violet]
-        // Get 16bit color data.
-        let colors565: [UInt16] = colors888.map { getRGB565LE($0) }
+// Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        let scrollStep = 5
-        var buffer = [UInt16](repeating: 0, count: scrollStep * screen.height)
+let red: UInt32 = 0xFF0000
+let orange: UInt32 = 0xFF7F00
+let yellow: UInt32 = 0xFFFF00
+let green: UInt32 = 0x00FF00
+let blue: UInt32 = 0x0000FF
+let indigo: UInt32 = 0x4B0082
+let violet: UInt32 = 0x9400D3
+let colors888 = [red, orange, yellow, green, blue, indigo, violet]
+// Get 16bit color data.
+let colors565: [UInt16] = colors888.map { getRGB565BE($0) }
 
-        while true {
-            // Loop over the colors.
-            for color in colors565 {
-                // Move left by updating the area with new color.
-                for i in 1..<screen.width / scrollStep {
-                    // Replace all data with current color.
-                    buffer.indices.forEach { buffer[$0] = color }
+let scrollStep = 5
+var buffer = [UInt16](repeating: 0, count: scrollStep * screen.height)
 
-                    // Send the data to the screen using SPI to update the specified area.
-                    let x = screen.width - i * scrollStep - 1
-                    buffer.withUnsafeBytes {
-                        screen.writeBitmap(x: x, y: 0, width: scrollStep, height: screen.height, data: $0)
-                    }
+while true {
+    // Loop over the colors.
+    for color in colors565 {
+        // Move left by updating the area with new color.
+        for i in 1..<screen.width / scrollStep {
+            // Replace all data with current color.
+            buffer.indices.forEach { buffer[$0] = color }
 
-                    sleep(ms: 30)
-                }
+            // Send the data to the screen using SPI to update the specified area.
+            let x = screen.width - i * scrollStep - 1
+            buffer.withUnsafeBytes {
+                screen.writeBitmap(x: x, y: 0, width: scrollStep, height: screen.height, data: $0)
             }
-        }
 
-        // The screen needs RGB565 color data, so change color data from UInt32 to UInt16.
-        // Besides, the board uses little endian format, so the bytes are swapped.
-        func getRGB565LE(_ color: UInt32) -> UInt16 {
-            return UInt16(((color & 0xF80000) >> 8) | ((color & 0xFC00) >> 5) | ((color & 0xF8) >> 3)).byteSwapped
+            sleep(ms: 30)
         }
     }
+}
+
+// The screen needs RGB565 color data, so change color data from UInt32 to UInt16.
+// Besides, the board uses little endian format, so the bytes are swapped.
+func getRGB565BE(_ color: UInt32) -> UInt16 {
+    return UInt16(((color & 0xF80000) >> 8) | ((color & 0xFC00) >> 5) | ((color & 0xF8) >> 3)).byteSwapped
 }
 ```
 </TabItem>
 <TabItem value="package">
 
 ```swift showLineNumbers
-// swift-tools-version:5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "ScrollEffect",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "LCD",
+            name: "ScrollEffect",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
-                .product(name: "ST7789", package: "MadDrivers")
+                .product(name: "ST7789", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "LCDTests",
-            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -808,7 +793,7 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'AnalogVisualizer.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -816,66 +801,65 @@ You can download the project source code [here](https://github.com/madmachineio/
 <TabItem value="main">
 
 ```swift showLineNumbers
+// Visualize analog values on the screen.
+// The line height changes with the value from the potentiometer.
+
 import SwiftIO
 import MadBoard
 import ST7789
 
-@main
-public struct AnalogVisualizer {
-    public static func main() {
-        // Initialize the SPI pin and the digital pins for the LCD.
-        let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D5)
-        let dc = DigitalOut(Id.D4)
-        let rst = DigitalOut(Id.D3)
-        let bl = DigitalOut(Id.D2)
 
-        // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
-        let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
+// Initialize the SPI pin and the digital pins for the LCD.
+let bl = DigitalOut(Id.D2)
+let rst = DigitalOut(Id.D12)
+let dc = DigitalOut(Id.D13)
+let cs = DigitalOut(Id.D5)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
 
-        // Initialize the analog pin for the potentiometer.
-        let pot = AnalogIn(Id.A0)
+// Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        // The max line height.
-        let maxHeight = 200
+// Initialize the analog pin for the potentiometer.
+let pot = AnalogIn(Id.A0)
 
-        let white: UInt16 = 0xFFFF
-        let black: UInt16 = 0
+// The max line height drawn on the screen.
+let maxHeight = 200
 
-        // Store the previous heights to make a scrolling display.
-        var heightValues = [Int](repeating: 0, count: screen.width)
+let white: UInt16 = 0xFFFF
+let black: UInt16 = 0
 
-        while true {
-            // Read current analog value and map it to height.
-            let height = pot.readRawValue() * maxHeight / pot.maxRawValue
+// Store the previous heights to make a scrolling display.
+var heightValues = [Int](repeating: 0, count: screen.width)
 
-            // Update line heights for display.
-            heightValues.removeFirst()
-            heightValues.append(height)
+while true {
+    // Read current analog value and map it to height.
+    let height = pot.readRawValue() * maxHeight / pot.maxRawValue
 
-            // Iterate over the array to draw vertical lines with the given height.
-            for i in 0..<heightValues.count-1 {
-                let lastH = heightValues[i]
-                let currentH = heightValues[i+1]
+    // Update line heights for display.
+    heightValues.removeFirst()
+    heightValues.append(height)
 
-                // Compare the line heights and update the line.
-                if lastH > currentH {
-                    drawLine(x: i, y: screen.height - lastH, height: lastH - currentH, color: black)
-                } else if lastH < currentH {
-                    drawLine(x: i, y: screen.height - currentH, height: currentH - lastH, color: white)
-                }
-            }
+    // Iterate over the array to draw vertical lines with the given height.
+    for i in 0..<heightValues.count-1 {
+        let lastHeight = heightValues[i]
+        let currentHeight = heightValues[i+1]
 
-            sleep(ms: 100)
+        // Compare the line heights and update the line.
+        if lastHeight > currentHeight {
+            drawLine(x: i, y: screen.height - lastHeight, height: lastHeight - currentHeight, color: black)
+        } else if lastHeight < currentHeight {
+            drawLine(x: i, y: screen.height - currentHeight, height: currentHeight - lastHeight, color: white)
         }
+    }
 
-        // Draw a vertical line on the screen.
-        func drawLine(x: Int, y: Int, height: Int, color: UInt16) {
-            let buffer = [UInt16](repeating: color, count: height)
-            buffer.withUnsafeBytes {
-                screen.writeBitmap(x: x, y: y, width: 1, height: height, data: $0)
-            }
-        }
+    sleep(ms: 100)
+}
+
+// Draw a vertical line on the screen.
+func drawLine(x: Int, y: Int, height: Int, color: UInt16) {
+    let buffer = [UInt16](repeating: color, count: height)
+    buffer.withUnsafeBytes {
+        screen.writeBitmap(x: x, y: y, width: 1, height: height, data: $0)
     }
 }
 ```
@@ -883,33 +867,31 @@ public struct AnalogVisualizer {
 <TabItem value="package">
 
 ```swift showLineNumbers
-// swift-tools-version:5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "AnalogVisualizer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "LCD",
+            name: "AnalogVisualizer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
-                .product(name: "ST7789", package: "MadDrivers")
+                .product(name: "ST7789", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "LCDTests",
-            dependencies: ["LCD"]),
     ]
 )
 ```
@@ -943,7 +925,8 @@ You can download the project source code [here](https://github.com/madmachineio/
 <Tabs
   defaultValue="main"
   values={[
-    { label: 'AccelerationVisualizer.swift', value: 'main', },
+    { label: 'main.swift', value: 'main', },
+    { label: 'Bar.swift', value: 'bar', },
     { label: 'Package.swift', value: 'package', },
   ]
 }>
@@ -951,143 +934,147 @@ You can download the project source code [here](https://github.com/madmachineio/
 <TabItem value="main">
 
 ```swift showLineNumbers
-// Visualize the x, y, z accelerations in the range by moving the corresponding sliders.
+// Visualize the x, y , z accelerations in the range by moving the corresponding sliders.
 
 import SwiftIO
 import MadBoard
 import LIS3DH
 import ST7789
 
-@main
-public struct AccelerationVisualizer {
-    public static func main() {
-        // Initialize the SPI pin and the digital pins for the LCD.
-        let spi = SPI(Id.SPI0, speed: 30_000_000)
-        let cs = DigitalOut(Id.D5)
-        let dc = DigitalOut(Id.D4)
-        let rst = DigitalOut(Id.D3)
-        let bl = DigitalOut(Id.D2)
-        // Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
-        let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        // Initialize the accelerometer using I2C communication.
-        let i2c = I2C (Id.I2C0)
-        let accelerometer = LIS3DH(i2c)
+// Initialize the SPI pin and the digital pins for the LCD.
+let bl = DigitalOut(Id.D2)
+let rst = DigitalOut(Id.D12)
+let dc = DigitalOut(Id.D13)
+let cs = DigitalOut(Id.D5)
+let spi = SPI(Id.SPI0, speed: 30_000_000)
+// Initialize the LCD using the pins above. Rotate the screen to keep the original at the upper left.
+let screen = ST7789(spi: spi, cs: cs, dc: dc, rst: rst, bl: bl, rotation: .angle90)
 
-        // 16-bit colors for acceleration bars.
-        let red: UInt16 = 0x07E0
-        let green: UInt16 = 0x001F
-        let blue: UInt16 = 0xF800
+// Initialize the accelerometer using I2C communication.
+let i2c = I2C (Id.I2C0)
+let accelerometer = LIS3DH(i2c)
 
-        // Get the acceleration range of the sensor.
-        let gRange: Int
-        switch accelerometer.getRange() {
-        case .g2: gRange = 4
-        case .g4: gRange = 8
-        case .g8: gRange = 16
-        case .g16: gRange = 32
-        }
+// 16-bit colors for acceleration bars.
+let red: UInt16 = 0x07E0
+let green: UInt16 = 0x001F
+let blue: UInt16 = 0xF800
 
-        // Draw the bars of accelerations on x, y, z-axis.
-        let barWidth = 200
-        let barHeight = 40
-        let spacer = 20
-        let startY = (screen.height - barHeight * 3 - spacer * 2) / 2
+// Get the acceleration range of the sensor.
+let gRange: Int
+switch accelerometer.getRange() {
+case .g2: gRange = 4
+case .g4: gRange = 8
+case .g8: gRange = 16
+case .g16: gRange = 32
+}
 
-        var xBar = Bar(y: startY, width: barWidth, height: barHeight, color: red, screen: screen)
-        var yBar = Bar(y: startY + barHeight + spacer, width: barWidth, height: barHeight, color: green, screen: screen)
-        var zBar = Bar(y: startY + (barHeight + spacer) * 2, width: barWidth, height: barHeight, color: blue, screen: screen)
+// Draw the bars of accelerations on x, y, z-axis.
+let barWidth = 200
+let barHeight = 40
+let spacer = 20
+let startY = (screen.height - barHeight * 3 - spacer * 2) / 2
 
-        while true {
-            // Update the indicators' position in each bar according to the current accelerations.
-            let values = accelerometer.readXYZ()
-            xBar.update(values.x, gRange: gRange)
-            yBar.update(values.y, gRange: gRange)
-            zBar.update(values.z, gRange: gRange)
-            sleep(ms: 10)
+var xBar = Bar(y: startY, width: barWidth, height: barHeight, color: red, screen: screen)
+var yBar = Bar(y: startY + barHeight + spacer, width: barWidth, height: barHeight, color: green, screen: screen)
+var zBar = Bar(y: startY + (barHeight + spacer) * 2, width: barWidth, height: barHeight, color: blue, screen: screen)
+
+while true {
+    // Update the indicators' position in each bar according to the current accelerations.
+    let values = accelerometer.readXYZ()
+    xBar.update(values.x, gRange: gRange)
+    yBar.update(values.y, gRange: gRange)
+    zBar.update(values.z, gRange: gRange)
+    sleep(ms: 10)
+}
+```
+</TabItem>
+
+<TabItem value="bar">
+
+```swift showLineNumbers
+import ST7789
+
+struct Bar {
+    let x: Int
+    let y: Int
+    let width: Int
+    let height: Int
+    let screen: ST7789
+    let color: UInt16
+
+    var indicatorPos: Int?
+    let indicatorColor: UInt16 = 0xFFFF
+
+    // Draw a bar on the screen.
+    init(y: Int, width: Int, height: Int, color: UInt16, screen: ST7789) {
+        self.y = y
+        self.width = width
+        self.height = height
+        self.color = color
+        self.screen = screen
+        x = (screen.width - width) / 2
+
+        let data = [UInt16](repeating: color, count: width * height)
+        data.withUnsafeBytes {
+            screen.writeBitmap(x: x, y: y, width: width, height: height, data: $0)
         }
     }
 
-    struct Bar {
-        let x: Int
-        let y: Int
-        let width: Int
-        let height: Int
-        let screen: ST7789
-        let color: UInt16
+    // Update indicator's position in the bar with the latest value.
+    mutating func update(_ accel: Float, gRange: Int) {
+        let currentPos = x + Int((accel + 2) * Float((width - 1) / gRange))
 
-        var indicatorPos: Int?
-        let indicatorColor: UInt16 = 0xFFFF
-
-        // Draw a bar on the screen.
-        init(y: Int, width: Int, height: Int, color: UInt16, screen: ST7789) {
-            self.y = y
-            self.width = width
-            self.height = height
-            self.color = color
-            self.screen = screen
-            x = (screen.width - width) / 2
-
-            let data = [UInt16](repeating: color, count: width * height)
-            data.withUnsafeBytes {
-                screen.writeBitmap(x: x, y: y, width: width, height: height, data: $0)
+        if indicatorPos != currentPos {
+            // Draw the indicator at its current position.
+            for py in y..<y+height {
+                screen.writePixel(x: currentPos, y: py, color: indicatorColor)
             }
-        }
 
-        // Update the indicator's position in the bar with the latest value.
-        mutating func update(_ accel: Float, gRange: Int) {
-            let currentPos = x + Int((accel + 2) * Float((width - 1) / gRange))
-
-            if indicatorPos != currentPos {
-                // Draw the indicator at its current position.
+            if let indicatorPos {
+                // Remove the indicator from its previous position.
                 for py in y..<y+height {
-                    screen.writePixel(x: currentPos, y: py, color: indicatorColor)
+                    screen.writePixel(x: indicatorPos, y: py, color: color)
                 }
-
-                if let indicatorPos {
-                    // Remove the indicator from its previous position.
-                    for py in y..<y+height {
-                        screen.writePixel(x: indicatorPos, y: py, color: color)
-                    }
-                }
-
-                indicatorPos = currentPos
             }
+
+            indicatorPos = currentPos
         }
     }
 }
 ```
 </TabItem>
+
 <TabItem value="package">
 
 ```swift showLineNumbers
+// swift-tools-version: 5.9
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
     name: "AccelerationVisualizer",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        // highlight-next-line
         .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "AccelerationVisualizer",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
                 // highlight-next-line
                 .product(name: "LIS3DH", package: "MadDrivers"),
                 // highlight-next-line
-                .product(name: "ST7789", package: "MadDrivers")
+                .product(name: "ST7789", package: "MadDrivers"),
             ]),
-        .testTarget(
-            name: "AccelerationVisualizerTests",
-            dependencies: ["AccelerationVisualizer"]),
     ]
 )
 ```

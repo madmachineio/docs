@@ -263,36 +263,32 @@ import ReactPlayer from 'react-player/youtube';
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/10UART/SerialEcho).
 
-```swift title="SerialEcho.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Send message from computer to USB-Serial converter using serial monitor. 
 // Then send the message back using UART.
 import SwiftIO
 import MadBoard
 
-@main
-public struct SerialEcho {
-    public static func main() {
-        let uart = UART(Id.UART0)
 
-        var message = [UInt8](repeating: 0, count: 100)
+let uart = UART(Id.UART0)
 
-        while true {
-            // Check if there is available data in the UART buffer.
-            let count = uart.checkBufferReceived()
+var message = [UInt8](repeating: 0, count: 100)
 
-            if count > 0 {
-                for i in message.indices {
-                    message[i] = 0
-                }
-                // Read data from the buffer.
-                uart.read(into: &message, count: count)
-                // Send the message back. 
-                uart.write(Array(message[0..<count]))
-            }
-            
-            sleep(ms: 10)
+while true {
+    // Check if there is available data in the UART buffer.
+    let count = uart.checkBufferReceived()
+
+    if count > 0 {
+        for i in message.indices {
+            message[i] = 0
         }
+        // Read data from the buffer.
+        uart.read(into: &message, count: count)
+        // Send the message back. 
+        uart.write(Array(message[0..<count]))
     }
+    
+    sleep(ms: 10)
 }
 ```
 
@@ -350,45 +346,41 @@ Turn on/off the LED by sending commands from your computer.
 
 You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/10UART/SerialLEDSwitch).
 
-```swift title="SerialLEDSwitch.swift" showLineNumbers
+```swift title="main.swift" showLineNumbers
 // Connect the USB-Serial converter module to your computer 
-// and choose the port in the serial monitor.
+// and choose the port in serial monitor.
 // Send message (1/0) from computer to turn on/off the LED.
 
 import SwiftIO
 import MadBoard
 
-@main
-public struct SerialLEDSwitch {
-    public static func main() {
-        let uart = UART(Id.UART0)
-        let led = DigitalOut(Id.D18)
 
-        while true {
-            // Check if there is any message from computer.
-            let count = uart.checkBufferReceived()
-            
-            if count > 0 {
-                // Read data from UART buffer.
-                var buffer = [UInt8](repeating: 0, count: count)
-                uart.read(into: &buffer)
-                
-                // Decode the data since the text from computer is sent in UTF8 format.
-                let command = String(decoding: buffer, as: UTF8.self)
-                // Connect the port on your Micro in serial monitor to see printed message
-                print(command)
-                
-                // Set digital output according to the command from computer.
-                switch command  {
-                case "0": led.low()
-                case "1": led.high()
-                default: break
-                }
-            }
-            
-            sleep(ms: 10)
+let uart = UART(Id.UART0)
+let led = DigitalOut(Id.D18)
+
+while true {
+    // Check if there is any message from computer.
+    let count = uart.checkBufferReceived()
+    
+    if count > 0 {
+        // Read data from UART buffer.
+        var buffer = [UInt8](repeating: 0, count: count)
+        uart.read(into: &buffer)
+        
+        // Decode the data since the text from computer is sent in UTF8 format.
+        let command = String(decoding: buffer, as: UTF8.self)
+        // Connect the port on your micro board in serial monitor to see printed message
+        print(command)
+        
+        // Set digital output according to the command from computer.
+        switch command  {
+        case "0": led.low()
+        case "1": led.high()
+        default: break
         }
     }
+    
+    sleep(ms: 10)
 }
 ```
 
@@ -440,39 +432,40 @@ import TabItem from '@theme/TabItem';
 <TabItem value="Board1">
 
 ```swift showLineNumbers
-// This code is downloaded to the board connected to a button.
+// This code is downloaded to board connected to a button.
 // Detect if the button is pressed/released and send message to another board via UART bus.
 // Connect UART0 (RX/TX) of this board to the UART0 (TX/RX) of the other board.
 
 import SwiftIO
 import MadBoard
 
-@main
-public struct Button {
-    public static func main() {
-        let uart = UART(Id.UART0)
-        let button = DigitalIn(Id.D1)
 
-        var buttonPressed = false
+let uart = UART(Id.UART0)
 
-        while true {
-            let pressingButton = button.read()
+#if SWIFTIOMICRO
+let button = DigitalIn(Id.DL)
+#else
+let button = DigitalIn(Id.D0)
+#endif
 
-            // If button is pressed, send message to turn on LED connected to another board.
-            if pressingButton && !buttonPressed {
-                uart.write("on")
-                buttonPressed = true
-            }
+var buttonPressed = false
 
-            // If button is released, send message to turn off LED connected to another board.
-            if buttonPressed && !pressingButton {
-                uart.write("off")
-                buttonPressed = false
-            }
+while true {
+    let pressingButton = button.read()
 
-            sleep(ms: 5)
-        }
+    // If button is pressed, send message to turn on LED connected to another board.
+    if pressingButton && !buttonPressed {
+        uart.write("on")
+        buttonPressed = true
     }
+
+    // If button is released, send message to turn off LED connected to another board.
+    if buttonPressed && !pressingButton {
+        uart.write("off")
+        buttonPressed = false
+    }
+
+    sleep(ms: 5)
 }
 ```
 
@@ -480,51 +473,47 @@ public struct Button {
 <TabItem value="Board2">
 
 ```swift showLineNumbers
-// This code is downloaded to the board connected to an LED.
-// Wait for UART data from the other board to turn on/off the LED.
-// Connect the UART0 (RX/TX) of this board to the UART0 (TX/RX) of the other board.
+// This code is downloaded to board connected to an LED.
+// Wait UART data from other board to turn on/off LED.
+// Connect UART0 (RX/TX) of this board to the UART0 (TX/RX) of the other board.
 
 import SwiftIO
 import MadBoard
 
-@main
-public struct LED {
-    public static func main() {
-        let uart = UART(Id.UART0)
-        let led = DigitalOut(Id.D18)
 
-        var buffer: [UInt8] = []
+let uart = UART(Id.UART0)
+let led = DigitalOut(Id.BLUE)
 
-        while true {
-            // Receive all data from another board via UART bus.
-            while uart.checkBufferReceived() > 0 {
-                var byte: UInt8 = 0
-                uart.read(into: &byte)
-                buffer.append(byte)
-                sleep(ms: 1)
-            }
+var buffer: [UInt8] = []
 
-            // Match the message and change the LED state.
-            if buffer.count > 0 {
-                // The message from another board is sent in cString 
-                // which means the last data is 0, so you need to convert
-                // the data in buffer to string using the given encoding. 
-                let str = String(cString: buffer)
-                
-                buffer.removeAll()
+while true {
+    // Receive all data from another board via UART bus.
+    while uart.checkBufferReceived() > 0 {
+        var byte: UInt8 = 0
+        uart.read(into: &byte)
+        buffer.append(byte)
+        sleep(ms: 1)
+    }
 
-                switch str {
-                case "on": 
-                    led.high()
-                case "off": 
-                    led.low()
-                default: break
-                }
-            }
-            
-            sleep(ms: 10)
+    // Match the message and change the LED state.
+    if buffer.count > 0 {
+        // The message from another board is sent in cString 
+        // which means the last data is 0, so you need to convert
+        // the data in buffer to string using the given encoding. 
+        let command = String(cString: buffer)
+        
+        buffer.removeAll()
+
+        switch command {
+        case "on": 
+            led.high()
+        case "off": 
+            led.low()
+        default: break
         }
     }
+    
+    sleep(ms: 10)
 }
 ```
 
