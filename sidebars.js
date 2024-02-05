@@ -118,7 +118,7 @@ const sidebars = {
           },
           items: [
             'learn/advanced/uart',
-            
+            'learn/advanced/wifi',
           ],
         },
 
