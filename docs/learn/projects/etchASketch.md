@@ -85,7 +85,7 @@ public struct EtchASketch {
         func getPixel(_ pin: AnalogIn) -> Int {
             var sum: Float = 0
             for _ in 0..<15 {
-                let reading = pin.readPercent()
+                let reading = pin.readPercentage()
                 sum += reading
             }
             

@@ -52,7 +52,7 @@ public struct Mission8_Servo_Motor {
         let servo = PWMOut(Id.PWM4A)
 
         while true {
-            let value = a0.readPercent() // Read the analog value and return a value between 0.0 and 1.0.
+            let value = a0.readPercentage() // Read the analog value and return a value between 0.0 and 1.0.
             let pulse = Int(500 + 2000 * value) // Calculate the value to get the pulse duration.
             servo.set(period: 20000, pulse: pulse) // Set the servo position according to the scaled value.
 
@@ -105,7 +105,7 @@ let servo = PWMOut(Id.PWM4A)
 Initialize the analog pin A0 for the potentiometer and the PWM pin PWM4A for the servo.
 
 ```swift
-let value = a0.readPercent() 
+let value = a0.readPercentage() 
 let pulse = Int(500 + 2000 * value)
 servo.set(period: 20000, pulse: pulse)
 sleep(ms: 20)

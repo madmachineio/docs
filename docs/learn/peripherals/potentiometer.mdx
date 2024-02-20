@@ -142,7 +142,7 @@ The circuits above are simplified for your reference.
 | ------ | ----------- |
 | `init(_:)` | Initialize an analog pin. The only parameter is the pin id. |
 | `readVoltage()` | Read the voltage value on the pin. The return value is a float between 0 and 3.3. |
-| `readPercent()` | Read the input value and represent it as a percentage. The return value is between 0 and 1. |
+| `readPercentage()` | Read the input value and represent it as a percentage. The return value is between 0 and 1. |
 
 **Global function**
 
@@ -291,7 +291,7 @@ let buzzer = PWMOut(Id.PWM5A)
 // Then calculate the value into the frequency. 
 // Set the PWM with the frequency and a duty cycle.
 while true {
-    let potPercentage = pot.readPercent()
+    let potPercentage = pot.readPercentage()
     let frequency = 50 + Int(1000 * potPercentage)
     buzzer.set(frequency: frequency, dutycycle: 0.5)
     sleep(ms: 20)
@@ -302,9 +302,9 @@ while true {
 **Code analysis**
 
 ```swift
-let potPercentage = pot.readPercent()
+let potPercentage = pot.readPercentage()
 ```
-Here you use another method `readPercent()` to get the input value represented as a percentage.
+Here you use another method `readPercentage()` to get the input value represented as a percentage.
 
 ```swift
 let frequency = 50 + Int(1000 * potPercentage)
@@ -359,7 +359,7 @@ let led = PWMOut(Id.PWM4A)
 // The value is represented in percentage, while the duty cycle is also between 0 and 1, 
 // so you can directly use the reading value to set the PWM.
 while true {
-    let dutycycle = pot.readPercent()
+    let dutycycle = pot.readPercentage()
     led.setDutycycle(dutycycle)
 
     sleep(ms: 20)
@@ -411,7 +411,7 @@ while true {
 
     // Read value from the analog pin. 
     // It serves as duty cycle for PWM to set LED brightness.
-    led.setDutycycle(brightnessPot.readPercent())
+    led.setDutycycle(brightnessPot.readPercentage())
     sleep(ms: blinkTime)
 
     // After a specified time, suspend the output to turn off the LED.
@@ -468,10 +468,10 @@ while true {
     // Map the analog value from the range 0-1 to the range minIntensity-maxIntensity. 
     // It decides the max duty cycle for the PWM signal.
     // That's to say, it changes the maximum intensity of the LED.
-    let maxDutycycle = intensityPot.readPercent() * (maxIntensity - minIntensity) + minIntensity
+    let maxDutycycle = intensityPot.readPercentage() * (maxIntensity - minIntensity) + minIntensity
 
     // Read the analog value (0-1) from the pin A0 which serves as ratio for final duty cycle.
-    let dutycycleRatio = brightnessPot.readPercent()
+    let dutycycleRatio = brightnessPot.readPercentage()
 
     // Calculate the final duty cycle value (0-maxDutycycle).
     // Set the PWM output using the result.

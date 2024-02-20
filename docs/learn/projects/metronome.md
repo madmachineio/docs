@@ -102,12 +102,12 @@ public struct Metronome {
 
         // Get the initial beat.
         // It sets how many beats a measure has, from 2 to 12, based on the potentiometer reading.
-        var beatsConfig = calculateBeat(beatPot.readPercent())
+        var beatsConfig = calculateBeat(beatPot.readPercentage())
 
         // Get the initial bpm setting.
         // bpm descibes the beat number every minute.
         // reading 0: bpm 40; reading 1: reading 208
-        var bpm = calculateBPM(bpmPot.readPercent())
+        var bpm = calculateBPM(bpmPot.readPercentage())
 
         // The height of each bar on the screen. It is evenly divided by the number of beats.
         var height = 220 / beatsConfig
@@ -128,13 +128,13 @@ public struct Metronome {
 
         while true {
             // Get current bpm setting and update its value on the screen. 
-            bpm = calculateBPM(bpmPot.readPercent())
+            bpm = calculateBPM(bpmPot.readPercentage())
             bmpLabel.updateText("BMP: \(bpm)")
             // The duration for each beat in millisecond.
           let duration = 60000 / bpm
 
             // Read the current state of the potentiometer to know if the beat is changed.
-            let currentBeatsConfig = calculateBeat(beatPot.readPercent())
+            let currentBeatsConfig = calculateBeat(beatPot.readPercentage())
             // If it's changed, update the display.
             if currentBeatsConfig != beatsConfig {
                 beatsConfig = currentBeatsConfig

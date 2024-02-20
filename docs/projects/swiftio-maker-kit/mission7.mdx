@@ -52,7 +52,7 @@ public struct Mission7_DC_Motors {
 
         while true {
             // Read the input value and use it to set the duty cycle of pwm.
-            let value = a0.readPercent()
+            let value = a0.readPercentage()
             motor.setDutycycle(value) 
             sleep(ms: 50)
         }
@@ -98,7 +98,7 @@ let motor = PWMOut(Id.PWM2B)
 Initialize the analog pin A0 for the potentiometer and the PWM pin PWM2B for the motor.
 
 ```swift
-let value = a0.readPercent()
+let value = a0.readPercentage()
 motor.setDutycycle(value) 
 sleep(ms: 50)
 ```

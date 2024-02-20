@@ -49,7 +49,7 @@ public struct BrightnessControl {
         // Allow the LED brightness control all the time.
         while true {
             // Read the input voltage in percentage.
-            let value = sensor.readPercent()
+            let value = sensor.readPercentage()
             // Light the LED by setting the duty cycle.
             led.setDutycycle(value)
             // Keep the current LED state for 200 milliseconds.
@@ -63,7 +63,7 @@ public struct BrightnessControl {
 ## Code analysis
 
 ```swift
-let value = sensor.readPercent()
+let value = sensor.readPercentage()
 ```
 
 There are three available methods to get analog values in different forms. In this case, you will need `.readPercentage`. It will return a percentage representing the ratio between actual voltage and reference voltage (3.3V). The value can then be used as duty cycle to set the LED brightness.

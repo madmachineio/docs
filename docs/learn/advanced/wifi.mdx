@@ -5,17 +5,16 @@ description: Learn how to
 
 # Wi-Fi
 
-In this tutorial, you will explore Wi-Fi usage. ESP32 is widely used in all kinds of projects that requires Wi-Fi.
+Welcome to this tutorial where we delve into the world of Wi-Fi. It's undeniable that Wi-Fi has become an essential part of our daily lives. However, have you ever pondered the mechanics behind the seemingly simple act of entering a Wi-Fi password and gaining internet access on your phone or computer? Let's unravel this mystery together.
+
+The ESP32 is a versatile component widely employed in various projects that require Wi-Fi connectivity. We'll explore Wi-Fi utilizing the ESP32 as a Wi-Fi module.
 
 
 **Learning goals**
 
-* Get a rough idea of how Wi-Fi works.
-* Learn to get info from public servers using HTTP requests.
-
-
-
-
+* Gain a fundamental understanding of Wi-Fi functionality.
+* Master the process of connecting the ESP32 to your Wi-Fi network.
+* Learn how to exchange data with public servers through HTTP requests.
 
 
 ## 🔸Circuit - ESP32-C3
@@ -467,6 +466,137 @@ We'll utilize [Swift Extra JSON](https://github.com/swift-extras/swift-extras-js
 * The predined structs in `Weather.swift` conform to the **Decodable** protocol, enabling seamless decoding from an external representation, like JSON.
 * **Match JSON keys to corresponding properties** in the structs. If they don't match exactly, use the `CodingKeys` enum to provide custom mappings.
 * Use **decoder** to decode JSON data into the predefined `WeatherInfo` struct.
+
+### 3. Temperature data logger
+
+Let's delve into how HTTP POST request works using ThingSpeak as an example. [ThingSpeak](https://thingspeak.com/) is a versatile open-source Internet of Things (IoT) platform designed for collecting, storing, analyzing and visualizing data from IoT devices. 
+
+In this project, we'll focus on sending sensor readings to ThingSpeak via HTTP POST requests. By doing so, we'll be able to observe and analyze how the data changes over time.
+
+<img
+  src={require('./img/ThingSpeakChart.png').default}
+  alt="ThingSpeak Chart" width="960"
+/>
+
+**Project overview**
+
+1. Connect ESP32 to Wi-Fi.
+2. Read temperature and humidity from sensor.
+3. Send sensor data to ThingSpeak using HTTP POST requests.
+4. Monitor temperature and humidity trends on the ThingSpeak dashboard.
+
+
+**Example code**
+
+
+<Tabs
+  defaultValue="main"
+  values={[
+    { label: 'main.swift', value: 'main', },
+    { label: 'Package.swift', value: 'package', },
+  ]
+}>
+
+<TabItem value="main">
+
+```swift showLineNumbers
+import SwiftIO
+import MadBoard
+import ESP32ATClient
+import SHT3x
+
+let rst = DigitalOut(Id.D24, value: true)
+let uart = UART(Id.UART1, baudRate: 115200)
+let esp = ESP32ATClient(uart: uart, rst: rst)
+
+let i2c = I2C(Id.I2C0)
+let humiture = SHT3x(i2c)
+
+do {
+    // If reset failed, you might need to adjust the baudrate.
+    try esp.reset()
+    print("ESP32 status: \(esp.esp32Status)")
+
+    // Only in 'Station' or 'Station+SoftAP' mode can a connection to an AP be established.
+    var wifiMode = ESP32ATClient.WiFiMode.station
+    _ = try esp.setWiFiMode(wifiMode)
+
+    wifiMode = try esp.getWiFiMode()
+    print("ESP32 WiFi mode: \(wifiMode)")
+
+    // Fill the SSID and password below.
+    try esp.joinAP(ssid: "", password: "", timeout: 20000)
+    print("ESP32 WiFi status: \(esp.wifiStatus)")
+
+    let ipInfo = try esp.getStationIP()
+    print(ipInfo)
+} catch {
+    print("Error: \(error)")
+}
+
+while true {
+    sleep(ms: 30_000)
+    if esp.wifiStatus == .ready {
+        do {
+            // Read temperature and humidity values from the sensor.
+            let temp = humiture.readCelsius()
+            let humidity = humiture.readHumidity()
+            // Send the values to ThingSpeak using HTTP POST requests to visualize them.
+            _ = try esp.httpPost(url: "https://api.thingspeak.com/update?api_key=YourAPIKey&field1=\(temp)&field2=\(humidity)", headers: ["Content-Type: application/x-www-form-urlencoded"], timeout: 20000)
+        } catch {
+            print("Http POST Error: \(error)")
+        }
+    } else {
+        _ = try? esp.readLine(timeout: 1000)
+        print("WiFi status: \(esp.wifiStatus)")
+    }
+}
+```
+
+</TabItem>
+<TabItem value="package">
+
+```swift showLineNumbers
+// swift-tools-version: 5.9
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
+import PackageDescription
+
+let package = Package(
+    name: "ESP32Demo",
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
+        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .executableTarget(
+            name: "ESP32Demo",
+            dependencies: [
+                "SwiftIO",
+                "MadBoards",
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
+                .product(name: "ESP32ATClient", package: "MadDrivers"),
+                .product(name: "SHT3x", package: "MadDrivers"),
+            ]),
+    ]
+)
+```
+
+</TabItem>
+</Tabs>
+
+**Code analysis**
+
+```swift
+_ = try esp.httpPost(url: "https://api.thingspeak.com/update?api_key=YourAPIKey&field1=\(temp)&field2=\(humidity)", headers: ["Content-Type: application/x-www-form-urlencoded"], timeout: 20000)
+```
+Send temperature and humidity data to ThingSpeak using the provided API key. Ensure to replace `YourAPIKey` in the URL with your unique API key, generated upon [setting up a channel](https://www.mathworks.com/help/thingspeak/collect-data-in-a-new-channel.html) on ThingSpeak. 
+
+
 
 ## 🔸API
 
