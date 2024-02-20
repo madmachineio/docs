@@ -21,322 +21,6 @@ For those coming from the software programming world, you may be familiar with t
 * Blink LEDs using digital output.
 * Learn how to use a timer to control LED.
 
-## 🔸Background
-
-### What is digital signal?
-
-In electronics and telecommunication, electronic **signals carry data from one device to another** to send and receive all kinds of information. These signals are time-varying, meaning that the voltage or current changes over time in a specific pattern that carries information. **Digital and [analog](./potentiometer#what-is-an-analog-signal)** signals are two different types of electronic signals used to transmit and process information. 
-
-In this tutorial, you'll focus on digital signals. **Digital signals** typically take on two distinct voltage levels, which can represent binary **1 or 0** values. These values can be combined in various ways to represent more complex information, such as text, images, or sound.
-
-<img
-  src={require('./img/digitalSignal.png').default}
-  alt="Digital signal wave" width="480"
-/>
-
-Here are different expressions to represent two states:
-
-| Logic 1 | Logic 0 |
-|---------|------|
-| true | false | 
-| high | low |
-| 3.3V | 0V |
-
-
-:::info
-For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true...
-:::
-
-Digital signals are ideal for working with components that have discrete states, such as LEDs (on/off) and buttons (pressed/released).
-
-### Peripheral - GPIO
-
-The peripheral **GPIO** (general-purpose input/output) allows sending and receiving digital signals between MCUs and various devices. 
-
-**GPIO pins** can be configured as either **input or output pins using software**. 
-
-- When a GPIO pin is configured as an **output**, it can be set to either a high or low voltage level to control the state of an external device, such as turning an LED on or off. 
-- When a GPIO pin is configured as an [**input**](./button), it can read the voltage level of an external signal, either high or low.
-
-
-In this tutorial, you'll make a GPIO pin output digital signal to control the LED. For the LED module on your kit, when you apply a high signal, it will turn on, and if you apply a low signal, it will be off. 
-
-
-
-## 🔸New component
-
-### Diode
-
-The diode is a **polarized** component. It has a positive side (anode) and a negative side (cathode). After being connected in the circuit, **the current can only flow** in a single direction, **from anode to cathode**. If you connect it in an opposite direction, the current will not be allowed to pass through.
-
-<img
-  src={require('./img/diode.png').default}
-  alt="Diode" width="240"
-/>
-
-### LED
-
-LED (Light-emitting diode) is a type of diode that convert electrical energy into light. Only when you connect it in the right direction - **connect the anode to power and the cathode to ground** - is the current allowed to flow, lighting up the LED.
-
-<img
-  src={require('./img/LED.png').default}
-  alt="LED" width="180"
-/>
-
-
-<details>
-  <summary> How to identify the two legs of an LED? </summary>
-
-1. Typically the long leg is positive and the short leg is negative. 
-2. Alternatively, sometimes you will find a notch on the negative side.
-
-</details>
-
-The LED allows a **limited range of current**, usually no more than 20mA. So you should add a [resistor](#resistor) when connecting it to your circuit. Or the LED might burn out when driving too much current.
-
-**LED Circuit connection**
-
-When you connect the LED in the circuit, there are two cases to control the LED:
-
-* Connect the **anode to a digital output pin and cathode to ground**. When connected this way, the LED turns on when the pin outputs a high signal.
-
-<img
-  src={require('./img/LEDConnectGND.png').default}
-  alt="LED connection to light it with high voltage" width="480"
-/>
-
-_Pin is a digital output pin, R is a resistor, <img
-  src={require('./img/LEDSymbol.png').default}
-  alt="LED symbol" width="40" align="center"
-/> is an LED, and GND is ground_
-
-* Another method is to connect the **anode to a power source and connect the cathode to a digital output pin**. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on. This is how the built-in LED works on the SwiftIO Micro.
-
-<img
-  src={require('./img/LEDConnect3V3.png').default}
-  alt="LED connection to light it with low voltage" width="480"
-/>
-
-_Vcc is a power source, R is a resistor, <img
-  src={require('./img/LEDSymbol.png').default}
-  alt="LED symbol" width="40" align="center"
-/> is an LED, and pin is a digital output pin_
-
-
-There are many types of LEDs with different colors and sizes. The LED on your kit is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
-
-### Resistor
-
-Resistor functions as a current-limiting component that, just as its name suggests, can **resist the current** in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current, called **resistance**, is measured in **ohm (Ω)**.
-
-<img
-  src={require('./img/10kResistor.png').default}
-  alt="resistor" width="240"
-/>
-
-Symbol: <img
-  src={require('./img/resistorSymbol1.png').default}
-  alt="International resistor symbol" width="80" align="center"
-/> (International), <img
-  src={require('./img/resistorSymbol2.png').default}
-  alt="American resistor symbol" width="80" align="center"
-/> (US)
-
-
-
-:::info Exercise
-
-How can you tell how much resistance a resistor provides?
-
-Each resistor has a specific resistance. Note the colored bands in the diagram. Each band corresponds to a certain number. [Here](https://www.allaboutcircuits.com/tools/resistor-color-code-calculator/) is an online guide and calculator to determine how to total the value of all the bands together. 
-
-
-What's the resistance of the sample resistor R1 pictured above, as well as the resistors R2 and R3 below? See below for the answer! 
-
-<img
-  src={require('./img/330Resistor.png').default}
-  alt="resistor" width="240"
-/>
-
-<img
-  src={require('./img/470kResistor.png').default}
-  alt="resistor" width="240"
-/>
-
-<details>
-    <summary> Answer</summary>
-
-* R1: 10KΩ with a tolerance of ± 5%
-* R2: 330Ω with a tolerance of ± 5%
-* R3: 470KΩ with a tolerance of ± 1%
-
-</details>
-
-:::
-
-This kind of resistor is useful primarily when you DIY some stuff. The kit use surface mount resistors as they are smaller and more suitable for mass production.
-
-## 🔸New concept
-
-### Ohm's law
-
-When starting with electronics, you must get familiar with these three concepts: voltage, current, and resistance:
-* **Voltage** measures potential energy between two points. 
-* **Current** describes the rate of flow of electric charges that flow through the circuit. 
-* And **resistance** is the capability to resist the flow of current.
-
-An intuitive and common **analogy** is water pressure in a tank. Imagine a water tank with water inside and an opening at the bottom. 
-
-<img
-  src={require('./img/tank.png').default}
-  alt="ohm's law analogy" width="960"
-/>
-
-In this scenario, the water pressure (water level) is like the voltage, the opening is like resistance, and the amount of water spilling out is like the current. 
-
-* Looking at the first figure, very little water will come out (current) because there isn't much pressure (voltage) and the opening is small (resistance). 
-* In the second example, we've increased the water level (voltage), but kept the same sized opening (resistance), which results in an increase in the flow of the water (current). 
-* Finally, in the last one, we've also increased the size of the opening (reduced resistance), keeping the water level (voltage) the same, resulting in another increase in flow (current).
-
-**Ohm's law** describes how voltage, current and resistance interact with each other and work similarly to the water tank above. The formula is: 
-
-> **V = I * R**
-
-* _V: voltage (unit: volts or V)_
-* _I: current (unit: amps or A)_
-* _R: resistance (unit: ohm or Ω)_
-
-
-Using some simple algebra, we can also put forward the following formulas:
-
-> **R = V / I**
-
-and 
-
-> **I = V / R**
-
-
-As stated previously, all digital pins on the SwiftIO Micro output a high signal of 3.3V. For example, if the resistance in the circuit is 330Ω, the current would be 3.3 / 330 = 0.01A. 
-
-:::info Exercise
-
-Given an LED with the following characteristics, how many ohm resistors should you use to complete the circuit, using the 3.3V DigitalOut pin source?
-
-* Forward current: 15mA max
-* Forward voltage: 3.0V
-
-Here is the equation:
-
-**R = (Vcc - V<sub>F</sub>) / I<sub>F</sub>**
-
-* Vcc: supply voltage
-* V<sub>F</sub>: forward voltage for the LED, that is, voltage drop as the current across the LED. 
-* I<sub>F</sub>: forward current for the LED (usually 10-20mA). It's the maximum current. If you don't have the specs about LED, you could normally suppose it to be 20mA.
-
-Btw, the resistance of the LED itself is little so you could ignore it. 
-
-<details>
-    <summary> Answer </summary>
-
-The resistor needed for the LED is:
-R = (3.3 - 3.0) / 0.015 = 20Ω
-
-</details>
-
-
-Frequently you will be unable to find a resistor that matches the exact theoretical value. When this happens, you can use a resistor that has slightly greater resistance.
-
-In general, the resistance calculated is a minimum requirement. You can also choose a resistor with larger resistance. Doing so will cause the LED's brightness to change with it. Greater resistance will cause the LED to be dimmer.
-
-:::
-
-You can also try this [online Ohm's law simulator](
-https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html) to get more familiar with it.
-
-### Series circuit and parallel circuit
-
-Series and parallel circuits are the ways to connect more than two devices in the circuit. 
-
-* In a **series circuit**, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same: **I<sub>R1</sub> = I<sub>R2</sub>**.
-* In a **parallel circuit**, devices share two common nodes, like R3 and R4. Node a connects both two devices, so the current flows through both of them. The voltages between the two devices are the same: **V<sub>R3</sub> = V<sub>R4</sub>**.
-
-<img
-  src={require('./img/seriesParallel.png').default}
-  alt="Series and parallel circuit" width="960"
-/>                  
-
-
-:::info Exercise
-
-Calculate the current and voltage of each resistor in the circuit above using Ohm's law. 
-
-<details>
-    <summary> Suppose R1 is 100Ω and R2 is 200Ω, the voltage supply is 3V.  </summary>
-
-  * R<sub>Total</sub> = R<sub>R1</sub> + R<sub>R2</sub> = 300Ω
-  * I<sub>R1</sub> = I<sub>R2</sub> = 3V / 300Ω = 0.01A
-  * V<sub>R1</sub> = 0.01A x 100Ω = 1V
-  * V<sub>R2</sub> = 0.01A x 200Ω = 2V
-
-</details>
-
-<details>
-    <summary> Suppose R3 is 100Ω and R4 is 200Ω, the voltage supply is 3V. </summary>
-
-  * V<sub>R3</sub> = V<sub>R4</sub> = 3V
-  * I<sub>R3</sub> = 3V / 100Ω = 0.03A
-  * I<sub>R4</sub> = 3V / 200Ω = 0.015A
-  * I = I<sub>R3</sub> + I<sub>R4</sub> = 0.045A
-
-You could also get total resistance in the circuit:
-
-1. V / R<sub>Total</sub> = V<sub>R3</sub> / R<sub>R3</sub> + V<sub>R4</sub> / R<sub>R4</sub>
-2. 1 / R<sub>Total</sub> = 1 / R<sub>R3</sub> + 1 / R<sub>R4</sub>
-3. Thus you get the formula for the total resistance in the circuit:
-  R<sub>Total</sub> = (R<sub>R3</sub> x R<sub>R4</sub>) / (R<sub>R3</sub> + R<sub>R4</sub>) ≈ 66.67Ω
-
-</details>
-
-
-:::
-
-
-
-In your real situation, the circuit would not be that easy. The series and parallel circuits would both be used when building the circuit.
-
-Let's look at an example.
-
-* In the first circuit, the two lamps are connected in series, so the switch can control both of them. If any of the lamps breaks down, even if the switch is closed, the other lamp will not be lit. 
-* In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the switch connected in series: switch1 controls the lamp1, switch2 controls the lamp2. The two lamps work separately.
-
-<img
-  src={require('./img/seriesParallelCombination.png').default}
-  alt="Both series and parallel circuit connection" width="960"
-/>     
-
-### Open, closed and short circuit
-
-In addition to the previously mentioned types of circuits, there are three more concepts you need to know about: open circuit, closed circuit, and short circuit. 
-
-* The first figure is a **closed circuit**. This allows current to flow freely from the positive terminal through a load that consumes electric power, finally returning to the negative terminal. 
-* In an **open circuit**, there is a gap somewhere on the circuit, therefore disallowing any current to flow through it.
-* Current tends to flow through the path with lower resistance, if you accidentally connect the positive to the negative terminal of the power supply, the current will flow directly through this path and bypass the other paths with higher resistance. The resistance of wires is so small that you could normally ignore it. This causes a **short circuit**. It can be dangerous as it can cause overheating, damage to components, or even fires.
-
-<img
-  src={require('./img/threeCircuits.png').default}
-  alt="Open, closed and short circuits" width="960"
-/>  
-
-
-:::danger Current safety
-In a complete circuit, the current will always flow from the point of higher voltage (usually power) to the one of lower voltage (usually ground or GND). Consumed energy is turned into light, heat, sound and many other forms. 
-
-If you were to connect the power directly to the ground using a wire, this would cause a short circuit. It can (and usually do) cause damage to your circuit and board, and is also very possible to start a fire.  
-
-Another warning: if you're not careful about selecting an appropriately strong resistor to resist the level of current flowing through the circuit, the devices can be burnt and damaged (and additionally cause a fire hazard). 
-
-:::
-
 
 ## 🔸Circuit - LED
 
@@ -371,24 +55,6 @@ On circuit diagrams, the red line is usually for power and the black line for gr
 The circuits above are simplified for your reference.
 [Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
-
-## 🔸API 
-
-**Class**
-
-**[`DigitalOut`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout)** - as indicated by its name, this class is used to control digital output, to get high or low voltage.
-
-| Method | Explanation |
-| ------- | -----------|
-| `init(_:mode:value:)` | Initialize a digital output pin. <br />The first parameter needs the pin id which is listed in the Id enumeration. The parameters `mode` and `value` already have a default value: the mode is `pushPull` and the output value is `false`. |
-|`write(_:)` | Set the pin to output high or low voltage. <br />Its parameter is a boolean type: `true` corresponds to a high level and `false` corresponds to a low level. |
-| `toggle()` | Reverse the digital output. |
-| `high()` | Output high voltage. |
-| `low()` | Output low voltage. |
-
-**Global function**
-
-`sleep(ms:)` - Make the microcontroller suspend its work for a certain time, measured in milliseconds.
 
 
 ## 🔸Projects
@@ -929,6 +595,344 @@ while true {
 In the loop, the microcontroller will do other work. Here you will make the onboard blue LED blink every 500ms.
 
 
+## 🔸API 
+
+### [`DigitalOut`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalout)
+
+As indicated by its name, this class is used to control digital output, to get high or low voltage.
+
+| Method | Explanation |
+| ------- | -----------|
+| `init(_:mode:value:)` | Initialize a digital output pin. <br /> **Parameter:**<br />- `idName`: the pin id which is listed in the Id enumeration. <br />- `mode`: the output mode of the pin, `pushPull` by default. <br />- `value`: the output value after initialization, `false` by default. |
+|`write(_:)` | Set the pin to output high or low voltage. <br /> **Parameter:**<br />- `value`: a boolean type: `true` corresponds to a high level and `false` corresponds to a low level. |
+| `toggle()` | Reverse the digital output. |
+| `high()` | Output high voltage. |
+| `low()` | Output low voltage. |
+
+
+### `sleep(ms:)` 
+
+Make the microcontroller suspend its work for a certain time, measured in milliseconds.
+
+
+## 🔸Background
+
+### What is digital signal?
+
+In electronics and telecommunication, electronic **signals carry data from one device to another** to send and receive all kinds of information. These signals are time-varying, meaning that the voltage or current changes over time in a specific pattern that carries information. **Digital and [analog](./potentiometer#what-is-an-analog-signal)** signals are two different types of electronic signals used to transmit and process information. 
+
+In this tutorial, you'll focus on digital signals. **Digital signals** typically take on two distinct voltage levels, which can represent binary **1 or 0** values. These values can be combined in various ways to represent more complex information, such as text, images, or sound.
+
+<img
+  src={require('./img/digitalSignal.png').default}
+  alt="Digital signal wave" width="480"
+/>
+
+Here are different expressions to represent two states:
+
+| Logic 1 | Logic 0 |
+|---------|------|
+| true | false | 
+| high | low |
+| 3.3V | 0V |
+
+
+:::info
+For our board, 3.3V represent true and 0V represent false. Of course, there are many other possibilities, like 5V for true...
+:::
+
+Digital signals are ideal for working with components that have discrete states, such as LEDs (on/off) and buttons (pressed/released).
+
+### Peripheral - GPIO
+
+The peripheral **GPIO** (general-purpose input/output) allows sending and receiving digital signals between MCUs and various devices. 
+
+**GPIO pins** can be configured as either **input or output pins using software**. 
+
+- When a GPIO pin is configured as an **output**, it can be set to either a high or low voltage level to control the state of an external device, such as turning an LED on or off. 
+- When a GPIO pin is configured as an [**input**](./button), it can read the voltage level of an external signal, either high or low.
+
+
+In this tutorial, you'll make a GPIO pin output digital signal to control the LED. For the LED module on your kit, when you apply a high signal, it will turn on, and if you apply a low signal, it will be off. 
+
+
+
+## 🔸New component
+
+### Diode
+
+The diode is a **polarized** component. It has a positive side (anode) and a negative side (cathode). After being connected in the circuit, **the current can only flow** in a single direction, **from anode to cathode**. If you connect it in an opposite direction, the current will not be allowed to pass through.
+
+<img
+  src={require('./img/diode.png').default}
+  alt="Diode" width="240"
+/>
+
+### LED
+
+LED (Light-emitting diode) is a type of diode that convert electrical energy into light. Only when you connect it in the right direction - **connect the anode to power and the cathode to ground** - is the current allowed to flow, lighting up the LED.
+
+<img
+  src={require('./img/LED.png').default}
+  alt="LED" width="180"
+/>
+
+
+<details>
+  <summary> How to identify the two legs of an LED? </summary>
+
+1. Typically the long leg is positive and the short leg is negative. 
+2. Alternatively, sometimes you will find a notch on the negative side.
+
+</details>
+
+The LED allows a **limited range of current**, usually no more than 20mA. So you should add a [resistor](#resistor) when connecting it to your circuit. Or the LED might burn out when driving too much current.
+
+**LED Circuit connection**
+
+When you connect the LED in the circuit, there are two cases to control the LED:
+
+* Connect the **anode to a digital output pin and cathode to ground**. When connected this way, the LED turns on when the pin outputs a high signal.
+
+<img
+  src={require('./img/LEDConnectGND.png').default}
+  alt="LED connection to light it with high voltage" width="480"
+/>
+
+_Pin is a digital output pin, R is a resistor, <img
+  src={require('./img/LEDSymbol.png').default}
+  alt="LED symbol" width="40" align="center"
+/> is an LED, and GND is ground_
+
+* Another method is to connect the **anode to a power source and connect the cathode to a digital output pin**. When the digital output signal is high, there is no voltage difference between two ends of the LED, but when the digital signal is low, current is allowed to flow, causing the LED to turn on. This is how the built-in LED works on the SwiftIO Micro.
+
+<img
+  src={require('./img/LEDConnect3V3.png').default}
+  alt="LED connection to light it with low voltage" width="480"
+/>
+
+_Vcc is a power source, R is a resistor, <img
+  src={require('./img/LEDSymbol.png').default}
+  alt="LED symbol" width="40" align="center"
+/> is an LED, and pin is a digital output pin_
+
+
+There are many types of LEDs with different colors and sizes. The LED on your kit is a small variant designed to be convenient for mass production. You could see [this article](https://lastminuteengineers.com/light-emitting-diode-led/) for more details on LED.
+
+### Resistor
+
+Resistor functions as a current-limiting component that, just as its name suggests, can **resist the current** in the circuit. It has two legs. You can connect it in either direction as it is not polarized. Its ability to resist the current, called **resistance**, is measured in **ohm (Ω)**.
+
+<img
+  src={require('./img/10kResistor.png').default}
+  alt="resistor" width="240"
+/>
+
+Symbol: <img
+  src={require('./img/resistorSymbol1.png').default}
+  alt="International resistor symbol" width="80" align="center"
+/> (International), <img
+  src={require('./img/resistorSymbol2.png').default}
+  alt="American resistor symbol" width="80" align="center"
+/> (US)
+
+
+
+:::info Exercise
+
+How can you tell how much resistance a resistor provides?
+
+Each resistor has a specific resistance. Note the colored bands in the diagram. Each band corresponds to a certain number. [Here](https://www.allaboutcircuits.com/tools/resistor-color-code-calculator/) is an online guide and calculator to determine how to total the value of all the bands together. 
+
+
+What's the resistance of the sample resistor R1 pictured above, as well as the resistors R2 and R3 below? See below for the answer! 
+
+<img
+  src={require('./img/330Resistor.png').default}
+  alt="resistor" width="240"
+/>
+
+<img
+  src={require('./img/470kResistor.png').default}
+  alt="resistor" width="240"
+/>
+
+<details>
+    <summary> Answer</summary>
+
+* R1: 10KΩ with a tolerance of ± 5%
+* R2: 330Ω with a tolerance of ± 5%
+* R3: 470KΩ with a tolerance of ± 1%
+
+</details>
+
+:::
+
+This kind of resistor is useful primarily when you DIY some stuff. The kit use surface mount resistors as they are smaller and more suitable for mass production.
+
+## 🔸New concept
+
+### Ohm's law
+
+When starting with electronics, you must get familiar with these three concepts: voltage, current, and resistance:
+* **Voltage** measures potential energy between two points. 
+* **Current** describes the rate of flow of electric charges that flow through the circuit. 
+* And **resistance** is the capability to resist the flow of current.
+
+An intuitive and common **analogy** is water pressure in a tank. Imagine a water tank with water inside and an opening at the bottom. 
+
+<img
+  src={require('./img/tank.png').default}
+  alt="ohm's law analogy" width="960"
+/>
+
+In this scenario, the water pressure (water level) is like the voltage, the opening is like resistance, and the amount of water spilling out is like the current. 
+
+* Looking at the first figure, very little water will come out (current) because there isn't much pressure (voltage) and the opening is small (resistance). 
+* In the second example, we've increased the water level (voltage), but kept the same sized opening (resistance), which results in an increase in the flow of the water (current). 
+* Finally, in the last one, we've also increased the size of the opening (reduced resistance), keeping the water level (voltage) the same, resulting in another increase in flow (current).
+
+**Ohm's law** describes how voltage, current and resistance interact with each other and work similarly to the water tank above. The formula is: 
+
+> **V = I * R**
+
+* _V: voltage (unit: volts or V)_
+* _I: current (unit: amps or A)_
+* _R: resistance (unit: ohm or Ω)_
+
+
+Using some simple algebra, we can also put forward the following formulas:
+
+> **R = V / I**
+
+and 
+
+> **I = V / R**
+
+
+As stated previously, all digital pins on the SwiftIO Micro output a high signal of 3.3V. For example, if the resistance in the circuit is 330Ω, the current would be 3.3 / 330 = 0.01A. 
+
+:::info Exercise
+
+Given an LED with the following characteristics, how many ohm resistors should you use to complete the circuit, using the 3.3V DigitalOut pin source?
+
+* Forward current: 15mA max
+* Forward voltage: 3.0V
+
+Here is the equation:
+
+**R = (Vcc - V<sub>F</sub>) / I<sub>F</sub>**
+
+* Vcc: supply voltage
+* V<sub>F</sub>: forward voltage for the LED, that is, voltage drop as the current across the LED. 
+* I<sub>F</sub>: forward current for the LED (usually 10-20mA). It's the maximum current. If you don't have the specs about LED, you could normally suppose it to be 20mA.
+
+Btw, the resistance of the LED itself is little so you could ignore it. 
+
+<details>
+    <summary> Answer </summary>
+
+The resistor needed for the LED is:
+R = (3.3 - 3.0) / 0.015 = 20Ω
+
+</details>
+
+
+Frequently you will be unable to find a resistor that matches the exact theoretical value. When this happens, you can use a resistor that has slightly greater resistance.
+
+In general, the resistance calculated is a minimum requirement. You can also choose a resistor with larger resistance. Doing so will cause the LED's brightness to change with it. Greater resistance will cause the LED to be dimmer.
+
+:::
+
+You can also try this [online Ohm's law simulator](
+https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html) to get more familiar with it.
+
+### Series circuit and parallel circuit
+
+Series and parallel circuits are the ways to connect more than two devices in the circuit. 
+
+* In a **series circuit**, devices are connected end-to-end in a chain, like R1 and R2. The current flows through them in one direction from positive to negative. And the current flowing through each device is the same: **I<sub>R1</sub> = I<sub>R2</sub>**.
+* In a **parallel circuit**, devices share two common nodes, like R3 and R4. Node a connects both two devices, so the current flows through both of them. The voltages between the two devices are the same: **V<sub>R3</sub> = V<sub>R4</sub>**.
+
+<img
+  src={require('./img/seriesParallel.png').default}
+  alt="Series and parallel circuit" width="960"
+/>                  
+
+
+:::info Exercise
+
+Calculate the current and voltage of each resistor in the circuit above using Ohm's law. 
+
+<details>
+    <summary> Suppose R1 is 100Ω and R2 is 200Ω, the voltage supply is 3V.  </summary>
+
+  * R<sub>Total</sub> = R<sub>R1</sub> + R<sub>R2</sub> = 300Ω
+  * I<sub>R1</sub> = I<sub>R2</sub> = 3V / 300Ω = 0.01A
+  * V<sub>R1</sub> = 0.01A x 100Ω = 1V
+  * V<sub>R2</sub> = 0.01A x 200Ω = 2V
+
+</details>
+
+<details>
+    <summary> Suppose R3 is 100Ω and R4 is 200Ω, the voltage supply is 3V. </summary>
+
+  * V<sub>R3</sub> = V<sub>R4</sub> = 3V
+  * I<sub>R3</sub> = 3V / 100Ω = 0.03A
+  * I<sub>R4</sub> = 3V / 200Ω = 0.015A
+  * I = I<sub>R3</sub> + I<sub>R4</sub> = 0.045A
+
+You could also get total resistance in the circuit:
+
+1. V / R<sub>Total</sub> = V<sub>R3</sub> / R<sub>R3</sub> + V<sub>R4</sub> / R<sub>R4</sub>
+2. 1 / R<sub>Total</sub> = 1 / R<sub>R3</sub> + 1 / R<sub>R4</sub>
+3. Thus you get the formula for the total resistance in the circuit:
+  R<sub>Total</sub> = (R<sub>R3</sub> x R<sub>R4</sub>) / (R<sub>R3</sub> + R<sub>R4</sub>) ≈ 66.67Ω
+
+</details>
+
+
+:::
+
+
+
+In your real situation, the circuit would not be that easy. The series and parallel circuits would both be used when building the circuit.
+
+Let's look at an example.
+
+* In the first circuit, the two lamps are connected in series, so the switch can control both of them. If any of the lamps breaks down, even if the switch is closed, the other lamp will not be lit. 
+* In the second circuit,  the two lamps are connected in parallel, you can control any of them by using the switch connected in series: switch1 controls the lamp1, switch2 controls the lamp2. The two lamps work separately.
+
+<img
+  src={require('./img/seriesParallelCombination.png').default}
+  alt="Both series and parallel circuit connection" width="960"
+/>     
+
+### Open, closed and short circuit
+
+In addition to the previously mentioned types of circuits, there are three more concepts you need to know about: open circuit, closed circuit, and short circuit. 
+
+* The first figure is a **closed circuit**. This allows current to flow freely from the positive terminal through a load that consumes electric power, finally returning to the negative terminal. 
+* In an **open circuit**, there is a gap somewhere on the circuit, therefore disallowing any current to flow through it.
+* Current tends to flow through the path with lower resistance, if you accidentally connect the positive to the negative terminal of the power supply, the current will flow directly through this path and bypass the other paths with higher resistance. The resistance of wires is so small that you could normally ignore it. This causes a **short circuit**. It can be dangerous as it can cause overheating, damage to components, or even fires.
+
+<img
+  src={require('./img/threeCircuits.png').default}
+  alt="Open, closed and short circuits" width="960"
+/>  
+
+
+:::danger Current safety
+In a complete circuit, the current will always flow from the point of higher voltage (usually power) to the one of lower voltage (usually ground or GND). Consumed energy is turned into light, heat, sound and many other forms. 
+
+If you were to connect the power directly to the ground using a wire, this would cause a short circuit. It can (and usually do) cause damage to your circuit and board, and is also very possible to start a fire.  
+
+Another warning: if you're not careful about selecting an appropriately strong resistor to resist the level of current flowing through the circuit, the devices can be burnt and damaged (and additionally cause a fire hazard). 
+
+:::
+
+
+
 ## 🔸Go further 
 
 ### Push-pull and open-drain
@@ -964,4 +968,3 @@ An active device is used to pull the output voltage to a low state, but does not
 To drive the signal high, an external pull-up resistor can be used to connect it to the high voltage level (Vcc), which will pull the output high when no other device is actively driving the signal. This means that the current flowing through the pull-up resistor is sourced by the voltage source, not by the open-drain output.
 
 The use of open-drain outputs is useful in situations where multiple devices need to share a single communication line, such as the I2C bus.
-

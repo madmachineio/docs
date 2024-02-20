@@ -46,6 +46,8 @@ In this project, we'll connect the ESP32 module to Wi-Fi and grab its IP address
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/11WiFi/JoiningWiFi).
+
 :::info
 Don't forget to fill in your SSID (Wi-Fi network name) and password before downloading the code.
 :::
@@ -109,7 +111,7 @@ while true {
 import PackageDescription
 
 let package = Package(
-    name: "JoinWiFi",
+    name: "JoiningWiFi",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
@@ -120,7 +122,7 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "JoinWiFi",
+            name: "JoiningWiFi",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
@@ -150,6 +152,8 @@ If you've ever used a weather app on your phone, here's an exciting opportunity 
 
 
 **Example code**
+
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/11WiFi/Weather).
 
 <Tabs
   defaultValue="main"
@@ -488,6 +492,7 @@ In this project, we'll focus on sending sensor readings to ThingSpeak via HTTP P
 
 **Example code**
 
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/11WiFi/TemperatureDataLogger).
 
 <Tabs
   defaultValue="main"
@@ -601,7 +606,7 @@ Send temperature and humidity data to ThingSpeak using the provided API key. Ens
 ## 🔸API
 
 
-### **[`ESP32ATClient`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/ESP32ATClient)**
+### [`ESP32ATClient`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/ESP32ATClient)
 
 This library enables you to use ESP32 as a client, facilitating the sending of HTTP requests to servers.
 
