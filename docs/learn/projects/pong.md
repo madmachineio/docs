@@ -34,7 +34,7 @@ The two potentiometers (A0, A11) are used to move paddles. The button (D1) is us
 
 ## Example code
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/11MoreProjects/Pong).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/12MoreProjects/Pong).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -291,15 +291,25 @@ struct PongGame {
     func readSoundData(from path: String) -> [UInt8] {
         let headerSize = 0x2C
 
-        let file = FileDescriptor.open(path)
-        defer { file.close() }
+        guard let file = try? FileDescriptor.open(path) else {
+            print("Read sound data \(path) failed!")
+            return []
+        }
 
-        file.seek(offset: 0, from: FileDescriptor.SeekOrigin.end)
-        let size = file.tell() - headerSize
+        var buffer = [UInt8]()
 
-        var buffer = [UInt8](repeating: 0, count: size)
-        buffer.withUnsafeMutableBytes { rawBuffer in 
-            _ = file.read(fromAbsoluteOffest: headerSize, into: rawBuffer, count: size)
+        do {
+            try file.seek(offset: 0, from: FileDescriptor.SeekOrigin.end)
+            let size = try file.tell() - headerSize
+
+            buffer = [UInt8](repeating: 0, count: size)
+            try buffer.withUnsafeMutableBytes { rawBuffer in 
+                _ = try file.read(fromAbsoluteOffest: headerSize, into: rawBuffer, count: size)
+            }
+            try file.close()
+        } catch {
+            print("File \(path) handle error: \(error)")
+            return []
         }
 
         return buffer

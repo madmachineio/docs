@@ -16,78 +16,6 @@ The button is a commonly used input component and is widely used in a light swit
 * Learn how to detect button states.
 * Try to control the LED using the button(s) in different ways.
 
-## 🔸Background
-
-### Peripheral - GPIO
-
-The peripheral **GPIO** is designed to handle digital signals, either input or output. You've tried output in the previous tutorial, and in this tutorial, you will explore how to **use the GPIO pins as input**.
-
-Digital input signals have two states, commonly referred to as high and low. When an input signal comes in, its voltage will **be compared with specific thresholds**. If the voltage is higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage but only has two results.
-
-<img
-  src={require('./img/digitalSignal.png').default}
-  alt="Digital signal wave" width="480"
-/>
-
-Therefore, GPIO input pins can be used to **read the state** of a switch, button, or other types of digital input device.
-
-
-
-## 🔸New component
-
-### Push button 
-
-The button module in your kit is a **momentary switch**. This kind of switch is only activated when holding/pressing it and goes back to its original state once releasing it, i.e. keyboard buttons... While a **maintained switch** changes its position when actuated and remains in its state until the next action, such as light switches.
-
-The push button typically has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button is of no use since the current flows all the time. 
-
-To make things easier, it is a good idea to **connect the two legs on a diagonal**, like 1 and 4, 2 and 3.
-
-<img
-  src={require('./img/button.png').default}
-  alt="Button" width="960"
-/>
-
-Symbol: <img
-  src={require('./img/buttonSymbol.png').default}
-  alt="Button symbol" width="80" align="center"
-/>
-
-
-Let's talk about **how the button works** in circuits:
-
-* By default, the circuit inside the button is disconnected, therefore blocking the current flow. 
-* As you press it, the internal metals come into contact, so the current can flow successfully through the circuit. 
-* Once you release it, the button will go back to its original state and the current is blocked again. 
-
-
-### Pull resistor
-
-As you have known, digital input will always be either high or low. But if the input pin is connected to nothing, what will the input value be? High or low?
-
-That's hard to say. The state of that pin will be uncertain and change randomly between high and low states. This state is called **floating**. To ensure a stable state, a pull-up or pull-down resistor is needed.
-
-**Pull-up resistor**
-
-The pull-up resistor connects the input pin to **power**. In this case, the button should connect to the input pin and ground. 
-* By default, when the button is **not pressed**, the input pin reads **high**. 
-* If the button is **pressed**, the current flows from power directly to the ground and the pin reads **low** level.
-       
-**Pull-down resistor**
-
-The pull-down resistor connects the input pin to **ground**. If so, the button should connect to the power and input pin. 
-* By default, the button is **not pressed**. The pin connects directly to the ground, so the pin keeps in a **low** state. 
-* And if you **press** the button, the pin reads **high**.
-
-<img
-  src={require('./img/pullResistor.png').default}
-  alt="Pull up and pull down resistor" width="960"
-/>
-
-In this way, the input pin is always at a determined state.
-
-You would usually need a pull-up or pull-down resistor with a button. The SwiftIO Micro has internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.
-
 
 ## 🔸Circuit - Button
 There are two buttons on your kit. They are connected respectively to **D1** and **D19**. 
@@ -115,19 +43,6 @@ There are two buttons on your kit. They are connected respectively to **D1** and
 The circuits above are simplified for your reference.
 [Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
-
-## 🔸API
-Let's see the new class you are going to use in this project.
-
-**Class**
-
-**[`DigitalIn`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalin)** - this class allows you to get the current state of a specified input pin.
-
-| Method | Explanation |
-| ------ | ----------- |
-| `init(_:mode:)` | Initialize the digital input pin. <br />- **`id`**: the id of the digital pin. <br />- **`mode`**: set the pull resistors, `pullDown` by default. |
-| `read()` | Read voltage level from an input pin. <br />- **Return value** - the voltage represented as `true` or `false`. |
-| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project. <br />- **`mode`**: set the type of edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />- **`enable`**: decide whether to enable the interrupt once you set it. By default, it is `true` (enabled). <br />- **`callback`**: pass in a function as the paramter. The function should need no parameter and returns nothing: () -> void. |
 
 
 ## 🔸Projects
@@ -880,3 +795,88 @@ while true {
 :::info
 Since the button module on SwiftIO Playground uses a hardware debounce method, you may not meet this problem so frequently.
 :::
+
+## 🔸API
+Let's see the new class you are going to use in this project.
+
+### [`DigitalIn`](https://madmachineio.github.io/SwiftIO/documentation/swiftio/digitalin)
+
+This class allows you to get the current state of a specified input pin.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:mode:)` | Initialize the digital input pin. <br /> **Parameter:**<br />- `idName`: the id of the digital pin. <br />- `mode`: set the pull resistors, `pullDown` by default. |
+| `read()` | Read voltage level from an input pin. <br />- **Return value:**<br /> The voltage represented as `true` or `false`. |
+| `setInterrupt(_:`<br />`enable:callback:)` | It allows you to define the interrupt mechanism in your project.  <br /> **Parameter:**<br />- `mode`: set the type of edge to trigger the interrupt: `.rising`, `.falling`, `.bothEdges`. <br />- `enable`: decide whether to enable the interrupt once you set it. By default, it is `true` (enabled). <br />- `callback`: pass in a function as the paramter. The function should need no parameter and returns nothing: () -> void. |
+
+## 🔸Background
+
+### Peripheral - GPIO
+
+The peripheral **GPIO** is designed to handle digital signals, either input or output. You've tried output in the previous tutorial, and in this tutorial, you will explore how to **use the GPIO pins as input**.
+
+Digital input signals have two states, commonly referred to as high and low. When an input signal comes in, its voltage will **be compared with specific thresholds**. If the voltage is higher than the threshold, it's high, and if it's lower, it's low. You can regard it as a multimeter used to measure voltage but only has two results.
+
+<img
+  src={require('./img/digitalSignal.png').default}
+  alt="Digital signal wave" width="480"
+/>
+
+Therefore, GPIO input pins can be used to **read the state** of a switch, button, or other types of digital input device.
+
+
+
+## 🔸New component
+
+### Push button 
+
+The button module in your kit is a **momentary switch**. This kind of switch is only activated when holding/pressing it and goes back to its original state once releasing it, i.e. keyboard buttons... While a **maintained switch** changes its position when actuated and remains in its state until the next action, such as light switches.
+
+The push button typically has four legs. Each two of them are shorted, like 1 and 3, 2 and 4 in the following diagram. If you connect the two legs that are shorted internally, like 1 and 3, the button is of no use since the current flows all the time. 
+
+To make things easier, it is a good idea to **connect the two legs on a diagonal**, like 1 and 4, 2 and 3.
+
+<img
+  src={require('./img/button.png').default}
+  alt="Button" width="960"
+/>
+
+Symbol: <img
+  src={require('./img/buttonSymbol.png').default}
+  alt="Button symbol" width="80" align="center"
+/>
+
+
+Let's talk about **how the button works** in circuits:
+
+* By default, the circuit inside the button is disconnected, therefore blocking the current flow. 
+* As you press it, the internal metals come into contact, so the current can flow successfully through the circuit. 
+* Once you release it, the button will go back to its original state and the current is blocked again. 
+
+
+### Pull resistor
+
+As you have known, digital input will always be either high or low. But if the input pin is connected to nothing, what will the input value be? High or low?
+
+That's hard to say. The state of that pin will be uncertain and change randomly between high and low states. This state is called **floating**. To ensure a stable state, a pull-up or pull-down resistor is needed.
+
+**Pull-up resistor**
+
+The pull-up resistor connects the input pin to **power**. In this case, the button should connect to the input pin and ground. 
+* By default, when the button is **not pressed**, the input pin reads **high**. 
+* If the button is **pressed**, the current flows from power directly to the ground and the pin reads **low** level.
+       
+**Pull-down resistor**
+
+The pull-down resistor connects the input pin to **ground**. If so, the button should connect to the power and input pin. 
+* By default, the button is **not pressed**. The pin connects directly to the ground, so the pin keeps in a **low** state. 
+* And if you **press** the button, the pin reads **high**.
+
+<img
+  src={require('./img/pullResistor.png').default}
+  alt="Pull up and pull down resistor" width="960"
+/>
+
+In this way, the input pin is always at a determined state.
+
+You would usually need a pull-up or pull-down resistor with a button. The SwiftIO Micro has internal pull-up and pull-down resistors. By default, the pull-down resistor is chosen. You could change it according to actual usage.

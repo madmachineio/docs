@@ -13,59 +13,6 @@ You may not have heard of accelerometers, but you must experience them in everyd
 * Know about acceleration and how it is measured.
 * Read accelerations on x, y, z-axis using I2C communication.
 
-## 🔸New component
-
-### Accelerometer
-
-**Overview**
-
-The accelerometer, aka 3-axis accelerometer, **measures accelerations**, changes of velocity with time, and the direction of movement of an object **on x, y, and z-axis**. It can detect **changes in motion**, including vibration, rotation, and changes in linear acceleration. They can also detect the direction and magnitude of **gravitational forces** acting on the object.
-
-<img
-  src={require('./img/accelerometer.png').default}
-  alt="Accelerometer" width="320"
-/>
-
-**Acceleration** is measured in meters per second squared (m/s<sup>2</sup>). It **has both magnitude and direction** and can be either positive or negative depending on the direction of the force causing the acceleration. 
-
-On Earth, the acceleration due to gravity is approximately **9.8 m/s<sup>2</sup>**, which is often referred to as **1g**. When an accelerometer measures acceleration, it typically expresses the results in units of g.
-
-**How does an accelerometer work**
-
-The basic principle behind an accelerometer is the measurement of changes in force and motion. It contains a mass suspended by a set of springs or beams. When the object that contains the accelerometer experiences acceleration, **the mass inside the sensor moves in response to the force**, causing a change in the capacitance or voltage output of the sensor. This change is then measured and used to calculate the acceleration.
-
-<img
-  src={require('./img/mems.png').default}
-  alt="mems" width="960"
-/>
-
-To better understand how the accelerometer works, let's imagine a small ball inside a vacuum box. There are several situations: 
-
-* There is no gravity in a vacuum box, so the ball remains stationary in the center of the box.
-* When the box is suddenly moved to the left, the ball inside the box would experience a force due to its inertia, which would cause it to move in the opposite direction. This is similar to what happens when you are in a car or on a bus that suddenly accelerates or stops - your body experiences a force in the opposite direction of the motion.
-* If air comes into the box, the ball will fall due to gravity. 
-
-<img
-  src={require('./img/ballinbox.png').default}
-  alt="A ball in box to show the acceleration" width="960"
-/>
-              
-Now let's go back to the sensor.
-
-* When the accelerometer sensor is at rest and not moving, it will primarily detect the force of gravity. When the sensor faces up on the table, it gets a force downwards on the z-axis. When the sensor is perpendicular to the table, there will be a force on the x or y-axis.
-
-<img
-  src={require('./img/accelerometerDirection.png').default}
-  alt="Accelerometer in three directions" width="960"
-/>
-
-* When the accelerometer is in motion, it will also detect inertial forces in addition to the force of gravity.
-
-**LIS3DH**
-
-
-The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit only connects to the I2C interface. The raw values provided by the sensor range from -32768 to 32767 (16-bit). Then they will be converted to the acceleration value according to the measurement range. The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. 
-
 
 ## 🔸Circuit - Accelerometer
 
@@ -93,16 +40,7 @@ The circuits above are simplified versions for your reference.
 [Download the schematics here.](img/SwiftIOPlaygroundSchematics.pdf)
 :::
 
-## 🔸API
 
-**Class**
-
-**[`LIS3DH`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/LIS3DH)** - it is the library for LIS3DH accelerometer. It provides predefined methods for you to get readings from the sensor in an easy way.
-
-| Method | Explanation |
-| ------ | ----------- |
-| `init(_:address:)` | Initialize the sensor to start the communication.  <br /> **Parameters:** <br /> - `id`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. 0x18 by default. |
-| `readXYZ()` | Read the acceleration on 3-axis. <br /> **Return value:** <br /> Accelerations on x, y, z-axis on float. |
 
 ## 🔸Projects
 
@@ -561,3 +499,69 @@ let package = Package(
 ```
 </TabItem>
 </Tabs>
+
+## 🔸API
+
+### [`LIS3DH`](https://github.com/madmachineio/MadDrivers/tree/main/Sources/LIS3DH)
+
+It provides predefined methods for you to get readings from the LIS3DH accelerometer.
+
+| Method | Explanation |
+| ------ | ----------- |
+| `init(_:address:)` | Initialize the sensor to start the communication.  <br /> **Parameters:** <br /> - `i2c`: I2C interface that the sensor connects to.  <br /> - `address`: the sensor's address. 0x18 by default. |
+| `readXYZ()` | Read the acceleration on 3-axis. <br /> **Return value:** <br /> Accelerations on x, y, z-axis. |
+
+
+## 🔸New component
+
+### Accelerometer
+
+**Overview**
+
+The accelerometer, aka 3-axis accelerometer, **measures accelerations**, changes of velocity with time, and the direction of movement of an object **on x, y, and z-axis**. It can detect **changes in motion**, including vibration, rotation, and changes in linear acceleration. They can also detect the direction and magnitude of **gravitational forces** acting on the object.
+
+<img
+  src={require('./img/accelerometer.png').default}
+  alt="Accelerometer" width="320"
+/>
+
+**Acceleration** is measured in meters per second squared (m/s<sup>2</sup>). It **has both magnitude and direction** and can be either positive or negative depending on the direction of the force causing the acceleration. 
+
+On Earth, the acceleration due to gravity is approximately **9.8 m/s<sup>2</sup>**, which is often referred to as **1g**. When an accelerometer measures acceleration, it typically expresses the results in units of g.
+
+**How does an accelerometer work**
+
+The basic principle behind an accelerometer is the measurement of changes in force and motion. It contains a mass suspended by a set of springs or beams. When the object that contains the accelerometer experiences acceleration, **the mass inside the sensor moves in response to the force**, causing a change in the capacitance or voltage output of the sensor. This change is then measured and used to calculate the acceleration.
+
+<img
+  src={require('./img/mems.png').default}
+  alt="mems" width="960"
+/>
+
+To better understand how the accelerometer works, let's imagine a small ball inside a vacuum box. There are several situations: 
+
+* There is no gravity in a vacuum box, so the ball remains stationary in the center of the box.
+* When the box is suddenly moved to the left, the ball inside the box would experience a force due to its inertia, which would cause it to move in the opposite direction. This is similar to what happens when you are in a car or on a bus that suddenly accelerates or stops - your body experiences a force in the opposite direction of the motion.
+* If air comes into the box, the ball will fall due to gravity. 
+
+<img
+  src={require('./img/ballinbox.png').default}
+  alt="A ball in box to show the acceleration" width="960"
+/>
+              
+Now let's go back to the sensor.
+
+* When the accelerometer sensor is at rest and not moving, it will primarily detect the force of gravity. When the sensor faces up on the table, it gets a force downwards on the z-axis. When the sensor is perpendicular to the table, there will be a force on the x or y-axis.
+
+<img
+  src={require('./img/accelerometerDirection.png').default}
+  alt="Accelerometer in three directions" width="960"
+/>
+
+* When the accelerometer is in motion, it will also detect inertial forces in addition to the force of gravity.
+
+**LIS3DH**
+
+
+The accelerometer LIS3DH supports I2C and SPI communication, but the module on your kit only connects to the I2C interface. The raw values provided by the sensor range from -32768 to 32767 (16-bit). Then they will be converted to the acceleration value according to the measurement range. The sensor provides several measurement ranges: ±2g, ±4g, ±8g, ±16g. 
+

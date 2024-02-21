@@ -27,7 +27,7 @@ You will use the two buttons (D1, 19) and two potentiometers (A0, A11) on the ki
 
 ## Example code
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/11MoreProjects/TicTacToe).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/12MoreProjects/TicTacToe).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
