@@ -9,16 +9,10 @@ In this tutorial, you will get to know the hardware that will be your companion 
 
 The SwiftIO Playground kit consists of two parts: 
 * SwiftIO Micro - main board
-<img
-  src={require('./img/micro.png').default}
-  alt="SwiftIO Micro" width="480"
-/>
+<img src={require('./img/micro.png').default} alt="SwiftIO Micro" width="480" />
 
 * SwiftIO Playground - expansion board
-<img
-  src={require('./img/playground.png').default}
-  alt="SwiftIO playground" width="960"
-/>
+<img src={require('./img/playground.png').default} alt="SwiftIO playground" width="960" />
 
 ## SwiftIO Micro
 
@@ -30,10 +24,7 @@ What's more, the SwiftIO Micro is compatible with the [Adafruit Feather system](
 
 Now, let's delve into the details of the board:
 
-<img
-  src={require('./img/microParts.png').default}
-  alt="Parts of Micro" width="960"
-/>
+<img src={require('./img/microParts.png').default} alt="Parts of Micro" width="960" />
 
 | Part     | Detail                                                                           |
 | -------- | -------------------------------------------------------------------------------- |
@@ -54,10 +45,7 @@ Now, let's delve into the details of the board:
 
 You can connect other hardware to the board through the pins on two sides. This is the pinout diagram of SwiftIO Micro. It shows the usage of all pins.
 
-<img
-  src={require('./img/microPinout.png').default}
-  alt="Pinout of Micro" width="960"
-/>
+<img src={require('./img/microPinout.png').default} alt="Pinout of Micro" width="960" />
 
 As mentioned before, most pins on the board are [multiplexed](./peripherals#how-are-pins-organized), therefore you need to decide the pin's usage in your code.
 
@@ -67,17 +55,11 @@ As mentioned before, most pins on the board are [multiplexed](./peripherals#how-
 
 Only with the SwiftIO Micro, you may still don't know how to start. The expansion board - SwiftIO Playground is specially designed for all newbies to get started. No wire is needed! All modules are directly connected to the shield in the middle.
 
-<img
-  src={require('./img/playgroundPins.png').default}
-  alt="playground module connection" width="720"
-/>
+<img src={require('./img/playgroundPins.png').default} alt="playground module connection" width="720" />
 
 The shield in the middle is for easier connection, and it's the SwiftIO Micro that communicates with all the modules. After you plug the SwiftIO Micro into the shield, the circuit is built. Then you could program the SwiftIO Micro to control the modules. 
 
-<img
-  src={require('./img/plugMicro.png').default}
-  alt="Plug SwiftIO Micro to the shield" width="960"
-/>
+<img src={require('./img/plugMicro.png').default} alt="Plug SwiftIO Micro to the shield" width="960" />
 
 Let's look into these modules in detail:
 
@@ -104,10 +86,7 @@ Let's look into these modules in detail:
 
 These connectors are provided in the event that you wish to disassemble the board. Please note that disassembly is a one-way process, though, and you will not be able to reconnect the parts through the included board. Once apart, use 4-pin cables to connect the module to the shield. Some modules (like LCD) don't have a connector since they require more than 4 wires and don't support 4-pin connectors. 
 
-<img
-  src={require('./img/disassembledParts.png').default}
-  alt="Each part of playground" width="960"
-/>
+<img src={require('./img/disassembledParts.png').default} alt="Each part of playground" width="960" />
 
 :::caution Attention
 Make sure not to connect these modules to the shield through the connectors since they are already connected through the board!
@@ -121,10 +100,7 @@ Make sure not to connect these modules to the shield through the connectors sinc
 
 The modules can be separated by cutting as shown below.
 
-<img
-  src={require('./img/disassemble.png').default}
-  alt="Disassemble the kit" width="360"
-/>
+<img src={require('./img/disassemble.png').default} alt="Disassemble the kit" width="360" />
 
 :::caution Attention
 Once again, you cannot put the board back together and once you've broken it apart, you will need to connect any circuits manually using cables.
