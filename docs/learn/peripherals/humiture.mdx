@@ -736,7 +736,7 @@ let result = i2c.write([UInt8(value >> 8), UInt8(value & 0xFF)], to: address)
 
 | Symbol | Meaning| Diagram |
 |--------|---------|---------|
-| **<<** | **left shift**: all bits will move to the left, and 0 will be added to the empty bits on the right. | <img src={require('./img/leftShift.png').default} alt="Left shift" width="320"/> |
+| **&lt;&lt;** | **left shift**: all bits will move to the left, and 0 will be added to the empty bits on the right. | <img src={require('./img/leftShift.png').default} alt="Left shift" width="320"/> |
 | **>>** | **right shift**: all bits will move to the right, and 0 will be added to the empty bits on the left. | <img src={require('./img/rightShift.png').default} alt="Right shift" width="320"/> |
 | **&** | **bitwise AND operator**: it will calculate each corresponding bit of two data. Only if both two bits are 1, the result will be 1, or it will be 0. | <img src={require('./img/and.png').default} alt="And operator" width="320"/> |
 | **\|** | **bitwise OR operator**: it will calculate each corresponding bit of two data. If either of the bits is 1, the result will be 1. | <img src={require('./img/or.png').default} alt="Or operator" width="320"/> |

@@ -90,7 +90,7 @@ import ReactPlayer from 'react-player/youtube';
 
 ### 2. Download mm-sdk
 
-Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/0.9.0-alpha.4)** according to your operating system. This sdk is used to build and download your project.
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/0.9.3-beta.0)** according to your operating system. This sdk is used to build and download your project.
 
 ### 3. Install MadMachine extension for VS Code
 
@@ -98,15 +98,9 @@ In Visual Studio Code,
 1. click the **Extensions** button on the left bar.
 2. enter the extension name **MadMachine** in the search box.
 3. click the **Install** button.
-<img
-  src={require('./img/install.png').default}
-  alt="Install the extension" width="960"
-/>
+<img src={require('./img/install.png').default} alt="Install the extension" width="960" />
 4. Click **⚙️ / Extension Settings** to open the settings.
-<img
-src={require('./img/settings.png').default}
-alt="Open the settings window" width="960"
-/>
+<img src={require('./img/settings.png').default} alt="Open the settings window" width="960" />
 5. Indicate the **mm-sdk location** in the box that matches your operating system.
 
 import Tabs from '@theme/Tabs';
@@ -130,10 +124,7 @@ import TabItem from '@theme/TabItem';
 </TabItem>
 <TabItem value="Linux">
 
-<img
-  src={require('./img/sdkPathLinux.png').default}
-  alt="Indicate the path of sdk on Linux." width="960"
-/>
+<img src={require('./img/sdkPathLinux.png').default} alt="Indicate the path of sdk on Linux." width="960" />
 
 </TabItem>
 </Tabs>
@@ -160,39 +151,24 @@ Now, you will start your first project.
 
 1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three buttons. Click **New Project**.
 
-<img
-  src={require('./img/create.png').default}
-  alt="Create a new project" width="960"
-/>
+<img src={require('./img/create.png').default} alt="Create a new project" width="960" />
 
 2. Choose the project as an **executable**. Your project will run on the board, so you need an executable. And the projects in the following sections are all executables.
 
-<img
-  src={require('./img/projectType.png').default}
-  alt="Choose project type" width="960"
-/>
+<img src={require('./img/projectType.png').default} alt="Choose project type" width="960" />
 
 
 3. Choose the board for this project - **SwiftIOMicro**.
 
-<img
-  src={require('./img/boardType.png').default}
-  alt="Chosse board type" width="960"
-/>
+<img src={require('./img/boardType.png').default} alt="Chosse board type" width="960" />
 
 4. **Name** the project. You could choose any descriptive name you like for the project. Then press the **Enter** key.
 
-<img
-  src={require('./img/projectName.png').default}
-  alt="Set project name" width="960"
-/>
+<img src={require('./img/projectName.png').default} alt="Set project name" width="960" />
 
 5. Choose a **location** to store the project and press **Open**.
 
-<img
-  src={require('./img/location.png').default}
-  alt="Set project location and name" width="960"
-/>
+<img src={require('./img/location.png').default} alt="Set project location and name" width="960" />
 
 Well, the project is created and will open in a new window.
 
@@ -218,19 +194,13 @@ while true {
 }
 ```
 
-<img
-  src={require('./img/code.png').default}
-  alt="Code" width="960"
-/>
+<img src={require('./img/code.png').default} alt="Code" width="960" />
 
 ##  Step 4: Connect board to computer
 
 **Connect** your SwiftIO Micro to your computer using a USB cable.
 
-<img
-  src={require('./img/connect.png').default}
-  alt="Connect your board to computer" width="960"
-/>
+<img src={require('./img/connect.png').default} alt="Connect your board to computer" width="960" />
 
 
 :::info
@@ -241,16 +211,10 @@ The SwiftIO Micro doesn't require an SD card to run your project.
 
 1. Click the **Build** button to build your project. Wait until the message **Done** appears on the window.
 
-<img
-  src={require('./img/build.png').default}
-  alt="click build button" width="960"
-/>
+<img src={require('./img/build.png').default} alt="click build button" width="960" />
 
 2. Click the **Download** button. It will take a few seconds.
 
-<img
-  src={require('./img/download.png').default}
-  alt="click download button" width="960"
-/>
+<img src={require('./img/download.png').default} alt="click download button" width="960" />
 
 After it's done, the onboard blue LED starts to blink💡.
