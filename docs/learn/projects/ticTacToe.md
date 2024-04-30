@@ -397,14 +397,12 @@ struct TicTacToeView {
             }
         }
 
-        buffer.withUnsafeBytes {
-            screen.writeBitmap(
-                x: pos.x * gridWidth + gridStroke,
-                y: pos.y * gridHeight + gridStroke,
-                width: gridInternalWidth,
-                height: gridInternalHeight,
-                data: $0)
-        }
+        screen.writeBitmap(
+            x: pos.x * gridWidth + gridStroke,
+            y: pos.y * gridHeight + gridStroke,
+            width: gridInternalWidth,
+            height: gridInternalHeight,
+            data: buffer)
     }
 
     // Draw an empty rectangle at a specified position.
@@ -423,14 +421,12 @@ struct TicTacToeView {
             }
         }
 
-        buffer.withUnsafeBytes {
-            screen.writeBitmap(
-                x: pos.x * gridWidth + gridStroke,
-                y: pos.y * gridHeight + gridStroke,
-                width: gridInternalWidth,
-                height: gridInternalHeight,
-                data: $0)
-        }
+        screen.writeBitmap(
+            x: pos.x * gridWidth + gridStroke,
+            y: pos.y * gridHeight + gridStroke,
+            width: gridInternalWidth,
+            height: gridInternalHeight,
+            data: buffer)
     }
 
     private func drawBackground() {
@@ -457,7 +453,7 @@ struct TicTacToeView {
             }
         }
 
-        screenBuffer.withUnsafeBytes { screen.writeScreen($0) }
+        screen.writeScreen(screenBuffer)
     }
 }
 

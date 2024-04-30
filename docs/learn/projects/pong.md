@@ -639,9 +639,7 @@ extension ST7789 {
             }
         }
 
-        buffer.withUnsafeBytes { ptr in
-            writeBitmap(x: x0, y: y0, width: x1 - x0, height: y1 - y0, data: ptr)
-        }
+        writeBitmap(x: x0, y: y0, width: x1 - x0, height: y1 - y0, data: buffer)
     }
 }
 ```
