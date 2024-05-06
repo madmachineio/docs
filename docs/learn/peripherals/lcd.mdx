@@ -491,9 +491,7 @@ while true {
 
             // Send the data to the screen using SPI to update the specified area.
             let x = screen.width - i * scrollStep - 1
-            buffer.withUnsafeBytes {
-                screen.writeBitmap(x: x, y: 0, width: scrollStep, height: screen.height, data: $0)
-            }
+            screen.writeBitmap(x: x, y: 0, width: scrollStep, height: screen.height, data: buffer)
 
             sleep(ms: 30)
         }
@@ -632,9 +630,7 @@ while true {
 // Draw a vertical line on the screen.
 func drawLine(x: Int, y: Int, height: Int, color: UInt16) {
     let buffer = [UInt16](repeating: color, count: height)
-    buffer.withUnsafeBytes {
-        screen.writeBitmap(x: x, y: y, width: 1, height: height, data: $0)
-    }
+    screen.writeBitmap(x: x, y: y, width: 1, height: height, data: buffer)
 }
 ```
 </TabItem>
@@ -790,9 +786,7 @@ struct Bar {
         x = (screen.width - width) / 2
 
         let data = [UInt16](repeating: color, count: width * height)
-        data.withUnsafeBytes {
-            screen.writeBitmap(x: x, y: y, width: width, height: height, data: $0)
-        }
+        screen.writeBitmap(x: x, y: y, width: width, height: height, data: data)
     }
 
     // Update indicator's position in the bar with the latest value.
@@ -901,7 +895,7 @@ Initialize an LCD.
 
 
 ```swift
-func writeBitmap(x: Int, y: Int, width w: Int, height h: Int, data: [UInt8])
+func writeBitmap(x: Int, y: Int, width w: Int, height h: Int, data: [UInt16])
 ```
 
 Fill a block of pixels on the screen.
@@ -911,14 +905,8 @@ Fill a block of pixels on the screen.
 - `x`, `y`: the coordinate of the starting point, that is, the left upper corner of the area. 
 - `width`: the width of the area.
 - `height`: the height of the area.
-- `data`: the color data stored in an UInt8 array. The pixels of the LCD need 16-bit colors, while the color values stored in the array are 8-bit, so the count of data equals width x height x 2. 
+- `data`: the color data stored in an UInt16 array.
 
-  For example, the color of the rectangle below is represented as 0xF483. So the `color` passed in should be `[0xF4, 0x83, 0xF4, 0x83, 0xF4, 0x83, 0xF4, 0x83, 0xF4, 0x83, 0xF4, 0x83]`.
-
-  <img
-      src={require('./img/writeBitmap.png').default}
-      alt="Write a bitmap on screen" width="240"
-  />
 
 ```swift
 func writePixel(x: Int, y: Int, color: UInt16)
