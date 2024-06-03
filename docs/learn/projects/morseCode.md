@@ -52,7 +52,7 @@ As you can see, the key point of this program is the state of the button. If it'
 
 ## Example code
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/12MoreProjects/MorseCode).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/13MoreProjects/MorseCode).
 
 ```swift title="MorseCode.swift" showLineNumbers
 // Import the SwiftIO library to set input/output and MadBoard to use pin id.

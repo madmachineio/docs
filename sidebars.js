@@ -47,6 +47,7 @@ const sidebars = {
         'overview/advanced/run-example',
         'overview/advanced/change-board',
         'overview/advanced/serial-debug',
+        'overview/advanced/download-resources',
         'overview/advanced/mm-sdk',
         {
           type: 'category',
@@ -119,6 +120,7 @@ const sidebars = {
           items: [
             'learn/advanced/uart',
             'learn/advanced/wifi',
+            'learn/advanced/file-system',
           ],
         },
 

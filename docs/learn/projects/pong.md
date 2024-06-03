@@ -34,7 +34,7 @@ The two potentiometers (A0, A11) are used to move paddles. The button (D1) is us
 
 ## Example code
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/12MoreProjects/Pong).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/13MoreProjects/Pong).
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
