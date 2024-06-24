@@ -29,7 +29,7 @@ The modules for this project are the accelerometer (I2C0) and the LCD (SPI0).
 
 ## Example code
 
-You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/12MoreProjects/MovingBall).
+You can download the project source code [here](https://github.com/madmachineio/MadExamples/tree/main/Examples/SwiftIOPlayground/13MoreProjects/MovingBall).
 
 
 ```swift title="MovingBall.swift" showLineNumbers
