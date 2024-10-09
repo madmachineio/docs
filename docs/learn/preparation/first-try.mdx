@@ -1,0 +1,220 @@
+---
+title: First try
+description: Install the software and run your hello world project using embedded Swift programming.
+---
+
+# First try
+
+
+Before diving into the nitty-gritty details, it's always a good idea to get hands-on and try your first project. So, let's kick off your journey by blinking an LED!
+
+:::info
+We only support macOS 11.0 and above, as well as Linux. Windows is not supported yet. 
+:::
+
+## Step 1: Set up software 
+
+At first, you will get started with the software setup process.
+
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/B5H6tOMcefI?si=DtokZEP6EBhPz1EQ'
+    controls={true}
+  />
+</div>
+
+
+
+### 1. Install USB driver
+
+1. Download **[the macOS driver](img/CH341SER_MAC.ZIP)** and unzip it. 
+2. Install the **dmg format** driver in the zip file. 
+
+  <img
+    src={require('./img/dmg.png').default}
+    alt="" width="480"
+  />
+
+3. Drag CH34xVCPDriver into Application folder.
+
+  <img
+    src={require('./img/drag.png').default}
+    alt="" width="240"
+  />
+
+4. Open LaunchPad and **open the CH34xVCPDriver** app. 
+
+    <details>
+      <summary> Click Open if there is a popup window. </summary>
+    <img
+      src={require('./img/openDriver.png').default}
+      alt="" width="240"
+    />
+    </details>
+
+5. Click the **Install** button.
+
+  <img
+    src={require('./img/installDriver.png').default}
+    alt="" width="480"
+  />
+
+  <details>
+    <summary> If there is a popup message saying System Extension Blocked. </summary>
+
+  Click Open System Settings button.
+  <img
+    src={require('./img/openSystemSettings.png').default}
+    alt="" width="240"
+  />
+
+  Click Allow.
+  <img
+    src={require('./img/allow.png').default}
+    alt="" width="480"
+  />
+
+  The driver is installed successfully.
+  <img
+    src={require('./img/installed.png').default}
+    alt="" width="240"
+  />
+  </details>
+
+:::info
+1. To uninstall the driver, remove the app to Trash.
+2. Restart the computer before reinstalling the driver.
+:::
+
+### 2. Download mm-sdk
+
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/0.9.3-beta.0)** according to your operating system. This sdk is used to build and download your project.
+
+### 3. Install MadMachine extension for VS Code
+
+In Visual Studio Code, 
+1. click the **Extensions** button on the left bar.
+2. enter the extension name **MadMachine** in the search box.
+3. click the **Install** button.
+<img src={require('./img/install.png').default} alt="Install the extension" width="960" />
+4. Click **⚙️ / Extension Settings** to open the settings.
+<img src={require('./img/settings.png').default} alt="Open the settings window" width="960" />
+5. Indicate the **mm-sdk location** in the box that matches your operating system.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Mac"
+  values={[
+    { label: 'Mac', value: 'Mac', },
+    { label: 'Linux', value: 'Linux', },
+  ]
+}>
+
+<TabItem value="Mac">
+
+<img
+  src={require('./img/sdkPathMac.png').default}
+  alt="Indicate the path of sdk on Mac." width="960"
+/>
+
+</TabItem>
+<TabItem value="Linux">
+
+<img src={require('./img/sdkPathLinux.png').default} alt="Indicate the path of sdk on Linux." width="960" />
+
+</TabItem>
+</Tabs>
+
+:::info
+If you change the location of the SDK later, don't forget to update its path. 
+:::
+
+
+OK, the software gets prepared👏.
+
+
+##  Step 2: Create a project
+
+Now, you will start your first project.
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/mKe0BYHnjDU?si=jttzKnouAKZYxZpV'
+    controls={true}
+  />
+</div>
+
+
+1. Click the **Explorer** button on the left bar. Then click the extension **MadMachine** on the bottom to show three buttons. Click **New Project**.
+
+<img src={require('./img/create.png').default} alt="Create a new project" width="960" />
+
+2. Choose the project as an **executable**. Your project will run on the board, so you need an executable. And the projects in the following sections are all executables.
+
+<img src={require('./img/projectType.png').default} alt="Choose project type" width="960" />
+
+
+3. Choose the board for this project - **SwiftIOMicro**.
+
+<img src={require('./img/boardType.png').default} alt="Chosse board type" width="960" />
+
+4. **Name** the project. You could choose any descriptive name you like for the project. Then press the **Enter** key.
+
+<img src={require('./img/projectName.png').default} alt="Set project name" width="960" />
+
+5. Choose a **location** to store the project and press **Open**.
+
+<img src={require('./img/location.png').default} alt="Set project location and name" width="960" />
+
+Well, the project is created and will open in a new window.
+
+##  Step 3: Write code
+
+Then you will need to edit the code for the project. 
+
+1. Click on the **Sources** / **main.swift** to open the file.
+2. **Copy the code below** into the file. In the [next section](../peripherals/led), you will learn how everything works.
+
+```swift title="main.swift" showLineNumbers
+import SwiftIO
+import MadBoard
+
+let led = DigitalOut(Id.D18)
+
+while true {
+    led.write(true)
+    sleep(ms: 500)
+
+    led.write(false)
+    sleep(ms: 500)
+}
+```
+
+<img src={require('./img/code.png').default} alt="Code" width="960" />
+
+##  Step 4: Connect board to computer
+
+**Connect** your SwiftIO Micro to your computer using a USB cable.
+
+<img src={require('./img/connect.png').default} alt="Connect your board to computer" width="960" />
+
+
+:::info
+The SwiftIO Micro doesn't require an SD card to run your project. 
+:::
+
+##  Step 5: Download code to the board
+
+1. Click the **Build** button to build your project. Wait until the message **Done** appears on the window.
+
+<img src={require('./img/build.png').default} alt="click build button" width="960" />
+
+2. Click the **Download** button. It will take a few seconds.
+
+<img src={require('./img/download.png').default} alt="click download button" width="960" />
+
+After it's done, the onboard blue LED starts to blink💡.

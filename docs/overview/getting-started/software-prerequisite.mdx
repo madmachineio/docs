@@ -1,0 +1,126 @@
+---
+title: 1. Software prerequisite
+description: Install and set up the MadMachine VS Code extension.
+---
+
+
+# 1. Software prerequisite
+
+At first, you could install the MadMachine extension for Visual Studio Code. It allows you to create a new project, compile and download it to your board. 
+
+:::info
+We only support macOS 11.0 and above, as well as Linux. Windows is not supported yet. 
+:::
+
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/B5H6tOMcefI?si=DtokZEP6EBhPz1EQ'
+    controls={true}
+  />
+</div>
+
+## 1. Install USB driver 
+
+1. Download **[the macOS driver](../../learn/preparation/img/CH341SER_MAC.ZIP)** and unzip it. 
+2. Install the **dmg format** driver in the zip file. 
+<img src={require('./img/dmg.png').default} alt="" width="480" />
+
+3. Drag CH34xVCPDriver into Application folder.
+<img src={require('./img/drag.png').default} alt="" width="240" />
+
+4. Open LaunchPad and **open the CH34xVCPDriver** app. 
+
+    <details>
+      <summary> Click Open if there is a popup window. </summary>
+      <img src={require('./img/openDriver.png').default} alt="" width="240" />
+    </details>
+
+5. Click the **Install** button.
+
+  <img src={require('./img/installDriver.png').default} alt="" width="480" />
+
+  <details>
+    <summary> If there is a popup message saying System Extension Blocked. </summary>
+
+  Click Open System Settings button.
+  <img src={require('./img/openSystemSettings.png').default} alt="" width="240" />
+
+  Click Allow.
+  <img src={require('./img/allow.png').default} alt="" width="480" />
+
+  The driver is installed successfully.
+  <img src={require('./img/installed.png').default} alt="" width="240" />
+  </details>
+
+:::info
+1. To uninstall the driver, remove the app to Trash.
+2. Restart the computer before reinstalling the driver.
+:::
+
+After the driver is installed, you should see the port _tty.wchusbserialx_ in serial monitor if you connect your board to the computer.
+
+## 2. Download mm-sdk
+
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/0.9.3-beta.0)** according to your operating system and **unzip** it.
+
+## 3. Install the extension
+
+1. Open the **Visual Studio Code**. Click the **Extension** icon on the left activity bar.
+2. Enter **MadMachine** in the search box to find the extension in its marketplace.
+3. Click the **Install** button. 
+
+<img src={require('./img/install.png').default} alt="Install the MadMachine extension" width="960" />
+
+
+:::info
+For advanced users, you could edit your code wherever you like and use the [mm-sdk](../advanced/mm-sdk) to compile your code.
+:::
+
+4. Click ⚙️ / **Extension Settings** to open the settings.
+  
+  The extension relies on the mm-sdk to do all its work. You need to indicate sdk's path before using the extension.
+
+<img src={require('./img/settings.png').default} alt="Set the MadMachine extension" width="960" />
+
+5. Enter the **path of the sdk** in the box that matches your operating system.
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Mac"
+  values={[
+    { label: 'Mac', value: 'Mac', },
+    { label: 'Linux', value: 'Linux', },
+  ]
+}>
+
+<TabItem value="Mac">
+
+<img src={require('./img/sdkPathMac.png').default} alt="Indicate the path of sdk on Mac." width="960" />
+
+</TabItem>
+<TabItem value="Linux">
+
+<img src={require('./img/sdkPathLinux.png').default} alt="Indicate the path of sdk on Linux." width="960" />
+
+</TabItem>
+</Tabs>
+
+
+:::caution important
+Make sure the sdk path is correct, or the extension won't work.
+:::
+
+Now, the extension gets ready👏.
+
+The extension is at the bottom of the Explorer panel. All you need for your project is these three buttons:
+
+- **Build**: build your project after you finish the code. If there are any errors, you can modify your code according to the message in the terminal.
+- **Download**: download the generated file after building your project.
+- **New Project**: create a new MadMachine project. You will choose the project type and the board type.
+
+<img src={require('./img/extension.png').default} alt="MadMachine extension" width="960" />

@@ -1,0 +1,511 @@
+---
+title: Mission10_Humiture_Sensor
+description: Learn how to measure the temperature and humidity. You will program your board in Swift to allow the sensor to measure the values.
+---
+
+# Mission10_Humiture_Sensor
+
+In the previous mission, you learn about the LCD. Now you're going to use it to show the current temperature in your room. So you will need a temperature sensor to measure the value.
+
+
+
+## What you need
+
+The parts you will use are all included in the [Maker kit](../../hardware/maker-kit).
+
+- SwiftIO board
+- Shield
+- Humiture sensor
+- 16x2 LCD
+- 4-pin cable
+
+
+## Circuit
+
+1. Plug the shield on top of the SwiftIO board.
+2. Connect the **humiture sensor and the LCD to I2C0**. There are three available pins, you could choose any two.
+
+<img
+  src={require('./img/humitureSchematic.png').default}
+  alt="Circuit diagram" width="480"
+/>
+
+
+## Example code
+
+Open the project `Mission10_Humiture_Sensor` in the folder [`MadExamples`](https://github.com/madmachineio/MadExamples)/`Examples`/`MakerKit` if you downloaded the folder.
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="Mission10_Humiture_Sensor"
+  values={[
+    { label: 'Mission10_Humiture_Sensor.swift', value: 'Mission10_Humiture_Sensor', },
+    { label: 'SHT3x.swift', value: 'SHT3x', },
+    { label: 'LCD1602.swift', value: 'LCD1602', },
+  ]
+}>
+
+<TabItem value="Mission10_Humiture_Sensor">
+
+```swift showLineNumbers
+import SwiftIO
+import MadBoard
+
+@main
+public struct Mission10_Humiture_Sensor {
+    public static func main() {
+        // Initialize the LCD and sensor to use the I2C communication.
+        let i2c = I2C(Id.I2C0)
+        let lcd = LCD1602(i2c)
+        let sht = SHT3x(i2c)
+
+        while true{
+            // Read and display the temperature on the LCD and update the value every 1s.
+
+            let temp = sht.readCelsius()
+
+            lcd.write(x:0, y:0, "Temperature:")
+            lcd.write(x: 0, y: 1, temp)
+            lcd.write(x:4, y:1, " ")
+            lcd.write(x:5, y:1, "C")
+
+            sleep(ms: 1000)
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="SHT3x">
+
+```swift showLineNumbers
+import SwiftIO
+
+final public class SHT3x {
+    
+    let i2c: I2C
+    let address: UInt8
+
+    private var readBuffer = [UInt8](repeating: 0, count: 6)
+    
+    public init(_ i2c: I2C, address: UInt8 = 0x44) {
+        self.i2c = i2c
+        self.address = address
+        
+        reset()
+    }
+    
+    public func reset() {
+        sleep(ms: 2)
+        try? writeCommand(.softReset)
+        sleep(ms: 2)
+    }
+    
+    public func readCelsius() -> Float {
+        try? readRawValue(into: &readBuffer)
+        let rawTemp = UInt16(readBuffer[0]) << 8 | UInt16(readBuffer[1])
+        return 175.0 * Float(rawTemp) / 65535.0 - 45.0
+    }
+    
+    public func readFahrenheit() -> Float {
+        try? readRawValue(into: &readBuffer)
+        let rawTemp = UInt16(readBuffer[0]) << 8 | UInt16(readBuffer[1])
+        return 315.0 * Float(rawTemp) / 65535.0 - 49.0
+    }
+ 
+    public func readHumidity() -> Float {
+        try? readRawValue(into: &readBuffer)
+        let rawHumi = UInt16(readBuffer[3]) << 8 | UInt16(readBuffer[4])
+        return 100.0 * Float(rawHumi) / 65535.0
+    }
+}
+
+extension SHT3x {
+    private enum Command: UInt16 {
+        case readStatus     = 0xF32D
+        case clearStatus    = 0x3041
+        case softReset      = 0x30A2
+        case heaterEnable   = 0x306D
+        case heaterDisable  = 0x3066
+        
+        case measureHigh    = 0x2400
+        case measureMedium  = 0x240B
+        case measureLow     = 0x2416
+        
+        case measureStretchHigh     = 0x2C06
+        case measureStretchMedium   = 0x2C0D
+        case measureStretchLow      = 0x2C10
+    }
+    
+    private func writeCommand(_ command: Command) throws {
+        let value = command.rawValue
+        let result = i2c.write([UInt8(value >> 8), UInt8(value & 0xFF)], to: address)
+        if case .failure(let err) = result {
+            throw err
+        }
+    }
+
+    private func readRawValue(into buffer: inout [UInt8]) throws {
+        for i in 0..<buffer.count {
+            buffer[i] = 0
+        }
+
+        try? writeCommand(.measureMedium)
+        sleep(ms: 8)
+
+        let result = i2c.read(into: &buffer, from: address)
+        if case .failure(let err) = result {
+            throw err
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="LCD1602">
+
+```swift showLineNumbers
+import SwiftIO
+
+final public class LCD1602 {
+    
+    private enum Command: UInt8 {
+        case clearDisplay   = 0x01
+        case returnHome     = 0x02
+        case entryModeSet   = 0x04
+        case displayControl = 0x08
+        case cursorShift    = 0x10
+        case functionSet    = 0x20
+        case setCGRAMAddr   = 0x40
+        case setDDRAMAddr   = 0x80
+    }
+    
+    private struct FunctionMode: OptionSet {
+        let rawValue: UInt8
+        
+        static let _4BitMode = FunctionMode([])
+        static let _8BitMode = FunctionMode(rawValue: 0x10)
+        
+        static let _1Line = FunctionMode([])
+        static let _2Line = FunctionMode(rawValue: 0x08)
+        
+        static let _5x8Dots = FunctionMode([])
+        static let _5x10Dots = FunctionMode(rawValue: 0x04)
+    }
+    
+    private struct ControlMode: OptionSet {
+        let rawValue: UInt8
+        
+        static let displayOff = ControlMode([])
+        static let displayOn = ControlMode(rawValue: 0x04)
+        
+        static let cursorOff = ControlMode([])
+        static let cursorOn = ControlMode(rawValue: 0x02)
+        
+        static let blinkOff = ControlMode([])
+        static let blinkOn = ControlMode(rawValue: 0x01)
+    }
+    
+    private struct EntryMode: OptionSet {
+        let rawValue: UInt8
+        
+        static let entryRight = EntryMode([])
+        static let entryLeft = EntryMode(rawValue: 0x02)
+        
+        static let entryShiftDecrement = EntryMode([])
+        static let entryShiftIncrement = EntryMode(rawValue: 0x01)
+    }
+    
+    private struct ShiftMode: OptionSet {
+        let rawValue: UInt8
+        
+        static let cursorMove = ShiftMode([])
+        static let displayMove = ShiftMode(rawValue: 0x08)
+        
+        static let moveLeft = ShiftMode([])
+        static let moveRight = ShiftMode(rawValue: 0x04)
+    }
+    
+    let i2c: I2C
+    let address: UInt8
+    
+    private var funntionModeConfig: FunctionMode
+    private var controlModeConfig: ControlMode
+    private var entryModeConfig: EntryMode
+    private var shiftModeConfig: ShiftMode
+    
+    public init(_ i2c: I2C, address: UInt8 = 0x3E,
+                columns: UInt8 = 16, rows: UInt8 = 2, dotSize: UInt8 = 8) {
+        
+        guard (columns > 0) && (rows == 1 || rows == 2)
+                && (dotSize == 8 || dotSize == 10) else {
+            fatalError("LCD1602 parameter error, init failed")
+        }
+        
+        self.i2c = i2c
+        self.address = address
+        
+        funntionModeConfig = FunctionMode([])
+        controlModeConfig = ControlMode([.displayOn, .cursorOff, .blinkOff])
+        entryModeConfig = EntryMode([.entryLeft, .entryShiftDecrement])
+        shiftModeConfig = ShiftMode([])
+        
+        if rows > 1 {
+            funntionModeConfig.insert(._2Line)
+        }
+        
+        if dotSize != 8 && rows == 1 {
+            funntionModeConfig.insert(._5x10Dots)
+        }
+        
+        writeConfig(funntionModeConfig, to: .functionSet)
+        sleep(ms: 5)
+        
+        writeConfig(funntionModeConfig, to: .functionSet)
+        sleep(ms: 1)
+        
+        writeConfig(funntionModeConfig, to: .functionSet)
+        writeConfig(funntionModeConfig, to: .functionSet)
+        
+        leftToRight()
+        noAutoScroll()
+        clear()
+        turnOn()
+    }
+    
+    public func clear() {
+        writeCommand(.clearDisplay)
+        sleep(ms: 2)
+    }
+    
+    public func home() {
+        writeCommand(.returnHome)
+        sleep(ms: 2)
+    }
+    
+    public func turnOn() {
+        controlModeConfig.insert(.displayOn)
+        controlModeConfig.remove(.displayOff)
+        writeConfig(controlModeConfig, to: .displayControl)
+    }
+    
+    public func turnOff() {
+        controlModeConfig.insert(.displayOff)
+        controlModeConfig.remove(.displayOn)
+        writeConfig(controlModeConfig, to: .displayControl)
+    }
+    
+    public func cursorOn() {
+        controlModeConfig.insert(.cursorOn)
+        controlModeConfig.remove(.cursorOff)
+        writeConfig(controlModeConfig, to: .displayControl)
+    }
+    
+    public func cursorOff() {
+        controlModeConfig.insert(.cursorOff)
+        controlModeConfig.remove(.cursorOn)
+        writeConfig(controlModeConfig, to: .displayControl)
+    }
+    
+    public func cursorBlinkOn() {
+        controlModeConfig.insert(.blinkOn)
+        controlModeConfig.remove(.blinkOff)
+        writeConfig(controlModeConfig, to: .displayControl)
+    }
+    
+    public func cursorBlinkOff() {
+        controlModeConfig.insert(.blinkOff)
+        controlModeConfig.remove(.blinkOn)
+        writeConfig(controlModeConfig, to: .displayControl)
+    }
+    
+    public func leftToRight() {
+        entryModeConfig.insert(.entryLeft)
+        entryModeConfig.remove(.entryRight)
+        writeConfig(entryModeConfig, to: .entryModeSet)
+    }
+    
+    public func rightToLeft() {
+        entryModeConfig.insert(.entryRight)
+        entryModeConfig.remove(.entryLeft)
+        writeConfig(entryModeConfig, to: .entryModeSet)
+    }
+    
+    public func autoScroll() {
+        entryModeConfig.insert(.entryShiftIncrement)
+        entryModeConfig.remove(.entryShiftDecrement)
+        writeConfig(entryModeConfig, to: .entryModeSet)
+    }
+    
+    public func noAutoScroll() {
+        entryModeConfig.insert(.entryShiftDecrement)
+        entryModeConfig.remove(.entryShiftIncrement)
+        writeConfig(entryModeConfig, to: .entryModeSet)
+    }
+    
+    public func scrollLeft() {
+        shiftModeConfig.insert([.displayMove, .moveLeft])
+        shiftModeConfig.remove([.cursorMove, .moveRight])
+        writeConfig(shiftModeConfig, to: .cursorShift)
+    }
+    
+    public func scrollRight() {
+        shiftModeConfig.insert([.displayMove, .moveRight])
+        shiftModeConfig.remove([.cursorMove, .moveLeft])
+        writeConfig(shiftModeConfig, to: .cursorShift)
+    }
+    
+    public func clear(x: Int, y: Int, count: Int = 1) {
+        guard count > 0 else {
+            return
+        }
+        
+        let data: [UInt8] = [0x40, 0x20]
+        
+        setCursor(x: x, y: y)
+        for _ in 1...count {
+            i2c.write(data, to: address)
+        }
+        setCursor(x: x, y: y)
+    }
+    
+    public func setCursor(x: Int, y: Int) {
+        guard x >= 0 && y >= 0 else { 
+            return
+        }
+        let val: UInt8 = y == 0 ? UInt8(x) | 0x80 : UInt8(x) | 0xc0
+        writeCommand(val)
+    }
+    
+    public func write(x: Int, y: Int, _ str: String) {
+        setCursor(x: x, y: y)
+        writeData(str)
+    }
+    
+    public func write(x: Int, y: Int, _ num: Int) {
+        write(x: x, y: y, String(num))
+    }
+    
+    public func write(x: Int, y: Int, _ num: Float, decimal: Int? = 1) {
+        if let decimal = decimal {
+            if decimal <= 0 {
+                write(x: x, y: y, String(Int(num)))
+                return
+            }
+            
+            var mul = 1
+            for _ in 0..<decimal {
+                mul *= 10
+            }
+            let expandValue = Int(num * Float(mul))
+            write(x: x, y: y, String(Float(expandValue) / Float(mul)))
+        } else {
+            write(x: x, y: y, String(num))
+        }
+    }
+}
+
+extension LCD1602 {
+    
+    private func writeCommand(_ command: Command) {
+        writeCommand(command.rawValue)
+    }
+    
+    private func writeCommand(_ value: UInt8) {
+        let data: [UInt8] = [0x80, value]
+        i2c.write(data, to: address)
+    }
+    
+    private func writeConfig<T: OptionSet>(_ config: T, to command: Command) {
+        let value = config.rawValue as? UInt8
+        guard  value != nil else {
+            return
+        }
+        writeCommand(value! | command.rawValue)
+    }
+    
+    private func writeData(_ str: String) {
+        let bytes: [UInt8] = Array(str.utf8)
+        var data: [UInt8] = [0x40, 0]
+        
+        for byte in bytes {
+            data[1] = byte
+            i2c.write(data, to: address)
+        }
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+import ReactPlayer from 'react-player/youtube';
+
+<div className='row row--no-gutters'>
+  <ReactPlayer
+    url='https://youtu.be/_ZZUwAj6Ttc'
+    controls={true}
+  />
+</div>
+
+## Background
+
+### Humiture sensor
+The humiture sensor can sense the temperature and humidity at the same time. This one uses the I2C protocol to communicate with the SwiftIO board. You can find a file [`SHT3x.swift`](https://github.com/madmachineio/MadExamples/blob/main/Examples/MakerKit/Mission10_Humiture_Sensor/Sources/Mission10_Humiture_Sensor/SHT3x.swift) in example code to read the values.
+
+## Code analysis
+
+In this project, there is the file `LCD1602.swift` for the LCD and the file `SHT3x.swift` for the sensor. You can directly use them to simplify your code and don't need to configure them according to their datasheet. 
+
+So let's come to the file `Mission10_Humiture_Sensor.swift`.
+
+```swift
+import SwiftIO
+import MadBoard
+```
+Import the two libraries: [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio) and [MadBoard](https://github.com/madmachineio/MadBoards/blob/main/Sources/MadBoards/SwiftIOBoard.swift). **SwiftIO** is used to control the input and output of all boards. **MadBoard** defines the pin name of the board.
+
+```swift
+let i2c = I2C(Id.I2C0)
+let lcd = LCD1602(i2c)
+let sht = SHT3x(i2c)
+```
+Initialize the I2C interface I2C0. Then initialize the LCD and the sensor. Both of them need the I2C interface as their parameter.
+
+```swift
+let temp = sht.readCelsius()
+```
+To get the temperature, you need the method `readCelsius()` in the file `SHT3x.swift`. It will calculate the temperature into Celsius.
+
+```swift
+lcd.write(x:0, y:0, "Temperature:")
+lcd.write(x: 0, y: 1, temp)
+lcd.write(x:4, y:1, " ")
+lcd.write(x:5, y:1, "C")
+```
+As you get the value, you can display it on the LCD. The four statements are all about the content to be displayed:
+
+- The first row of the LCD will display the text "Temperature:". It starts from the origin.
+- The temperature displays on the second row from the first column. They will take up four characters.
+- The fifth is blank to separate the value from the unit.
+- The sixth is the unit.
+
+<img
+  src={require('./img/lcdContent.png').default}
+  alt="Content on the LCD" width="480"
+/>
+
+```swift
+sleep(ms: 1000)
+```
+The sensor will read value every 1s, so the value on the LCD will refresh per second.
+
+## Reference
+
+[I2C](https://madmachineio.github.io/SwiftIO/documentation/swiftio/i2c) - use the I2C protocol to communicate with other devices.
+
+[MadBoard](https://github.com/madmachineio/MadBoards) - find the corresponding pin ids of your board.
