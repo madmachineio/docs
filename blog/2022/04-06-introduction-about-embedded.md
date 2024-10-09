@@ -9,6 +9,8 @@ Thanks [**janhendry**](https://github.com/janhendry) for helping me improve the 
 
 ## What is "Embedded, Bare-metal, Real-time, Microcontroller, Arduino, Raspberry Pi"
 
+<!-- truncate -->
+
 Sorry to put so many technical terms at this beginning. I met so many people who felt confused about these terms. Of course you will, because it's hard to find any precise definitions if you google them. First, I'll give a brief explanation about them.
 
 * **Embedded**: At the very beginning, the meaning of embedded application is pretty intuitive. It refers to a kind of software built into any machine other than a general-purpose computer. But its meaning is becoming vague and confused nowadays. You could find so many different explanations with google. I prefer the one on [wikipedia](https://en.wikipedia.org/wiki/Embedded_software): **If the main software functions are not initiated/controlled via a human interface, but through machine-interfaces, you could call it embedded application**, from simple firmware that controls the microwave oven to complicated Android-based automotive HMIs. Many people might think it is relevant to the complexity and performance of applications, or if an OS is used, and that’s not the case. 

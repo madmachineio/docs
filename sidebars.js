@@ -18,7 +18,7 @@ const sidebars = {
 
   // But you can create a sidebar manually
   
-  docsSidebar: [
+  overviewSidebar: [
     'overview/introduction', 
     {
       type: 'category',
@@ -247,4 +247,4 @@ const sidebars = {
   ],
 };
 
-module.exports = sidebars;
+export default sidebars;
