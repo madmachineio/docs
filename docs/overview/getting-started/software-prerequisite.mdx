@@ -9,7 +9,7 @@ description: Install and set up the MadMachine VS Code extension.
 At first, you could install the MadMachine extension for Visual Studio Code. It allows you to create a new project, compile and download it to your board. 
 
 :::info
-We only support macOS 11.0 and above, as well as Linux. Windows is not supported yet. 
+We only support macOS 12.0 and above, as well as Linux. Windows is not supported yet.
 :::
 
 import ReactPlayer from 'react-player/youtube';
@@ -21,7 +21,8 @@ import ReactPlayer from 'react-player/youtube';
   />
 </div>
 
-## 1. Install USB driver 
+
+## 1. Install USB-Serial driver
 
 1. Download **[the macOS driver](../../learn/preparation/img/CH341SER_MAC.ZIP)** and unzip it. 
 2. Install the **dmg format** driver in the zip file. 
@@ -63,9 +64,55 @@ After the driver is installed, you should see the port _tty.wchusbserialx_ in se
 
 ## 2. Download mm-sdk
 
-Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/0.9.3-beta.0)** according to your operating system and **unzip** it.
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.0-alpha.2)** according to your operating system and **unzip** it.
 
-## 3. Install the extension
+
+## 3. Setting up the Swift development enviroment
+
+<Tabs
+  defaultValue="macOS"
+  values={[
+    { label: 'macOS', value: 'macOS', },
+    { label: 'Linux', value: 'Linux', },
+  ]
+}>
+
+<TabItem value="macOS">
+
+Since the current pre-release version of the SDK is based on the **main branch (September 25, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility. Step 2 will no longer be necessary after Swift 6.1 is released.
+
+1. [Download](https://developer.apple.com/xcode) and install Xcode.
+2. [Download](https://www.swift.org/install/macos) and install the development snapshot **(main branch build)** of the Swift toolchain(.pkg), it will install itself to `/Library/Developer/Toolchains`.
+
+</TabItem>
+
+<TabItem value="Linux">
+
+Since the current prerelease version of the SDK is based on the **main branch (September 25, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility.
+
+1. [Download](https://www.swift.org/install/linux/ubuntu/22_04) the development snapshot **(main branch build)** of the Swift toolchain(.tar.gz).
+2. Unzip the `.tar.gz` file into the SDK's `usr` path, and it will appear as shown below:
+
+```md
+mm-sdk
+├── boards
+├── lib
+├── mm
+└── usr
+    ├── arm-none-eabi
+    ├── bin
+    ├── include
+    ├── lib
+    ├── local
+    ├── mm
+    └── share
+```
+
+</TabItem>
+</Tabs>
+
+
+## 4. Install MadMachine extension for VS Code
 
 1. Open the **Visual Studio Code**. Click the **Extension** icon on the left activity bar.
 2. Enter **MadMachine** in the search box to find the extension in its marketplace.
@@ -91,18 +138,19 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
-  defaultValue="Mac"
+  defaultValue="macOS"
   values={[
-    { label: 'Mac', value: 'Mac', },
+    { label: 'macOS', value: 'macOS', },
     { label: 'Linux', value: 'Linux', },
   ]
 }>
 
-<TabItem value="Mac">
+<TabItem value="macOS">
 
-<img src={require('./img/sdkPathMac.png').default} alt="Indicate the path of sdk on Mac." width="960" />
+<img src={require('./img/sdkPathMac.png').default} alt="Indicate the path of sdk on macOS." width="960" />
 
 </TabItem>
+
 <TabItem value="Linux">
 
 <img src={require('./img/sdkPathLinux.png').default} alt="Indicate the path of sdk on Linux." width="960" />
