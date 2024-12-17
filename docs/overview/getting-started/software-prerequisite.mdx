@@ -64,7 +64,7 @@ After the driver is installed, you should see the port _tty.wchusbserialx_ in se
 
 ## 2. Download mm-sdk
 
-Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.0-alpha.3)** according to your operating system and **unzip** it.
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.0-alpha.9)** according to your operating system and **unzip** it.
 
 
 ## 3. Setting up the Swift development enviroment
@@ -79,19 +79,65 @@ Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.
 
 <TabItem value="macOS">
 
-Since the current pre-release version of the SDK is based on the **main branch (September 25, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility. Step 2 will no longer be necessary after Swift 6.1 is released.
+Since the current pre-release version of the SDK is based on the **release/6.1 branch (December 15, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility. Step 2 will no longer be necessary after Swift 6.1 is released.
 
 1. [Download](https://developer.apple.com/xcode) and install Xcode.
-2. [Download](https://www.swift.org/install/macos) and install the development snapshot **(main branch build)** of the Swift toolchain(.pkg), it will install itself to `/Library/Developer/Toolchains`.
+2. [Download](https://www.swift.org/install/macos) and install the development snapshot **(release/6.1 branch build)** of the Swift toolchain(.pkg), it will install itself to `/Library/Developer/Toolchains`.
 
 </TabItem>
 
 <TabItem value="Linux">
 
-Since the current prerelease version of the SDK is based on the **main branch (September 25, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility.
+Since the current prerelease version of the SDK is based on the **release/6.1 branch (December 15, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility.
 
-1. [Download](https://www.swift.org/install/linux/ubuntu/22_04) the development snapshot **(main branch build)** of the Swift toolchain(.tar.gz).
-2. Unzip the `.tar.gz` file into the SDK's `usr` path, and it will appear as shown below:
+1. Install required dependencies:
+
+**Ubuntu 22.04**
+```shell
+sudo apt-get install \
+          binutils \
+          git \
+          gnupg2 \
+          libc6-dev \
+          libcurl4-openssl-dev \
+          libedit2 \
+          libgcc-11-dev \
+          libpython3-dev \
+          libsqlite3-0 \
+          libstdc++-11-dev \
+          libxml2-dev \
+          libz3-dev \
+          pkg-config \
+          python3-lldb-13 \
+          tzdata \
+          unzip \
+          zlib1g-dev
+```
+
+**Ubuntu 24.04**
+```shell
+sudo apt-get install \
+          binutils \
+          git \
+          gnupg2 \
+          libc6-dev \
+          libcurl4-openssl-dev \
+          libedit2 \
+          libgcc-13-dev \
+          libncurses-dev \
+          libpython3-dev \
+          libsqlite3-0 \
+          libstdc++-13-dev \
+          libxml2-dev \
+          libz3-dev \
+          pkg-config \
+          tzdata \
+          unzip \
+          zlib1g-dev
+```
+
+2. [Download](https://www.swift.org/install/linux/ubuntu/22_04) the development snapshot **(release/6.1 branch build)** of the Swift toolchain(.tar.gz).
+3. Unzip the `.tar.gz` file into the SDK's `usr` path, and it will appear as shown below:
 
 ```md
 mm-sdk
