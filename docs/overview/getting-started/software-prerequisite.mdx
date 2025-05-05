@@ -24,7 +24,7 @@ import ReactPlayer from 'react-player/youtube';
 
 ## 1. Install USB-Serial driver
 
-1. Download **[the macOS driver](../../learn/preparation/img/CH341SER_MAC.ZIP)** and unzip it. 
+1. Download **[the macOS driver](../../learn/preparation/img/CH341SER_MAC_V19.zip)** and unzip it. 
 2. Install the **dmg format** driver in the zip file. 
 <img src={require('./img/dmg.png').default} alt="" width="480" />
 
@@ -64,7 +64,7 @@ After the driver is installed, you should see the port _tty.wchusbserialx_ in se
 
 ## 2. Download mm-sdk
 
-Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.0-alpha.9)** according to your operating system and **unzip** it.
+Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.0-beta.0)** according to your operating system and **unzip** it.
 
 
 ## 3. Setting up the Swift development enviroment
@@ -79,16 +79,14 @@ Download the **[mm-sdk](https://github.com/madmachineio/mm-sdk/releases/tag/1.1.
 
 <TabItem value="macOS">
 
-Since the current pre-release version of the SDK is based on the **release/6.1 branch (December 15, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility. Step 2 will no longer be necessary after Swift 6.1 is released.
+Since the Swift toolchain included in Xcode doesn't contain the embedded libraries, you need to install latest Swift toolchain release from [Swift.org](https://swift.org) 
 
 1. [Download](https://developer.apple.com/xcode) and install Xcode.
-2. [Download](https://www.swift.org/install/macos) and install the development snapshot **(release/6.1 branch build)** of the Swift toolchain(.pkg), it will install itself to `/Library/Developer/Toolchains`.
+2. [Download](https://download.swift.org/swift-6.1-release/xcode/swift-6.1-RELEASE/swift-6.1-RELEASE-osx.pkg) and install the Package Installer **(release/6.1)** of the Swift toolchain(.pkg), it will install itself to `/Library/Developer/Toolchains`.
 
 </TabItem>
 
 <TabItem value="Linux">
-
-Since the current prerelease version of the SDK is based on the **release/6.1 branch (December 15, 2024 or newer)** build of the Swift toolchain, you need to install the development snapshot of the Swift toolchain for compatibility.
 
 1. Install required dependencies:
 
@@ -136,7 +134,7 @@ sudo apt-get install \
           zlib1g-dev
 ```
 
-2. [Download](https://www.swift.org/install/linux/ubuntu/22_04) the development snapshot **(release/6.1 branch build)** of the Swift toolchain(.tar.gz).
+2. [Download](https://www.swift.org/install/linux/ubuntu) the tarball package **(.tar.gz)** of the latest Swift toolchain release.
 3. Unzip the `.tar.gz` file into the SDK's `usr` path, and it will appear as shown below:
 
 ```md
