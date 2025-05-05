@@ -38,7 +38,7 @@ Each device has its own quirky way of configuration that often involves diving i
 
 3. **Graphics Primitives**: MadGraphics provides efficient implementations of fundamental graphics types:
    - `Bitmap`: A generic class for storing and manipulating pixel data
-   - `Canvas`: A specialized bitmap for 32-bit RGBA color representation
+   - `Canvas`: A specialized bitmap for 32-bit ARGB color representation
    - `Mask`: A bitmap specifically for alpha channel data
    - `Pixel`: A type for handling 32-bit color values with ARGB format
 
@@ -59,3 +59,8 @@ The library is particularly well-suited for applications requiring:
 - Text rendering with advanced layout features
 - Efficient pixel manipulation
 - Precise control over rendering performance
+
+
+## [MadExamples](https://github.com/madmachineio/MadExamples)
+
+It contains a series of demo projects to guide you from fundamental concepts, including electronics and Swift programming, and to progressively advanced use cases such as sound generation and graphic display. Additionally, it is complemented by a series of comprehensive tutorials to provide detailed guidance throughout your learning journey.
