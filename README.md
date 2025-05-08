@@ -11,7 +11,7 @@ There are 5 sections in total, which allow you to get familiar with the usage, e
 - **Overview** - get familiar with the MadMachine project and learn basic operations and useful guides for your projects.
 - **Learning Playground** - learn from zero electronics and language and understand how everything works using SwiftIO Playground Kit.
 - **Hardware** - know all hardware in the MadMachine platform.
-- **API Reference** - consult the documentation of APIs as you program your board.
+- **Library Reference** - consult the documentation of APIs as you program your board.
 - **Blog** - get updates about how the whole system works and dive deeper into some technical details.
 
 Last but not least, if you find something confusing, or you have any suggestions, welcome to create an issue or open a pull request. 

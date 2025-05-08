@@ -1,10 +1,10 @@
 ---
-title: API Reference
-description: When you program your board, you can consult the references to use all functionalities.
+title: Library Reference
+description: When you program your board, you can consult the library references to use all functionalities.
 slug: /reference
 ---
 
-# API Reference
+# Library Reference
 
 
 ## [SwiftIO](https://madmachineio.github.io/SwiftIO/documentation/swiftio)
