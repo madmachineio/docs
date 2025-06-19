@@ -7,51 +7,37 @@ description: Learn to use mm sdk to build and download your project.
 
 ## MM SDK
 
-The mm-sdk contains everything you need to build a MadMachine project, either a library or an executable.
+The mm-sdk contains eveything you need to build a MadMachine project, either a library or an executable.
 
 A MadMachine project is structured the same as a [Swift package](https://swift.org/package-manager).
 
 Download the latest release depending on your OS on the [Releases page](https://github.com/madmachineio/mm-sdk/releases).
 
+The latest features would be added to this SDK first and then integrated into the MadMachine IDE.
+
 ## What is inside the SDK
 
 1. Boards
    * Board abstraction libraries based on [Zephyr](https://github.com/zephyrproject-rtos/zephyr)
+
 2. mm
-   * Python script to help to build the project
+   * Python script which is used to help building the project
+
 3. usr (This directory is only contained in the [release package](https://github.com/madmachineio/mm-sdk/releases), not in the git repo)
-   * Clang, Swift compiler, SwiftPM tools, etc.
+   * GCC tools/libraries etc.
    * Standard library and arch related libraries
    * Compiled Python build tool
 
-## Usage (macOS and Linux)
+## Usage (Take macOS and Linux for example)
 
 ### Install required dependencies:
 
 #### macOS
 
-Install XCode and open it so it can install any necessary components.
+Since the Swift toolchain included in Xcode doesn't contain the embedded libraries, you need to install latest Swift toolchain release from [Swift.org](https://swift.org) 
 
-#### Ubuntu 18.04
 
-```bash
-sudo apt-get install \
-          binutils \
-          git \
-          libc6-dev \
-          libcurl4 \
-          libedit2 \
-          libgcc-5-dev \
-          libpython2.7 \
-          libsqlite3-0 \
-          libstdc++-5-dev \
-          libxml2 \
-          pkg-config \
-          tzdata \
-          zlib1g-dev
-```
-
-#### Ubuntu 20.04
+#### Ubuntu 22.04
 
 ```bash
 sudo apt-get install \
@@ -59,18 +45,43 @@ sudo apt-get install \
           git \
           gnupg2 \
           libc6-dev \
-          libcurl4 \
+          libcurl4-openssl-dev \
           libedit2 \
-          libgcc-9-dev \
-          libpython2.7 \
+          libgcc-11-dev \
+          libpython3-dev \
           libsqlite3-0 \
-          libstdc++-9-dev \
-          libxml2 \
+          libstdc++-11-dev \
+          libxml2-dev \
+          libz3-dev \
+          pkg-config \
+          python3-lldb-13 \
+          tzdata \
+          unzip \
+          zlib1g-dev
+```
+
+
+#### Ubuntu 24.04
+
+```bash
+sudo apt-get install \
+          binutils \
+          git \
+          gnupg2 \
+          libc6-dev \
+          libcurl4-openssl-dev \
+          libedit2 \
+          libgcc-13-dev \
+          libncurses-dev \
+          libpython3-dev \
+          libsqlite3-0 \
+          libstdc++-13-dev \
+          libxml2-dev \
           libz3-dev \
           pkg-config \
           tzdata \
-          zlib1g-dev \
-          libncurses5
+          unzip \
+          zlib1g-dev
 ```
 
 ### Download the mm-sdk
@@ -99,31 +110,30 @@ python3 ~/mm-sdk/mm/src/mm.py init -b SwiftIOMicro
 The `Package.swift` should look like below
 
 ```swift
-// swift-tools-version:5.3
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
+
 let package = Package(
-    name: "DemoProgram",
+    name: "Hello",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/madmachineio/SwiftIO.git", branch: "main"),
         .package(url: "https://github.com/madmachineio/MadBoards.git", branch: "main"),
-        .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
+        // .package(url: "https://github.com/madmachineio/MadDrivers.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "DemoProgram",
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .executableTarget(
+            name: "Hello",
             dependencies: [
                 "SwiftIO",
                 "MadBoards",
-                // use specific library would speed up the compile procedure
-                .product(name: "MadDrivers", package: "MadDrivers")
+                // Use specific library name rather than "MadDrivers" would speed up the build procedure.
+                // .product(name: "MadDrivers", package: "MadDrivers")
             ]),
-        .testTarget(
-            name: "DemoProgramTests",
-            dependencies: ["DemoProgram"]),
     ]
 )
 ```
@@ -141,20 +151,6 @@ python3 ~/mm-sdk/mm/src/mm.py build
 
 ### Download an executable to the board
 
-After building your project successfully, there would be `.build/release/micro.img` in your project directory. Note that the `.build` directory is hidden by default.
-
-Follow those steps to download the executable:
-
-1. Insert an SD card into the board and connect it to your computer through USB cable
-2. Press the **Download** button and wait until the onboard RGB LED turns to static **green**
-2. A USB disk drive should be mounted on your computer
-3. Copy the `micro.img` to the SD card root directory
-4. Eject the USB drive and the program would run automatically
-
-### Download an executable to the board using command (Only on macOS now)
-
-After mounting the SD card:
-
 ```shell
 cd ~/Documents/DemoProgram
 ~/mm-sdk/usr/mm/mm download
@@ -164,4 +160,4 @@ or
 python3 ~/mm-sdk/mm/src/mm.py download
 ```
 
-This command will find the corresponding bin file, copy it to the SD card and eject the SD card automatically.
+This command will find the corresponding image file, copy it to board Flash automatically.
